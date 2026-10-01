@@ -1,0 +1,10 @@
+CREATE TABLE public.institution_content (id uuid PRIMARY KEY DEFAULT gen_random_uuid(), kind text NOT NULL CHECK (kind IN ('teacher','achievement','event','gallery','testimonial','facility','meal','program','stat')), title text NOT NULL, body text NOT NULL DEFAULT '', image_url text, detail text, category text, published boolean NOT NULL DEFAULT true, sort_order integer NOT NULL DEFAULT 0, created_at timestamptz NOT NULL DEFAULT now());
+GRANT SELECT ON public.institution_content TO anon, authenticated;
+GRANT INSERT, UPDATE, DELETE ON public.institution_content TO authenticated;
+GRANT ALL ON public.institution_content TO service_role;
+ALTER TABLE public.institution_content ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public read published content" ON public.institution_content FOR SELECT TO anon, authenticated USING (published OR public.has_role(auth.uid(), 'admin'));
+CREATE POLICY "Admin insert content" ON public.institution_content FOR INSERT TO authenticated WITH CHECK (public.has_role(auth.uid(), 'admin'));
+CREATE POLICY "Admin update content" ON public.institution_content FOR UPDATE TO authenticated USING (public.has_role(auth.uid(), 'admin')) WITH CHECK (public.has_role(auth.uid(), 'admin'));
+CREATE POLICY "Admin delete content" ON public.institution_content FOR DELETE TO authenticated USING (public.has_role(auth.uid(), 'admin'));
+CREATE INDEX institution_content_kind_order_idx ON public.institution_content (kind, sort_order, created_at DESC);
