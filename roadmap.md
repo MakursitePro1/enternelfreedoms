@@ -4,11 +4,11 @@
 - [x] Refine the entire site's visual design and responsive layout without changing content or functionality.
 - [x] Complete the proposal's missing public sections: programme detail, meals and safety, people, activities, gallery and testimonials without inventing facts.
 - [x] Add safe administrator publishing for institutional content and richer book/order journeys.
-- [ ] Full proposal build (approved plan): database extensions + demo data
-- [ ] Topbar notice ticker, language switch (bn/en/ar), richer footer
-- [ ] Home page: all 19 sections in proposal order
-- [ ] New pages: programme detail, teachers + profile, campus, news detail, book detail, notice detail, contact
-- [ ] Upgrade about, residential, admission (fees, docs upload), gallery (categories, lightbox, video), notices (filter/search/paging), FAQ
-- [ ] Admin dashboard: summary, messages, settings, all content kinds, image upload
-- [ ] Verify all pages at 390/768/1280 and real flows
+- [x] Full proposal build (approved plan): database extensions + demo data
+- [x] Topbar notice ticker, language switch (bn/en/ar), richer footer
+- [x] Home page: all 19 sections in proposal order
+- [x] New pages: programme detail, teachers + profile, campus, news detail, book detail, notice detail, contact
+- [x] Upgrade about, residential, admission (fees, docs upload), gallery (categories, lightbox, video), notices (filter/search/paging), FAQ
+- [x] Admin dashboard: summary, messages, settings, all content kinds, image upload
+- [x] Verify all pages at 390/768/1280 and real flows (admin signed-in view unverified: no admin account exists yet)
 - [ ] Enable live online payment after the institution supplies its merchant account credentials (blocked: credentials).
