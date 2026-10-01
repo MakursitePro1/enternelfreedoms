@@ -13,8 +13,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AcademicsRouteImport } from './routes/academics'
 import { Route as AdmissionRouteImport } from './routes/admission'
+import { Route as BooksRouteImport } from './routes/books'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as NoticesRouteImport } from './routes/notices'
 import { Route as ResidentialRouteImport } from './routes/residential'
 
 const IndexRoute = IndexRouteImport.update({
@@ -37,6 +39,11 @@ const AdmissionRoute = AdmissionRouteImport.update({
   path: '/admission',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BooksRoute = BooksRouteImport.update({
+  id: '/books',
+  path: '/books',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
@@ -45,6 +52,11 @@ const FaqRoute = FaqRouteImport.update({
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticesRoute = NoticesRouteImport.update({
+  id: '/notices',
+  path: '/notices',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResidentialRoute = ResidentialRouteImport.update({
@@ -58,8 +70,10 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/academics': typeof AcademicsRoute
   '/admission': typeof AdmissionRoute
+  '/books': typeof BooksRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
+  '/notices': typeof NoticesRoute
   '/residential': typeof ResidentialRoute
 }
 export interface FileRoutesByTo {
@@ -67,8 +81,10 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/academics': typeof AcademicsRoute
   '/admission': typeof AdmissionRoute
+  '/books': typeof BooksRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
+  '/notices': typeof NoticesRoute
   '/residential': typeof ResidentialRoute
 }
 export interface FileRoutesById {
@@ -77,8 +93,10 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/academics': typeof AcademicsRoute
   '/admission': typeof AdmissionRoute
+  '/books': typeof BooksRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
+  '/notices': typeof NoticesRoute
   '/residential': typeof ResidentialRoute
 }
 export interface FileRouteTypes {
@@ -88,8 +106,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/academics'
     | '/admission'
+    | '/books'
     | '/faq'
     | '/gallery'
+    | '/notices'
     | '/residential'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -97,8 +117,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/academics'
     | '/admission'
+    | '/books'
     | '/faq'
     | '/gallery'
+    | '/notices'
     | '/residential'
   id:
     | '__root__'
@@ -106,8 +128,10 @@ export interface FileRouteTypes {
     | '/about'
     | '/academics'
     | '/admission'
+    | '/books'
     | '/faq'
     | '/gallery'
+    | '/notices'
     | '/residential'
   fileRoutesById: FileRoutesById
 }
@@ -116,8 +140,10 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AcademicsRoute: typeof AcademicsRoute
   AdmissionRoute: typeof AdmissionRoute
+  BooksRoute: typeof BooksRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
+  NoticesRoute: typeof NoticesRoute
   ResidentialRoute: typeof ResidentialRoute
 }
 
@@ -151,6 +177,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdmissionRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/books': {
+      id: '/books'
+      path: '/books'
+      fullPath: '/books'
+      preLoaderRoute: typeof BooksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/faq': {
       id: '/faq'
       path: '/faq'
@@ -163,6 +196,13 @@ declare module '@tanstack/react-router' {
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notices': {
+      id: '/notices'
+      path: '/notices'
+      fullPath: '/notices'
+      preLoaderRoute: typeof NoticesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/residential': {
@@ -180,8 +220,10 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AcademicsRoute: AcademicsRoute,
   AdmissionRoute: AdmissionRoute,
+  BooksRoute: BooksRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
+  NoticesRoute: NoticesRoute,
   ResidentialRoute: ResidentialRoute,
 }
 export const routeTree = rootRouteImport
