@@ -22,6 +22,11 @@ export const submitOrder=createServerFn({method:'POST'}).inputValidator((data)=>
  const {data:row,error}=await supabaseAdmin.from('orders').insert({customer_name:data.customer_name,phone:data.phone,address:data.address,items,total,payment_method:data.payment_method,payment_reference:data.payment_method==='ক্যাশ অন ডেলিভারি'?null:data.payment_reference ?? null}).select('reference').single();
  if(error) throw new Error('অর্ডার জমা দেওয়া যায়নি।'); return row;
 });
+export const trackOrder=createServerFn({method:'POST'}).inputValidator((data)=>z.object({reference:z.string().trim().max(30),phone:z.string().regex(/^01[0-9]{9}$/)}).parse(data)).handler(async ({data})=>{
+ const {supabaseAdmin}=await import('@/integrations/supabase/client.server');
+ const {data:row}=await supabaseAdmin.from('orders').select('status,created_at,total,payment_method').eq('reference',data.reference.toUpperCase()).eq('phone',data.phone).maybeSingle();
+ return row;
+});
 async function verifyAdmin(token:string){
  const {supabaseAdmin}=await import('@/integrations/supabase/client.server');
  const {data:{user},error}=await supabaseAdmin.auth.getUser(token);
@@ -32,22 +37,26 @@ async function verifyAdmin(token:string){
 }
 export const getAdminData=createServerFn({method:'POST'}).inputValidator((data)=>z.object({token:z.string().min(10)}).parse(data)).handler(async ({data})=>{
  const db=await verifyAdmin(data.token);
- const [admissions,orders,books,notices]=await Promise.all([
- db.from('admissions').select('*').order('created_at',{ascending:false}),db.from('orders').select('*').order('created_at',{ascending:false}),db.from('books').select('*').order('created_at',{ascending:false}),db.from('notices').select('*').order('published_at',{ascending:false})]);
- return {admissions:admissions.data??[],orders:orders.data??[],books:books.data??[],notices:notices.data??[]};
+  const [admissions,orders,books,notices,content]=await Promise.all([
+  db.from('admissions').select('*').order('created_at',{ascending:false}),db.from('orders').select('*').order('created_at',{ascending:false}),db.from('books').select('*').order('created_at',{ascending:false}),db.from('notices').select('*').order('published_at',{ascending:false}),db.from('institution_content').select('*').order('sort_order',{ascending:true})]);
+  return {admissions:admissions.data??[],orders:orders.data??[],books:books.data??[],notices:notices.data??[],content:content.data??[]};
 });
 const editSchema=z.discriminatedUnion('kind',[
  z.object({kind:z.literal('admission'),id:z.string().uuid(),status:z.enum(['নতুন','যাচাই চলছে','অনুমোদিত','বাতিল'])}),
  z.object({kind:z.literal('order'),id:z.string().uuid(),status:z.enum(['নতুন','প্রক্রিয়াধীন','পাঠানো হয়েছে','সম্পন্ন','বাতিল'])}),
  z.object({kind:z.literal('notice'),id:z.string().uuid().optional(),title:z.string().min(3).max(200),body:z.string().max(5000),category:z.string().min(1).max(50),file_url:z.string().url().optional()}),
- z.object({kind:z.literal('book'),id:z.string().uuid().optional(),title:z.string().min(2).max(200),description:z.string().max(3000),price:z.number().nonnegative(),cover_url:z.string().url().optional(),active:z.boolean()})
+  z.object({kind:z.literal('book'),id:z.string().uuid().optional(),title:z.string().min(2).max(200),description:z.string().max(3000),price:z.number().nonnegative(),cover_url:z.string().url().optional(),active:z.boolean()}),
+  z.object({kind:z.literal('content'),id:z.string().uuid().optional(),content_kind:z.enum(['teacher','achievement','event','gallery','testimonial','facility','meal','program','stat']),title:z.string().trim().min(2).max(200),body:z.string().max(5000),image_url:z.string().url().optional(),detail:z.string().max(500).optional(),category:z.string().max(100).optional(),published:z.boolean(),sort_order:z.number().int().min(0).max(10000)}),
+  z.object({kind:z.literal('delete'),target:z.enum(['notice','book','content']),id:z.string().uuid()})
 ]);
 export const adminSave=createServerFn({method:'POST'}).inputValidator((data)=>z.object({token:z.string().min(10),change:editSchema}).parse(data)).handler(async ({data})=>{
  const db=await verifyAdmin(data.token); const change=data.change;
  let result;
- if(change.kind==='admission') result=await db.from('admissions').update({status:change.status}).eq('id',change.id);
+  if(change.kind==='delete') result=await db.from(change.target==='notice'?'notices':change.target==='book'?'books':'institution_content').delete().eq('id',change.id);
+  else if(change.kind==='admission') result=await db.from('admissions').update({status:change.status}).eq('id',change.id);
  else if(change.kind==='order') result=await db.from('orders').update({status:change.status}).eq('id',change.id);
  else if(change.kind==='notice'){const payload={title:change.title,body:change.body,category:change.category,file_url:change.file_url||null}; result=change.id?await db.from('notices').update(payload).eq('id',change.id):await db.from('notices').insert(payload);}
- else {const payload={title:change.title,description:change.description,price:change.price,cover_url:change.cover_url||null,active:change.active}; result=change.id?await db.from('books').update(payload).eq('id',change.id):await db.from('books').insert(payload);}
+  else if(change.kind==='book'){const payload={title:change.title,description:change.description,price:change.price,cover_url:change.cover_url||null,active:change.active}; result=change.id?await db.from('books').update(payload).eq('id',change.id):await db.from('books').insert(payload);}
+  else {const payload={kind:change.content_kind,title:change.title,body:change.body,image_url:change.image_url||null,detail:change.detail||null,category:change.category||null,published:change.published,sort_order:change.sort_order};result=change.id?await db.from('institution_content').update(payload).eq('id',change.id):await db.from('institution_content').insert(payload);}
  if(result.error) throw new Error('পরিবর্তন সংরক্ষণ করা যায়নি।'); return {ok:true};
 });
