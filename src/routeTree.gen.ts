@@ -23,6 +23,7 @@ import { Route as AcademicsSlugRouteImport } from './routes/academics.$slug'
 import { Route as ActivitiesIndexRouteImport } from './routes/activities.index'
 import { Route as ActivitiesIdRouteImport } from './routes/activities.$id'
 import { Route as BooksIndexRouteImport } from './routes/books.index'
+import { Route as BooksIdRouteImport } from './routes/books.$id'
 import { Route as NoticesIndexRouteImport } from './routes/notices.index'
 import { Route as NoticesIdRouteImport } from './routes/notices.$id'
 import { Route as TeachersIndexRouteImport } from './routes/teachers.index'
@@ -98,6 +99,11 @@ const BooksIndexRoute = BooksIndexRouteImport.update({
   path: '/books/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BooksIdRoute = BooksIdRouteImport.update({
+  id: '/books/$id',
+  path: '/books/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NoticesIndexRoute = NoticesIndexRouteImport.update({
   id: '/notices/',
   path: '/notices/',
@@ -131,6 +137,7 @@ export interface FileRoutesByFullPath {
   '/residential': typeof ResidentialRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
+  '/books/$id': typeof BooksIdRoute
   '/notices/$id': typeof NoticesIdRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/academics/': typeof AcademicsIndexRoute
@@ -151,6 +158,7 @@ export interface FileRoutesByTo {
   '/residential': typeof ResidentialRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
+  '/books/$id': typeof BooksIdRoute
   '/notices/$id': typeof NoticesIdRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/academics': typeof AcademicsIndexRoute
@@ -172,6 +180,7 @@ export interface FileRoutesById {
   '/residential': typeof ResidentialRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
+  '/books/$id': typeof BooksIdRoute
   '/notices/$id': typeof NoticesIdRoute
   '/teachers/$id': typeof TeachersIdRoute
   '/academics/': typeof AcademicsIndexRoute
@@ -194,6 +203,7 @@ export interface FileRouteTypes {
     | '/residential'
     | '/academics/$slug'
     | '/activities/$id'
+    | '/books/$id'
     | '/notices/$id'
     | '/teachers/$id'
     | '/academics/'
@@ -214,6 +224,7 @@ export interface FileRouteTypes {
     | '/residential'
     | '/academics/$slug'
     | '/activities/$id'
+    | '/books/$id'
     | '/notices/$id'
     | '/teachers/$id'
     | '/academics'
@@ -234,6 +245,7 @@ export interface FileRouteTypes {
     | '/residential'
     | '/academics/$slug'
     | '/activities/$id'
+    | '/books/$id'
     | '/notices/$id'
     | '/teachers/$id'
     | '/academics/'
@@ -255,6 +267,7 @@ export interface RootRouteChildren {
   ResidentialRoute: typeof ResidentialRoute
   AcademicsSlugRoute: typeof AcademicsSlugRoute
   ActivitiesIdRoute: typeof ActivitiesIdRoute
+  BooksIdRoute: typeof BooksIdRoute
   NoticesIdRoute: typeof NoticesIdRoute
   TeachersIdRoute: typeof TeachersIdRoute
   AcademicsIndexRoute: typeof AcademicsIndexRoute
@@ -364,6 +377,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BooksIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/books/$id': {
+      id: '/books/$id'
+      path: '/books/$id'
+      fullPath: '/books/$id'
+      preLoaderRoute: typeof BooksIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/notices/': {
       id: '/notices/'
       path: '/notices'
@@ -407,6 +427,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResidentialRoute: ResidentialRoute,
   AcademicsSlugRoute: AcademicsSlugRoute,
   ActivitiesIdRoute: ActivitiesIdRoute,
+  BooksIdRoute: BooksIdRoute,
   NoticesIdRoute: NoticesIdRoute,
   TeachersIdRoute: TeachersIdRoute,
   AcademicsIndexRoute: AcademicsIndexRoute,
