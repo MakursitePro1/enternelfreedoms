@@ -11,14 +11,15 @@ export const trackAdmission = createServerFn({method:'POST'}).inputValidator((da
  const {supabaseAdmin}=await import('@/integrations/supabase/client.server');
  const {data:row}=await supabaseAdmin.from('admissions').select('student_name,program,status,created_at').eq('reference',data.reference.toUpperCase()).eq('phone',data.phone).maybeSingle(); return row;
 });
-const orderSchema=z.object({customer_name:z.string().trim().min(2).max(120),phone:z.string().regex(/^01[0-9]{9}$/),address:z.string().trim().min(8).max(500), items:z.array(z.object({id:z.string().uuid(),quantity:z.number().int().min(1).max(20)})).min(1).max(30)});
+const orderSchema=z.object({customer_name:z.string().trim().min(2).max(120),phone:z.string().regex(/^01[0-9]{9}$/),address:z.string().trim().min(8).max(500), payment_method:z.enum(['ক্যাশ অন ডেলিভারি','বিকাশ','নগদ']),payment_reference:z.string().trim().max(100).optional(),items:z.array(z.object({id:z.string().uuid(),quantity:z.number().int().min(1).max(20)})).min(1).max(30)});
 export const submitOrder=createServerFn({method:'POST'}).inputValidator((data)=>orderSchema.parse(data)).handler(async ({data})=>{
  const {supabaseAdmin}=await import('@/integrations/supabase/client.server');
+ if(data.payment_method!=='ক্যাশ অন ডেলিভারি' && (!data.payment_reference || data.payment_reference.length<5)) throw new Error('পেমেন্টের ট্রানজেকশন আইডি প্রয়োজন।');
  const ids=data.items.map(x=>x.id); const {data:books,error:bookError}=await supabaseAdmin.from('books').select('id,title,price,active').in('id',ids);
  if(bookError || !books || data.items.some(item=>!books.some(book=>book.id===item.id && book.active))) throw new Error('বইয়ের তথ্য পাওয়া যায়নি।');
  const items=data.items.map(item=>{const book=books.find(book=>book.id===item.id); if(!book) throw new Error('বইয়ের তথ্য পাওয়া যায়নি।'); return {id:book.id,title:book.title,price:Number(book.price),quantity:item.quantity};});
  const total=items.reduce((sum,item)=>sum+item.price*item.quantity,0);
- const {data:row,error}=await supabaseAdmin.from('orders').insert({customer_name:data.customer_name,phone:data.phone,address:data.address,items,total,payment_method:'ক্যাশ অন ডেলিভারি'}).select('reference').single();
+ const {data:row,error}=await supabaseAdmin.from('orders').insert({customer_name:data.customer_name,phone:data.phone,address:data.address,items,total,payment_method:data.payment_method,payment_reference:data.payment_method==='ক্যাশ অন ডেলিভারি'?null:data.payment_reference}).select('reference').single();
  if(error) throw new Error('অর্ডার জমা দেওয়া যায়নি।'); return row;
 });
 async function verifyAdmin(token:string){
