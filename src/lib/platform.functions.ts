@@ -1,6 +1,5 @@
 import { createServerFn } from '@tanstack/react-start';
 import { z } from 'zod';
-import { requireSupabaseAuth } from '@/integrations/supabase/auth-middleware';
 
 const admissionSchema = z.object({ student_name:z.string().trim().min(2).max(120), birth_date:z.string().optional(), program:z.string().min(2).max(100), guardian_name:z.string().trim().min(2).max(120), phone:z.string().regex(/^01[0-9]{9}$/), address:z.string().trim().min(5).max(500), previous_school:z.string().max(150).optional(), notes:z.string().max(1000).optional() });
 export const submitAdmission = createServerFn({method:'POST'}).inputValidator((data)=>admissionSchema.parse(data)).handler(async ({data})=>{
@@ -22,11 +21,18 @@ export const submitOrder=createServerFn({method:'POST'}).inputValidator((data)=>
  const {data:row,error}=await supabaseAdmin.from('orders').insert({customer_name:data.customer_name,phone:data.phone,address:data.address,items,total,payment_method:'ক্যাশ অন ডেলিভারি'}).select('reference').single();
  if(error) throw new Error('অর্ডার জমা দেওয়া যায়নি।'); return row;
 });
-export const getAdminData=createServerFn({method:'GET'}).middleware([requireSupabaseAuth]).handler(async ({context})=>{
- const {data:role}=await context.supabase.from('user_roles').select('role').eq('user_id',context.userId).eq('role','admin').maybeSingle();
+async function verifyAdmin(token:string){
+ const {supabaseAdmin}=await import('@/integrations/supabase/client.server');
+ const {data:{user},error}=await supabaseAdmin.auth.getUser(token);
+ if(error||!user) throw new Error('লগইন প্রয়োজন।');
+ const {data:role}=await supabaseAdmin.from('user_roles').select('role').eq('user_id',user.id).eq('role','admin').maybeSingle();
  if(!role) throw new Error('অ্যাডমিন অনুমতি নেই।');
+ return supabaseAdmin;
+}
+export const getAdminData=createServerFn({method:'POST'}).inputValidator((data)=>z.object({token:z.string().min(10)}).parse(data)).handler(async ({data})=>{
+ const db=await verifyAdmin(data.token);
  const [admissions,orders,books,notices]=await Promise.all([
- context.supabase.from('admissions').select('*').order('created_at',{ascending:false}), context.supabase.from('orders').select('*').order('created_at',{ascending:false}), context.supabase.from('books').select('*').order('created_at',{ascending:false}), context.supabase.from('notices').select('*').order('published_at',{ascending:false})]);
+ db.from('admissions').select('*').order('created_at',{ascending:false}),db.from('orders').select('*').order('created_at',{ascending:false}),db.from('books').select('*').order('created_at',{ascending:false}),db.from('notices').select('*').order('published_at',{ascending:false})]);
  return {admissions:admissions.data??[],orders:orders.data??[],books:books.data??[],notices:notices.data??[]};
 });
 const editSchema=z.discriminatedUnion('kind',[
@@ -35,12 +41,12 @@ const editSchema=z.discriminatedUnion('kind',[
  z.object({kind:z.literal('notice'),id:z.string().uuid().optional(),title:z.string().min(3).max(200),body:z.string().max(5000),category:z.string().min(1).max(50),file_url:z.string().url().optional()}),
  z.object({kind:z.literal('book'),id:z.string().uuid().optional(),title:z.string().min(2).max(200),description:z.string().max(3000),price:z.number().nonnegative(),cover_url:z.string().url().optional(),active:z.boolean()})
 ]);
-export const adminSave=createServerFn({method:'POST'}).middleware([requireSupabaseAuth]).inputValidator((data)=>editSchema.parse(data)).handler(async ({context,data})=>{
- const {data:role}=await context.supabase.from('user_roles').select('role').eq('user_id',context.userId).eq('role','admin').maybeSingle(); if(!role) throw new Error('অ্যাডমিন অনুমতি নেই।');
+export const adminSave=createServerFn({method:'POST'}).inputValidator((data)=>z.object({token:z.string().min(10),change:editSchema}).parse(data)).handler(async ({data})=>{
+ const db=await verifyAdmin(data.token); const change=data.change;
  let result;
- if(data.kind==='admission') result=await context.supabase.from('admissions').update({status:data.status}).eq('id',data.id);
- else if(data.kind==='order') result=await context.supabase.from('orders').update({status:data.status}).eq('id',data.id);
- else if(data.kind==='notice'){const payload={title:data.title,body:data.body,category:data.category,file_url:data.file_url||null}; result=data.id?await context.supabase.from('notices').update(payload).eq('id',data.id):await context.supabase.from('notices').insert(payload);}
- else {const payload={title:data.title,description:data.description,price:data.price,cover_url:data.cover_url||null,active:data.active}; result=data.id?await context.supabase.from('books').update(payload).eq('id',data.id):await context.supabase.from('books').insert(payload);}
+ if(change.kind==='admission') result=await db.from('admissions').update({status:change.status}).eq('id',change.id);
+ else if(change.kind==='order') result=await db.from('orders').update({status:change.status}).eq('id',change.id);
+ else if(change.kind==='notice'){const payload={title:change.title,body:change.body,category:change.category,file_url:change.file_url||null}; result=change.id?await db.from('notices').update(payload).eq('id',change.id):await db.from('notices').insert(payload);}
+ else {const payload={title:change.title,description:change.description,price:change.price,cover_url:change.cover_url||null,active:change.active}; result=change.id?await db.from('books').update(payload).eq('id',change.id):await db.from('books').insert(payload);}
  if(result.error) throw new Error('পরিবর্তন সংরক্ষণ করা যায়নি।'); return {ok:true};
 });
