@@ -1,3 +1,4 @@
 - [ ] Build Bengali public pages for institution, study, residential life, admissions, books, notices, gallery and FAQ.
 - [ ] Connect admissions, tracking, orders, notices, books and secure admin management to Cloud.
 - [ ] Check mobile and desktop previews, then apply routine package update.
+- [ ] Refine the entire site's visual design and responsive layout without changing content or functionality.

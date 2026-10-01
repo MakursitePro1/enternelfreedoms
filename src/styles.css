@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@400;500;600;700&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
@@ -66,7 +65,7 @@
 }
 
 :root {
-  --radius: 0.125rem;
+   --radius: 0.5rem;
   --background: #FBFBFA;
   --foreground: #173c32;
   --card: #ffffff;
@@ -75,11 +74,11 @@
   --popover-foreground: #173c32;
   --primary: #0D3B2E;
   --primary-foreground: #FBFBFA;
-  --secondary: #F4F6F4;
+  --secondary: #F1F5F0;
   --secondary-foreground: #0D3B2E;
-  --muted: #F4F6F4;
+  --muted: #F1F5F0;
   --muted-foreground: #61766d;
-  --accent: #e9eee8;
+  --accent: #e6eee7;
   --accent-foreground: #0D3B2E;
   --destructive: #a02d29;
   --destructive-foreground: #ffffff;
@@ -112,5 +111,25 @@
     font-family: "Hind Siliguri", sans-serif;
     background-color: var(--color-background);
     color: var(--color-foreground);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
   }
+
+  h1, h2, h3 { text-wrap: balance; }
+
+  input, textarea, select { border-radius: var(--radius); }
+
+  :focus-visible { outline: 2px solid var(--color-ring); outline-offset: 3px; }
+}
+
+@layer components {
+  .premium-panel { border-radius: calc(var(--radius) * 2); box-shadow: 0 12px 35px -28px color-mix(in oklab, var(--primary) 55%, transparent); }
+  .premium-image { border-radius: calc(var(--radius) * 2); }
+  .premium-card { border-radius: calc(var(--radius) * 2); transition: transform .25s ease, box-shadow .25s ease; }
+  .premium-card:hover { transform: translateY(-3px); box-shadow: 0 20px 40px -30px color-mix(in oklab, var(--primary) 55%, transparent); }
+  .premium-field { border-radius: var(--radius); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
