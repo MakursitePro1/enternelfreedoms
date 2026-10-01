@@ -167,7 +167,7 @@ export function Heading({ eyebrow, title, description, center = false, light = f
   );
 }
 
-export function PageIntro({ eyebrow, title, description, image }: { eyebrow: string; title: string; description: string; image?: string }) {
+export function PageIntro({ eyebrow, title, description, image }: { eyebrow: string; title: string; description: string; image?: string | undefined }) {
   const { t } = useLang();
   return (
     <section className="relative overflow-hidden bg-primary px-5 py-20 text-primary-foreground sm:py-24 lg:px-8">

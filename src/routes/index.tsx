@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Site, Heading, TextLink, DemoNote } from '@/components/Site';
 import { StatsBar, TeachersGrid, TestimonialSlider, ActivitiesTeaser, AchievementsGrid, SafetyGrid, MealTable, itemImage } from '@/components/InstitutionSections';
 import { ContactForm } from '@/components/ContactForm';
-import { photos, programs, dayTimeline, whyCards, parentQuestions, facilityImages, admissionSteps, galleryPhotos, bookCovers, isDemo } from '@/lib/content';
+import { photos, programs, dayTimeline, whyCards, parentQuestions, facilityImages, admissionSteps, galleryPhotos, bookCovers, isDemo, pick } from '@/lib/content';
 import { useInstitutionContent } from '@/lib/institution-content';
 import { useSiteSettings, telHref, youtubeEmbed } from '@/lib/site-settings';
 import { useLang } from '@/lib/i18n';
@@ -61,6 +61,7 @@ function Home() {
   const [books, setBooks] = useState<Book[]>([]);
   const [day, setDay] = useState(0);
   const video = s.video_url ? youtubeEmbed(s.video_url) : null;
+  const [dTime, dAct, dDesc] = dayTimeline[day] ?? ['', '', ''];
   useEffect(() => {
     supabase.from('notices').select('id,title,category,published_at').order('published_at', { ascending: false }).limit(4).then(({ data }) => setNotices(data ?? []));
     supabase.from('books').select('id,title,description,price,cover_url,slug,author').eq('active', true).order('created_at', { ascending: true }).limit(4).then(({ data }) => setBooks((data ?? []) as Book[]));
@@ -169,9 +170,9 @@ function Home() {
           <Heading center light eyebrow="দৈনন্দিন জীবন" title="একটি দিন Eternal Freedom-এ" description="“আমার সন্তান এখানে সারাদিন কীভাবে সময় কাটাবে?” — ফজর থেকে ঘুম পর্যন্ত সুশৃঙ্খল রুটিন।" />
           <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr] lg:items-center">
             <div className="rounded-3xl bg-primary-foreground/10 p-8 sm:p-10">
-              <div className="text-sm font-semibold text-gold-light">{dayTimeline[day][0]}</div>
-              <div key={day} className="fade-slide mt-2 font-display text-4xl font-semibold">{dayTimeline[day][1]}</div>
-              <p className="mt-4 leading-8 text-primary-foreground/80">{dayTimeline[day][2]}</p>
+              <div className="text-sm font-semibold text-gold-light">{dTime}</div>
+              <div key={day} className="fade-slide mt-2 font-display text-4xl font-semibold">{dAct}</div>
+              <p className="mt-4 leading-8 text-primary-foreground/80">{dDesc}</p>
               <div className="mt-8 h-1.5 overflow-hidden rounded-full bg-primary-foreground/15"><div className="h-full bg-gold transition-all" style={{ width: `${((day + 1) / dayTimeline.length) * 100}%` }} /></div>
               <div className="mt-2 text-xs opacity-70">ধাপ {(day + 1).toLocaleString('bn-BD')} / {dayTimeline.length.toLocaleString('bn-BD')}</div>
             </div>
@@ -294,7 +295,7 @@ function Home() {
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {books.map((b, k) => (
                 <Link key={b.id} to="/books/$id" params={{ id: b.id }} className="group overflow-hidden rounded-2xl bg-secondary premium-card shadow-elegant">
-                  <div className="relative aspect-[3/4] overflow-hidden"><img src={b.cover_url ?? bookCovers[k % bookCovers.length]} alt={b.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />{!b.cover_url && <div className="absolute inset-x-6 top-1/2 -translate-y-1/2 rounded-lg bg-background/90 p-3 text-center font-display text-sm font-semibold text-primary">{b.title}</div>}</div>
+                  <div className="relative aspect-[3/4] overflow-hidden"><img src={b.cover_url ?? pick(bookCovers, k)} alt={b.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />{!b.cover_url && <div className="absolute inset-x-6 top-1/2 -translate-y-1/2 rounded-lg bg-background/90 p-3 text-center font-display text-sm font-semibold text-primary">{b.title}</div>}</div>
                   <div className="p-5"><div className="flex items-center gap-2"><span className="text-xs text-muted-foreground">{b.author}</span><DemoNote show={isDemo(b.slug)} /></div><h3 className="mt-1 font-display text-lg font-semibold text-primary">{b.title}</h3><div className="mt-3 flex items-center justify-between"><strong className="text-lg text-primary">৳ {Number(b.price).toLocaleString('bn-BD')}</strong><span className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground"><ShoppingBag className="size-3.5" />{t('এখনই কিনুন')}</span></div></div>
                 </Link>
               ))}

@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from 're
 import { useServerFn } from '@tanstack/react-start';
 import { LayoutDashboard, GraduationCap, ShoppingBag, MessageSquare, Megaphone, BookOpen, Layers, Settings, LogOut, Upload, Trash2, Pencil, FileText, Plus } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
-import { adminSave, adminUpload, adminDocumentLink, getAdminData } from '@/lib/platform.functions';
+import { adminSave, adminUpload, adminDocumentLink, getAdminData, type AdminChange } from '@/lib/platform.functions';
 import { contentKinds, type ContentKind } from '@/lib/institution-content';
 import { settingFields } from '@/lib/site-settings';
 import { Site } from '@/components/Site';
@@ -55,7 +55,7 @@ function Admin() {
     return () => sub.subscription.unsubscribe();
   }, []);
   function flash(m: string) { setMessage(m); setError(''); window.setTimeout(() => setMessage(''), 3000); }
-  async function run(change: Parameters<typeof save>[0]['data']['change'], ok: string) {
+  async function run(change: AdminChange, ok: string) {
     try { await save({ data: { token: await token(), change } }); flash(ok); await refresh(); return true; }
     catch { setError('সংরক্ষণ করা যায়নি। তথ্য যাচাই করুন।'); return false; }
   }

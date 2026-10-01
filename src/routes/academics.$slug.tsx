@@ -1,7 +1,7 @@
 import { createFileRoute, Link, notFound } from '@tanstack/react-router';
 import { ArrowRight, CheckCircle2, Clock, Users, CalendarRange, BookOpen, Target, ListChecks, Star } from 'lucide-react';
 import { Site, PageIntro, Heading } from '@/components/Site';
-import { programs, facilityImageList } from '@/lib/content';
+import { programs, facilityImageList, pick } from '@/lib/content';
 import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
@@ -26,7 +26,7 @@ function ProgramDetail() {
   const lists: [typeof Target, string, string[]][] = [[Target, 'শিক্ষার উদ্দেশ্য', p.goals], [ListChecks, 'কার্যক্রম', p.activities], [Star, 'শিক্ষার্থীর সুবিধা', p.benefits]];
   return (
     <Site>
-      <PageIntro eyebrow={p.group} title={p.name} description={p.text} image={facilityImageList[idx % facilityImageList.length]} />
+      <PageIntro eyebrow={p.group} title={p.name} description={p.text} image={pick(facilityImageList, idx)} />
       <section className="px-5 py-20 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_.42fr]">
           <div className="space-y-6">

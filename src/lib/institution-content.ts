@@ -38,7 +38,7 @@ export function parseLabeled(body: string) {
   const rest: string[] = [];
   for (const line of body.split('\n')) {
     const m = line.match(/^\s*([^:：]{2,12})[:：]\s*(.+)$/);
-    if (m) fields[m[1].trim()] = m[2].trim(); else if (line.trim()) rest.push(line.trim());
+    if (m?.[1] && m[2]) fields[m[1].trim()] = m[2].trim(); else if (line.trim()) rest.push(line.trim());
   }
   return { fields, text: rest.join('\n') };
 }
