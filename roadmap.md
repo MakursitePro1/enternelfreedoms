@@ -12,4 +12,4 @@
 - [x] Admin dashboard: summary, messages, settings, all content kinds, image upload
 - [x] Verify all pages at 390/768/1280 and real flows (admin signed-in view unverified: no admin account exists yet)
 - [ ] Enable live online payment after the institution supplies its merchant account credentials (blocked: credentials).
-- [ ] Polish all existing pages with stronger premium surfaces and consistent small-screen spacing; verify phone, tablet and desktop previews without changing content or flows.
+- [x] Polish all existing pages with stronger premium surfaces and consistent small-screen spacing; verify phone, tablet and desktop previews without changing content or flows.
