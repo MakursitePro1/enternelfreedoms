@@ -116,7 +116,7 @@ function Admission() {
                   {step === 3 && <div className="sm:col-span-2"><dl className="grid gap-4 rounded-2xl bg-secondary p-6 sm:grid-cols-2">{[['শিক্ষার্থী', form.student_name], ['বিভাগ', form.program], ['জন্ম তারিখ', form.birth_date || '—'], ['অভিভাবক', form.guardian_name], ['ফোন', form.phone], ['ঠিকানা', form.address], ['কাগজপত্র', docs.length ? docs.map((d) => d.label).join(', ') : 'যুক্ত করা হয়নি']].map(([k, v]) => <div key={k}><dt className="text-xs text-muted-foreground">{k}</dt><dd className="font-semibold text-primary">{v}</dd></div>)}</dl></div>}
                 </div>
                 {error && <p role="alert" className="mt-5 text-sm text-destructive">{error}</p>}
-                <div className="mt-8 flex justify-between gap-3">{step > 0 ? <Button type="button" variant="secondary" onClick={() => { setError(''); setStep(step - 1); }}><ArrowLeft className="size-4 rtl:rotate-180" /> পেছনে</Button> : <span />}{step < 3 ? <Button type="button" onClick={next}>পরবর্তী ধাপ <ArrowRight className="size-4 rtl:rotate-180" /></Button> : <Button type="submit" disabled={busy}>{busy ? 'জমা হচ্ছে...' : 'আবেদন জমা দিন'}</Button>}</div>
+                <div className="mt-8 flex justify-between gap-3">{step > 0 ? <Button type="button" variant="secondary" onClick={() => { setError(''); setStep(step - 1); }}><ArrowLeft className="size-4 rtl:rotate-180" /> পেছনে</Button> : <span />}{step < 3 ? <Button key="next" type="button" onClick={next}>পরবর্তী ধাপ <ArrowRight className="size-4 rtl:rotate-180" /></Button> : <Button key="submit" type="submit" disabled={busy}>{busy ? 'জমা হচ্ছে...' : 'আবেদন জমা দিন'}</Button>}</div>
               </form>
             </>)}
           </div>
