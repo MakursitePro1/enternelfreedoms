@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AcademicsRouteImport } from './routes/academics'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdmissionRouteImport } from './routes/admission'
 import { Route as BooksRouteImport } from './routes/books'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -32,6 +33,11 @@ const AboutRoute = AboutRouteImport.update({
 const AcademicsRoute = AcademicsRouteImport.update({
   id: '/academics',
   path: '/academics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdmissionRoute = AdmissionRouteImport.update({
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academics': typeof AcademicsRoute
+  '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
   '/books': typeof BooksRoute
   '/faq': typeof FaqRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academics': typeof AcademicsRoute
+  '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
   '/books': typeof BooksRoute
   '/faq': typeof FaqRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/academics': typeof AcademicsRoute
+  '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
   '/books': typeof BooksRoute
   '/faq': typeof FaqRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academics'
+    | '/admin'
     | '/admission'
     | '/books'
     | '/faq'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academics'
+    | '/admin'
     | '/admission'
     | '/books'
     | '/faq'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/academics'
+    | '/admin'
     | '/admission'
     | '/books'
     | '/faq'
@@ -139,6 +151,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AcademicsRoute: typeof AcademicsRoute
+  AdminRoute: typeof AdminRoute
   AdmissionRoute: typeof AdmissionRoute
   BooksRoute: typeof BooksRoute
   FaqRoute: typeof FaqRoute
@@ -168,6 +181,13 @@ declare module '@tanstack/react-router' {
       path: '/academics'
       fullPath: '/academics'
       preLoaderRoute: typeof AcademicsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admission': {
@@ -219,6 +239,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AcademicsRoute: AcademicsRoute,
+  AdminRoute: AdminRoute,
   AdmissionRoute: AdmissionRoute,
   BooksRoute: BooksRoute,
   FaqRoute: FaqRoute,
