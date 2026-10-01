@@ -4,4 +4,5 @@
 - [x] Refine the entire site's visual design and responsive layout without changing content or functionality.
 - [x] Complete the proposal's missing public sections: programme detail, meals and safety, people, activities, gallery and testimonials without inventing facts.
 - [x] Add safe administrator publishing for institutional content and richer book/order journeys.
-- [ ] Verify public flows and responsive previews, and identify information that requires the institution's real materials.
+- [ ] Verify public flows and responsive previews, and identify information that requires the institution's real materials (real books, prices, merchant payment credentials, and administrator account required for complete verification).
+- [ ] Enable live online payment after the institution supplies its merchant account and credentials for a zero-subscription-fee gateway; do not activate a paid platform against the zero-cost requirement.
