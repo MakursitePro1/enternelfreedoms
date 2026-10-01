@@ -154,7 +154,7 @@ function Home() {
 
       {/* Food */}
       <section className="px-5 py-24 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center [&>*]:min-w-0">
           <div>
             <Heading eyebrow="খাবার ও পুষ্টি" title="নিজস্ব রান্নাঘরে যত্নে তৈরি খাবার" description="নিজস্ব কিচেন, বেকারি ও পরিচ্ছন্ন ডাইনিংয়ে স্বাস্থ্যসম্মতভাবে তৈরি তিনবেলা পুষ্টিকর খাবার ও নাশতা।" />
             <img src={facilityImages.dining} alt="ডাইনিংয়ে খাবার পরিবেশন" loading="lazy" className="h-72 w-full object-cover premium-image shadow-elegant" />
