@@ -2,3 +2,6 @@
 - [x] Connect admissions, tracking, orders, notices, books and secure admin management to Cloud.
 - [x] Check mobile and desktop previews, then apply routine package update.
 - [x] Refine the entire site's visual design and responsive layout without changing content or functionality.
+- [x] Complete the proposal's missing public sections: programme detail, meals and safety, people, activities, gallery and testimonials without inventing facts.
+- [x] Add safe administrator publishing for institutional content and richer book/order journeys.
+- [ ] Verify public flows and responsive previews, and identify information that requires the institution's real materials.

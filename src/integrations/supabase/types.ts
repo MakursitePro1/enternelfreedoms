@@ -89,6 +89,45 @@ export type Database = {
         }
         Relationships: []
       }
+      institution_content: {
+        Row: {
+          body: string
+          category: string | null
+          created_at: string
+          detail: string | null
+          id: string
+          image_url: string | null
+          kind: string
+          published: boolean
+          sort_order: number
+          title: string
+        }
+        Insert: {
+          body?: string
+          category?: string | null
+          created_at?: string
+          detail?: string | null
+          id?: string
+          image_url?: string | null
+          kind: string
+          published?: boolean
+          sort_order?: number
+          title: string
+        }
+        Update: {
+          body?: string
+          category?: string | null
+          created_at?: string
+          detail?: string | null
+          id?: string
+          image_url?: string | null
+          kind?: string
+          published?: boolean
+          sort_order?: number
+          title?: string
+        }
+        Relationships: []
+      }
       notices: {
         Row: {
           body: string
