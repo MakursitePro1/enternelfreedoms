@@ -11,15 +11,15 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
-import { Route as AcademicsRouteImport } from './routes/academics'
-import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdmissionRouteImport } from './routes/admission'
-import { Route as BooksRouteImport } from './routes/books'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GalleryRouteImport } from './routes/gallery'
-import { Route as NoticesRouteImport } from './routes/notices'
 import { Route as ResidentialRouteImport } from './routes/residential'
+import { Route as AcademicsIndexRouteImport } from './routes/academics.index'
+import { Route as ActivitiesIndexRouteImport } from './routes/activities.index'
+import { Route as BooksIndexRouteImport } from './routes/books.index'
+import { Route as NoticesIndexRouteImport } from './routes/notices.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,16 +29,6 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AcademicsRoute = AcademicsRouteImport.update({
-  id: '/academics',
-  path: '/academics',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ActivitiesRoute = ActivitiesRouteImport.update({
-  id: '/activities',
-  path: '/activities',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -51,11 +41,6 @@ const AdmissionRoute = AdmissionRouteImport.update({
   path: '/admission',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BooksRoute = BooksRouteImport.update({
-  id: '/books',
-  path: '/books',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
@@ -66,111 +51,126 @@ const GalleryRoute = GalleryRouteImport.update({
   path: '/gallery',
   getParentRoute: () => rootRouteImport,
 } as any)
-const NoticesRoute = NoticesRouteImport.update({
-  id: '/notices',
-  path: '/notices',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ResidentialRoute = ResidentialRouteImport.update({
   id: '/residential',
   path: '/residential',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AcademicsIndexRoute = AcademicsIndexRouteImport.update({
+  id: '/academics/',
+  path: '/academics/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivitiesIndexRoute = ActivitiesIndexRouteImport.update({
+  id: '/activities/',
+  path: '/activities/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BooksIndexRoute = BooksIndexRouteImport.update({
+  id: '/books/',
+  path: '/books/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticesIndexRoute = NoticesIndexRouteImport.update({
+  id: '/notices/',
+  path: '/notices/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/academics': typeof AcademicsRoute
-  '/activities': typeof ActivitiesRoute
   '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
-  '/books': typeof BooksRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
-  '/notices': typeof NoticesRoute
   '/residential': typeof ResidentialRoute
+  '/academics/': typeof AcademicsIndexRoute
+  '/activities/': typeof ActivitiesIndexRoute
+  '/books/': typeof BooksIndexRoute
+  '/notices/': typeof NoticesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/academics': typeof AcademicsRoute
-  '/activities': typeof ActivitiesRoute
   '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
-  '/books': typeof BooksRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
-  '/notices': typeof NoticesRoute
   '/residential': typeof ResidentialRoute
+  '/academics': typeof AcademicsIndexRoute
+  '/activities': typeof ActivitiesIndexRoute
+  '/books': typeof BooksIndexRoute
+  '/notices': typeof NoticesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/academics': typeof AcademicsRoute
-  '/activities': typeof ActivitiesRoute
   '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
-  '/books': typeof BooksRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
-  '/notices': typeof NoticesRoute
   '/residential': typeof ResidentialRoute
+  '/academics/': typeof AcademicsIndexRoute
+  '/activities/': typeof ActivitiesIndexRoute
+  '/books/': typeof BooksIndexRoute
+  '/notices/': typeof NoticesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
-    | '/academics'
-    | '/activities'
     | '/admin'
     | '/admission'
-    | '/books'
     | '/faq'
     | '/gallery'
-    | '/notices'
     | '/residential'
+    | '/academics/'
+    | '/activities/'
+    | '/books/'
+    | '/notices/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/academics'
-    | '/activities'
     | '/admin'
     | '/admission'
-    | '/books'
     | '/faq'
     | '/gallery'
-    | '/notices'
     | '/residential'
+    | '/academics'
+    | '/activities'
+    | '/books'
+    | '/notices'
   id:
     | '__root__'
     | '/'
     | '/about'
-    | '/academics'
-    | '/activities'
     | '/admin'
     | '/admission'
-    | '/books'
     | '/faq'
     | '/gallery'
-    | '/notices'
     | '/residential'
+    | '/academics/'
+    | '/activities/'
+    | '/books/'
+    | '/notices/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  AcademicsRoute: typeof AcademicsRoute
-  ActivitiesRoute: typeof ActivitiesRoute
   AdminRoute: typeof AdminRoute
   AdmissionRoute: typeof AdmissionRoute
-  BooksRoute: typeof BooksRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
-  NoticesRoute: typeof NoticesRoute
   ResidentialRoute: typeof ResidentialRoute
+  AcademicsIndexRoute: typeof AcademicsIndexRoute
+  ActivitiesIndexRoute: typeof ActivitiesIndexRoute
+  BooksIndexRoute: typeof BooksIndexRoute
+  NoticesIndexRoute: typeof NoticesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -189,20 +189,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/academics': {
-      id: '/academics'
-      path: '/academics'
-      fullPath: '/academics'
-      preLoaderRoute: typeof AcademicsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/activities': {
-      id: '/activities'
-      path: '/activities'
-      fullPath: '/activities'
-      preLoaderRoute: typeof ActivitiesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -215,13 +201,6 @@ declare module '@tanstack/react-router' {
       path: '/admission'
       fullPath: '/admission'
       preLoaderRoute: typeof AdmissionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/books': {
-      id: '/books'
-      path: '/books'
-      fullPath: '/books'
-      preLoaderRoute: typeof BooksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -238,18 +217,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalleryRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/notices': {
-      id: '/notices'
-      path: '/notices'
-      fullPath: '/notices'
-      preLoaderRoute: typeof NoticesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/residential': {
       id: '/residential'
       path: '/residential'
       fullPath: '/residential'
       preLoaderRoute: typeof ResidentialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/academics/': {
+      id: '/academics/'
+      path: '/academics'
+      fullPath: '/academics/'
+      preLoaderRoute: typeof AcademicsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activities/': {
+      id: '/activities/'
+      path: '/activities'
+      fullPath: '/activities/'
+      preLoaderRoute: typeof ActivitiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/books/': {
+      id: '/books/'
+      path: '/books'
+      fullPath: '/books/'
+      preLoaderRoute: typeof BooksIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notices/': {
+      id: '/notices/'
+      path: '/notices'
+      fullPath: '/notices/'
+      preLoaderRoute: typeof NoticesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -258,15 +258,15 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  AcademicsRoute: AcademicsRoute,
-  ActivitiesRoute: ActivitiesRoute,
   AdminRoute: AdminRoute,
   AdmissionRoute: AdmissionRoute,
-  BooksRoute: BooksRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
-  NoticesRoute: NoticesRoute,
   ResidentialRoute: ResidentialRoute,
+  AcademicsIndexRoute: AcademicsIndexRoute,
+  ActivitiesIndexRoute: ActivitiesIndexRoute,
+  BooksIndexRoute: BooksIndexRoute,
+  NoticesIndexRoute: NoticesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
