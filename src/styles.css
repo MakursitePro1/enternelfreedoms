@@ -65,7 +65,7 @@
 }
 
 :root {
-   --radius: 0.5rem;
+   --radius: 0.625rem;
   --background: #FBFBFA;
   --foreground: #173c32;
   --card: #ffffff;
@@ -123,11 +123,20 @@
 }
 
 @layer components {
-  .premium-panel { border-radius: calc(var(--radius) * 2); box-shadow: 0 12px 35px -28px color-mix(in oklab, var(--primary) 55%, transparent); }
+  .premium-panel { border-radius: calc(var(--radius) * 2); box-shadow: 0 20px 52px -32px color-mix(in oklab, var(--primary) 38%, transparent), 0 2px 12px -8px color-mix(in oklab, var(--primary) 12%, transparent); }
   .premium-image { border-radius: calc(var(--radius) * 2); }
-  .premium-card { border-radius: calc(var(--radius) * 2); transition: transform .25s ease, box-shadow .25s ease; }
-  .premium-card:hover { transform: translateY(-3px); box-shadow: 0 20px 40px -30px color-mix(in oklab, var(--primary) 55%, transparent); }
+  .premium-card { border-radius: calc(var(--radius) * 2); box-shadow: 0 20px 52px -32px color-mix(in oklab, var(--primary) 35%, transparent), 0 2px 12px -8px color-mix(in oklab, var(--primary) 12%, transparent); transition: transform .25s ease, box-shadow .25s ease; }
+  .premium-card:hover { transform: translateY(-3px); box-shadow: 0 26px 55px -28px color-mix(in oklab, var(--primary) 40%, transparent), 0 3px 16px -8px color-mix(in oklab, var(--primary) 16%, transparent); }
   .premium-field { border-radius: var(--radius); }
+}
+
+/* Keep the many editorial sections airy on large screens and comfortable on phones. */
+@media (max-width: 639px) {
+  main section[class*="py-20"], main section[class*="py-24"] { padding-top: 3.75rem; padding-bottom: 3.75rem; }
+  main section[class*="py-20"] .premium-card, main section[class*="py-24"] .premium-card { min-width: 0; }
+}
+@media (min-width: 640px) and (max-width: 1023px) {
+  main section[class*="py-20"], main section[class*="py-24"] { padding-top: 4.5rem; padding-bottom: 4.5rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -137,7 +146,7 @@
 :root {
   --gradient-hero: linear-gradient(110deg, color-mix(in oklab, var(--primary) 94%, transparent) 0%, color-mix(in oklab, var(--primary) 70%, transparent) 55%, color-mix(in oklab, var(--primary) 25%, transparent) 100%);
   --gradient-gold: linear-gradient(135deg, var(--gold-light), var(--gold));
-  --shadow-elegant: 0 24px 60px -32px color-mix(in oklab, var(--primary) 60%, transparent);
+   --shadow-elegant: 0 26px 58px -34px color-mix(in oklab, var(--primary) 42%, transparent), 0 3px 16px -10px color-mix(in oklab, var(--primary) 18%, transparent);
 }
 
 html[dir="rtl"] body { font-family: "Noto Naskh Arabic", "Hind Siliguri", sans-serif; }

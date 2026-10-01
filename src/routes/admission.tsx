@@ -69,7 +69,7 @@ function Admission() {
       <PageIntro eyebrow="ভর্তি" title="অনলাইন ভর্তি" description="ভর্তির তথ্য জানতে বারবার ফোন করতে হবে না—সব তথ্য দেখে ঘরে বসেই আবেদন করুন।" image={photos[0]} />
 
       <nav className="sticky top-[68px] z-30 border-b border-border bg-background/95 px-5 backdrop-blur lg:px-8" aria-label="ভর্তি পাতার অংশ">
-        <div className="mx-auto flex max-w-7xl gap-1 overflow-x-auto py-2 text-sm">{[['info', 'ভর্তি তথ্য'], ['programs', 'বিভাগ'], ['requirements', 'যোগ্যতা'], ['docs', 'কাগজপত্র'], ['fees', 'ফি'], ['apply', 'আবেদন'], ['track', 'ট্র্যাক']].map(([id, l]) => <a key={id} href={`#${id}`} className="whitespace-nowrap rounded-md px-3 py-1.5 font-medium text-primary hover:bg-secondary">{l}</a>)}</div>
+        <div className="mx-auto grid max-w-7xl grid-cols-4 gap-1 py-2 text-center text-xs sm:flex sm:overflow-x-auto sm:text-sm">{[['info', 'ভর্তি তথ্য'], ['programs', 'বিভাগ'], ['requirements', 'যোগ্যতা'], ['docs', 'কাগজপত্র'], ['fees', 'ফি'], ['apply', 'আবেদন'], ['track', 'ট্র্যাক']].map(([id, l]) => <a key={id} href={`#${id}`} className="rounded-md px-1 py-1.5 font-medium text-primary hover:bg-secondary sm:whitespace-nowrap sm:px-3">{l}</a>)}</div>
       </nav>
 
       <section id="info" className="scroll-mt-32 px-5 py-20 lg:px-8">
@@ -101,7 +101,7 @@ function Admission() {
               <div className="py-6 text-center"><CheckCircle2 className="mx-auto size-16 text-primary" /><h2 className="mt-5 font-display text-3xl text-primary">আবেদন জমা হয়েছে</h2><p className="mt-3 leading-7">আপনার আবেদন নম্বর: <strong className="select-all text-xl text-primary">{reference}</strong></p><p className="mt-2 text-sm text-muted-foreground">এই নম্বর ও অভিভাবকের ফোন নম্বর দিয়ে নিচে আবেদনের অবস্থা দেখতে পারবেন। প্রতিষ্ঠান শীঘ্রই যোগাযোগ করবে।</p></div>
             ) : (<>
               <Heading eyebrow="অনলাইন আবেদন" title="ভর্তি আবেদন ফর্ম" />
-              <div className="mb-8 grid grid-cols-4 gap-2">{steps.map((s, i) => <div key={s} className={`rounded-lg px-1 py-3 text-center text-[11px] font-semibold sm:text-sm ${step === i ? 'bg-primary text-primary-foreground' : step > i ? 'bg-accent text-primary' : 'bg-secondary text-muted-foreground'}`}>{(i + 1).toLocaleString('bn-BD')}. {s}</div>)}</div>
+               <div className="mb-8 grid grid-cols-2 gap-2 sm:grid-cols-4">{steps.map((s, i) => <div key={s} className={`rounded-lg px-2 py-3 text-center text-xs font-semibold sm:text-sm ${step === i ? 'bg-primary text-primary-foreground' : step > i ? 'bg-accent text-primary' : 'bg-secondary text-muted-foreground'}`}>{(i + 1).toLocaleString('bn-BD')}. {s}</div>)}</div>
               <form onSubmit={submit}>
                 <div className="grid gap-5 sm:grid-cols-2">
                   {step === 0 && <>{field('student_name', 'শিক্ষার্থীর নাম', true)}{field('birth_date', 'জন্ম তারিখ', false, 'date')}<label className="block text-sm font-semibold text-primary sm:col-span-2">বিভাগ *<select value={form.program} onChange={(e) => setForm({ ...form, program: e.target.value })} required className={input}><option value="">বিভাগ নির্বাচন করুন</option>{programs.map((p) => <option key={p.slug}>{p.name}</option>)}</select></label>{field('previous_school', 'আগের প্রতিষ্ঠান')}</>}
