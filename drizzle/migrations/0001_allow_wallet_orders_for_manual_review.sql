@@ -1,0 +1,1 @@
+CREATE POLICY "Public create wallet orders for review" ON public.orders FOR INSERT TO anon, authenticated WITH CHECK (status = 'নতুন' AND payment_method IN ('বিকাশ', 'নগদ') AND payment_reference IS NOT NULL AND length(payment_reference) BETWEEN 5 AND 100);
