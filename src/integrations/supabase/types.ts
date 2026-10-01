@@ -19,6 +19,7 @@ export type Database = {
           address: string
           birth_date: string | null
           created_at: string
+          documents: Json
           guardian_name: string
           id: string
           notes: string | null
@@ -33,6 +34,7 @@ export type Database = {
           address: string
           birth_date?: string | null
           created_at?: string
+          documents?: Json
           guardian_name: string
           id?: string
           notes?: string | null
@@ -47,6 +49,7 @@ export type Database = {
           address?: string
           birth_date?: string | null
           created_at?: string
+          documents?: Json
           guardian_name?: string
           id?: string
           notes?: string | null
@@ -62,30 +65,75 @@ export type Database = {
       books: {
         Row: {
           active: boolean
+          author: string | null
           cover_url: string | null
           created_at: string
           description: string
+          details: string | null
           id: string
+          pages: number | null
           price: number
+          slug: string | null
           title: string
         }
         Insert: {
           active?: boolean
+          author?: string | null
           cover_url?: string | null
           created_at?: string
           description?: string
+          details?: string | null
           id?: string
+          pages?: number | null
           price: number
+          slug?: string | null
           title: string
         }
         Update: {
           active?: boolean
+          author?: string | null
           cover_url?: string | null
           created_at?: string
           description?: string
+          details?: string | null
           id?: string
+          pages?: number | null
           price?: number
+          slug?: string | null
           title?: string
+        }
+        Relationships: []
+      }
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          message: string
+          name: string
+          phone: string
+          status: string
+          subject: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          message: string
+          name: string
+          phone: string
+          status?: string
+          subject?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string
+          name?: string
+          phone?: string
+          status?: string
+          subject?: string
         }
         Relationships: []
       }
@@ -99,6 +147,7 @@ export type Database = {
           image_url: string | null
           kind: string
           published: boolean
+          slug: string | null
           sort_order: number
           title: string
         }
@@ -111,6 +160,7 @@ export type Database = {
           image_url?: string | null
           kind: string
           published?: boolean
+          slug?: string | null
           sort_order?: number
           title: string
         }
@@ -123,6 +173,7 @@ export type Database = {
           image_url?: string | null
           kind?: string
           published?: boolean
+          slug?: string | null
           sort_order?: number
           title?: string
         }
@@ -194,6 +245,24 @@ export type Database = {
           reference?: string
           status?: string
           total?: number
+        }
+        Relationships: []
+      }
+      site_settings: {
+        Row: {
+          key: string
+          updated_at: string
+          value: string
+        }
+        Insert: {
+          key: string
+          updated_at?: string
+          value?: string
+        }
+        Update: {
+          key?: string
+          updated_at?: string
+          value?: string
         }
         Relationships: []
       }
