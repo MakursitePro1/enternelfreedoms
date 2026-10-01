@@ -3,14 +3,14 @@ import { useEffect, useState } from 'react';
 import { ArrowUpRight, Award, CalendarDays, ChevronLeft, ChevronRight, Quote, ShieldCheck, Camera, HeartPulse, Eye, Home, PhoneCall, Lock } from 'lucide-react';
 import { Heading, DemoNote } from '@/components/Site';
 import { useInstitutionContent, parseLabeled, type ContentKind, type InstitutionItem } from '@/lib/institution-content';
-import { facilityImages, facilityImageList, initials, isDemo, photos } from '@/lib/content';
+import { facilityImage, facilityImageList, initials, isDemo, photos, pick } from '@/lib/content';
 import { youtubeEmbed } from '@/lib/site-settings';
 
 export function itemImage(item: InstitutionItem, index = 0) {
   if (item.image_url) return item.image_url;
-  if (item.kind === 'facility' && item.category && facilityImages[item.category]) return facilityImages[item.category];
-  const pool = [...facilityImageList, ...photos];
-  return pool[index % pool.length];
+  const fac = item.kind === 'facility' ? facilityImage(item.category) : undefined;
+  if (fac) return fac;
+  return pick([...facilityImageList, ...photos], index);
 }
 
 export function InstitutionSections({ kind, eyebrow, title, empty, limit }: { kind: ContentKind; eyebrow: string; title: string; empty?: string; limit?: number }) {
@@ -91,8 +91,8 @@ export function TestimonialSlider() {
     const id = window.setInterval(() => setI((x) => (x + 1) % items.length), 6000);
     return () => window.clearInterval(id);
   }, [items.length]);
-  if (!items.length) return null;
-  const cur = items[i % items.length];
+  const cur = items[i % Math.max(items.length, 1)];
+  if (!cur) return null;
   const embed = cur.image_url ? youtubeEmbed(cur.image_url) : null;
   return (
     <div className="grid gap-8 lg:grid-cols-[1.2fr_.8fr] lg:items-center">

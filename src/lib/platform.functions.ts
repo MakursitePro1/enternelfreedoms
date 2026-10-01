@@ -6,7 +6,10 @@ const admissionSchema = z.object({ student_name: z.string().trim().min(2).max(12
 
 function decode(data: string) {
   const base64 = data.includes(',') ? data.split(',')[1] : data;
-  return Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+  const bin = atob(base64 ?? '');
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
 }
 function safeName(name: string) {
   return name.replace(/[^\w.-]+/g, '_').slice(-80);
@@ -99,6 +102,7 @@ const editSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('delete'), target: z.enum(['notice', 'book', 'content', 'message']), id: z.string().uuid() }),
 ]);
 
+export type AdminChange = z.infer<typeof editSchema>;
 export const adminSave = createServerFn({ method: 'POST' }).validator((data) => z.object({ token: z.string().min(10), change: editSchema }).parse(data)).handler(async ({ data }) => {
   const db = await verifyAdmin(data.token);
   const change = data.change;

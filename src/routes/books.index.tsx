@@ -6,13 +6,13 @@ import { supabase } from '@/integrations/supabase/client';
 import { submitOrder, trackOrder } from '@/lib/platform.functions';
 import { Site, PageIntro, Heading, DemoNote } from '@/components/Site';
 import { Button } from '@/components/ui/button';
-import { bookCovers, isDemo, facilityImages } from '@/lib/content';
+import { bookCovers, pick, isDemo, facilityImages } from '@/lib/content';
 import { useCart } from '@/lib/cart';
 import { useSiteSettings } from '@/lib/site-settings';
 import { seo } from '@/lib/seo';
 
 export const Route = createFileRoute('/books/')({
-  validateSearch: (s: Record<string, unknown>): { cart?: number } => (s.cart ? { cart: 1 } : {}),
+  validateSearch: (s: Record<string, unknown>): { cart?: number } => (s['cart'] ? { cart: 1 } : {}),
   head: () => seo('অনলাইন বইয়ের দোকান', 'Eternal Freedom প্রকাশনার বই দেখুন, বিস্তারিত পড়ুন এবং ক্যাশ অন ডেলিভারি, বিকাশ বা নগদে অর্ডার করুন।'),
   component: Books,
 });
@@ -20,7 +20,7 @@ export const Route = createFileRoute('/books/')({
 export type Book = { id: string; title: string; description: string; price: number; cover_url: string | null; slug: string | null; author: string | null; pages: number | null; details: string | null };
 type Method = 'ক্যাশ অন ডেলিভারি' | 'বিকাশ' | 'নগদ';
 
-export function coverFor(b: Book, k: number) { return b.cover_url ?? bookCovers[k % bookCovers.length]; }
+export function coverFor(b: Book, k: number) { return b.cover_url ?? pick(bookCovers, k); }
 
 export function CartDrawer({ books, onClose }: { books: Book[]; onClose: () => void }) {
   const { cart, change, clear } = useCart();

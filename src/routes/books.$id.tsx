@@ -4,7 +4,7 @@ import { ArrowLeft, BookOpen, User, FileText, ShoppingBag, Truck, Wallet, Plus, 
 import { supabase } from '@/integrations/supabase/client';
 import { Site, DemoNote } from '@/components/Site';
 import { Button } from '@/components/ui/button';
-import { bookCovers, isDemo } from '@/lib/content';
+import { bookCovers, pick, isDemo } from '@/lib/content';
 import { useCart } from '@/lib/cart';
 import { seo } from '@/lib/seo';
 import type { Book } from './books.index';
@@ -27,7 +27,7 @@ function BookDetail() {
   if (book === undefined) return <Site><div className="mx-auto max-w-6xl px-5 py-24"><div className="h-96 animate-pulse rounded-2xl bg-secondary" /></div></Site>;
   if (!book) return <Site><section className="mx-auto max-w-3xl px-5 py-24 text-center"><h1 className="font-display text-3xl text-primary">বইটি পাওয়া যায়নি</h1><Button asChild className="mt-6"><Link to="/books">সব বই দেখুন</Link></Button></section></Site>;
   const qty = cart[book.id] ?? 0;
-  const cover = book.cover_url ?? bookCovers[0];
+  const cover = book.cover_url ?? pick(bookCovers, 0);
   return (
     <Site>
       <section className="px-5 py-14 lg:px-8">
@@ -52,7 +52,7 @@ function BookDetail() {
           {book.details && <div className="mt-14 rounded-3xl bg-secondary p-8 sm:p-10"><h2 className="font-display text-2xl font-semibold text-primary">বইয়ের বিস্তারিত</h2><p className="mt-4 whitespace-pre-line leading-8 text-muted-foreground">{book.details}</p></div>}
         </div>
       </section>
-      {others.length > 0 && <section className="bg-secondary px-5 py-16 lg:px-8"><div className="mx-auto max-w-6xl"><h2 className="mb-6 font-display text-2xl font-semibold text-primary">আরও বই</h2><div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{others.map((o, k) => <Link key={o.id} to="/books/$id" params={{ id: o.id }} className="overflow-hidden rounded-2xl bg-background shadow-elegant premium-card"><img src={o.cover_url ?? bookCovers[(k + 1) % bookCovers.length]} alt={o.title} loading="lazy" className="aspect-[4/3] w-full object-cover" /><div className="p-4"><h3 className="font-semibold text-primary">{o.title}</h3><div className="mt-1 text-sm font-bold text-primary">৳ {Number(o.price).toLocaleString('bn-BD')}</div></div></Link>)}</div></div></section>}
+      {others.length > 0 && <section className="bg-secondary px-5 py-16 lg:px-8"><div className="mx-auto max-w-6xl"><h2 className="mb-6 font-display text-2xl font-semibold text-primary">আরও বই</h2><div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{others.map((o, k) => <Link key={o.id} to="/books/$id" params={{ id: o.id }} className="overflow-hidden rounded-2xl bg-background shadow-elegant premium-card"><img src={o.cover_url ?? pick(bookCovers, k + 1)} alt={o.title} loading="lazy" className="aspect-[4/3] w-full object-cover" /><div className="p-4"><h3 className="font-semibold text-primary">{o.title}</h3><div className="mt-1 text-sm font-bold text-primary">৳ {Number(o.price).toLocaleString('bn-BD')}</div></div></Link>)}</div></div></section>}
     </Site>
   );
 }

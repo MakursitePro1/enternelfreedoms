@@ -13,10 +13,18 @@ import quran from '@/assets/facility-quran.jpg';
 import cover1 from '@/assets/book-cover-1.jpg';
 import cover2 from '@/assets/book-cover-2.jpg';
 
-export const photos = [campusBoys.url, campusGirls.url, campusGroup.url, campusGathering.url, student.url, principal.url];
-export const facilityImages: Record<string, string> = { dorm, dining, classroom, playground, library, quran };
-export const facilityImageList = [dorm, classroom, quran, library, dining, playground];
-export const bookCovers = [cover1, cover2];
+export const photos: [string, string, string, string, string, string] = [campusBoys.url, campusGirls.url, campusGroup.url, campusGathering.url, student.url, principal.url];
+export const facilityImages = { dorm, dining, classroom, playground, library, quran } as { dorm: string; dining: string; classroom: string; playground: string; library: string; quran: string };
+export type FacilityImageKey = keyof typeof facilityImages;
+export const facilityImageList: string[] = [dorm, classroom, quran, library, dining, playground];
+export const bookCovers: string[] = [cover1, cover2];
+/** Cycles through a non-empty list without returning undefined. */
+export function pick(list: readonly string[], index: number): string {
+  return list[index % list.length] ?? list[0] ?? '';
+}
+export function facilityImage(key: string | null | undefined): string | undefined {
+  return key && key in facilityImages ? facilityImages[key as FacilityImageKey] : undefined;
+}
 
 /** Primary navigation shown in the header. */
 export const nav = [
@@ -101,7 +109,7 @@ export const requiredDocs = ['শিক্ষার্থীর জন্মন�
 export const eligibility = ['নূরানী: ৫ – ৮ বছর বয়সী শিশু', 'নাজেরা: আরবি হরফ চেনা ও প্রাথমিক পাঠ জানা', 'হিফজ: নাজেরা সম্পন্ন অথবা সাবলীল দেখে পড়তে পারা', 'কিতাব: হিফজ / নাজেরা সম্পন্ন ও প্রাথমিক আরবি জ্ঞান', 'সাধারণ শিক্ষা: আগের শ্রেণি উত্তীর্ণ হওয়ার প্রমাণ'];
 
 export const galleryCategories = ['ক্যাম্পাস', 'শ্রেণিকক্ষ', 'কুরআন শিক্ষা', 'হিফজ', 'নাজেরা', 'কিতাব', 'আবাসিক জীবন', 'খাবার ও রান্নাঘর', 'খেলাধুলা', 'অনুষ্ঠান', 'শিক্ষকবৃন্দ', 'শিক্ষার্থীদের কার্যক্রম'];
-export const galleryPhotos = [
+export const galleryPhotos: { src: string; category: string; alt: string }[] = [
   { src: photos[2], category: 'ক্যাম্পাস', alt: 'শিক্ষার্থী ও শিক্ষকদের সম্মিলিত ছবি' },
   { src: facilityImages.classroom, category: 'শ্রেণিকক্ষ', alt: 'শ্রেণিকক্ষে পাঠরত শিক্ষার্থীরা' },
   { src: facilityImages.quran, category: 'কুরআন শিক্ষা', alt: 'রেহালে কুরআন তিলাওয়াত' },
