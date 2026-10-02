@@ -192,6 +192,10 @@ html[dir="rtl"] .ticker-track { animation-direction: reverse; }
   -webkit-mask-image: linear-gradient(to right, transparent, black 9%, black 91%, transparent);
   mask-image: linear-gradient(to right, transparent, black 9%, black 91%, transparent);
 }
+.teacher-carousel-fade {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
+}
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
 }
