@@ -81,7 +81,7 @@ function Home() {
       <section className="relative overflow-hidden px-5 py-14 max-[359px]:py-10 sm:py-20 lg:px-8 lg:py-24">
         <div className="pointer-events-none absolute -top-24 end-[-120px] size-72 rounded-full bg-gold-gradient opacity-[0.08] blur-3xl sm:size-96" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-9 sm:gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-          <div className="min-w-0">
+          <div className="about-compact min-w-0">
             <Heading eyebrow="আমাদের পরিচয়" title="শুধু প্রতিষ্ঠান নয়—একটি পূর্ণাঙ্গ শিক্ষা পরিবার" description="Eternal Freedom Institute Al Islamia একটি সমন্বিত ইসলামী ও সাধারণ শিক্ষার সম্পূর্ণ আবাসিক প্রতিষ্ঠান। এখানে কুরআন, দ্বীনি জ্ঞান ও জাতীয় পাঠক্রমের পাশাপাশি আদব-আখলাক, শৃঙ্খলা এবং আধুনিক দক্ষতার মাধ্যমে শিক্ষার্থীকে আলোকিত মানুষ হিসেবে গড়ে তোলা হয়।" />
             <ul className="mb-7 grid gap-2 max-[359px]:mb-6 max-[359px]:gap-1.5 sm:mb-9 sm:grid-cols-2 sm:gap-3">
               {['প্লে থেকে দশম / দাখিল পর্যন্ত', 'নূরানী, নাজেরা, হিফজ ও কিতাব', 'সম্পূর্ণ আবাসিক ব্যবস্থা', 'সিসিটিভি ও সার্বক্ষণিক তত্ত্বাবধান'].map((x) => (
