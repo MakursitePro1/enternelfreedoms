@@ -137,6 +137,8 @@ export function Site({ children }: { children: ReactNode }) {
                 </div>
               </SheetContent>
             </Sheet>
+          </div>
+        </div>
       </header>
       <main>{children}</main>
       <footer className="relative overflow-hidden bg-primary text-primary-foreground">
