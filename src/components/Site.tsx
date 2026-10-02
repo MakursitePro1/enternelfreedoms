@@ -163,8 +163,8 @@ export function Heading({ eyebrow, title, description, center = false, light = f
     <div className={`mb-10 ${center ? 'mx-auto max-w-3xl text-center' : ''}`}>
       <div className={`mb-5 flex items-center gap-3 ${center ? 'justify-center' : ''}`}>
         <span className="h-px w-8 bg-gradient-to-r from-transparent to-gold sm:w-10" />
-        <span className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] shadow-sm ring-1 backdrop-blur-sm sm:text-xs ${light ? 'bg-gold/15 text-gold-light ring-gold/30' : 'bg-gold/10 text-gold ring-gold/25'}`}>
-          <span className="size-1.5 rounded-full bg-gold shadow-[0_0_6px] shadow-gold" />
+        <span className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] shadow-sm ring-1 sm:text-xs ${light ? 'bg-gold text-primary ring-gold-light/70' : 'bg-gold-soft text-gold-deep ring-gold/40'}`}>
+          <span className="size-1.5 shrink-0 rounded-full bg-gold shadow-[0_0_6px] shadow-gold" />
           {t(eyebrow)}
         </span>
         <span className="h-px w-8 bg-gradient-to-l from-transparent to-gold sm:w-10" />
