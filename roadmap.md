@@ -13,4 +13,4 @@
 - [x] Verify all pages at 390/768/1280 and real flows (admin signed-in view unverified: no admin account exists yet)
 - [ ] Enable live online payment after the institution supplies its merchant account credentials (blocked: credentials).
 - [x] Polish all existing pages with stronger premium surfaces and consistent small-screen spacing; verify phone, tablet and desktop previews without changing content or flows.
-- [ ] Place home statistics within the hero background and fit the complete hero within a device screen where practical.
+- [x] Place home statistics within the hero background and fit the complete hero within a device screen where practical.
