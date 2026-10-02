@@ -61,15 +61,23 @@ export function StatsBar({ dark = false, hero = false }: { dark?: boolean; hero?
 export function TeacherCard({ item }: { item: InstitutionItem }) {
   const { fields } = parseLabeled(item.body);
   return (
-    <Link to="/teachers/$id" params={{ id: item.id }} className="group block overflow-hidden bg-background text-center premium-card shadow-elegant">
-      <div className="relative bg-primary px-6 pb-14 pt-8"><div className="islamic-pattern absolute inset-0 opacity-40" /><span className="relative text-xs font-semibold text-gold-light">{item.category}</span></div>
-      <div className="-mt-12 px-6 pb-7">
-        {item.image_url ? <img src={item.image_url} alt={item.title} className="mx-auto size-24 rounded-full border-4 border-background object-cover" /> : <div className="mx-auto grid size-24 place-items-center rounded-full border-4 border-background bg-gold-gradient font-display text-2xl font-bold text-primary">{initials(item.title)}</div>}
-        <h3 className="mt-4 font-display text-lg font-semibold text-primary">{item.title}</h3>
-        <p className="text-sm text-gold">{item.detail}</p>
-        {fields['যোগ্যতা'] && <p className="mt-3 text-xs leading-5 text-muted-foreground">{fields['যোগ্যতা']}</p>}
-        {fields['অভিজ্ঞতা'] && <p className="mt-1 text-xs font-semibold text-primary">অভিজ্ঞতা: {fields['অভিজ্ঞতা']}</p>}
-        <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary group-hover:text-gold">প্রোফাইল দেখুন <ArrowUpRight className="size-4" /></span>
+    <Link to="/teachers/$id" params={{ id: item.id }} className="group flex h-full flex-col overflow-hidden rounded-2xl bg-background text-center premium-card shadow-elegant">
+      <div className="relative overflow-hidden bg-secondary">
+        {item.image_url
+          ? <img src={item.image_url} alt={item.title} loading="lazy" className="aspect-[4/5] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.06]" />
+          : <div className="grid aspect-[4/5] w-full place-items-center bg-primary"><div className="grid size-20 place-items-center rounded-full bg-gold-gradient font-display text-2xl font-bold text-primary sm:size-24 sm:text-3xl">{initials(item.title)}</div></div>}
+        {item.category && <span className="absolute bottom-3 left-1/2 max-w-[92%] -translate-x-1/2 truncate rounded-full bg-gold px-3 py-1 text-[10px] font-bold text-primary sm:px-4 sm:py-1.5 sm:text-xs">{item.category}</span>}
+      </div>
+      <div className="flex flex-1 flex-col px-3 pb-4 pt-3.5 sm:px-5 sm:pb-5 sm:pt-4">
+        <h3 className="line-clamp-2 font-display text-sm font-semibold leading-5 text-primary sm:text-lg sm:leading-7">{item.title}</h3>
+        {item.detail && <p className="mt-0.5 truncate text-[11px] font-semibold text-gold-deep sm:text-sm">{item.detail}</p>}
+        {fields['যোগ্যতা'] && <p className="mt-1.5 text-[11px] leading-4 text-muted-foreground sm:mt-2.5 sm:text-xs sm:leading-5">{fields['যোগ্যতা']}</p>}
+        {fields['অভিজ্ঞতা'] && <p className="mt-1 text-[11px] font-semibold text-primary sm:text-xs">অভিজ্ঞতা: {fields['অভিজ্ঞতা']}</p>}
+        <div className="mt-auto flex justify-center pt-2.5 sm:pt-4">
+          <span className="inline-flex items-center gap-1 rounded-full bg-gold px-3.5 py-1.5 text-[11px] font-bold text-primary transition-colors group-hover:bg-gold-deep group-hover:text-white sm:px-5 sm:py-2 sm:text-xs">
+            প্রোফাইল দেখুন <ArrowUpRight className="size-3.5 sm:size-4" />
+          </span>
+        </div>
         <div className="mt-2"><DemoNote show={isDemo(item.slug)} /></div>
       </div>
     </Link>
@@ -80,7 +88,7 @@ export function TeachersGrid({ limit }: { limit?: number }) {
   const items = useInstitutionContent('teacher');
   const list = limit ? items.slice(0, limit) : items;
   if (!list.length) return <p className="text-muted-foreground">শিক্ষকদের তথ্য শীঘ্রই প্রকাশ করা হবে।</p>;
-  return <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{list.slice(0, limit ?? list.length).map((t) => <TeacherCard key={t.id} item={t} />)}</div>;
+  return <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 xl:grid-cols-4">{list.slice(0, limit ?? list.length).map((t) => <TeacherCard key={t.id} item={t} />)}</div>;
 }
 
 export function TestimonialSlider() {
