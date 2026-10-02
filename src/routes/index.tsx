@@ -297,9 +297,12 @@ function Home() {
       <section className="bg-secondary px-5 py-24 lg:px-8"><div className="mx-auto max-w-7xl"><Heading center eyebrow="সাফল্য" title="অর্জনসমূহ" /><AchievementsGrid /></div></section>
 
       {/* Admission process */}
-      <section className="relative overflow-hidden bg-primary px-5 py-14 text-primary-foreground lg:px-8">
+      <div className="px-2.5 pb-2.5 pt-2.5 sm:px-5 sm:pb-5 sm:pt-5">
+      <section className="relative overflow-hidden rounded-[0.75rem] bg-primary py-14 text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
+
         <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
-        <div className="relative mx-auto max-w-7xl">
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-8 lg:px-10">
+
           <Heading center light eyebrow="ভর্তি" title="ভর্তি প্রক্রিয়া" description="মাত্র চারটি সহজ ধাপে আপনার সন্তানের ভর্তি সম্পন্ন করুন।" />
           <div className="relative grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
             <span aria-hidden className="absolute inset-x-8 top-9 hidden h-px bg-gold lg:block" />
@@ -314,6 +317,8 @@ function Home() {
           <div className="mt-8 flex flex-wrap justify-center gap-3"><Button size="lg" asChild className="bg-gold text-primary hover:bg-gold-light hover:text-primary"><Link to="/admission">অনলাইনে আবেদন করুন <ArrowRight className="size-4 rtl:rotate-180" /></Link></Button><Button size="lg" variant="secondary" asChild className="bg-background text-primary hover:bg-secondary"><Link to="/faq">ভর্তি সংক্রান্ত প্রশ্ন</Link></Button></div>
         </div>
       </section>
+      </div>
+
 
       {/* Notices + News */}
       <section className="bg-secondary px-5 py-24 lg:px-8">
