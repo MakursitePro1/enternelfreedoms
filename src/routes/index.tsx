@@ -88,7 +88,6 @@ function Home() {
           <div className="relative grid grid-cols-2 gap-4">
             <img src={photos[0]} alt="প্রতিষ্ঠানের শিক্ষার্থী ও শিক্ষক" className="h-64 w-full object-cover premium-image shadow-elegant sm:h-80" />
             <img src={facilityImages.library} alt="লাইব্রেরি ও পাঠকক্ষ" loading="lazy" className="mt-10 h-64 w-full object-cover premium-image shadow-elegant sm:h-80" />
-            <div className="absolute -bottom-6 start-6 rounded-2xl bg-primary p-5 text-primary-foreground shadow-elegant"><div className="font-display text-3xl text-gold-light">১০০%</div><div className="text-xs opacity-80">আবাসিক তত্ত্বাবধান</div></div>
           </div>
         </div>
       </section>
