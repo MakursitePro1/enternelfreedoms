@@ -33,23 +33,26 @@ function Hero() {
   const [i, setI] = useState(0);
   useEffect(() => { const id = window.setInterval(() => setI((x) => (x + 1) % heroSlides.length), 6000); return () => window.clearInterval(id); }, []);
   return (
-    <section className="relative flex min-h-[calc(100svh-290px)] flex-col justify-end overflow-hidden rounded-b-[0.75rem] bg-primary text-primary-foreground max-[359px]:min-h-[calc(100svh-300px)] sm:min-h-[calc(100svh-190px)] sm:rounded-b-[1.25rem]">
+    <section className="relative flex flex-col justify-end overflow-hidden rounded-b-[0.75rem] bg-primary text-primary-foreground sm:min-h-[calc(100svh-190px)] sm:rounded-b-[1.25rem]">
       {heroSlides.map((sl, k) => <img key={sl.src} src={sl.src} alt={sl.alt} className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${k === i ? 'opacity-100' : 'opacity-0'}`} />)}
       <div className="absolute inset-0 bg-hero-overlay" />
       <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-25" />
-      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 py-2 max-[359px]:py-1.5 sm:py-6 lg:px-8">
-        <span className="inline-flex self-start items-center gap-2 rounded-full bg-gold px-3.5 py-1 text-[11px] font-bold text-primary shadow-elegant max-[359px]:px-3 sm:px-4 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />{s.admission_badge}</span>
-        <p className="mt-2 flex items-center gap-2 text-[11px] font-semibold text-gold-light sm:mt-4 sm:gap-3 sm:text-sm"><span className="h-px w-6 shrink-0 bg-gold sm:w-8" />{t('গফরগাঁও, ময়মনসিংহের সমন্বিত শিক্ষা প্রতিষ্ঠান')}</p>
-        <h1 className="mt-1.5 max-w-5xl font-hero text-[1.6rem] font-bold leading-[1.14] max-[359px]:text-[1.45rem] sm:mt-2.5 sm:text-5xl lg:text-6xl xl:text-7xl">Eternal Freedom<br /><span className="text-gold-light">Institute Al Islamia</span></h1>
-        <p className="mt-2 max-w-xl text-[13px] leading-5 text-primary-foreground/90 sm:mt-2.5 sm:text-base sm:leading-7">“{t('কুরআনের আলোয় জ্ঞান, চরিত্র ও দক্ষতার সমন্বিত শিক্ষা')}”</p>
-        <div className="mt-3 flex flex-wrap gap-1.5 sm:mt-6 sm:gap-3">
-          <Button size="lg" asChild className="max-sm:h-9 max-sm:px-3.5 max-sm:text-[13px] bg-gold text-primary hover:bg-gold-light"><Link to="/admission">{t('ভর্তি সম্পর্কে জানুন')} <ArrowRight className="size-3.5 sm:size-4 rtl:rotate-180" /></Link></Button>
-          <Button size="lg" variant="outline" asChild className="max-sm:h-9 max-sm:px-3.5 max-sm:text-[13px] border-primary-foreground/60 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary"><Link to="/campus">{t('ক্যাম্পাস ঘুরে দেখুন')}</Link></Button>
-          <Button size="lg" variant="ghost" asChild className="max-sm:h-9 max-sm:px-3.5 max-sm:text-[13px] text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"><a href={telHref(s.phone)}><Phone className="size-3.5 sm:size-4" />{s.phone}</a></Button>
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pb-4 pt-16 max-[359px]:px-4 max-[359px]:pt-10 sm:justify-center sm:py-6 lg:px-8">
+        <span className="inline-flex self-start items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary shadow-elegant sm:gap-2 sm:px-4 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />{s.admission_badge}</span>
+        <p className="mt-2.5 flex items-center gap-2 text-[11px] font-semibold text-gold-light sm:mt-4 sm:gap-3 sm:text-sm"><span className="h-px w-5 shrink-0 bg-gold sm:w-8" />{t('গফরগাঁও, ময়মনসিংহের সমন্বিত শিক্ষা প্রতিষ্ঠান')}</p>
+        <h1 className="mt-1.5 max-w-5xl font-hero text-[1.65rem] font-bold leading-[1.12] max-[359px]:text-[1.4rem] sm:mt-2.5 sm:text-5xl lg:text-6xl xl:text-7xl">Eternal Freedom<br /><span className="text-gold-light">Institute Al Islamia</span></h1>
+        <p className="mt-2 max-w-xl text-[12.5px] leading-5 text-primary-foreground/90 sm:mt-2.5 sm:text-base sm:leading-7">“{t('কুরআনের আলোয় জ্ঞান, চরিত্র ও দক্ষতার সমন্বিত শিক্ষা')}”</p>
+        <div className="mt-3.5 grid grid-cols-2 gap-2 sm:mt-6 sm:flex sm:flex-wrap sm:gap-3">
+          <Button size="lg" asChild className="max-sm:h-10 max-sm:w-full max-sm:gap-1 max-sm:px-2 max-sm:text-[12.5px] max-[359px]:text-[11.5px] bg-gold text-primary hover:bg-gold-light"><Link to="/admission">{t('ভর্তি সম্পর্কে জানুন')} <ArrowRight className="size-3.5 sm:size-4 rtl:rotate-180" /></Link></Button>
+          <Button size="lg" variant="outline" asChild className="max-sm:h-10 max-sm:w-full max-sm:px-2 max-sm:text-[12.5px] max-[359px]:text-[11.5px] border-primary-foreground/60 bg-primary-foreground/5 text-primary-foreground backdrop-blur-sm hover:bg-primary-foreground hover:text-primary"><Link to="/campus">{t('ক্যাম্পাস ঘুরে দেখুন')}</Link></Button>
+          <Button size="lg" variant="ghost" asChild className="max-sm:hidden text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"><a href={telHref(s.phone)}><Phone className="size-4" />{s.phone}</a></Button>
         </div>
-        <div className="mt-2.5 flex gap-1.5 sm:mt-6 sm:gap-2">{heroSlides.map((sl, k) => <button key={sl.src} type="button" aria-label={`ছবি ${k + 1}`} onClick={() => setI(k)} className={`h-1.5 rounded-full transition-all ${k === i ? 'w-10 bg-gold' : 'w-5 bg-primary-foreground/40'}`} />)}</div>
+        <div className="mt-3.5 flex items-center justify-between gap-3 sm:mt-6 sm:justify-start">
+          <a href={telHref(s.phone)} className="inline-flex min-w-0 items-center gap-1.5 text-[12.5px] font-semibold text-primary-foreground/90 sm:hidden"><span className="grid size-6 shrink-0 place-items-center rounded-full bg-primary-foreground/15"><Phone className="size-3" /></span>{s.phone}</a>
+          <div className="flex shrink-0 gap-1.5 sm:gap-2">{heroSlides.map((sl, k) => <button key={sl.src} type="button" aria-label={`ছবি ${k + 1}`} onClick={() => setI(k)} className={`h-1.5 rounded-full transition-all ${k === i ? 'w-8 bg-gold sm:w-10' : 'w-4 bg-primary-foreground/40 sm:w-5'}`} />)}</div>
+        </div>
       </div>
-      <div className="relative w-full bg-primary/85 backdrop-blur-sm"><div className="mx-auto max-w-7xl px-5 lg:px-8"><StatsBar hero /></div></div>
+      <div className="relative w-full bg-primary/85 backdrop-blur-sm"><div className="mx-auto max-w-7xl sm:px-5 lg:px-8"><StatsBar hero /></div></div>
     </section>
   );
 }
