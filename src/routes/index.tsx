@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { ArrowRight, BookOpen, ShieldCheck, Heart, GraduationCap, MapPin, Home as HomeIcon, Trophy, Phone, Mail, Clock, PlayCircle, Sparkles, CheckCircle2, CalendarDays, ShoppingBag } from 'lucide-react';
+import { ArrowRight, BookOpen, ShieldCheck, Heart, GraduationCap, MapPin, Home as HomeIcon, Trophy, Phone, Mail, Clock, PlayCircle, Sparkles, CheckCircle2, CalendarDays, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Site, Heading, TextLink, DemoNote } from '@/components/Site';
 import { StatsBar, TeachersGrid, TestimonialSlider, ActivitiesTeaser, AchievementsGrid, SafetyGrid, MealTable, itemImage } from '@/components/InstitutionSections';
 import { ContactForm } from '@/components/ContactForm';
@@ -23,6 +24,8 @@ const heroSlides = [
   { src: facilityImages.classroom, alt: 'শ্রেণিকক্ষে পাঠরত শিক্ষার্থীরা' },
 ];
 const whyIcons = { book: BookOpen, grad: GraduationCap, home: HomeIcon, shield: ShieldCheck, heart: Heart, trophy: Trophy } as const;
+
+const galleryUnique = [...photos, facilityImages.dorm, facilityImages.dining, facilityImages.classroom, facilityImages.playground, facilityImages.library, facilityImages.quran];
 
 type Notice = { id: string; title: string; category: string; published_at: string };
 type Book = { id: string; title: string; description: string; price: number; cover_url: string | null; slug: string | null; author: string | null };
@@ -64,6 +67,7 @@ function Home() {
   const [notices, setNotices] = useState<Notice[]>([]);
   const [books, setBooks] = useState<Book[]>([]);
   const [day, setDay] = useState(0);
+  const [lightbox, setLightbox] = useState<number | null>(null);
   const video = s.video_url ? youtubeEmbed(s.video_url) : null;
   const [dTime, dAct, dDesc] = dayTimeline[day] ?? ['', '', ''];
   useEffect(() => {
@@ -83,11 +87,29 @@ function Home() {
           <Heading compact eyebrow="আমাদের মুহূর্ত" title="ছবিতে আমাদের প্রতিষ্ঠান" />
           <div className="marquee-fade mt-4 overflow-hidden sm:mt-7">
             <div className="marquee-track flex w-max gap-3 sm:gap-5">
-              {[...photos, facilityImages.dorm, facilityImages.dining, facilityImages.classroom, facilityImages.playground, facilityImages.library, facilityImages.quran, ...photos, facilityImages.dorm, facilityImages.dining, facilityImages.classroom, facilityImages.playground, facilityImages.library, facilityImages.quran].map((src, i) => (
-                <img key={i} src={src} alt="প্রতিষ্ঠানের মুহূর্ত" loading={i > 13 ? 'lazy' : undefined} className="h-40 w-[46.5vw] shrink-0 rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.03] max-[359px]:h-32 max-[359px]:w-[47vw] sm:h-52 sm:w-[30vw] sm:rounded-2xl lg:h-60 lg:w-[18vw]" />
+              {[...galleryUnique, ...galleryUnique].map((src, i) => (
+                <button key={i} type="button" onClick={() => setLightbox(i % galleryUnique.length)} aria-label="ছবি বড় করে দেখুন" className="shrink-0 cursor-zoom-in focus-visible:outline-none">
+                  <img src={src} alt="প্রতিষ্ঠানের মুহূর্ত" loading={i > 13 ? 'lazy' : undefined} className="h-40 w-[46.5vw] rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.03] max-[359px]:h-32 max-[359px]:w-[47vw] sm:h-52 sm:w-[30vw] sm:rounded-2xl lg:h-60 lg:w-[18vw]" />
+                </button>
               ))}
             </div>
           </div>
+          <Dialog open={lightbox !== null} onOpenChange={(o) => { if (!o) setLightbox(null); }}>
+            <DialogContent className="max-w-4xl gap-0 overflow-hidden rounded-2xl border-border p-0">
+              <DialogTitle className="sr-only">প্রতিষ্ঠানের ছবি</DialogTitle>
+              <DialogDescription className="sr-only">ছবিটি বড় করে দেখানো হচ্ছে</DialogDescription>
+              {lightbox !== null && (
+                <>
+                  <img src={galleryUnique[lightbox]} alt="প্রতিষ্ঠানের মুহূর্ত" className="max-h-[70vh] w-full bg-secondary object-contain" />
+                  <div className="flex items-center justify-between gap-3 border-t border-border/60 px-4 py-3">
+                    <Button variant="outline" size="icon" aria-label="আগের ছবি" onClick={() => setLightbox((lightbox - 1 + galleryUnique.length) % galleryUnique.length)}><ChevronLeft className="size-4" /></Button>
+                    <span className="text-sm font-medium text-muted-foreground">{lightbox + 1} / {galleryUnique.length}</span>
+                    <Button variant="outline" size="icon" aria-label="পরের ছবি" onClick={() => setLightbox((lightbox + 1) % galleryUnique.length)}><ChevronRight className="size-4" /></Button>
+                  </div>
+                </>
+              )}
+            </DialogContent>
+          </Dialog>
         </section>
       </div>
 
