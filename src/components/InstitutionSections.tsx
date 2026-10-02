@@ -188,13 +188,13 @@ export function AchievementsGrid() {
   const items = useInstitutionContent('achievement');
   if (!items.length) return null;
   return (
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
       {items.map((a) => (
-        <div key={a.id} className="relative overflow-hidden rounded-2xl bg-background p-7 shadow-elegant premium-card">
-          <div className="grid size-14 place-items-center rounded-2xl bg-gold-gradient text-primary"><Award className="size-7" /></div>
-          <div className="mt-5 text-sm font-bold text-gold">{a.detail}</div>
-          <h3 className="mt-1 font-display text-lg font-semibold leading-snug text-primary">{a.title}</h3>
-          <p className="mt-2 text-sm leading-6 text-muted-foreground">{a.body}</p>
+        <div key={a.id} className="group relative flex flex-col overflow-hidden rounded-2xl border border-border/60 bg-background p-4 shadow-elegant transition-transform duration-300 hover:-translate-y-1 sm:p-6 sm:shadow-elegant">
+          <div className="grid size-10 place-items-center rounded-xl bg-gold text-primary shadow-elegant sm:size-13 sm:rounded-2xl"><Award className="size-5 sm:size-7" /></div>
+          <div className="mt-4"><span className="inline-block rounded-full bg-gold-soft px-2.5 py-1 font-display text-[11px] font-bold text-gold-deep sm:text-xs">{a.detail}</span></div>
+          <h3 className="mt-2 font-display text-[14px] font-semibold leading-snug text-primary sm:text-lg">{a.title}</h3>
+          <p className="mt-1.5 text-[11.5px] leading-5 text-muted-foreground sm:text-sm sm:leading-6">{a.body}</p>
           <div className="mt-3"><DemoNote show={isDemo(a.slug)} /></div>
         </div>
       ))}
