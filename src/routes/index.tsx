@@ -94,8 +94,8 @@ function Home() {
           </div>
           <div className="relative min-w-0">
             <div className="relative grid grid-cols-2 gap-2.5 sm:gap-5">
-              <img src={photos[0]} alt="প্রতিষ্ঠানের শিক্ষার্থী ও শিক্ষক" className="h-28 w-full rounded-3xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-24 sm:h-56 lg:h-[21rem]" />
-              <img src={facilityImages.library} alt="লাইব্রেরি ও পাঠকক্ষ" loading="lazy" className="mt-4 h-28 w-full rounded-3xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-24 sm:mt-12 sm:h-56 lg:h-[21rem]" />
+              <img src={photos[0]} alt="প্রতিষ্ঠানের শিক্ষার্থী ও শিক্ষক" className="h-28 w-full rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-24 sm:h-56 lg:h-[21rem]" />
+              <img src={facilityImages.library} alt="লাইব্রেরি ও পাঠকক্ষ" loading="lazy" className="mt-4 h-28 w-full rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-24 sm:mt-12 sm:h-56 lg:h-[21rem]" />
               <div className="pointer-events-none absolute inset-x-0 top-1/2 z-20 hidden -translate-y-1/2 justify-center sm:flex">
                 <div className="grid size-14 place-items-center rounded-full bg-gold text-primary shadow-elegant ring-4 ring-background"><BookOpen className="size-6" /></div>
               </div>
