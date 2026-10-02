@@ -33,32 +33,21 @@ function Hero() {
   const [i, setI] = useState(0);
   useEffect(() => { const id = window.setInterval(() => setI((x) => (x + 1) % heroSlides.length), 6000); return () => window.clearInterval(id); }, []);
   return (
-    <section className="px-2 pt-2 sm:px-4 sm:pt-4 lg:px-6 lg:pt-6">
-      <div className="relative mx-auto w-full max-w-[88rem]">
-        <div aria-hidden className="pointer-events-none absolute -inset-2 -z-10 rounded-[2rem] bg-gold-gradient opacity-20 blur-3xl sm:-inset-4 lg:-inset-6 sm:rounded-[3rem]" />
-        <div className="relative overflow-hidden rounded-[2rem] shadow-elegant ring-1 ring-primary/20 sm:rounded-[2.75rem]">
-          <div className="relative flex min-h-[440px] items-center sm:min-h-[500px] lg:min-h-[560px]">
-            {heroSlides.map((sl, k) => <img key={sl.src} src={sl.src} alt={sl.alt} className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${k === i ? 'opacity-100' : 'opacity-0'}`} />)}
-            <div className="absolute inset-0 bg-hero-overlay" />
-            <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-25" />
-            <div aria-hidden className="pointer-events-none absolute -end-[12%] -top-32 size-[26rem] rounded-full bg-gold/20 blur-[130px]" />
-            <div aria-hidden className="pointer-events-none absolute -bottom-40 -start-[10%] size-[30rem] rounded-full bg-gold/15 blur-[150px]" />
-            <div className="relative mx-auto w-full px-4 pb-16 pt-12 sm:px-10 sm:py-14 lg:px-14 lg:py-16">
-              <div className="max-w-3xl rounded-3xl border border-primary-foreground/15 bg-primary/30 p-5 shadow-elegant backdrop-blur-md sm:rounded-[2rem] sm:p-8 lg:p-10">
-                <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-primary shadow-elegant"><Sparkles className="size-3.5" />{s.admission_badge}</span>
-                <p className="mt-4 flex items-center gap-3 text-sm font-semibold text-gold-light sm:mt-5"><span className="h-px w-8 bg-gold" />{t('গফরগাঁও, ময়মনসিংহের সমন্বিত শিক্ষা প্রতিষ্ঠান')}</p>
-                <h1 className="mt-3 font-hero text-[clamp(1.4rem,6.5vw,4rem)] font-semibold leading-[1.12] sm:mt-4"><span className="text-primary-foreground">Eternal Freedom</span><br /><span className="text-gold-light">Institute Al Islamia</span></h1>
-                <p className="mt-4 max-w-xl text-sm leading-7 text-primary-foreground/90 sm:mt-5 sm:text-base sm:leading-8">“{t('কুরআনের আলোয় জ্ঞান, চরিত্র ও দক্ষতার সমন্বিত শিক্ষা')}”</p>
-                <div className="mt-6 flex flex-wrap gap-3 sm:mt-7">
-                  <Button size="lg" asChild className="bg-gold text-primary hover:bg-gold-light"><Link to="/admission">{t('ভর্তি সম্পর্কে জানুন')} <ArrowRight className="size-4 rtl:rotate-180" /></Link></Button>
-                  <Button size="lg" variant="outline" asChild className="border-primary-foreground/60 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary"><Link to="/campus">{t('ক্যাম্পাস ঘুরে দেখুন')}</Link></Button>
-                  <Button size="lg" variant="ghost" asChild className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"><a href={telHref(s.phone)}><Phone className="size-4" />{s.phone}</a></Button>
-                </div>
-              </div>
-              <div className="mt-6 flex gap-2 sm:mt-8">{heroSlides.map((sl, k) => <button key={sl.src} type="button" aria-label={`ছবি ${k + 1}`} onClick={() => setI(k)} className={`h-1.5 rounded-full transition-all ${k === i ? 'w-10 bg-gold' : 'w-5 bg-primary-foreground/40'}`} />)}</div>
-            </div>
-          </div>
+    <section className="relative flex min-h-[600px] items-center overflow-hidden bg-primary text-primary-foreground sm:min-h-[680px]">
+      {heroSlides.map((sl, k) => <img key={sl.src} src={sl.src} alt={sl.alt} className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${k === i ? 'opacity-100' : 'opacity-0'}`} />)}
+      <div className="absolute inset-0 bg-hero-overlay" />
+      <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-25" />
+      <div className="relative mx-auto w-full max-w-7xl px-5 py-24 lg:px-8">
+        <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-primary shadow-elegant"><Sparkles className="size-3.5" />{s.admission_badge}</span>
+        <p className="mt-6 flex items-center gap-3 text-sm font-semibold text-gold-light"><span className="h-px w-8 bg-gold" />{t('গফরগাঁও, ময়মনসিংহের সমন্বিত শিক্ষা প্রতিষ্ঠান')}</p>
+        <h1 className="mt-4 max-w-4xl font-display text-4xl font-semibold leading-[1.2] sm:text-6xl lg:text-7xl">Eternal Freedom<br /><span className="text-gold-light">Institute Al Islamia</span></h1>
+        <p className="mt-7 max-w-xl text-lg leading-8 text-primary-foreground/90">“{t('কুরআনের আলোয় জ্ঞান, চরিত্র ও দক্ষতার সমন্বিত শিক্ষা')}”</p>
+        <div className="mt-10 flex flex-wrap gap-3">
+          <Button size="lg" asChild className="bg-gold text-primary hover:bg-gold-light"><Link to="/admission">{t('ভর্তি সম্পর্কে জানুন')} <ArrowRight className="size-4 rtl:rotate-180" /></Link></Button>
+          <Button size="lg" variant="outline" asChild className="border-primary-foreground/60 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary"><Link to="/campus">{t('ক্যাম্পাস ঘুরে দেখুন')}</Link></Button>
+          <Button size="lg" variant="ghost" asChild className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"><a href={telHref(s.phone)}><Phone className="size-4" />{s.phone}</a></Button>
         </div>
+        <div className="mt-12 flex gap-2">{heroSlides.map((sl, k) => <button key={sl.src} type="button" aria-label={`ছবি ${k + 1}`} onClick={() => setI(k)} className={`h-1.5 rounded-full transition-all ${k === i ? 'w-10 bg-gold' : 'w-5 bg-primary-foreground/40'}`} />)}</div>
       </div>
     </section>
   );
