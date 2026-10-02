@@ -143,9 +143,9 @@ function Home() {
       </section>
 
       {/* Principal */}
-      <section className="px-2.5 py-2.5 max-[359px]:px-2 max-[359px]:py-2 sm:px-5 sm:py-5 lg:px-8">
-        <div className="mx-auto max-w-7xl rounded-3xl border border-border bg-secondary p-3.5 shadow-elegant max-[359px]:rounded-2xl max-[359px]:p-2.5 sm:p-8 lg:p-14">
-          <div className="mx-auto grid max-w-6xl gap-5 sm:gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:gap-14">
+      <section className="bg-secondary px-2.5 py-10 max-[359px]:px-2 max-[359px]:py-8 sm:px-5 sm:py-20 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="mx-auto grid max-w-6xl gap-4 max-[359px]:gap-3 sm:gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:gap-14">
             <img src={photos[5]} alt="প্রতিষ্ঠাতা ও অধ্যক্ষ মোঃ আনছারুল হক" className="h-60 w-full rounded-2xl object-cover object-top shadow-elegant max-[359px]:h-52 max-[359px]:rounded-xl sm:h-[420px] lg:h-[540px]" />
             <div className="principal-card min-w-0 rounded-2xl border border-primary-foreground/15 bg-primary p-4 shadow-elegant max-[359px]:rounded-xl max-[359px]:p-3.5 sm:p-8 lg:p-10">
               <Heading light eyebrow="অধ্যক্ষের বাণী" title="আলোকিত মানুষ গড়ার প্রত্যয়ে" />
