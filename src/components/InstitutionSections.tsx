@@ -63,24 +63,25 @@ export function StatsBar({ dark = false, hero = false }: { dark?: boolean; hero?
 export function TeacherCard({ item }: { item: InstitutionItem }) {
   const { fields } = parseLabeled(item.body);
   return (
-    <Link to="/teachers/$id" params={{ id: item.id }} className="group flex h-full min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-card text-center shadow-sm transition-transform duration-300 hover:-translate-y-0.5">
+    <Link to="/teachers/$id" params={{ id: item.id }} className="group flex h-full min-w-0 flex-col overflow-hidden rounded-md border border-border bg-card shadow-sm transition-transform duration-300 hover:-translate-y-0.5">
       <div className="relative overflow-hidden bg-secondary">
         {item.image_url
-          ? <img src={item.image_url} alt={item.title} loading="lazy" width={768} height={960} className="aspect-[4/4.25] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
-          : <div className="grid aspect-[4/4.25] w-full place-items-center bg-primary"><div className="grid size-16 place-items-center rounded-full bg-gold font-display text-xl font-bold text-primary">{initials(item.title)}</div></div>}
-      </div>
-      <div className="flex min-h-40 flex-1 flex-col items-center px-2 pb-2.5 pt-2.5 font-teacher sm:min-h-44 sm:px-3 sm:pt-3">
-        {item.category && <span className="max-w-full truncate rounded-full bg-gold px-2.5 py-0.5 text-[10px] font-semibold text-primary sm:text-[11px]">{item.category}</span>}
-        <h3 className="mt-1.5 line-clamp-2 min-h-8 text-[12px] font-bold leading-4 text-primary sm:text-[14px] sm:leading-5">{item.title}</h3>
-        {item.detail && <p className="mt-0.5 truncate text-[10px] font-semibold text-gold-deep sm:text-[11px]">{item.detail}</p>}
-        {fields['যোগ্যতা'] && <p className="mt-0.5 line-clamp-1 max-w-full text-[10px] leading-4 text-muted-foreground sm:text-[11px]">{fields['যোগ্যতা']}</p>}
-        {fields['অভিজ্ঞতা'] && <p className="mt-0.5 text-[10px] font-semibold text-primary sm:text-[11px]">অভিজ্ঞতা: {fields['অভিজ্ঞতা']}</p>}
-        <div className="mt-auto pt-1.5">
-          <span className="inline-flex items-center gap-1 rounded-full bg-gold px-2.5 py-0.5 text-[10px] font-bold text-primary transition-colors group-hover:bg-gold-light sm:px-3 sm:py-1 sm:text-[11px]">
-            প্রোফাইল দেখুন <ArrowUpRight className="size-3" />
-          </span>
+          ? <img src={item.image_url} alt={item.title} loading="lazy" width={768} height={960} className="aspect-[4/5] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03] sm:aspect-[4/4.6]" />
+          : <div className="grid aspect-[4/5] w-full place-items-center bg-primary sm:aspect-[4/4.6]"><div className="grid size-16 place-items-center rounded-full bg-gold font-display text-xl font-bold text-primary">{initials(item.title)}</div></div>}
+        <div className="absolute inset-x-0 bottom-0 bg-primary px-2.5 py-2 font-teacher text-primary-foreground sm:px-3 sm:py-2.5">
+          {item.category && <span className="inline-block max-w-full truncate rounded-sm bg-gold px-1.5 py-0.5 text-[9px] font-bold leading-tight text-primary sm:text-[10px]">{item.category}</span>}
+          <h3 className="mt-1 line-clamp-2 min-h-8 text-[12px] font-bold leading-4 sm:text-[14px] sm:leading-[18px]">{item.title}</h3>
         </div>
-        <div className="mt-1 text-[10px]"><DemoNote show={isDemo(item.slug)} /></div>
+      </div>
+      <div className="flex min-h-25 flex-1 flex-col px-2.5 py-2 font-teacher sm:min-h-27 sm:px-3">
+        {item.detail && <p className="truncate text-[10px] font-bold text-primary sm:text-[11px]">{item.detail}</p>}
+        {fields['যোগ্যতা'] && <p className="mt-0.5 truncate text-[10px] text-muted-foreground sm:text-[11px]">{fields['যোগ্যতা']}</p>}
+        {fields['অভিজ্ঞতা'] && <p className="mt-0.5 truncate text-[10px] font-semibold text-primary sm:text-[11px]">অভিজ্ঞতা: {fields['অভিজ্ঞতা']}</p>}
+        <div className="mt-auto flex items-end justify-between gap-1 pt-1.5">
+          <span className="min-w-0 truncate text-[10px] font-bold text-gold-deep sm:text-[11px]">প্রোফাইল দেখুন</span>
+          <ArrowUpRight className="size-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </div>
+        {isDemo(item.slug) && <span className="mt-1 text-[9px] leading-3 text-muted-foreground">নমুনা তথ্য</span>}
       </div>
     </Link>
   );
