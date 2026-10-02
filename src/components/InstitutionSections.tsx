@@ -63,20 +63,20 @@ export function StatsBar({ dark = false, hero = false }: { dark?: boolean; hero?
 export function TeacherCard({ item }: { item: InstitutionItem }) {
   const { fields } = parseLabeled(item.body);
   return (
-    <Link to="/teachers/$id" params={{ id: item.id }} className="group block h-full overflow-hidden rounded-md border border-border bg-card p-1 shadow-sm transition-transform duration-300 hover:-translate-y-0.5">
-      <div className="flex h-full flex-col overflow-hidden rounded-[5px] bg-primary font-teacher text-primary-foreground">
+    <Link to="/teachers/$id" params={{ id: item.id }} className="group block h-full overflow-hidden rounded-xl border-[0.5px] border-border bg-card p-1 shadow-sm transition-transform duration-300 hover:-translate-y-0.5">
+      <div className="flex h-full flex-col overflow-hidden rounded-[10px] bg-primary font-teacher text-primary-foreground">
         <div className="relative overflow-hidden">
           {item.image_url
-            ? <img src={item.image_url} alt={item.title} loading="lazy" width={768} height={960} className="aspect-square w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
-            : <div className="grid aspect-square w-full place-items-center"><div className="grid size-12 place-items-center rounded-full bg-gold font-display text-lg font-bold text-primary">{initials(item.title)}</div></div>}
+            ? <img src={item.image_url} alt={item.title} loading="lazy" width={768} height={960} className="aspect-[10/9] w-full object-cover object-top brightness-105 transition-transform duration-500 group-hover:scale-[1.03]" />
+            : <div className="grid aspect-[10/9] w-full place-items-center"><div className="grid size-12 place-items-center rounded-full bg-gold font-display text-lg font-bold text-primary">{initials(item.title)}</div></div>}
+          {item.category && <span className="absolute left-2 top-2 max-w-[85%] truncate rounded-md bg-gold px-1.5 py-0.5 text-[9px] font-bold leading-tight text-primary shadow-sm">{item.category}</span>}
         </div>
-        <div className="flex min-h-28 flex-1 flex-col px-2.5 py-2.5 sm:min-h-30">
-          {item.category && <span className="w-fit max-w-full truncate rounded-sm bg-gold px-1.5 py-0.5 text-[9px] font-bold leading-tight text-primary">{item.category}</span>}
-          <h3 className="mt-1.5 line-clamp-2 text-[11px] font-bold leading-[15px] sm:text-[12px] sm:leading-4">{item.title}</h3>
-          {item.detail && <p className="mt-1 truncate text-[10px] font-semibold text-gold-light">{item.detail}</p>}
-          {fields['যোগ্যতা'] && <p className="mt-0.5 truncate text-[9px] leading-4 text-primary-foreground/80 sm:text-[10px]">{fields['যোগ্যতা']}</p>}
-          {fields['অভিজ্ঞতা'] && <p className="truncate text-[9px] font-medium leading-4 text-primary-foreground/80 sm:text-[10px]">অভিজ্ঞতা: {fields['অভিজ্ঞতা']}</p>}
-          <div className="mt-auto flex items-center justify-between gap-1 border-t border-primary-foreground/25 pt-1.5">
+        <div className="flex min-h-28 flex-1 flex-col px-2.5 py-3 sm:min-h-30">
+          <h3 className="line-clamp-2 text-[11px] font-bold leading-[15px] tracking-wide sm:text-[12px] sm:leading-4">{item.title}</h3>
+          {item.detail && <p className="mt-1.5 truncate text-[10px] font-semibold uppercase tracking-wide text-gold-light">{item.detail}</p>}
+          {fields['যোগ্যতা'] && <p className="mt-1 truncate text-[9px] leading-4 text-primary-foreground/80 sm:text-[10px]">{fields['যোগ্যতা']}</p>}
+          {fields['অভিজ্ঞতা'] && <p className="truncate text-[9px] font-medium leading-4 text-primary-foreground/75 sm:text-[10px]">অভিজ্ঞতা: {fields['অভিজ্ঞতা']}</p>}
+          <div className="mt-auto flex items-center justify-between gap-1 border-t border-primary-foreground/25 pt-2">
             <span className="min-w-0 truncate text-[9px] font-bold text-gold sm:text-[10px]">প্রোফাইল দেখুন</span>
             <ArrowUpRight className="size-3.5 shrink-0 text-gold transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </div>
