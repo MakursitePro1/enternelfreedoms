@@ -286,8 +286,8 @@ function Home() {
       </section>
 
       {/* Safety */}
-      <section className="px-5 py-24 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
+      <section className="px-5 py-14 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[.8fr_1.2fr] lg:items-start lg:gap-10">
           <div className="lg:sticky lg:top-28"><Heading eyebrow="নিরাপত্তা ও যত্ন" title="আপনার সন্তান নিরাপদ হাতে" description="সিসিটিভি পর্যবেক্ষণ, নিয়ন্ত্রিত পরিবেশ, চিকিৎসা সহায়তা ও সার্বক্ষণিক তত্ত্বাবধান।" /><div className="flex items-center gap-4 rounded-2xl bg-primary p-6 text-primary-foreground"><ShieldCheck className="size-12 shrink-0 text-gold" /><p className="text-sm leading-6 opacity-90">শিক্ষার্থীর নিরাপত্তা আমাদের সর্বোচ্চ অগ্রাধিকার—দিন-রাত ২৪ ঘণ্টা।</p></div></div>
           <SafetyGrid />
         </div>

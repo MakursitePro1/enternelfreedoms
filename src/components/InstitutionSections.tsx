@@ -211,12 +211,12 @@ export function SafetyGrid({ dark = false }: { dark?: boolean }) {
       {items.map((s, i) => {
         const Icon = safetyIcons[i % safetyIcons.length] ?? ShieldCheck;
         return (
-          <div key={s.id} className="group relative flex min-h-64 flex-col justify-end overflow-hidden rounded-2xl border border-border/50 bg-primary p-2 shadow-elegant transition-transform duration-300 hover:-translate-y-1 sm:min-h-80 sm:rounded-3xl sm:p-2.5">
+          <div key={s.id} className="group relative flex min-h-52 flex-col justify-end overflow-hidden rounded-2xl border border-border/50 bg-primary p-2 shadow-elegant transition-transform duration-300 hover:-translate-y-1 sm:min-h-60 sm:rounded-3xl sm:p-2.5">
             <img src={pick(facilityImageList, i)} alt={s.title} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute left-2.5 top-2.5 grid size-9 place-items-center rounded-xl bg-gold text-primary shadow-elegant sm:left-4 sm:top-4 sm:size-12"><Icon className="size-4 sm:size-6" /></div>
-            <div className="relative rounded-xl bg-primary p-3 text-primary-foreground sm:rounded-2xl sm:p-4">
-              <h3 className="text-[13px] font-bold leading-snug text-gold sm:text-base">{s.title}</h3>
-              <p className="mt-1 line-clamp-3 text-[11px] leading-5 text-primary-foreground/85 sm:text-sm sm:leading-6">{s.body}</p>
+            <div className="absolute left-2.5 top-2.5 grid size-8 place-items-center rounded-lg bg-gold text-primary shadow-elegant sm:left-3.5 sm:top-3.5 sm:size-10"><Icon className="size-3.5 sm:size-5" /></div>
+            <div className="relative rounded-lg bg-primary p-2.5 text-primary-foreground sm:rounded-xl sm:p-3">
+              <h3 className="text-[12px] font-bold leading-snug text-gold sm:text-sm">{s.title}</h3>
+              <p className="mt-0.5 line-clamp-2 text-[10.5px] leading-4 text-primary-foreground/85 sm:text-[12.5px] sm:leading-5">{s.body}</p>
             </div>
           </div>
         );
