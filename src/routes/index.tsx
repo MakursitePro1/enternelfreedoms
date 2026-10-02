@@ -169,7 +169,7 @@ function Home() {
                   <div className="flex flex-1 flex-col p-3 max-[359px]:p-2.5 sm:p-4">
                     <h3 className="font-display text-[14px] font-semibold leading-snug text-primary max-[359px]:text-[13px] sm:text-[15px]">{q.q}</h3>
                     <p className="mt-1.5 line-clamp-2 text-[11.5px] leading-5 text-muted-foreground max-[359px]:text-[11px] sm:mt-2 sm:text-[13px] sm:leading-6">{q.a}</p>
-                    <Link to="/residential" className="mt-auto inline-flex w-fit items-center gap-1.5 rounded-full bg-gold px-3 py-1.5 pt-1.5 text-[11px] font-bold text-primary transition-all duration-300 hover:gap-2.5 hover:bg-gold-light max-[359px]:px-2.5 max-[359px]:py-1 max-[359px]:text-[10px] sm:px-4 sm:py-2 sm:text-[13px]">বিস্তারিত <ArrowRight className="size-3 sm:size-4" /></Link>
+                    <Link to="/residential" className="mt-auto inline-flex w-fit items-center gap-1.5 rounded-full bg-gold px-3 py-1.5 text-[11px] font-bold text-primary transition-all duration-300 hover:gap-2.5 hover:bg-gold-light max-[359px]:px-2.5 max-[359px]:py-1 max-[359px]:text-[10px] sm:px-4 sm:py-2 sm:text-[13px]">বিস্তারিত <ArrowRight className="size-3 sm:size-4" /></Link>
                   </div>
                 </div>
               ))}
