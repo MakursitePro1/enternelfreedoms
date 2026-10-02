@@ -106,17 +106,37 @@ export function Site({ children }: { children: ReactNode }) {
           </nav>
           <div className="flex shrink-0 items-center gap-2">
             <Button asChild className="hidden sm:inline-flex"><Link to="/admission">{t('ভর্তি আবেদন')} <ArrowUpRight className="size-4" /></Link></Button>
-            <Button variant="ghost" size="icon" className="xl:hidden" onClick={() => setOpen(!open)} aria-label={open ? 'মেনু বন্ধ করুন' : 'মেনু খুলুন'} aria-expanded={open}>{open ? <X /> : <Menu />}</Button>
-          </div>
-        </div>
-        {open && (
-          <nav className="grid max-h-[75vh] overflow-auto bg-background px-5 pb-5 shadow-lg xl:hidden">
-            {allNav.map(([href, label]) => (
-              <Link key={href} to={href} onClick={() => setOpen(false)} className={`border-b border-border/60 py-3 text-sm font-medium ${active(href) ? 'text-primary' : 'text-foreground'}`}>{t(label)}</Link>
-            ))}
-            <Link to="/admission" onClick={() => setOpen(false)} className="mt-4 rounded-lg bg-primary px-4 py-3 text-center text-sm font-semibold text-primary-foreground">{t('ভর্তি আবেদন')}</Link>
-          </nav>
-        )}
+            <Sheet open={open} onOpenChange={setOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="xl:hidden" aria-label="মেনু খুলুন" aria-expanded={open}><Menu /></Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[86vw] max-w-sm gap-0 overflow-hidden rounded-l-2xl p-0 sm:max-w-sm">
+                <SheetTitle className="sr-only">মেনু</SheetTitle>
+                <SheetDescription className="sr-only">নেভিগেশন মেনু</SheetDescription>
+                <div className="flex h-full flex-col">
+                  <div className="border-b border-border/60 px-5 py-4">
+                    <Link to="/" onClick={() => setOpen(false)} className="flex items-center gap-3">
+                      <img src={logoAsset.url} alt="Eternal Freedom Institute Al Islamia লোগো" className="size-10 shrink-0 rounded-full bg-white object-contain p-0.5 ring-1 ring-border" />
+                      <span className="min-w-0">
+                        <strong className="block truncate font-display text-base leading-tight text-primary">Eternal Freedom</strong>
+                        <span className="block truncate text-[10px] font-semibold uppercase tracking-wide text-muted-foreground">Institute Al Islamia</span>
+                      </span>
+                    </Link>
+                  </div>
+                  <nav className="min-h-0 flex-1 overflow-auto px-2.5 py-3">
+                    {allNav.map(([href, label]) => (
+                      <Link key={href} to={href} onClick={() => setOpen(false)} className={`group flex items-center justify-between gap-2 rounded-lg px-4 py-3 text-sm font-medium transition-colors ${active(href) ? 'bg-secondary text-primary' : 'text-foreground/85 hover:bg-secondary/60 hover:text-primary'}`}>
+                        <span className="truncate">{t(label)}</span>
+                        <ChevronRight className={`size-4 shrink-0 transition-transform group-hover:translate-x-0.5 ${active(href) ? 'text-gold' : 'text-muted-foreground/60'}`} />
+                      </Link>
+                    ))}
+                  </nav>
+                  <div className="border-t border-border/60 p-4">
+                    <Button asChild className="w-full"><Link to="/admission" onClick={() => setOpen(false)}>{t('ভর্তি আবেদন')} <ArrowUpRight className="size-4" /></Link></Button>
+                  </div>
+                </div>
+              </SheetContent>
+            </Sheet>
       </header>
       <main>{children}</main>
       <footer className="relative overflow-hidden bg-primary text-primary-foreground">
