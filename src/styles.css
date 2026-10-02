@@ -184,7 +184,7 @@ html[dir="rtl"] .ticker-track { animation-direction: reverse; }
   to { transform: translateX(-50%); }
 }
 .marquee-track {
-  animation: marquee-loop 58s linear infinite;
+  animation: marquee-loop 75s linear infinite;
   will-change: transform;
 }
 .marquee-track:hover { animation-play-state: paused; }
