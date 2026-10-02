@@ -48,7 +48,7 @@ export const moreNav = [
 export const allNav = [...nav, ...moreNav];
 
 export type Program = {
-  slug: string; name: string; group: string; text: string; number: string;
+  slug: string; name: string; group: string; text: string; number: string; image: string;
   classes: string; age: string; duration: string;
   goals: string[]; activities: string[]; benefits: string[]; schedule: string;
 };
