@@ -43,7 +43,7 @@ function Hero() {
             <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-25" />
             <div aria-hidden className="pointer-events-none absolute -end-[12%] -top-32 size-[26rem] rounded-full bg-gold/20 blur-[130px]" />
             <div aria-hidden className="pointer-events-none absolute -bottom-40 -start-[10%] size-[30rem] rounded-full bg-gold/15 blur-[150px]" />
-            <div className="relative mx-auto w-full px-4 py-12 sm:px-10 sm:py-14 lg:px-14 lg:py-16">
+            <div className="relative mx-auto w-full px-4 pb-16 pt-12 sm:px-10 sm:py-14 lg:px-14 lg:py-16">
               <div className="max-w-3xl rounded-3xl border border-primary-foreground/15 bg-primary/30 p-5 shadow-elegant backdrop-blur-md sm:rounded-[2rem] sm:p-8 lg:p-10">
                 <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-primary shadow-elegant"><Sparkles className="size-3.5" />{s.admission_badge}</span>
                 <p className="mt-4 flex items-center gap-3 text-sm font-semibold text-gold-light sm:mt-5"><span className="h-px w-8 bg-gold" />{t('গফরগাঁও, ময়মনসিংহের সমন্বিত শিক্ষা প্রতিষ্ঠান')}</p>
