@@ -158,22 +158,20 @@ function Home() {
       </section>
 
       {/* Residential questions */}
-      <section className="bg-secondary px-5 py-24 lg:px-8">
+      <section className="bg-primary px-5 py-24 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="flex flex-wrap items-end justify-between gap-5"><Heading eyebrow="আবাসিক জীবন" title="অভিভাবকের সবচেয়ে বড় দুশ্চিন্তার সমাধান" description="সন্তানকে আবাসিকে দেওয়ার আগে যে প্রশ্নগুলো মনে আসে—তার প্রতিটির উত্তর।" /><TextLink to="/residential">আবাসিক জীবন বিস্তারিত</TextLink></div>
-          <div className="rounded-lg bg-primary p-3 shadow-elegant max-[359px]:p-2.5 sm:rounded-xl sm:p-6 lg:rounded-2xl lg:p-8">
-            <div className="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-5">
-              {parentQuestions.map((q) => (
-                <div key={q.q} className="group flex h-full flex-col overflow-hidden rounded-md bg-background shadow-elegant premium-card sm:rounded-lg">
-                  <img src={facilityImages[q.img]} alt={q.q} loading="lazy" className="aspect-[4/3] w-full shrink-0 object-cover transition-transform duration-700 group-hover:scale-105" />
-                  <div className="flex flex-1 flex-col p-3 max-[359px]:p-2.5 sm:p-4">
-                    <h3 className="font-display text-[14px] font-semibold leading-snug text-primary max-[359px]:text-[13px] sm:text-[15px]">{q.q}</h3>
-                    <p className="mt-1.5 line-clamp-2 text-[11.5px] leading-5 text-muted-foreground max-[359px]:text-[11px] sm:mt-2 sm:text-[13px] sm:leading-6">{q.a}</p>
-                    <Link to="/residential" className="mt-auto inline-flex w-fit items-center gap-1.5 rounded-full bg-gold px-3 py-1.5 text-[11px] font-bold text-primary transition-all duration-300 hover:gap-2.5 hover:bg-gold-light max-[359px]:px-2.5 max-[359px]:py-1 max-[359px]:text-[10px] sm:px-4 sm:py-2 sm:text-[13px]">বিস্তারিত <ArrowRight className="size-3 sm:size-4" /></Link>
-                  </div>
+          <div className="flex flex-wrap items-end justify-between gap-5"><Heading light eyebrow="আবাসিক জীবন" title="অভিভাবকের সবচেয়ে বড় দুশ্চিন্তার সমাধান" description="সন্তানকে আবাসিকে দেওয়ার আগে যে প্রশ্নগুলো মনে আসে—তার প্রতিটির উত্তর।" /><TextLink light to="/residential">আবাসিক জীবন বিস্তারিত</TextLink></div>
+          <div className="mt-10 grid grid-cols-2 gap-2 max-[359px]:gap-2 sm:mt-12 sm:grid-cols-2 sm:gap-4 lg:grid-cols-5">
+            {parentQuestions.map((q) => (
+              <div key={q.q} className="group flex h-full flex-col overflow-hidden rounded-md bg-background shadow-elegant premium-card sm:rounded-lg">
+                <img src={facilityImages[q.img]} alt={q.q} loading="lazy" className="aspect-[4/3] w-full shrink-0 object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="flex flex-1 flex-col p-2 max-[359px]:p-1.5 sm:p-4">
+                  <h3 className="font-display text-[11.5px] font-semibold leading-snug text-primary max-[359px]:text-[11px] sm:text-[15px] lg:text-[14px]">{q.q}</h3>
+                  <p className="mt-1 line-clamp-3 text-[10px] leading-4 text-muted-foreground max-[359px]:text-[9.5px] max-[359px]:leading-4 sm:mt-2 sm:text-[13px] sm:leading-6 lg:text-[12px] lg:leading-5">{q.a}</p>
+                  <Link to="/residential" className="mt-auto inline-flex w-fit items-center gap-1 rounded-full bg-gold px-2 py-1 text-[9.5px] font-bold text-primary transition-all duration-300 hover:gap-2 hover:bg-gold-light max-[359px]:px-1.5 max-[359px]:text-[9px] sm:mt-2 sm:gap-1.5 sm:px-4 sm:py-2 sm:text-[13px] lg:px-3 lg:py-1.5 lg:text-[11.5px]">বিস্তারিত <ArrowRight className="size-2.5 sm:size-4" /></Link>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
