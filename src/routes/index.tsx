@@ -48,14 +48,14 @@ function Hero() {
                 <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-primary shadow-elegant"><Sparkles className="size-3.5" />{s.admission_badge}</span>
                 <p className="mt-4 flex items-center gap-3 text-sm font-semibold text-gold-light sm:mt-5"><span className="h-px w-8 bg-gold" />{t('গফরগাঁও, ময়মনসিংহের সমন্বিত শিক্ষা প্রতিষ্ঠান')}</p>
                 <h1 className="mt-3 font-hero text-[clamp(1.4rem,6.5vw,4rem)] font-semibold leading-[1.12] sm:mt-4"><span className="text-primary-foreground">Eternal Freedom</span><br /><span className="text-gold-light">Institute Al Islamia</span></h1>
-                <p className="mt-6 max-w-xl text-base leading-8 text-primary-foreground/90 sm:text-lg">“{t('কুরআনের আলোয় জ্ঞান, চরিত্র ও দক্ষতার সমন্বিত শিক্ষা')}”</p>
-                <div className="mt-9 flex flex-wrap gap-3">
+                <p className="mt-4 max-w-xl text-sm leading-7 text-primary-foreground/90 sm:mt-5 sm:text-base sm:leading-8">“{t('কুরআনের আলোয় জ্ঞান, চরিত্র ও দক্ষতার সমন্বিত শিক্ষা')}”</p>
+                <div className="mt-6 flex flex-wrap gap-3 sm:mt-7">
                   <Button size="lg" asChild className="bg-gold text-primary hover:bg-gold-light"><Link to="/admission">{t('ভর্তি সম্পর্কে জানুন')} <ArrowRight className="size-4 rtl:rotate-180" /></Link></Button>
                   <Button size="lg" variant="outline" asChild className="border-primary-foreground/60 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary"><Link to="/campus">{t('ক্যাম্পাস ঘুরে দেখুন')}</Link></Button>
                   <Button size="lg" variant="ghost" asChild className="text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"><a href={telHref(s.phone)}><Phone className="size-4" />{s.phone}</a></Button>
                 </div>
               </div>
-              <div className="mt-7 flex gap-2 sm:mt-10">{heroSlides.map((sl, k) => <button key={sl.src} type="button" aria-label={`ছবি ${k + 1}`} onClick={() => setI(k)} className={`h-1.5 rounded-full transition-all ${k === i ? 'w-10 bg-gold' : 'w-5 bg-primary-foreground/40'}`} />)}</div>
+              <div className="mt-6 flex gap-2 sm:mt-8">{heroSlides.map((sl, k) => <button key={sl.src} type="button" aria-label={`ছবি ${k + 1}`} onClick={() => setI(k)} className={`h-1.5 rounded-full transition-all ${k === i ? 'w-10 bg-gold' : 'w-5 bg-primary-foreground/40'}`} />)}</div>
             </div>
           </div>
         </div>
