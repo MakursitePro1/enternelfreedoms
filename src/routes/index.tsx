@@ -146,17 +146,17 @@ function Home() {
       </div>
 
       {/* Why */}
-      <div className="px-2.5 pb-2.5 sm:px-5 sm:pb-5">
-        <section className="relative overflow-hidden rounded-[0.75rem] bg-primary py-7 text-primary-foreground shadow-elegant max-[359px]:py-6 sm:rounded-[1.25rem] sm:py-12">
+      <div className="px-2.5 pb-2.5 pt-5 sm:px-5 sm:pb-5 sm:pt-9">
+        <section className="relative overflow-hidden rounded-[0.75rem] bg-primary py-5 text-primary-foreground shadow-elegant max-[359px]:py-4 sm:rounded-[1.25rem] sm:py-9">
           <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
           <div className="relative mx-auto max-w-7xl px-4 sm:px-8 lg:px-10">
             <Heading compact center light eyebrow="আমাদের শক্তি" title="কেন Eternal Freedom?" description="একজন অভিভাবক কেন তাঁর সন্তানের জন্য আমাদের বেছে নেবেন—তার স্পষ্ট উত্তর।" />
-            <div className="grid grid-cols-2 gap-2 max-[359px]:gap-2 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+            <div className="grid grid-cols-2 gap-2 max-[359px]:gap-2 sm:grid-cols-2 sm:gap-3.5 lg:grid-cols-3">
               {whyCards.map((w, k) => { const Icon = whyIcons[w.icon]; return (
-                <div key={w.title} className="group rounded-lg border border-primary-foreground/10 bg-primary-foreground/5 p-3 transition-colors hover:bg-primary-foreground/10 max-[359px]:p-2.5 sm:rounded-2xl sm:p-5">
-                  <div className="flex items-center"><div className="grid size-9 place-items-center rounded-xl bg-gold text-primary max-[359px]:size-8 max-[359px]:rounded-lg sm:size-11 sm:rounded-2xl"><Icon className="size-4.5 max-[359px]:size-4 sm:size-5.5" /></div></div>
-                  <h3 className="mt-3 font-display text-[12px] font-semibold leading-snug max-[359px]:text-[11px] sm:mt-4 sm:text-lg">{w.title}</h3>
-                  <p className="mt-1 text-[10px] leading-4 text-primary-foreground/75 max-[359px]:text-[9.5px] max-[359px]:leading-4 sm:mt-1.5 sm:leading-6 sm:text-[13.5px]">{w.text}</p>
+                <div key={w.title} className="group rounded-lg border border-primary-foreground/10 bg-primary-foreground/5 p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/40 hover:bg-primary-foreground/10 max-[359px]:p-2 sm:rounded-2xl sm:p-4">
+                  <div className="flex items-center"><div className="grid size-9 place-items-center rounded-xl bg-gold text-primary max-[359px]:size-8 max-[359px]:rounded-lg sm:size-10 sm:rounded-xl"><Icon className="size-4.5 max-[359px]:size-4 sm:size-5" /></div></div>
+                  <h3 className="mt-2.5 font-display text-[12px] font-semibold leading-snug max-[359px]:text-[11px] sm:mt-3 sm:text-base">{w.title}</h3>
+                  <p className="mt-1 text-[10px] leading-4 text-primary-foreground/75 max-[359px]:text-[9.5px] max-[359px]:leading-4 sm:mt-1.5 sm:leading-5 sm:text-[12.5px]">{w.text}</p>
                 </div>
               ); })}
             </div>
