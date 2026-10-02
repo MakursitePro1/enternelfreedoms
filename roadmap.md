@@ -16,3 +16,4 @@
 - [x] Place home statistics within the hero background and fit the complete hero within a device screen where practical.
 - [x] Compact teacher cards and add a looping, edge-faded teacher carousel with more clearly marked sample profiles.
 - [x] Use only male sample teacher portraits and identities; shrink the teacher cards and make the leftward carousel slow and continuous with edge fades.
+- [x] Further compact teacher cards with solid image-overlaid identity and a smaller details area, retaining responsive profile navigation.
