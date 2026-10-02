@@ -79,7 +79,7 @@ export function Site({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-3 lg:px-8">
           <Link to="/" className="flex min-w-0 items-center gap-3">
-            <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary text-2xl text-gold-light shadow-elegant">۞</span>
+            <img src={logoAsset.url} alt="Eternal Freedom Institute Al Islamia লোগো" className="size-10 shrink-0 rounded-full bg-white object-contain p-0.5 shadow-elegant ring-1 ring-border sm:size-11" />
             <span className="min-w-0">
               <strong className="block truncate font-display text-base leading-tight text-primary sm:text-xl">Eternal Freedom</strong>
               <span className="block truncate text-[10px] font-semibold uppercase tracking-wide text-muted-foreground sm:text-xs">Institute Al Islamia</span>
@@ -121,7 +121,7 @@ export function Site({ children }: { children: ReactNode }) {
         <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-40" />
         <div className="relative mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
           <div>
-            <div className="flex items-center gap-3"><span className="grid size-12 place-items-center rounded-xl bg-gold text-2xl text-primary">۞</span><div><div className="font-display text-2xl">Eternal Freedom</div><p className="text-xs opacity-75">Institute Al Islamia</p></div></div>
+            <div className="flex items-center gap-3"><img src={logoAsset.url} alt="Eternal Freedom Institute Al Islamia লোগো" className="size-12 shrink-0 rounded-full bg-white object-contain p-0.5 shadow-elegant" /><div><div className="font-display text-2xl">Eternal Freedom</div><p className="text-xs opacity-75">Institute Al Islamia</p></div></div>
             <p className="mt-6 max-w-xs leading-7 opacity-80">{t('কুরআনের আলোয় জ্ঞান, চরিত্র ও দক্ষতার সমন্বিত শিক্ষা')}।</p>
             <div className="mt-6 flex gap-2">
               {s.facebook && <a href={s.facebook} target="_blank" rel="noreferrer" aria-label="ফেসবুক" className="grid size-10 place-items-center rounded-lg bg-primary-foreground/10 hover:bg-gold hover:text-primary"><Facebook className="size-4" /></a>}

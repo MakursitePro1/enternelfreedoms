@@ -54,11 +54,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>('bn');
   useEffect(() => {
     const saved = window.localStorage.getItem('ef-lang') as Lang | null;
-    if (saved === 'en' || saved === 'ar') setLangState(saved);
+    if (saved === 'en') setLangState(saved);
   }, []);
   useEffect(() => {
     document.documentElement.lang = lang;
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dir = 'ltr';
   }, [lang]);
   const setLang = (l: Lang) => { setLangState(l); window.localStorage.setItem('ef-lang', l); };
   const t = (bn: string) => (lang === 'bn' ? bn : dict[bn]?.[lang] ?? bn);
