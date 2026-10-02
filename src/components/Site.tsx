@@ -157,11 +157,11 @@ export function Site({ children }: { children: ReactNode }) {
   );
 }
 
-export function Heading({ eyebrow, title, description, center = false, light = false, hideDescriptionOnMobile = false }: { eyebrow: string; title: string; description?: string; center?: boolean; light?: boolean; hideDescriptionOnMobile?: boolean }) {
+export function Heading({ eyebrow, title, description, center = false, light = false, hideDescriptionOnMobile = false, compact = false }: { eyebrow: string; title: string; description?: string; center?: boolean; light?: boolean; hideDescriptionOnMobile?: boolean; compact?: boolean }) {
   const { t } = useLang();
   return (
-    <div className={`mb-10 ${center ? 'mx-auto max-w-3xl text-center' : ''}`}>
-      <div className={`mb-5 flex items-center gap-3 ${center ? 'justify-center' : ''}`}>
+    <div className={`${compact ? 'mb-7' : 'mb-10'} ${center ? 'mx-auto max-w-3xl text-center' : ''}`}>
+      <div className={`mb-5 flex items-center gap-3 ${compact ? 'mb-4' : 'mb-5'} ${center ? 'justify-center' : ''}`}>
         <span className="h-px w-8 bg-gradient-to-r from-transparent to-gold sm:w-10" />
         <span className="inline-flex items-center gap-1.5 rounded-full bg-primary px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.08em] text-gold shadow-sm ring-1 ring-gold/60 sm:text-xs">
           <span className="size-1.5 shrink-0 rounded-full bg-gold shadow-[0_0_6px] shadow-gold" />
@@ -169,8 +169,8 @@ export function Heading({ eyebrow, title, description, center = false, light = f
         </span>
         <span className="h-px w-8 bg-gradient-to-l from-transparent to-gold sm:w-10" />
       </div>
-      <h2 className={`font-display text-3xl font-semibold leading-tight sm:text-4xl ${light ? 'text-primary-foreground' : 'text-primary'}`}>{t(title)}</h2>
-      {description && <p className={`mt-5 leading-8 ${center ? 'mx-auto' : ''} max-w-2xl ${hideDescriptionOnMobile ? 'hidden sm:block' : ''} ${light ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{description}</p>}
+      <h2 className={`font-display text-3xl font-semibold leading-tight ${compact ? 'sm:text-3xl' : 'sm:text-4xl'} ${light ? 'text-primary-foreground' : 'text-primary'}`}>{t(title)}</h2>
+      {description && <p className={`mt-5 leading-8 ${center ? 'mx-auto' : ''} max-w-2xl ${compact ? 'mt-3 text-[13px] leading-6 sm:text-[15px]' : ''} ${hideDescriptionOnMobile ? 'hidden sm:block' : ''} ${light ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{description}</p>}
     </div>
   );
 }
