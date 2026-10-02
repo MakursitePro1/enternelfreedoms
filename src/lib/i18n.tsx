@@ -1,14 +1,13 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 
-export type Lang = 'bn' | 'en' | 'ar';
+export type Lang = 'bn' | 'en';
 export const languages: { key: Lang; label: string }[] = [
   { key: 'bn', label: 'বাংলা' },
   { key: 'en', label: 'English' },
-  { key: 'ar', label: 'العربية' },
 ];
 
 /** Translations keyed by the Bangla source text. Missing keys fall back to Bangla. */
-const dict: Record<string, { en: string; ar: string }> = {
+const dict: Record<string, { en: string }> = {
   'হোম': { en: 'Home', ar: 'الرئيسية' },
   'প্রতিষ্ঠান পরিচিতি': { en: 'About', ar: 'عن المؤسسة' },
   'শিক্ষা কার্যক্রম': { en: 'Academics', ar: 'البرامج التعليمية' },
