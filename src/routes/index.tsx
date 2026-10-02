@@ -43,11 +43,11 @@ function Hero() {
             <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-25" />
             <div aria-hidden className="pointer-events-none absolute -end-[12%] -top-32 size-[26rem] rounded-full bg-gold/20 blur-[130px]" />
             <div aria-hidden className="pointer-events-none absolute -bottom-40 -start-[10%] size-[30rem] rounded-full bg-gold/15 blur-[150px]" />
-            <div className="relative mx-auto w-full max-w-7xl px-4 py-20 sm:px-10 sm:py-24 lg:px-14 lg:py-28">
-              <div className="max-w-3xl rounded-3xl border border-primary-foreground/15 bg-primary/30 p-6 shadow-elegant backdrop-blur-md sm:rounded-[2rem] sm:p-10 lg:p-12">
+            <div className="relative mx-auto w-full px-4 py-12 sm:px-10 sm:py-14 lg:px-14 lg:py-16">
+              <div className="max-w-3xl rounded-3xl border border-primary-foreground/15 bg-primary/30 p-5 shadow-elegant backdrop-blur-md sm:rounded-[2rem] sm:p-8 lg:p-10">
                 <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-primary shadow-elegant"><Sparkles className="size-3.5" />{s.admission_badge}</span>
-                <p className="mt-6 flex items-center gap-3 text-sm font-semibold text-gold-light"><span className="h-px w-8 bg-gold" />{t('গফরগাঁও, ময়মনসিংহের সমন্বিত শিক্ষা প্রতিষ্ঠান')}</p>
-                <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.2] sm:text-6xl lg:text-7xl"><span className="text-primary-foreground">Eternal Freedom</span><br /><span className="text-gold-light">Institute Al Islamia</span></h1>
+                <p className="mt-4 flex items-center gap-3 text-sm font-semibold text-gold-light sm:mt-5"><span className="h-px w-8 bg-gold" />{t('গফরগাঁও, ময়মনসিংহের সমন্বিত শিক্ষা প্রতিষ্ঠান')}</p>
+                <h1 className="mt-3 font-hero text-[clamp(1.4rem,6.5vw,4rem)] font-semibold leading-[1.12] sm:mt-4"><span className="text-primary-foreground">Eternal Freedom</span><br /><span className="text-gold-light">Institute Al Islamia</span></h1>
                 <p className="mt-6 max-w-xl text-base leading-8 text-primary-foreground/90 sm:text-lg">“{t('কুরআনের আলোয় জ্ঞান, চরিত্র ও দক্ষতার সমন্বিত শিক্ষা')}”</p>
                 <div className="mt-9 flex flex-wrap gap-3">
                   <Button size="lg" asChild className="bg-gold text-primary hover:bg-gold-light"><Link to="/admission">{t('ভর্তি সম্পর্কে জানুন')} <ArrowRight className="size-4 rtl:rotate-180" /></Link></Button>
