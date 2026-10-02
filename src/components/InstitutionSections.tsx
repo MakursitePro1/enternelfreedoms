@@ -184,23 +184,23 @@ export function MealTable({ limit }: { limit?: number }) {
   if (!items.length) return null;
   const rows = items.slice(0, limit ?? items.length).map((m) => ({ ...m, parsed: parseLabeled(m.body).fields }));
   return (
-    <div className="overflow-hidden rounded-lg border border-border/60 bg-background shadow-elegant sm:rounded-xl">
+    <div className="overflow-hidden rounded-xl border border-border/60 bg-background shadow-elegant">
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[560px] text-[12.5px] sm:text-sm">
+        <table className="w-full min-w-[560px] border-collapse text-[12.5px] sm:text-sm">
           <thead>
             <tr className="bg-primary text-primary-foreground">
               {['দিন', 'সকালের নাশতা', 'দুপুরের খাবার', 'রাতের খাবার'].map((h) => (
-                <th key={h} className="border-b-2 border-gold p-2.5 text-start font-semibold max-[359px]:p-2 sm:p-4">{h}</th>
+                <th key={h} className="border-b-2 border-gold p-3 text-start text-[13px] font-semibold tracking-wide max-[359px]:p-2.5 max-[359px]:text-[12px] sm:p-4 sm:text-sm">{h}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {rows.map((r, i) => (
-              <tr key={r.id} className={`transition-colors duration-200 hover:bg-accent ${i % 2 ? 'bg-secondary' : ''}`}>
-                <td className="p-2.5 font-display font-bold text-gold-deep max-[359px]:p-2 sm:p-4">{r.title}</td>
-                <td className="p-2.5 text-muted-foreground max-[359px]:p-2 sm:p-4">{r.parsed['সকাল'] ?? '—'}</td>
-                <td className="p-2.5 text-muted-foreground max-[359px]:p-2 sm:p-4">{r.parsed['দুপুর'] ?? '—'}</td>
-                <td className="p-2.5 text-muted-foreground max-[359px]:p-2 sm:p-4">{r.parsed['রাত'] ?? '—'}</td>
+              <tr key={r.id} className={`transition-colors duration-200 hover:bg-accent/70 ${i % 2 ? 'bg-secondary' : ''} ${i < rows.length - 1 ? 'border-b border-border/50' : ''}`}>
+                <td className="p-3 max-[359px]:p-2.5 sm:p-4"><span className="inline-block rounded-full bg-gold-soft px-2.5 py-1 font-display text-[12px] font-bold text-gold-deep max-[359px]:px-2 max-[359px]:text-[11px] sm:text-[13px]">{r.title}</span></td>
+                <td className="p-3 font-medium text-foreground/80 max-[359px]:p-2.5 sm:p-4">{r.parsed['সকাল'] ?? '—'}</td>
+                <td className="p-3 font-medium text-foreground/80 max-[359px]:p-2.5 sm:p-4">{r.parsed['দুপুর'] ?? '—'}</td>
+                <td className="p-3 font-medium text-foreground/80 max-[359px]:p-2.5 sm:p-4">{r.parsed['রাত'] ?? '—'}</td>
               </tr>
             ))}
           </tbody>
