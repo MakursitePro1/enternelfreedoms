@@ -297,7 +297,9 @@ function Home() {
       <section className="bg-secondary px-5 py-24 lg:px-8"><div className="mx-auto max-w-7xl"><Heading center eyebrow="সাফল্য" title="অর্জনসমূহ" /><AchievementsGrid /></div></section>
 
       {/* Admission process */}
-      <section className="relative overflow-hidden bg-primary px-5 py-14 text-primary-foreground lg:px-8">
+      <div className="px-2.5 pb-2.5 pt-2.5 sm:px-5 sm:pb-5 sm:pt-5">
+      <section className="relative overflow-hidden rounded-[0.75rem] bg-primary py-14 text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
+
         <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
         <div className="relative mx-auto max-w-7xl">
           <Heading center light eyebrow="ভর্তি" title="ভর্তি প্রক্রিয়া" description="মাত্র চারটি সহজ ধাপে আপনার সন্তানের ভর্তি সম্পন্ন করুন।" />
