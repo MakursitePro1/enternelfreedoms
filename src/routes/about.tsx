@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Target, Eye, BookOpen, Sparkles, Rocket, CheckCircle2 } from 'lucide-react';
+import { Target, Eye, BookOpen, Sparkles, Rocket } from 'lucide-react';
 import { Site, PageIntro, Heading, TextLink } from '@/components/Site';
 import { StatsBar, AchievementsGrid, TeachersGrid } from '@/components/InstitutionSections';
 import { photos, whyCards, programs } from '@/lib/content';
