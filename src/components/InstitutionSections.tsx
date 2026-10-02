@@ -69,7 +69,7 @@ export function TeacherCard({ item }: { item: InstitutionItem }) {
         {item.category && <span className="absolute bottom-3 left-1/2 max-w-[92%] -translate-x-1/2 truncate rounded-full bg-gold px-3 py-1 text-[10px] font-bold text-primary sm:px-4 sm:py-1.5 sm:text-xs">{item.category}</span>}
       </div>
       <div className="flex flex-1 flex-col px-3 pb-4 pt-3.5 sm:px-5 sm:pb-5 sm:pt-4">
-        <h3 className="truncate font-display text-sm font-semibold text-primary sm:text-lg">{item.title}</h3>
+        <h3 className="line-clamp-2 font-display text-sm font-semibold leading-5 text-primary sm:text-lg sm:leading-7">{item.title}</h3>
         {item.detail && <p className="mt-0.5 truncate text-[11px] font-semibold text-gold-deep sm:text-sm">{item.detail}</p>}
         {fields['যোগ্যতা'] && <p className="mt-1.5 text-[11px] leading-4 text-muted-foreground sm:mt-2.5 sm:text-xs sm:leading-5">{fields['যোগ্যতা']}</p>}
         {fields['অভিজ্ঞতা'] && <p className="mt-1 text-[11px] font-semibold text-primary sm:text-xs">অভিজ্ঞতা: {fields['অভিজ্ঞতা']}</p>}
