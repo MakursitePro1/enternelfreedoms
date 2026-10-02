@@ -78,29 +78,26 @@ function Home() {
       </div>
 
       {/* About */}
-      <section className="relative overflow-hidden px-5 py-14 max-[359px]:py-10 sm:py-20 lg:px-8 lg:py-24">
-        <div className="pointer-events-none absolute -top-24 end-[-120px] size-72 rounded-full bg-gold-gradient opacity-[0.08] blur-3xl sm:size-96" />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-9 sm:gap-12 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+      <section className="relative overflow-hidden px-5 py-10 max-[359px]:py-8 sm:py-14 lg:px-8 lg:py-24">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-7 sm:gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
           <div className="about-compact min-w-0">
             <Heading eyebrow="আমাদের পরিচয়" title="শুধু প্রতিষ্ঠান নয়—একটি পূর্ণাঙ্গ শিক্ষা পরিবার" description="Eternal Freedom Institute Al Islamia একটি সমন্বিত ইসলামী ও সাধারণ শিক্ষার সম্পূর্ণ আবাসিক প্রতিষ্ঠান। এখানে কুরআন, দ্বীনি জ্ঞান ও জাতীয় পাঠক্রমের পাশাপাশি আদব-আখলাক, শৃঙ্খলা এবং আধুনিক দক্ষতার মাধ্যমে শিক্ষার্থীকে আলোকিত মানুষ হিসেবে গড়ে তোলা হয়।" />
-            <ul className="mb-7 grid gap-2 max-[359px]:mb-6 max-[359px]:gap-1.5 sm:mb-9 sm:grid-cols-2 sm:gap-3">
+            <ul className="mb-6 grid grid-cols-2 gap-1.5 max-[359px]:gap-1 sm:mb-9 sm:gap-3">
               {['প্লে থেকে দশম / দাখিল পর্যন্ত', 'নূরানী, নাজেরা, হিফজ ও কিতাব', 'সম্পূর্ণ আবাসিক ব্যবস্থা', 'সিসিটিভি ও সার্বক্ষণিক তত্ত্বাবধান'].map((x) => (
-                <li key={x} className="group flex items-center gap-2.5 rounded-xl border border-gold/25 bg-card/80 px-3 py-2 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/55 hover:shadow-elegant sm:px-4 sm:py-3">
-                  <span className="grid size-6 shrink-0 place-items-center rounded-full bg-gold-soft ring-1 ring-gold/45 sm:size-7"><CheckCircle2 className="size-3.5 text-gold-deep sm:size-4" /></span>
-                  <span className="min-w-0 text-[12px] font-semibold leading-snug text-primary max-[359px]:text-[11px] sm:text-[13px]">{x}</span>
+                <li key={x} className="group flex items-center gap-1.5 rounded-lg border border-gold/25 bg-card px-2 py-1.5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/55 hover:shadow-elegant sm:rounded-xl sm:gap-2.5 sm:px-4 sm:py-3">
+                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-gold-soft ring-1 ring-gold/45 sm:size-7"><CheckCircle2 className="size-2.5 text-gold-deep sm:size-4" /></span>
+                  <span className="min-w-0 text-[9.5px] font-semibold leading-snug text-primary max-[359px]:text-[9px] sm:text-[13px]">{x}</span>
                 </li>
               ))}
             </ul>
             <TextLink to="/about">প্রতিষ্ঠান সম্পর্কে বিস্তারিত</TextLink>
           </div>
           <div className="relative min-w-0">
-            <div className="pointer-events-none absolute -inset-3 rounded-[2.5rem] bg-gold-gradient opacity-25 blur-3xl sm:-inset-6" />
-            <div className="pointer-events-none absolute inset-x-6 bottom-4 top-8 rounded-[2rem] border-2 border-gold/30 sm:inset-x-10 sm:bottom-8 sm:top-14" />
-            <div className="relative grid grid-cols-2 gap-3 sm:gap-5">
-              <img src={photos[0]} alt="প্রতিষ্ঠানের শিক্ষার্থী ও শিক্ষক" className="relative z-10 h-40 w-full rounded-3xl object-cover shadow-elegant ring-1 ring-gold/25 transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-36 sm:h-72 lg:h-[21rem]" />
-              <img src={facilityImages.library} alt="লাইব্রেরি ও পাঠকক্ষ" loading="lazy" className="relative z-10 mt-6 h-40 w-full rounded-3xl object-cover shadow-elegant ring-1 ring-gold/25 transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-36 sm:mt-12 sm:h-72 lg:h-[21rem]" />
+            <div className="relative grid grid-cols-2 gap-2.5 sm:gap-5">
+              <img src={photos[0]} alt="প্রতিষ্ঠানের শিক্ষার্থী ও শিক্ষক" className="h-28 w-full rounded-3xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-24 sm:h-56 lg:h-[21rem]" />
+              <img src={facilityImages.library} alt="লাইব্রেরি ও পাঠকক্ষ" loading="lazy" className="mt-4 h-28 w-full rounded-3xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-24 sm:mt-12 sm:h-56 lg:h-[21rem]" />
               <div className="pointer-events-none absolute inset-x-0 top-1/2 z-20 hidden -translate-y-1/2 justify-center sm:flex">
-                <div className="grid size-14 place-items-center rounded-full bg-gold-gradient text-primary shadow-elegant ring-4 ring-background"><BookOpen className="size-6" /></div>
+                <div className="grid size-14 place-items-center rounded-full bg-gold text-primary shadow-elegant ring-4 ring-background"><BookOpen className="size-6" /></div>
               </div>
             </div>
           </div>
