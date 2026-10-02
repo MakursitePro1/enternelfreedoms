@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowUpRight, Menu, MapPin, ArrowRight, Phone, Mail, Clock, ChevronDown, ChevronRight, Megaphone, Globe, Facebook, Youtube } from 'lucide-react';
 import { nav, moreNav, allNav } from '@/lib/content';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetDescription, SheetTitle } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { supabase } from '@/integrations/supabase/client';
 import { useSiteSettings, telHref } from '@/lib/site-settings';
 import { languages, useLang } from '@/lib/i18n';
