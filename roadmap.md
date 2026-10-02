@@ -17,3 +17,4 @@
 - [x] Compact teacher cards and add a looping, edge-faded teacher carousel with more clearly marked sample profiles.
 - [x] Use only male sample teacher portraits and identities; shrink the teacher cards and make the leftward carousel slow and continuous with edge fades.
 - [x] Further compact teacher cards with solid image-overlaid identity and a smaller details area, retaining responsive profile navigation.
+- [x] Make teacher portraits and entire cards substantially smaller, with compact identity and details bands on home and directory.
