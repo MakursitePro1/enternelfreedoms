@@ -116,11 +116,15 @@ function Home() {
           <div className="flex flex-wrap items-end justify-between gap-5"><Heading eyebrow="শিক্ষা কার্যক্রম" title="আমার সন্তান এখানে কী পড়বে?" description="সাধারণ শিক্ষা, কুরআন শিক্ষা, ইসলামিক স্টাডিজ এবং বিশেষ দক্ষতা—প্রতিটি বিভাগের আলাদা বিস্তারিত।" /><TextLink to="/academics">সব বিভাগ দেখুন</TextLink></div>
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {programs.map((p) => (
-              <Link to="/academics/$slug" params={{ slug: p.slug }} key={p.slug} className="group flex flex-col bg-background p-7 premium-card shadow-elegant">
-                <div className="flex items-center justify-between"><span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-primary">{p.group}</span><span className="font-display text-2xl text-gold">{p.number}</span></div>
-                <h3 className="mt-6 font-display text-xl font-semibold text-primary">{p.name}</h3>
-                <p className="mt-2 flex-1 text-sm leading-7 text-muted-foreground">{p.text}</p>
-                <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-primary group-hover:text-gold">বিস্তারিত <ArrowRight className="size-4 transition-transform group-hover:translate-x-1 rtl:rotate-180" /></span>
+              <Link to="/academics/$slug" params={{ slug: p.slug }} key={p.slug} className="group relative flex min-h-[300px] flex-col justify-end overflow-hidden rounded-2xl shadow-elegant transition-transform duration-300 hover:-translate-y-1.5 sm:min-h-[340px]">
+                <img src={p.image} alt={p.name} className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/75 to-primary/25 transition-colors duration-300 group-hover:via-primary/80" />
+                <div className="relative flex flex-1 flex-col p-5 sm:p-6">
+                  <div className="flex items-center justify-between"><span className="rounded-full bg-primary-foreground/15 px-3 py-1 text-[11px] font-semibold text-primary-foreground backdrop-blur-sm ring-1 ring-primary-foreground/20">{p.group}</span><span className="font-display text-2xl text-gold drop-shadow">{p.number}</span></div>
+                  <h3 className="mt-auto pt-14 font-display text-xl font-semibold text-primary-foreground drop-shadow-sm">{p.name}</h3>
+                  <p className="mt-2 flex-1 text-[13px] leading-6 text-primary-foreground/85">{p.text}</p>
+                  <span className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-full bg-gold px-4 py-2 text-[13px] font-bold text-primary shadow-md transition-all duration-300 group-hover:gap-2.5 group-hover:bg-gold-light group-hover:shadow-lg">বিস্তারিত <ArrowRight className="size-4 transition-transform group-hover:translate-x-1 rtl:rotate-180" /></span>
+                </div>
               </Link>
             ))}
           </div>
