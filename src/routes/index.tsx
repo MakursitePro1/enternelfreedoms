@@ -180,8 +180,9 @@ function Home() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
+          </div>
+        </section>
+      </div>
 
       {/* Food */}
       <section className="px-5 py-24 lg:px-8">
