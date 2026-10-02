@@ -110,7 +110,7 @@ export function Site({ children }: { children: ReactNode }) {
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="xl:hidden" aria-label="মেনু খুলুন" aria-expanded={open}><Menu /></Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[86vw] max-w-sm gap-0 overflow-hidden rounded-l-2xl p-0 sm:max-w-sm">
+              <SheetContent side="left" className="w-[86vw] max-w-sm gap-0 overflow-hidden rounded-r-2xl p-0 sm:max-w-sm">
                 <SheetTitle className="sr-only">মেনু</SheetTitle>
                 <SheetDescription className="sr-only">নেভিগেশন মেনু</SheetDescription>
                 <div className="flex h-full flex-col">
