@@ -184,12 +184,29 @@ export function MealTable({ limit }: { limit?: number }) {
   if (!items.length) return null;
   const rows = items.slice(0, limit ?? items.length).map((m) => ({ ...m, parsed: parseLabeled(m.body).fields }));
   return (
-    <div className="overflow-x-auto rounded-2xl bg-background shadow-elegant">
-      <table className="w-full min-w-[620px] text-sm">
-        <thead><tr className="bg-primary text-primary-foreground"><th className="p-4 text-start">দিন</th><th className="p-4 text-start">সকালের নাশতা</th><th className="p-4 text-start">দুপুরের খাবার</th><th className="p-4 text-start">রাতের খাবার</th></tr></thead>
-        <tbody>{rows.map((r, i) => <tr key={r.id} className={i % 2 ? 'bg-secondary' : ''}><td className="p-4 font-semibold text-primary">{r.title}</td><td className="p-4 text-muted-foreground">{r.parsed['সকাল'] ?? '—'}</td><td className="p-4 text-muted-foreground">{r.parsed['দুপুর'] ?? '—'}</td><td className="p-4 text-muted-foreground">{r.parsed['রাত'] ?? '—'}</td></tr>)}</tbody>
-      </table>
-      {rows.some((r) => isDemo(r.slug)) && <div className="p-3 text-end"><DemoNote /></div>}
+    <div className="overflow-hidden rounded-lg border border-border/60 bg-background shadow-elegant sm:rounded-xl">
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[560px] text-[12.5px] sm:text-sm">
+          <thead>
+            <tr className="bg-primary text-primary-foreground">
+              {['দিন', 'সকালের নাশতা', 'দুপুরের খাবার', 'রাতের খাবার'].map((h) => (
+                <th key={h} className="border-b-2 border-gold p-2.5 text-start font-semibold max-[359px]:p-2 sm:p-4">{h}</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r, i) => (
+              <tr key={r.id} className={`transition-colors duration-200 hover:bg-accent ${i % 2 ? 'bg-secondary' : ''}`}>
+                <td className="p-2.5 font-display font-bold text-gold-deep max-[359px]:p-2 sm:p-4">{r.title}</td>
+                <td className="p-2.5 text-muted-foreground max-[359px]:p-2 sm:p-4">{r.parsed['সকাল'] ?? '—'}</td>
+                <td className="p-2.5 text-muted-foreground max-[359px]:p-2 sm:p-4">{r.parsed['দুপুর'] ?? '—'}</td>
+                <td className="p-2.5 text-muted-foreground max-[359px]:p-2 sm:p-4">{r.parsed['রাত'] ?? '—'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {rows.some((r) => isDemo(r.slug)) && <div className="border-t border-border/60 p-2.5 text-end max-[359px]:p-2 sm:p-3"><DemoNote /></div>}
     </div>
   );
 }
