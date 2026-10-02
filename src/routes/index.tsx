@@ -147,10 +147,9 @@ function Home() {
 
       {/* Why */}
       <div className="px-2.5 pb-2.5 sm:px-5 sm:pb-5">
-        <section className="relative overflow-hidden rounded-[0.75rem] bg-primary py-7 text-primary-foreground shadow-elegant max-[359px]:py-6 sm:rounded-[1.25rem] sm:py-12">
-          <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
+        <section className="relative overflow-hidden rounded-[0.75rem] py-7 max-[359px]:py-6 sm:rounded-[1.25rem] sm:py-12">
           <div className="relative mx-auto max-w-7xl px-4 sm:px-8 lg:px-10">
-            <Heading compact center light eyebrow="আমাদের শক্তি" title="কেন Eternal Freedom?" description="একজন অভিভাবক কেন তাঁর সন্তানের জন্য আমাদের বেছে নেবেন—তার স্পষ্ট উত্তর।" />
+            <Heading compact center eyebrow="আমাদের শক্তি" title="কেন Eternal Freedom?" description="একজন অভিভাবক কেন তাঁর সন্তানের জন্য আমাদের বেছে নেবেন—তার স্পষ্ট উত্তর।" />
             <div className="grid grid-cols-2 gap-2 max-[359px]:gap-2 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
               {whyCards.map((w, k) => { const Icon = whyIcons[w.icon]; return (
                 <div key={w.title} className="group rounded-lg border border-primary-foreground/10 bg-primary-foreground/5 p-3 transition-colors hover:bg-primary-foreground/10 max-[359px]:p-2.5 sm:rounded-2xl sm:p-5">
