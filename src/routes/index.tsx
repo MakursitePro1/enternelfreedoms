@@ -78,31 +78,36 @@ function Home() {
       </div>
 
       {/* About */}
-      <section className="relative overflow-hidden px-5 py-10 max-[359px]:py-8 sm:py-14 lg:px-8 lg:py-24">
-        <div className="relative mx-auto grid max-w-7xl items-center gap-7 sm:gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-          <div className="about-compact min-w-0">
-            <Heading hideDescriptionOnMobile eyebrow="আমাদের পরিচয়" title="শুধু প্রতিষ্ঠান নয়—একটি পূর্ণাঙ্গ শিক্ষা পরিবার" description="Eternal Freedom Institute Al Islamia একটি সমন্বিত ইসলামী ও সাধারণ শিক্ষার সম্পূর্ণ আবাসিক প্রতিষ্ঠান। এখানে কুরআন, দ্বীনি জ্ঞান ও জাতীয় পাঠক্রমের পাশাপাশি আদব-আখলাক, শৃঙ্খলা এবং আধুনিক দক্ষতার মাধ্যমে শিক্ষার্থীকে আলোকিত মানুষ হিসেবে গড়ে তোলা হয়।" />
-            <ul className="mb-6 grid grid-cols-2 gap-1.5 max-[359px]:gap-1 sm:mb-9 sm:gap-3">
-              {['প্লে থেকে দশম / দাখিল পর্যন্ত', 'নূরানী, নাজেরা, হিফজ ও কিতাব', 'সম্পূর্ণ আবাসিক ব্যবস্থা', 'সিসিটিভি ও সার্বক্ষণিক তত্ত্বাবধান'].map((x) => (
-                <li key={x} className="group flex items-center gap-1.5 rounded-lg border border-gold/25 bg-card px-2 py-1.5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/55 hover:shadow-elegant sm:rounded-xl sm:gap-2.5 sm:px-4 sm:py-3">
-                  <span className="grid size-5 shrink-0 place-items-center rounded-full bg-gold-soft ring-1 ring-gold/45 sm:size-7"><CheckCircle2 className="size-2.5 text-gold-deep sm:size-4" /></span>
-                  <span className="min-w-0 text-[9.5px] font-semibold leading-snug text-primary max-[359px]:text-[9px] sm:text-[13px]">{x}</span>
-                </li>
-              ))}
-            </ul>
-            <TextLink to="/about">প্রতিষ্ঠান সম্পর্কে বিস্তারিত</TextLink>
-          </div>
-          <div className="relative min-w-0">
-            <div className="relative grid grid-cols-2 gap-2.5 sm:gap-5">
-              <img src={photos[0]} alt="প্রতিষ্ঠানের শিক্ষার্থী ও শিক্ষক" className="h-28 w-full rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-24 sm:h-56 lg:h-[21rem]" />
-              <img src={facilityImages.library} alt="লাইব্রেরি ও পাঠকক্ষ" loading="lazy" className="mt-4 h-28 w-full rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-24 sm:mt-12 sm:h-56 lg:h-[21rem]" />
-              <div className="pointer-events-none absolute inset-x-0 top-1/2 z-20 hidden -translate-y-1/2 justify-center sm:flex">
-                <div className="grid size-14 place-items-center rounded-full bg-gold text-primary shadow-elegant ring-4 ring-background"><BookOpen className="size-6" /></div>
+      <div className="px-2.5 py-2.5 sm:px-5 sm:py-5">
+        <section className="relative overflow-hidden rounded-[0.75rem] bg-primary px-5 py-10 text-primary-foreground shadow-elegant max-[359px]:px-4 max-[359px]:py-8 sm:rounded-[1.25rem] sm:px-8 sm:py-14 lg:px-10 lg:py-16">
+          <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
+          <div className="pointer-events-none absolute -left-24 -top-24 size-72 rounded-full bg-primary-foreground/10 blur-3xl sm:size-96" />
+          <div className="pointer-events-none absolute -bottom-32 -right-24 size-72 rounded-full bg-gold/10 blur-3xl sm:size-96" />
+          <div className="relative mx-auto grid max-w-7xl items-center gap-7 sm:gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+            <div className="about-compact min-w-0">
+              <Heading light hideDescriptionOnMobile eyebrow="আমাদের পরিচয়" title="শুধু প্রতিষ্ঠান নয়—একটি পূর্ণাঙ্গ শিক্ষা পরিবার" description="Eternal Freedom Institute Al Islamia একটি সমন্বিত ইসলামী ও সাধারণ শিক্ষার সম্পূর্ণ আবাসিক প্রতিষ্ঠান। এখানে কুরআন, দ্বীনি জ্ঞান ও জাতীয় পাঠক্রমের পাশাপাশি আদব-আখলাক, শৃঙ্খলা এবং আধুনিক দক্ষতার মাধ্যমে শিক্ষার্থীকে আলোকিত মানুষ হিসেবে গড়ে তোলা হয়।" />
+              <ul className="mb-6 grid grid-cols-2 gap-1.5 max-[359px]:gap-1 sm:mb-9 sm:gap-3">
+                {['প্লে থেকে দশম / দাখিল পর্যন্ত', 'নূরানী, নাজেরা, হিফজ ও কিতাব', 'সম্পূর্ণ আবাসিক ব্যবস্থা', 'সিসিটিভি ও সার্বক্ষণিক তত্ত্বাবধান'].map((x) => (
+                  <li key={x} className="group flex items-center gap-1.5 rounded-lg border border-gold/25 bg-card px-2 py-1.5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/55 hover:shadow-elegant sm:rounded-xl sm:gap-2.5 sm:px-4 sm:py-3">
+                    <span className="grid size-5 shrink-0 place-items-center rounded-full bg-gold-soft ring-1 ring-gold/45 sm:size-7"><CheckCircle2 className="size-2.5 text-gold-deep sm:size-4" /></span>
+                    <span className="min-w-0 text-[9.5px] font-semibold leading-snug text-primary max-[359px]:text-[9px] sm:text-[13px]">{x}</span>
+                  </li>
+                ))}
+              </ul>
+              <TextLink light to="/about">প্রতিষ্ঠান সম্পর্কে বিস্তারিত</TextLink>
+            </div>
+            <div className="relative min-w-0">
+              <div className="relative grid grid-cols-2 gap-2.5 sm:gap-5">
+                <img src={photos[0]} alt="প্রতিষ্ঠানের শিক্ষার্থী ও শিক্ষক" className="h-28 w-full rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-24 sm:h-56 lg:h-[21rem]" />
+                <img src={facilityImages.library} alt="লাইব্রেরি ও পাঠকক্ষ" loading="lazy" className="mt-4 h-28 w-full rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-24 sm:mt-12 sm:h-56 lg:h-[21rem]" />
+                <div className="pointer-events-none absolute inset-x-0 top-1/2 z-20 hidden -translate-y-1/2 justify-center sm:flex">
+                  <div className="grid size-14 place-items-center rounded-full bg-gold text-primary shadow-elegant ring-4 ring-background"><BookOpen className="size-6" /></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Why */}
       <div className="px-2.5 pb-2.5 sm:px-5 sm:pb-5">
