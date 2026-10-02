@@ -81,7 +81,7 @@ function Home() {
       <section className="relative overflow-hidden px-5 py-10 max-[359px]:py-8 sm:py-14 lg:px-8 lg:py-24">
         <div className="relative mx-auto grid max-w-7xl items-center gap-7 sm:gap-10 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
           <div className="about-compact min-w-0">
-            <Heading eyebrow="আমাদের পরিচয়" title="শুধু প্রতিষ্ঠান নয়—একটি পূর্ণাঙ্গ শিক্ষা পরিবার" description="Eternal Freedom Institute Al Islamia একটি সমন্বিত ইসলামী ও সাধারণ শিক্ষার সম্পূর্ণ আবাসিক প্রতিষ্ঠান। এখানে কুরআন, দ্বীনি জ্ঞান ও জাতীয় পাঠক্রমের পাশাপাশি আদব-আখলাক, শৃঙ্খলা এবং আধুনিক দক্ষতার মাধ্যমে শিক্ষার্থীকে আলোকিত মানুষ হিসেবে গড়ে তোলা হয়।" />
+            <Heading hideDescriptionOnMobile eyebrow="আমাদের পরিচয়" title="শুধু প্রতিষ্ঠান নয়—একটি পূর্ণাঙ্গ শিক্ষা পরিবার" description="Eternal Freedom Institute Al Islamia একটি সমন্বিত ইসলামী ও সাধারণ শিক্ষার সম্পূর্ণ আবাসিক প্রতিষ্ঠান। এখানে কুরআন, দ্বীনি জ্ঞান ও জাতীয় পাঠক্রমের পাশাপাশি আদব-আখলাক, শৃঙ্খলা এবং আধুনিক দক্ষতার মাধ্যমে শিক্ষার্থীকে আলোকিত মানুষ হিসেবে গড়ে তোলা হয়।" />
             <ul className="mb-6 grid grid-cols-2 gap-1.5 max-[359px]:gap-1 sm:mb-9 sm:gap-3">
               {['প্লে থেকে দশম / দাখিল পর্যন্ত', 'নূরানী, নাজেরা, হিফজ ও কিতাব', 'সম্পূর্ণ আবাসিক ব্যবস্থা', 'সিসিটিভি ও সার্বক্ষণিক তত্ত্বাবধান'].map((x) => (
                 <li key={x} className="group flex items-center gap-1.5 rounded-lg border border-gold/25 bg-card px-2 py-1.5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/55 hover:shadow-elegant sm:rounded-xl sm:gap-2.5 sm:px-4 sm:py-3">
