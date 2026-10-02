@@ -42,16 +42,16 @@ export function InstitutionCard({ item, index = 0 }: { item: InstitutionItem; in
   );
 }
 
-export function StatsBar({ dark = false }: { dark?: boolean }) {
+export function StatsBar({ dark = false, hero = false }: { dark?: boolean; hero?: boolean }) {
   const items = useInstitutionContent('stat');
   if (!items.length) return null;
   return (
-    <div className={`grid grid-cols-2 gap-px overflow-hidden rounded-2xl sm:grid-cols-3 lg:grid-cols-5 ${dark ? 'bg-primary-foreground/15' : 'bg-border'} shadow-elegant`}>
+    <div className={hero ? 'grid grid-cols-5 border-t border-primary-foreground/25 text-primary-foreground' : `grid grid-cols-2 gap-px overflow-hidden rounded-2xl sm:grid-cols-3 lg:grid-cols-5 ${dark ? 'bg-primary-foreground/15' : 'bg-border'} shadow-elegant`}>
       {items.map((s) => (
-        <div key={s.id} className={`p-6 text-center ${dark ? 'bg-primary text-primary-foreground' : 'bg-background'}`}>
-          <div className="font-display text-3xl font-bold text-gold sm:text-4xl">{s.detail}</div>
-          <div className={`mt-1 font-semibold ${dark ? '' : 'text-primary'}`}>{s.title}</div>
-          {s.body && <div className={`mt-1 text-xs ${dark ? 'opacity-70' : 'text-muted-foreground'}`}>{s.body}</div>}
+        <div key={s.id} className={hero ? 'min-w-0 border-r border-primary-foreground/20 px-0.5 py-2 text-center last:border-r-0 sm:px-3 sm:py-3' : `p-6 text-center ${dark ? 'bg-primary text-primary-foreground' : 'bg-background'}`}>
+          <div className={`font-display font-bold text-gold ${hero ? 'text-base leading-tight sm:text-3xl' : 'text-3xl sm:text-4xl'}`}>{s.detail}</div>
+          <div className={`${hero ? 'mt-0.5 text-[10px] leading-tight sm:text-sm' : 'mt-1'} font-semibold ${dark || hero ? '' : 'text-primary'}`}>{s.title}</div>
+          {s.body && <div className={`${hero ? 'mt-0.5 hidden text-xs leading-tight text-primary-foreground/75 sm:block' : `mt-1 text-xs ${dark ? 'opacity-70' : 'text-muted-foreground'}`}`}>{s.body}</div>}
         </div>
       ))}
     </div>
