@@ -33,7 +33,7 @@ function Hero() {
   const [i, setI] = useState(0);
   useEffect(() => { const id = window.setInterval(() => setI((x) => (x + 1) % heroSlides.length), 6000); return () => window.clearInterval(id); }, []);
   return (
-    <section className="relative flex min-h-[calc(100svh-190px)] flex-col justify-end overflow-hidden rounded-b-[1.5rem] bg-primary text-primary-foreground max-[359px]:min-h-[calc(100svh-214px)] sm:rounded-b-[2.25rem]">
+    <section className="relative flex min-h-[calc(100svh-190px)] flex-col justify-end overflow-hidden rounded-b-[0.75rem] bg-primary text-primary-foreground max-[359px]:min-h-[calc(100svh-214px)] sm:rounded-b-[1.25rem]">
       {heroSlides.map((sl, k) => <img key={sl.src} src={sl.src} alt={sl.alt} className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${k === i ? 'opacity-100' : 'opacity-0'}`} />)}
       <div className="absolute inset-0 bg-hero-overlay" />
       <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-25" />
