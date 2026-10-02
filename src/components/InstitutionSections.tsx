@@ -66,22 +66,22 @@ export function TeacherCard({ item }: { item: InstitutionItem }) {
     <Link to="/teachers/$id" params={{ id: item.id }} className="group flex h-full min-w-0 flex-col overflow-hidden rounded-md border border-border bg-card shadow-sm transition-transform duration-300 hover:-translate-y-0.5">
       <div className="relative overflow-hidden bg-secondary">
         {item.image_url
-          ? <img src={item.image_url} alt={item.title} loading="lazy" width={768} height={960} className="aspect-[4/5] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03] sm:aspect-[4/4.6]" />
-          : <div className="grid aspect-[4/5] w-full place-items-center bg-primary sm:aspect-[4/4.6]"><div className="grid size-16 place-items-center rounded-full bg-gold font-display text-xl font-bold text-primary">{initials(item.title)}</div></div>}
-        <div className="absolute inset-x-0 bottom-0 bg-primary px-2.5 py-2 font-teacher text-primary-foreground sm:px-3 sm:py-2.5">
-          {item.category && <span className="inline-block max-w-full truncate rounded-sm bg-gold px-1.5 py-0.5 text-[9px] font-bold leading-tight text-primary sm:text-[10px]">{item.category}</span>}
-          <h3 className="mt-1 line-clamp-2 min-h-8 text-[12px] font-bold leading-4 sm:text-[14px] sm:leading-[18px]">{item.title}</h3>
-        </div>
+          ? <img src={item.image_url} alt={item.title} loading="lazy" width={768} height={960} className="aspect-square w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+          : <div className="grid aspect-square w-full place-items-center bg-primary"><div className="grid size-12 place-items-center rounded-full bg-gold font-display text-lg font-bold text-primary">{initials(item.title)}</div></div>}
       </div>
-      <div className="flex min-h-25 flex-1 flex-col px-2.5 py-2 font-teacher sm:min-h-27 sm:px-3">
-        {item.detail && <p className="truncate text-[10px] font-bold text-primary sm:text-[11px]">{item.detail}</p>}
-        {fields['যোগ্যতা'] && <p className="mt-0.5 truncate text-[10px] text-muted-foreground sm:text-[11px]">{fields['যোগ্যতা']}</p>}
-        {fields['অভিজ্ঞতা'] && <p className="mt-0.5 truncate text-[10px] font-semibold text-primary sm:text-[11px]">অভিজ্ঞতা: {fields['অভিজ্ঞতা']}</p>}
-        <div className="mt-auto flex items-end justify-between gap-1 pt-1.5">
-          <span className="min-w-0 truncate text-[10px] font-bold text-gold-deep sm:text-[11px]">প্রোফাইল দেখুন</span>
-          <ArrowUpRight className="size-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      <div className="flex h-17 flex-col justify-center bg-primary px-2.5 py-1.5 font-teacher text-primary-foreground sm:h-18">
+        {item.category && <span className="w-fit max-w-full truncate rounded-sm bg-gold px-1.5 py-0.5 text-[9px] font-bold leading-tight text-primary">{item.category}</span>}
+        <h3 className="mt-1 line-clamp-2 text-[11px] font-bold leading-[15px] sm:text-[12px] sm:leading-4">{item.title}</h3>
+      </div>
+      <div className="flex min-h-23 flex-1 flex-col px-2.5 py-2 font-teacher sm:min-h-24">
+        {item.detail && <p className="truncate text-[10px] font-bold text-primary">{item.detail}</p>}
+        {fields['যোগ্যতা'] && <p className="truncate text-[9px] leading-4 text-muted-foreground sm:text-[10px]">{fields['যোগ্যতা']}</p>}
+        {fields['অভিজ্ঞতা'] && <p className="truncate text-[9px] font-semibold leading-4 text-primary sm:text-[10px]">অভিজ্ঞতা: {fields['অভিজ্ঞতা']}</p>}
+        <div className="mt-auto flex items-center justify-between gap-1 border-t border-border pt-1">
+          <span className="min-w-0 truncate text-[9px] font-bold text-gold-deep sm:text-[10px]">প্রোফাইল দেখুন</span>
+          <ArrowUpRight className="size-3.5 shrink-0 text-primary transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
         </div>
-        {isDemo(item.slug) && <span className="mt-1 text-[9px] leading-3 text-muted-foreground">নমুনা তথ্য</span>}
+        {isDemo(item.slug) && <span className="text-[9px] leading-3 text-muted-foreground">নমুনা তথ্য</span>}
       </div>
     </Link>
   );
@@ -91,7 +91,7 @@ export function TeachersGrid({ limit }: { limit?: number }) {
   const items = useInstitutionContent('teacher');
   const list = limit ? items.slice(0, limit) : items;
   if (!list.length) return <p className="text-muted-foreground">শিক্ষকদের তথ্য শীঘ্রই প্রকাশ করা হবে।</p>;
-  return <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 xl:grid-cols-4">{list.slice(0, limit ?? list.length).map((t) => <TeacherCard key={t.id} item={t} />)}</div>;
+  return <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 xl:grid-cols-6">{list.slice(0, limit ?? list.length).map((t) => <TeacherCard key={t.id} item={t} />)}</div>;
 }
 
 export function TeachersCarousel() {
@@ -114,7 +114,7 @@ export function TeachersCarousel() {
       <div className="teacher-carousel-fade overflow-hidden" ref={viewportRef} aria-label="শিক্ষকদের প্রোফাইল">
         <div className="-ml-2.5 flex touch-pan-y sm:-ml-3.5">
           {items.map((item) => (
-            <div key={item.id} className="min-w-0 flex-[0_0_50%] pl-2.5 sm:flex-[0_0_33.333%] sm:pl-3.5 lg:flex-[0_0_25%] xl:flex-[0_0_20%]">
+            <div key={item.id} className="min-w-0 flex-[0_0_46%] pl-2.5 sm:flex-[0_0_28%] sm:pl-3.5 lg:flex-[0_0_19%] xl:flex-[0_0_16.666%]">
               <TeacherCard item={item} />
             </div>
           ))}
