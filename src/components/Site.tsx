@@ -157,7 +157,7 @@ export function Site({ children }: { children: ReactNode }) {
   );
 }
 
-export function Heading({ eyebrow, title, description, center = false, light = false }: { eyebrow: string; title: string; description?: string; center?: boolean; light?: boolean }) {
+export function Heading({ eyebrow, title, description, center = false, light = false, hideDescriptionOnMobile = false }: { eyebrow: string; title: string; description?: string; center?: boolean; light?: boolean; hideDescriptionOnMobile?: boolean }) {
   const { t } = useLang();
   return (
     <div className={`mb-10 ${center ? 'mx-auto max-w-3xl text-center' : ''}`}>
@@ -170,7 +170,7 @@ export function Heading({ eyebrow, title, description, center = false, light = f
         <span className="h-px w-8 bg-gradient-to-l from-transparent to-gold sm:w-10" />
       </div>
       <h2 className={`font-display text-3xl font-semibold leading-tight sm:text-4xl ${light ? 'text-primary-foreground' : 'text-primary'}`}>{t(title)}</h2>
-      {description && <p className={`mt-5 leading-8 ${center ? 'mx-auto' : ''} max-w-2xl ${light ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{description}</p>}
+      {description && <p className={`mt-5 leading-8 ${center ? 'mx-auto' : ''} max-w-2xl ${hideDescriptionOnMobile ? 'hidden sm:block' : ''} ${light ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{description}</p>}
     </div>
   );
 }
