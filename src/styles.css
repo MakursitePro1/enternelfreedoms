@@ -176,4 +176,5 @@ html[dir="rtl"] .ticker-track { animation-direction: reverse; }
   .about-compact h2 { font-size: 1.45rem; line-height: 1.35; }
   .about-compact p { margin-top: 0.6rem; font-size: 0.8rem; line-height: 1.7; }
   .about-compact > div:first-child { margin-bottom: 1.1rem; }
+  .principal-card > div:first-child { margin-bottom: 1.4rem; }
 }
