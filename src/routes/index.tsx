@@ -84,7 +84,7 @@ function Home() {
           <div className="marquee-fade mt-4 overflow-hidden sm:mt-7">
             <div className="marquee-track flex w-max gap-3 sm:gap-5">
               {[...photos, facilityImages.dorm, facilityImages.dining, facilityImages.classroom, facilityImages.playground, facilityImages.library, facilityImages.quran, ...photos, facilityImages.dorm, facilityImages.dining, facilityImages.classroom, facilityImages.playground, facilityImages.library, facilityImages.quran].map((src, i) => (
-                <img key={i} src={src} alt="প্রতিষ্ঠানের মুহূর্ত" loading={i > 13 ? 'lazy' : undefined} className="h-24 w-[47%] shrink-0 rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.03] max-[359px]:h-20 sm:h-44 sm:rounded-2xl lg:h-52 lg:w-[17%]" />
+                <img key={i} src={src} alt="প্রতিষ্ঠানের মুহূর্ত" loading={i > 13 ? 'lazy' : undefined} className="h-24 w-[46vw] shrink-0 rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.03] max-[359px]:h-20 sm:h-44 sm:w-[27vw] sm:rounded-2xl lg:h-52 lg:w-[16.5vw]" />
               ))}
             </div>
           </div>
