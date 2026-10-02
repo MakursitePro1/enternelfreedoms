@@ -218,8 +218,6 @@ export function TextLink({ to, children, light = false }: { to: string; children
   return <Link to={to} className={light ? "inline-flex items-center gap-2 border-b border-gold pb-1 font-semibold text-gold hover:text-gold-light" : "inline-flex items-center gap-2 border-b border-gold pb-1 font-semibold text-primary hover:text-gold"}>{children}<ArrowRight className="size-4 rtl:rotate-180" /></Link>;
 }
 
-export function DemoNote({ show = true }: { show?: boolean }) {
-  const s = useSiteSettings();
-  if (!show || s.is_demo === 'false') return null;
-  return <span className="inline-flex items-center rounded-full bg-gold/15 px-2.5 py-0.5 text-[11px] font-semibold text-primary">নমুনা তথ্য</span>;
+export function DemoNote(_props?: { show?: boolean }) {
+  return null;
 }
