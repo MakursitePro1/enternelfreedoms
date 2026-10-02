@@ -35,7 +35,7 @@ function Hero() {
   return (
     <section className="px-2 pt-2 sm:px-4 sm:pt-4 lg:px-6 lg:pt-6">
       <div className="relative mx-auto w-full max-w-[88rem]">
-        <div aria-hidden className="pointer-events-none absolute -inset-2 -z-10 rounded-[2rem] bg-gold-gradient opacity-20 blur-3xl sm:-inset-6 sm:rounded-[3rem]" />
+        <div aria-hidden className="pointer-events-none absolute -inset-2 -z-10 rounded-[2rem] bg-gold-gradient opacity-20 blur-3xl sm:-inset-4 lg:-inset-6 sm:rounded-[3rem]" />
         <div className="relative overflow-hidden rounded-[2rem] shadow-elegant ring-1 ring-primary/20 sm:rounded-[2.75rem]">
           <div className="relative flex min-h-[440px] items-center sm:min-h-[500px] lg:min-h-[560px]">
             {heroSlides.map((sl, k) => <img key={sl.src} src={sl.src} alt={sl.alt} className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${k === i ? 'opacity-100' : 'opacity-0'}`} />)}
