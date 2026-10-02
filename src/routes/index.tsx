@@ -226,15 +226,20 @@ function Home() {
       </div>
 
       {/* Food */}
-      <section className="px-5 py-24 lg:px-8">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-[.9fr_1.1fr] lg:items-center [&>*]:min-w-0">
-          <div>
-            <Heading eyebrow="খাবার ও পুষ্টি" title="নিজস্ব রান্নাঘরে যত্নে তৈরি খাবার" description="নিজস্ব কিচেন, বেকারি ও পরিচ্ছন্ন ডাইনিংয়ে স্বাস্থ্যসম্মতভাবে তৈরি তিনবেলা পুষ্টিকর খাবার ও নাশতা।" />
-            <img src={facilityImages.dining} alt="ডাইনিংয়ে খাবার পরিবেশন" loading="lazy" className="h-72 w-full object-cover premium-image shadow-elegant" />
+      <div className="px-2.5 py-2.5 sm:px-5 sm:py-5">
+        <section className="mx-auto max-w-7xl overflow-hidden rounded-[0.75rem] bg-background px-4 py-8 shadow-elegant max-[359px]:px-3 max-[359px]:py-7 sm:rounded-[1.25rem] sm:px-8 sm:py-12 lg:px-10">
+          <div className="grid grid-cols-1 gap-7 sm:gap-10 lg:grid-cols-[.9fr_1.1fr] lg:items-center lg:gap-12 [&>*]:min-w-0">
+            <div className="min-w-0">
+              <Heading compact eyebrow="খাবার ও পুষ্টি" title="নিজস্ব রান্নাঘরে যত্নে তৈরি খাবার" description="নিজস্ব কিচেন, বেকারি ও পরিচ্ছন্ন ডাইনিংয়ে স্বাস্থ্যসম্মতভাবে তৈরি তিনবেলা পুষ্টিকর খাবার ও নাশতা।" />
+              <img src={facilityImages.dining} alt="ডাইনিংয়ে খাবার পরিবেশন" loading="lazy" className="mt-4 aspect-[4/3] w-full rounded-lg object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:mt-3 max-[359px]:aspect-[3/2] max-[359px]:rounded-md sm:mt-6 sm:aspect-[16/10] sm:rounded-xl lg:aspect-[4/3]" />
+            </div>
+            <div className="min-w-0">
+              <MealTable limit={4} />
+              <div className="mt-4 max-[359px]:mt-3 sm:mt-6"><TextLink to="/residential">পূর্ণ সাপ্তাহিক মেনু দেখুন</TextLink></div>
+            </div>
           </div>
-          <div><MealTable limit={4} /><div className="mt-5"><TextLink to="/residential">পূর্ণ সাপ্তাহিক মেনু দেখুন</TextLink></div></div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Day timeline */}
       <section className="relative overflow-hidden bg-primary px-5 py-24 text-primary-foreground lg:px-8">
