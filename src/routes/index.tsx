@@ -40,7 +40,7 @@ function Hero() {
       <div className="relative mx-auto w-full max-w-7xl px-5 py-24 lg:px-8">
         <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-primary shadow-elegant"><Sparkles className="size-3.5" />{s.admission_badge}</span>
         <p className="mt-6 flex items-center gap-3 text-sm font-semibold text-gold-light"><span className="h-px w-8 bg-gold" />{t('গফরগাঁও, ময়মনসিংহের সমন্বিত শিক্ষা প্রতিষ্ঠান')}</p>
-        <h1 className="mt-4 max-w-4xl font-display text-4xl font-semibold leading-[1.2] sm:text-6xl lg:text-7xl">Eternal Freedom<br /><span className="text-gold-light">Institute Al Islamia</span></h1>
+        <h1 className="mt-4 max-w-5xl font-hero text-[2rem] font-bold leading-[1.12] sm:text-5xl lg:text-6xl xl:text-7xl">Eternal Freedom<br /><span className="text-gold-light">Institute Al Islamia</span></h1>
         <p className="mt-7 max-w-xl text-lg leading-8 text-primary-foreground/90">“{t('কুরআনের আলোয় জ্ঞান, চরিত্র ও দক্ষতার সমন্বিত শিক্ষা')}”</p>
         <div className="mt-10 flex flex-wrap gap-3">
           <Button size="lg" asChild className="bg-gold text-primary hover:bg-gold-light"><Link to="/admission">{t('ভর্তি সম্পর্কে জানুন')} <ArrowRight className="size-4 rtl:rotate-180" /></Link></Button>
