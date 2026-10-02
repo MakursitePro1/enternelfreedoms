@@ -79,12 +79,12 @@ function Home() {
 
       {/* Gallery loop */}
       <div className="px-2.5 py-2.5 sm:px-5 sm:py-5">
-        <section className="overflow-hidden rounded-[0.75rem] bg-card py-6 shadow-elegant sm:rounded-[1.25rem] sm:py-9">
+        <section className="overflow-hidden rounded-[0.75rem] py-4 sm:rounded-[1.25rem] sm:py-7">
           <Heading compact eyebrow="আমাদের মুহূর্ত" title="ছবিতে আমাদের প্রতিষ্ঠান" />
           <div className="marquee-fade mt-4 overflow-hidden sm:mt-7">
             <div className="marquee-track flex w-max gap-3 sm:gap-5">
               {[...photos, facilityImages.dorm, facilityImages.dining, facilityImages.classroom, facilityImages.playground, facilityImages.library, facilityImages.quran, ...photos, facilityImages.dorm, facilityImages.dining, facilityImages.classroom, facilityImages.playground, facilityImages.library, facilityImages.quran].map((src, i) => (
-                <img key={i} src={src} alt="প্রতিষ্ঠানের মুহূর্ত" loading={i > 13 ? 'lazy' : undefined} className="h-24 w-[46vw] shrink-0 rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.03] max-[359px]:h-20 sm:h-44 sm:w-[27vw] sm:rounded-2xl lg:h-52 lg:w-[16.5vw]" />
+                <img key={i} src={src} alt="প্রতিষ্ঠানের মুহূর্ত" loading={i > 13 ? 'lazy' : undefined} className="h-40 w-[46.5vw] shrink-0 rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.03] max-[359px]:h-32 max-[359px]:w-[47vw] sm:h-52 sm:w-[30vw] sm:rounded-2xl lg:h-60 lg:w-[18vw]" />
               ))}
             </div>
           </div>
