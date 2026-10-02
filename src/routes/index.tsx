@@ -147,11 +147,11 @@ function Home() {
         <div className="mx-auto max-w-7xl rounded-3xl border border-border bg-secondary p-3.5 shadow-elegant max-[359px]:rounded-2xl max-[359px]:p-2.5 sm:p-8 lg:p-14">
           <div className="mx-auto grid max-w-6xl gap-5 sm:gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:gap-14">
             <img src={photos[5]} alt="প্রতিষ্ঠাতা ও অধ্যক্ষ মোঃ আনছারুল হক" className="h-60 w-full rounded-2xl object-cover object-top shadow-elegant max-[359px]:h-52 max-[359px]:rounded-xl sm:h-[420px] lg:h-[540px]" />
-            <div className="principal-card min-w-0 rounded-2xl border border-border bg-card p-4 shadow-elegant max-[359px]:rounded-xl max-[359px]:p-3.5 sm:p-8 lg:p-10">
-              <Heading eyebrow="অধ্যক্ষের বাণী" title="আলোকিত মানুষ গড়ার প্রত্যয়ে" />
-              <blockquote className="border-s-4 border-gold ps-4 font-display text-[15px] leading-8 text-primary sm:ps-6 sm:text-lg sm:leading-9">“আমরা বিশ্বাস করি, প্রকৃত শিক্ষা মানুষকে জ্ঞানী করার পাশাপাশি চরিত্রবান ও দায়িত্বশীল করে তোলে। কুরআনের আলোয় আলোকিত হৃদয় এবং আধুনিক জ্ঞানে সমৃদ্ধ মেধা—এই দুইয়ের সমন্বয়েই আমরা প্রতিটি শিক্ষার্থীকে গড়ে তুলতে চাই। অভিভাবকদের আমানত হিসেবে আমরা প্রতিটি শিশুকে নিজের সন্তানের মতো যত্ন করি।”</blockquote>
-              <p className="mt-4 text-[13px] leading-7 text-muted-foreground sm:mt-6 sm:text-base sm:leading-8">আমাদের লক্ষ্য এমন একটি প্রজন্ম তৈরি করা, যারা দ্বীন ও দুনিয়া—উভয় ক্ষেত্রে সফল হবে এবং সমাজ ও দেশের কল্যাণে অবদান রাখবে।</p>
-              <div className="mt-5 flex items-center gap-3 sm:mt-8 sm:gap-4"><div className="h-10 w-1 shrink-0 rounded bg-gold sm:h-12" /><div className="min-w-0"><div className="font-display text-lg font-semibold text-primary sm:text-xl">মোঃ আনছারুল হক (আনছার)</div><div className="text-xs text-muted-foreground sm:text-sm">Founder Principal & Director</div></div></div>
+            <div className="principal-card min-w-0 rounded-2xl border border-primary-foreground/15 bg-primary p-4 shadow-elegant max-[359px]:rounded-xl max-[359px]:p-3.5 sm:p-8 lg:p-10">
+              <Heading light eyebrow="অধ্যক্ষের বাণী" title="আলোকিত মানুষ গড়ার প্রত্যয়ে" />
+              <blockquote className="border-s-4 border-gold ps-4 font-display text-[15px] leading-8 text-primary-foreground sm:ps-6 sm:text-lg sm:leading-9">“আমরা বিশ্বাস করি, প্রকৃত শিক্ষা মানুষকে জ্ঞানী করার পাশাপাশি চরিত্রবান ও দায়িত্বশীল করে তোলে। কুরআনের আলোয় আলোকিত হৃদয় এবং আধুনিক জ্ঞানে সমৃদ্ধ মেধা—এই দুইয়ের সমন্বয়েই আমরা প্রতিটি শিক্ষার্থীকে গড়ে তুলতে চাই। অভিভাবকদের আমানত হিসেবে আমরা প্রতিটি শিশুকে নিজের সন্তানের মতো যত্ন করি।”</blockquote>
+              <p className="mt-4 text-[13px] leading-7 text-primary-foreground/75 sm:mt-6 sm:text-base sm:leading-8">আমাদের লক্ষ্য এমন একটি প্রজন্ম তৈরি করা, যারা দ্বীন ও দুনিয়া—উভয় ক্ষেত্রে সফল হবে এবং সমাজ ও দেশের কল্যাণে অবদান রাখবে।</p>
+              <div className="mt-5 flex items-center gap-3 sm:mt-8 sm:gap-4"><div className="h-10 w-1 shrink-0 rounded bg-gold sm:h-12" /><div className="min-w-0"><div className="font-display text-lg font-semibold text-primary-foreground sm:text-xl">মোঃ আনছারুল হক (আনছার)</div><div className="text-xs text-primary-foreground/70 sm:text-sm">Founder Principal & Director</div></div></div>
             </div>
           </div>
         </div>
