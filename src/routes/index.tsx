@@ -33,11 +33,11 @@ function Hero() {
   const [i, setI] = useState(0);
   useEffect(() => { const id = window.setInterval(() => setI((x) => (x + 1) % heroSlides.length), 6000); return () => window.clearInterval(id); }, []);
   return (
-    <section className="px-3 pt-3 sm:px-6 sm:pt-6 lg:px-8 lg:pt-8">
-      <div className="relative mx-auto w-full max-w-7xl">
+    <section className="px-2 pt-2 sm:px-4 sm:pt-4 lg:px-6 lg:pt-6">
+      <div className="relative mx-auto w-full max-w-[88rem]">
         <div aria-hidden className="pointer-events-none absolute -inset-2 -z-10 rounded-[2rem] bg-gold-gradient opacity-20 blur-3xl sm:-inset-6 sm:rounded-[3rem]" />
         <div className="relative overflow-hidden rounded-[2rem] shadow-elegant ring-1 ring-primary/20 sm:rounded-[2.75rem]">
-          <div className="relative flex min-h-[540px] items-center sm:min-h-[620px] lg:min-h-[680px]">
+          <div className="relative flex min-h-[440px] items-center sm:min-h-[500px] lg:min-h-[560px]">
             {heroSlides.map((sl, k) => <img key={sl.src} src={sl.src} alt={sl.alt} className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${k === i ? 'opacity-100' : 'opacity-0'}`} />)}
             <div className="absolute inset-0 bg-hero-overlay" />
             <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-25" />
