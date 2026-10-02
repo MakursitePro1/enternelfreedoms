@@ -178,3 +178,20 @@ html[dir="rtl"] .ticker-track { animation-direction: reverse; }
   .about-compact > div:first-child { margin-bottom: 1.1rem; }
   .principal-card > div:first-child { margin-bottom: 1.4rem; }
 }
+
+@keyframes marquee-loop {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee-loop 38s linear infinite;
+  will-change: transform;
+}
+.marquee-track:hover { animation-play-state: paused; }
+.marquee-fade {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 9%, black 91%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 9%, black 91%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
