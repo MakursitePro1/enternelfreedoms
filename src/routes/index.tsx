@@ -33,7 +33,7 @@ function Hero() {
   const [i, setI] = useState(0);
   useEffect(() => { const id = window.setInterval(() => setI((x) => (x + 1) % heroSlides.length), 6000); return () => window.clearInterval(id); }, []);
   return (
-    <section className="relative flex flex-col justify-end overflow-hidden rounded-b-[0.75rem] bg-primary text-primary-foreground sm:min-h-[calc(100svh-190px)] sm:rounded-b-[1.25rem]">
+    <section className="relative flex flex-col justify-end overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:min-h-[calc(100svh-230px)] sm:rounded-[1.25rem]">
       {heroSlides.map((sl, k) => <img key={sl.src} src={sl.src} alt={sl.alt} className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${k === i ? 'opacity-100' : 'opacity-0'}`} />)}
       <div className="absolute inset-0 bg-hero-overlay" />
       <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-25" />
@@ -73,7 +73,9 @@ function Home() {
 
   return (
     <Site>
-      <Hero />
+      <div className="px-2.5 pb-2.5 pt-2.5 sm:px-5 sm:pb-5 sm:pt-5">
+        <Hero />
+      </div>
 
       {/* About */}
       <section className="px-5 py-24 lg:px-8">
