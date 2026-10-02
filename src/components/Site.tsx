@@ -161,7 +161,14 @@ export function Heading({ eyebrow, title, description, center = false, light = f
   const { t } = useLang();
   return (
     <div className={`mb-10 ${center ? 'mx-auto max-w-3xl text-center' : ''}`}>
-      <div className={`mb-4 flex items-center gap-3 text-xs font-bold uppercase tracking-wider text-gold ${center ? 'justify-center' : ''}`}><span className="h-px w-8 bg-gold" />{t(eyebrow)}{center && <span className="h-px w-8 bg-gold" />}</div>
+      <div className={`mb-5 flex items-center gap-3 ${center ? 'justify-center' : ''}`}>
+        <span className="h-px w-8 bg-gradient-to-r from-transparent to-gold sm:w-10" />
+        <span className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] shadow-sm ring-1 backdrop-blur-sm sm:text-xs ${light ? 'bg-gold/15 text-gold-light ring-gold/30' : 'bg-gold/10 text-gold ring-gold/25'}`}>
+          <span className="size-1.5 rounded-full bg-gold shadow-[0_0_6px] shadow-gold" />
+          {t(eyebrow)}
+        </span>
+        <span className="h-px w-8 bg-gradient-to-l from-transparent to-gold sm:w-10" />
+      </div>
       <h2 className={`font-display text-3xl font-semibold leading-tight sm:text-4xl ${light ? 'text-primary-foreground' : 'text-primary'}`}>{t(title)}</h2>
       {description && <p className={`mt-5 leading-8 ${center ? 'mx-auto' : ''} max-w-2xl ${light ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{description}</p>}
     </div>
