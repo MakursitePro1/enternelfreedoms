@@ -1,7 +1,9 @@
 import { Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
+import useEmblaCarousel from 'embla-carousel-react';
 import { ArrowUpRight, Award, CalendarDays, ChevronLeft, ChevronRight, Quote, ShieldCheck, Camera, HeartPulse, Eye, Home, PhoneCall, Lock } from 'lucide-react';
 import { Heading, DemoNote } from '@/components/Site';
+import { Button } from '@/components/ui/button';
 import { useInstitutionContent, parseLabeled, type ContentKind, type InstitutionItem } from '@/lib/institution-content';
 import { facilityImage, facilityImageList, initials, isDemo, photos, pick } from '@/lib/content';
 import { youtubeEmbed } from '@/lib/site-settings';
@@ -61,24 +63,24 @@ export function StatsBar({ dark = false, hero = false }: { dark?: boolean; hero?
 export function TeacherCard({ item }: { item: InstitutionItem }) {
   const { fields } = parseLabeled(item.body);
   return (
-    <Link to="/teachers/$id" params={{ id: item.id }} className="group flex h-full flex-col overflow-hidden rounded-2xl bg-background text-center premium-card shadow-elegant">
+    <Link to="/teachers/$id" params={{ id: item.id }} className="group flex h-full min-w-0 flex-col overflow-hidden rounded-lg bg-card text-center premium-card">
       <div className="relative overflow-hidden bg-secondary">
         {item.image_url
-          ? <img src={item.image_url} alt={item.title} loading="lazy" className="aspect-[4/5] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.06]" />
-          : <div className="grid aspect-[4/5] w-full place-items-center bg-primary"><div className="grid size-20 place-items-center rounded-full bg-gold-gradient font-display text-2xl font-bold text-primary sm:size-24 sm:text-3xl">{initials(item.title)}</div></div>}
-        {item.category && <span className="absolute bottom-3 left-1/2 max-w-[92%] -translate-x-1/2 truncate rounded-full bg-gold px-3 py-1 text-[10px] font-bold text-primary sm:px-4 sm:py-1.5 sm:text-xs">{item.category}</span>}
+          ? <img src={item.image_url} alt={item.title} loading="lazy" width={768} height={960} className="aspect-[4/4.5] w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]" />
+          : <div className="grid aspect-[4/4.5] w-full place-items-center bg-primary"><div className="grid size-16 place-items-center rounded-full bg-gold font-display text-xl font-bold text-primary">{initials(item.title)}</div></div>}
+        {item.category && <span className="absolute bottom-2 left-1/2 max-w-[92%] -translate-x-1/2 truncate rounded-full bg-gold px-2.5 py-0.5 text-[10px] font-bold text-primary sm:px-3 sm:text-[11px]">{item.category}</span>}
       </div>
-      <div className="flex flex-1 flex-col px-3 pb-4 pt-3.5 sm:px-5 sm:pb-5 sm:pt-4">
-        <h3 className="line-clamp-2 font-display text-sm font-semibold leading-5 text-primary sm:text-lg sm:leading-7">{item.title}</h3>
-        {item.detail && <p className="mt-0.5 truncate text-[11px] font-semibold text-gold-deep sm:text-sm">{item.detail}</p>}
-        {fields['যোগ্যতা'] && <p className="mt-1.5 text-[11px] leading-4 text-muted-foreground sm:mt-2.5 sm:text-xs sm:leading-5">{fields['যোগ্যতা']}</p>}
-        {fields['অভিজ্ঞতা'] && <p className="mt-1 text-[11px] font-semibold text-primary sm:text-xs">অভিজ্ঞতা: {fields['অভিজ্ঞতা']}</p>}
-        <div className="mt-auto flex justify-center pt-2.5 sm:pt-4">
-          <span className="inline-flex items-center gap-1 rounded-full bg-gold px-3.5 py-1.5 text-[11px] font-bold text-primary transition-colors group-hover:bg-gold-deep group-hover:text-white sm:px-5 sm:py-2 sm:text-xs">
-            প্রোফাইল দেখুন <ArrowUpRight className="size-3.5 sm:size-4" />
+      <div className="flex flex-1 flex-col px-2.5 pb-3 pt-3 sm:px-3.5 sm:pb-3.5">
+        <h3 className="line-clamp-2 min-h-10 font-display text-[12px] font-semibold leading-5 text-primary sm:text-[14px]">{item.title}</h3>
+        {item.detail && <p className="truncate text-[11px] font-semibold text-gold-deep sm:text-xs">{item.detail}</p>}
+        {fields['যোগ্যতা'] && <p className="mt-1 line-clamp-2 min-h-8 text-[10px] leading-4 text-muted-foreground sm:text-[11px]">{fields['যোগ্যতা']}</p>}
+        {fields['অভিজ্ঞতা'] && <p className="mt-0.5 text-[10px] font-semibold text-primary sm:text-[11px]">অভিজ্ঞতা: {fields['অভিজ্ঞতা']}</p>}
+        <div className="mt-auto flex justify-center pt-2">
+          <span className="inline-flex items-center gap-1 rounded-full bg-gold px-3 py-1 text-[10px] font-bold text-primary transition-colors group-hover:bg-gold-light sm:px-3.5 sm:py-1.5 sm:text-[11px]">
+            প্রোফাইল দেখুন <ArrowUpRight className="size-3.5" />
           </span>
         </div>
-        <div className="mt-2"><DemoNote show={isDemo(item.slug)} /></div>
+        <div className="mt-1"><DemoNote show={isDemo(item.slug)} /></div>
       </div>
     </Link>
   );
@@ -89,6 +91,39 @@ export function TeachersGrid({ limit }: { limit?: number }) {
   const list = limit ? items.slice(0, limit) : items;
   if (!list.length) return <p className="text-muted-foreground">শিক্ষকদের তথ্য শীঘ্রই প্রকাশ করা হবে।</p>;
   return <div className="grid grid-cols-2 gap-3 sm:gap-5 md:grid-cols-3 xl:grid-cols-4">{list.slice(0, limit ?? list.length).map((t) => <TeacherCard key={t.id} item={t} />)}</div>;
+}
+
+export function TeachersCarousel() {
+  const items = useInstitutionContent('teacher');
+  const [viewportRef, carousel] = useEmblaCarousel({ loop: true, align: 'start', duration: 40 });
+  const [paused, setPaused] = useState(false);
+
+  useEffect(() => {
+    if (!carousel || items.length < 2 || paused) return;
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (motion.matches) return;
+    const timer = window.setInterval(() => carousel.scrollNext(), 4200);
+    return () => window.clearInterval(timer);
+  }, [carousel, items.length, paused]);
+
+  if (!items.length) return <p className="text-muted-foreground">শিক্ষকদের তথ্য শীঘ্রই প্রকাশ করা হবে।</p>;
+  return (
+    <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setPaused(false); }}>
+      <div className="teacher-carousel-fade overflow-hidden" ref={viewportRef} aria-label="শিক্ষকদের প্রোফাইল">
+        <div className="-ml-2.5 flex touch-pan-y sm:-ml-3.5">
+          {items.map((item) => (
+            <div key={item.id} className="min-w-0 flex-[0_0_50%] pl-2.5 sm:flex-[0_0_33.333%] sm:pl-3.5 lg:flex-[0_0_25%] xl:flex-[0_0_20%]">
+              <TeacherCard item={item} />
+            </div>
+          ))}
+        </div>
+      </div>
+      {items.length > 1 && <div className="mt-4 flex justify-end gap-2">
+        <Button variant="outline" size="icon" aria-label="আগের শিক্ষক" onClick={() => carousel?.scrollPrev()}><ChevronLeft className="size-4" /></Button>
+        <Button variant="outline" size="icon" aria-label="পরের শিক্ষক" onClick={() => carousel?.scrollNext()}><ChevronRight className="size-4" /></Button>
+      </div>}
+    </div>
+  );
 }
 
 export function TestimonialSlider() {

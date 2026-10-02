@@ -14,3 +14,4 @@
 - [ ] Enable live online payment after the institution supplies its merchant account credentials (blocked: credentials).
 - [x] Polish all existing pages with stronger premium surfaces and consistent small-screen spacing; verify phone, tablet and desktop previews without changing content or flows.
 - [x] Place home statistics within the hero background and fit the complete hero within a device screen where practical.
+- [x] Compact teacher cards and add a looping, edge-faded teacher carousel with more clearly marked sample profiles.

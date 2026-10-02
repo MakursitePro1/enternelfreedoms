@@ -4,7 +4,7 @@ import { ArrowRight, BookOpen, ShieldCheck, Heart, GraduationCap, MapPin, Home a
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Site, Heading, TextLink, DemoNote } from '@/components/Site';
-import { StatsBar, TeachersGrid, TestimonialSlider, ActivitiesTeaser, AchievementsGrid, SafetyGrid, MealTable, itemImage } from '@/components/InstitutionSections';
+import { StatsBar, TeachersCarousel, TestimonialSlider, ActivitiesTeaser, AchievementsGrid, SafetyGrid, MealTable, itemImage } from '@/components/InstitutionSections';
 import { ContactForm } from '@/components/ContactForm';
 import { photos, programs, dayTimeline, whyCards, parentQuestions, facilityImages, admissionSteps, galleryPhotos, bookCovers, isDemo, pick } from '@/lib/content';
 import { useInstitutionContent } from '@/lib/institution-content';
@@ -278,10 +278,10 @@ function Home() {
       </section>
 
       {/* Teachers */}
-      <section className="bg-secondary px-5 py-24 lg:px-8">
+      <section className="bg-secondary px-5 py-14 lg:px-8">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-wrap items-end justify-between gap-5"><Heading eyebrow="শিক্ষকমণ্ডলী" title="যাঁরা আপনার সন্তানকে গড়বেন" description="অভিজ্ঞ, যোগ্য ও আন্তরিক শিক্ষকমণ্ডলী।" /><TextLink to="/teachers">সব শিক্ষক</TextLink></div>
-          <TeachersGrid limit={4} />
+          <TeachersCarousel />
         </div>
       </section>
 
