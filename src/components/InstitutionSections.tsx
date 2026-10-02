@@ -95,7 +95,7 @@ export function TeachersGrid({ limit }: { limit?: number }) {
 
 export function TeachersCarousel() {
   const items = useInstitutionContent('teacher');
-  const [autoScroll] = useState(() => AutoScroll({ speed: 0.45, direction: 'forward', startDelay: 0, stopOnInteraction: true, stopOnMouseEnter: true, stopOnFocusIn: true }));
+  const [autoScroll] = useState(() => AutoScroll({ speed: 0.45, direction: 'forward', startDelay: 0, stopOnInteraction: false, stopOnMouseEnter: false, stopOnFocusIn: false }));
   const [viewportRef, carousel] = useEmblaCarousel({ loop: true, align: 'start' }, [autoScroll]);
 
   useEffect(() => {
@@ -110,7 +110,7 @@ export function TeachersCarousel() {
   if (!items.length) return <p className="text-muted-foreground">শিক্ষকদের তথ্য শীঘ্রই প্রকাশ করা হবে।</p>;
   return (
     <div>
-      <div className="teacher-carousel-fade overflow-hidden" ref={viewportRef} aria-label="শিক্ষকদের প্রোফাইল">
+      <div className="teacher-carousel-fade overflow-hidden" ref={viewportRef} aria-label="শিক্ষকদের প্রোফাইল" onMouseEnter={() => autoScroll.stop()} onMouseLeave={() => autoScroll.play(0)} onMouseDown={() => autoScroll.stop()} onTouchStart={() => autoScroll.stop()} onTouchEnd={() => autoScroll.play(0)}>
         <div className="-ml-2.5 flex touch-pan-y sm:-ml-3.5">
           {items.map((item) => (
             <div key={item.id} className="min-w-0 flex-[0_0_46%] pl-2.5 sm:flex-[0_0_28%] sm:pl-3.5 lg:flex-[0_0_19%] xl:flex-[0_0_16.666%]">
