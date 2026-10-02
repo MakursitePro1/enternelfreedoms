@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { Target, Eye, BookOpen, Sparkles, Rocket, CheckCircle2 } from 'lucide-react';
+import { Target, Eye, BookOpen, Sparkles, Rocket } from 'lucide-react';
 import { Site, PageIntro, Heading, TextLink } from '@/components/Site';
 import { StatsBar, AchievementsGrid, TeachersGrid } from '@/components/InstitutionSections';
 import { photos, whyCards, programs } from '@/lib/content';
@@ -68,7 +68,6 @@ function About() {
           <div><Heading eyebrow="ভবিষ্যৎ লক্ষ্য" title="আগামীর পরিকল্পনা" description="মানসম্মত শিক্ষা ও সুযোগ-সুবিধা আরও বিস্তৃত করার লক্ষ্যে আমাদের পরিকল্পনা।" /><Button asChild size="lg"><Link to="/admission">আমাদের পরিবারে যোগ দিন</Link></Button></div>
           <ul className="grid gap-3 sm:grid-cols-2">{futureGoals.map((g) => <li key={g} className="flex items-start gap-3 rounded-2xl bg-secondary p-5"><Rocket className="size-5 shrink-0 text-gold" /><span className="font-medium text-primary">{g}</span></li>)}</ul>
         </div>
-        <p className="mx-auto mt-10 flex max-w-7xl items-center gap-2 text-xs text-muted-foreground"><CheckCircle2 className="size-4 text-gold" />ইতিহাস ও সংখ্যাগুলো নমুনা হিসেবে দেওয়া—অ্যাডমিন প্যানেল থেকে আসল তথ্য দিয়ে বদলানো যাবে।</p>
       </section>
     </Site>
   );
