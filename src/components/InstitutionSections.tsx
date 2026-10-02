@@ -4,7 +4,6 @@ import useEmblaCarousel from 'embla-carousel-react';
 import AutoScroll from 'embla-carousel-auto-scroll';
 import { ArrowUpRight, Award, CalendarDays, ChevronLeft, ChevronRight, Quote, ShieldCheck, Camera, HeartPulse, Eye, Home, PhoneCall, Lock } from 'lucide-react';
 import { Heading, DemoNote } from '@/components/Site';
-import { Button } from '@/components/ui/button';
 import { useInstitutionContent, parseLabeled, type ContentKind, type InstitutionItem } from '@/lib/institution-content';
 import { facilityImage, facilityImageList, initials, isDemo, photos, pick } from '@/lib/content';
 import { youtubeEmbed } from '@/lib/site-settings';
