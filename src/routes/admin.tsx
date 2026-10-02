@@ -9,6 +9,7 @@ import { settingFields } from '@/lib/site-settings';
 import { Site } from '@/components/Site';
 import { Button } from '@/components/ui/button';
 import { seo } from '@/lib/seo';
+import logoAsset from '@/assets/institute-logo.jpeg.asset.json';
 
 export const Route = createFileRoute('/admin')({
   head: () => ({ ...seo('অ্যাডমিন ড্যাশবোর্ড', 'Eternal Freedom Institute Al Islamia-এর অনুমোদিত প্রশাসনিক ব্যবস্থাপনা।'), meta: [...seo('অ্যাডমিন ড্যাশবোর্ড', 'Eternal Freedom Institute Al Islamia-এর অনুমোদিত প্রশাসনিক ব্যবস্থাপনা।').meta, { name: 'robots', content: 'noindex' }] }),
@@ -86,7 +87,7 @@ function Admin() {
     <Site>
       <section className="grid min-h-[70vh] place-items-center bg-secondary px-5 py-16">
         <div className="w-full max-w-md rounded-3xl bg-background p-8 shadow-elegant">
-          <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-primary text-2xl text-gold-light">۞</div>
+          <img src={logoAsset.url} alt="Eternal Freedom Institute Al Islamia লোগো" className="mx-auto size-14 rounded-full bg-white object-contain p-1 shadow-elegant" />
           <h1 className="mt-4 text-center font-display text-2xl text-primary">{mode === 'login' ? 'অ্যাডমিন লগইন' : 'অ্যাডমিন অ্যাকাউন্ট তৈরি'}</h1>
           <form onSubmit={login} className="mt-6 space-y-4"><input type="email" required aria-label="ইমেইল" placeholder="ইমেইল" value={email} onChange={(e) => setEmail(e.target.value)} className={field} /><input type="password" required minLength={6} aria-label="পাসওয়ার্ড" placeholder="পাসওয়ার্ড" value={password} onChange={(e) => setPassword(e.target.value)} className={field} /><Button disabled={loading} className="w-full" size="lg">{loading ? 'অপেক্ষা করুন...' : mode === 'login' ? 'প্রবেশ করুন' : 'অ্যাকাউন্ট তৈরি করুন'}</Button></form>
           {error && <p role="alert" className="mt-3 text-sm text-destructive">{error}</p>}{message && <p className="mt-3 text-sm text-primary">{message}</p>}
@@ -101,7 +102,7 @@ function Admin() {
     <div className="min-h-screen bg-secondary">
       <div className="grid lg:grid-cols-[260px_1fr]">
         <aside className="bg-primary text-primary-foreground lg:sticky lg:top-0 lg:h-screen">
-          <div className="flex items-center gap-3 p-5"><span className="grid size-10 place-items-center rounded-xl bg-gold text-xl text-primary">۞</span><div><div className="font-display">Eternal Freedom</div><div className="text-xs opacity-70">অ্যাডমিন প্যানেল</div></div></div>
+          <div className="flex items-center gap-3 p-5"><img src={logoAsset.url} alt="Eternal Freedom Institute Al Islamia লোগো" className="size-10 shrink-0 rounded-full bg-white object-contain p-0.5" /><div><div className="font-display">Eternal Freedom</div><div className="text-xs opacity-70">অ্যাডমিন প্যানেল</div></div></div>
           <nav className="flex gap-1 overflow-x-auto px-3 pb-3 lg:flex-col lg:overflow-visible">{tabs.map(([k, l, Icon]) => <button key={k} type="button" onClick={() => { setTab(k); setMessage(''); setError(''); }} className={`flex shrink-0 items-center gap-3 rounded-lg px-3 py-2.5 text-sm ${tab === k ? 'bg-gold font-semibold text-primary' : 'hover:bg-primary-foreground/10'}`}><Icon className="size-4" />{l}</button>)}</nav>
           <div className="hidden p-3 lg:block"><a href="/" className="block rounded-lg px-3 py-2 text-sm opacity-80 hover:bg-primary-foreground/10">← ওয়েবসাইটে ফিরুন</a><button type="button" onClick={async () => { await supabase.auth.signOut(); setSession(false); }} className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm opacity-80 hover:bg-primary-foreground/10"><LogOut className="size-4" />লগআউট</button></div>
         </aside>
