@@ -101,7 +101,7 @@ function Home() {
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {whyCards.map((w, k) => { const Icon = whyIcons[w.icon]; return (
               <div key={w.title} className="group rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 p-7 transition-colors hover:bg-primary-foreground/10">
-                <div className="flex items-center justify-between"><div className="grid size-14 place-items-center rounded-2xl bg-gold text-primary"><Icon className="size-7" /></div><span className="font-display text-4xl text-primary-foreground/15">{String(k + 1).padStart(2, '0')}</span></div>
+                <div className="flex items-center"><div className="grid size-14 place-items-center rounded-2xl bg-gold text-primary"><Icon className="size-7" /></div></div>
                 <h3 className="mt-6 font-display text-xl font-semibold">{w.title}</h3>
                 <p className="mt-2 leading-7 text-primary-foreground/75">{w.text}</p>
               </div>
