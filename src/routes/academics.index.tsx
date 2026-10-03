@@ -33,21 +33,27 @@ function AcademicsHero() {
   );
 }
 
+const bn = (n: number | string) => String(n).replace(/\d/g, (d) => '০১২৩৪৫৬৭৮৯'.charAt(Number(d)));
+
 function ProgramCard({ p, featured = false }: { p: (typeof programs)[number]; featured?: boolean }) {
   return (
-    <Link to="/academics/$slug" params={{ slug: p.slug }} className={`group grid min-w-0 grid-cols-[104px_minmax(0,1fr)] overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-elegant ${featured ? 'sm:grid-cols-[32%_minmax(0,1fr)]' : 'sm:flex sm:flex-col'}`}>
-      <div className="relative min-h-full overflow-hidden sm:min-h-0">
-        <img src={p.image} alt={p.name} loading="lazy" className={`absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 ${featured ? '' : 'sm:relative sm:aspect-[16/9]'}`} />
-        <span className="absolute left-2 top-2 rounded-md bg-gold px-2 py-0.5 font-display text-xs font-bold text-primary sm:left-3 sm:top-3">{p.number}</span>
+    <Link
+      to="/academics/$slug"
+      params={{ slug: p.slug }}
+      className={`group grid h-full min-w-0 grid-cols-[100px_minmax(0,1fr)] overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-elegant ${featured ? 'sm:grid-cols-[42%_minmax(0,1fr)]' : 'sm:flex sm:flex-col'}`}
+    >
+      <div className={`relative min-h-[118px] overflow-hidden ${featured ? 'sm:min-h-[220px]' : 'sm:aspect-[4/3] sm:min-h-0'}`}>
+        <img src={p.image} alt={p.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        <span className="absolute left-2 top-2 rounded-md bg-gold px-2 py-0.5 font-display text-[11px] font-bold text-primary sm:left-3 sm:top-3 sm:text-xs">{p.number}</span>
       </div>
-      <div className={`flex min-w-0 flex-col p-3.5 sm:flex-1 sm:p-4 lg:p-5 ${featured ? 'sm:justify-center' : ''}`}>
-        <h3 className="font-display text-[15px] font-semibold leading-snug text-primary sm:text-lg">{p.name}</h3>
-        <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground sm:mt-2 sm:text-[13px] sm:leading-6">{p.text}</p>
-        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-0.5 text-[11px] font-medium text-primary sm:mt-3 sm:text-xs">
-          <span className="inline-flex items-center gap-1"><Users className="size-3 shrink-0 text-gold-deep" />{p.age}</span>
-          <span className="inline-flex min-w-0 items-center gap-1"><Clock className="size-3 shrink-0 text-gold-deep" /><span className="truncate">{p.duration}</span></span>
+      <div className={`flex min-w-0 flex-1 flex-col justify-center p-3.5 sm:p-4 lg:p-6 ${featured ? '' : 'sm:justify-start lg:p-5'}`}>
+        <h3 className="font-display text-[15px] font-semibold leading-snug text-primary sm:text-base lg:text-lg">{p.name}</h3>
+        <p className={`mt-1 text-xs leading-5 text-muted-foreground sm:mt-1.5 sm:text-[13px] sm:leading-6 ${featured ? 'line-clamp-2 sm:line-clamp-none' : 'line-clamp-2'}`}>{p.text}</p>
+        <div className="mt-2 flex flex-col gap-0.5 text-[11px] font-medium text-primary sm:mt-3 sm:gap-1 sm:text-xs">
+          <span className="inline-flex min-w-0 items-center gap-1.5"><Users className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate">{p.age}</span></span>
+          <span className="inline-flex min-w-0 items-center gap-1.5"><Clock className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate">{p.duration}</span></span>
         </div>
-        <span className={`mt-2 inline-flex items-center gap-1 text-xs font-bold text-primary group-hover:text-gold-deep sm:pt-3 ${featured ? '' : 'sm:mt-auto'}`}>বিস্তারিত দেখুন <ArrowUpRight className="size-3.5" /></span>
+        <span className={`mt-2 inline-flex items-center gap-1 text-xs font-bold text-primary group-hover:text-gold-deep sm:pt-3 ${featured ? 'sm:mt-2' : 'sm:mt-auto'}`}>বিস্তারিত দেখুন <ArrowUpRight className="size-3.5" /></span>
       </div>
     </Link>
   );
@@ -56,18 +62,28 @@ function ProgramCard({ p, featured = false }: { p: (typeof programs)[number]; fe
 function GroupSection({ group, index }: { group: string; index: number }) {
   const items = programs.filter((p) => p.group === group);
   const image = items[0]?.image ?? facilityImages.classroom;
+  const single = items.length === 1;
   return (
-    <section className="px-3 py-5 sm:px-5 sm:py-7 lg:px-8" aria-labelledby={`group-${index}`}>
-      <div className="mx-auto max-w-7xl">
-        <div className="grid min-h-28 grid-cols-[minmax(0,1fr)_105px] overflow-hidden rounded-xl bg-primary text-primary-foreground shadow-elegant sm:min-h-36 sm:grid-cols-[minmax(0,1fr)_32%] sm:rounded-[1.25rem]">
-          <div className="flex min-w-0 flex-col justify-center p-4 sm:p-7 lg:p-9">
-            <span className="text-[11px] font-bold text-gold-light sm:text-xs">বিভাগ {(index + 1).toLocaleString('bn-BD')} / {items.length.toLocaleString('bn-BD')}টি কার্যক্রম</span>
-            <h2 id={`group-${index}`} className="mt-1 font-display text-xl font-bold leading-tight sm:text-3xl">{group}</h2>
-            <p className="mt-1 hidden text-sm sm:block">{items.map((p) => p.name).join(' · ')}</p>
+    <section className="px-3 py-4 sm:px-5 sm:py-6 lg:px-8" aria-labelledby={`group-${index}`}>
+      <div className="mx-auto grid max-w-7xl gap-3 sm:gap-4 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-5">
+        <div className="flex min-w-0 flex-col overflow-hidden rounded-xl bg-primary text-primary-foreground shadow-elegant sm:flex-row lg:flex-col">
+          <div className="relative h-36 shrink-0 overflow-hidden sm:h-auto sm:w-[38%] lg:h-44 lg:w-full">
+            <img src={image} alt={group} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+            <span className="absolute left-3 top-3 rounded-full bg-gold px-3 py-1 font-display text-xs font-bold text-primary">বিভাগ {bn(String(index + 1).padStart(2, '0'))}</span>
           </div>
-          <img src={image} alt="" loading="lazy" className="h-full w-full object-cover" />
+          <div className="flex min-w-0 flex-1 flex-col justify-center p-4 sm:p-6">
+            <span className="text-xs font-bold text-gold-light">{bn(items.length)}টি কার্যক্রম</span>
+            <h2 id={`group-${index}`} className="mt-1 font-display text-2xl font-bold leading-tight sm:text-3xl">{group}</h2>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {items.map((p) => (
+                <span key={p.slug} className="rounded-full bg-gold px-2.5 py-1 text-[11px] font-bold text-primary sm:text-xs">{p.name}</span>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className={`mt-4 grid gap-3 sm:mt-5 sm:gap-4 ${items.length === 1 ? '' : 'sm:grid-cols-2 lg:grid-cols-3'}`}>{items.map((p) => <ProgramCard key={p.slug} p={p} featured={items.length === 1} />)}</div>
+        <div className={`grid min-w-0 gap-3 sm:gap-4 ${single ? '' : 'sm:grid-cols-3'}`}>
+          {items.map((p) => <ProgramCard key={p.slug} p={p} featured={single} />)}
+        </div>
       </div>
     </section>
   );
@@ -96,7 +112,7 @@ function Academics() {
         <div className="mx-auto grid max-w-7xl overflow-hidden rounded-xl bg-secondary lg:grid-cols-[44%_56%] lg:rounded-[1.25rem]">
           <div className="relative min-h-48 sm:min-h-64 lg:min-h-full">
             <img src={facilityImages.library} alt="প্রতিষ্ঠানের লাইব্রেরি" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-            <span className="absolute bottom-3 left-3 rounded-lg bg-gold px-3 py-1.5 text-xs font-bold text-primary sm:bottom-5 sm:left-5 sm:text-sm">{programs.length.toLocaleString('bn-BD')}টি বিভাগ ও কার্যক্রম</span>
+            <span className="absolute bottom-3 left-3 rounded-lg bg-gold px-3 py-1.5 text-xs font-bold text-primary sm:bottom-5 sm:left-5 sm:text-sm">{bn(programs.length)}টি বিভাগ ও কার্যক্রম</span>
           </div>
           <div className="p-5 sm:p-8 lg:p-10">
             <span className="inline-flex items-center gap-2 rounded-full bg-primary px-3 py-1 text-xs font-bold text-gold"><BookOpen className="size-3.5" />পাঠক্রমের বৈশিষ্ট্য</span>
