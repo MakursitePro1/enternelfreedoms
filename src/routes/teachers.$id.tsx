@@ -70,7 +70,8 @@ function TeacherProfile() {
             </div>
           </section>
           {stats.length > 0 && (
-            <div className="relative z-10 -mt-4 sm:-mt-6">
+            <div className="mt-2.5 sm:mt-4">
+
               <div className="flex flex-col divide-y divide-border overflow-hidden rounded-xl border border-border bg-background shadow-elegant sm:flex-row sm:divide-x sm:divide-y-0">
                 {stats.map((stat) => (
                   <div key={stat.label} className="min-w-0 flex-1 px-4 py-3 text-center sm:px-6 sm:py-4">
