@@ -4,6 +4,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import AutoScroll from 'embla-carousel-auto-scroll';
 import { ArrowUpRight, Award, CalendarDays, ChevronLeft, ChevronRight, Quote, ShieldCheck, Camera, HeartPulse, Eye, Home, PhoneCall, Lock } from 'lucide-react';
 import { Heading, DemoNote } from '@/components/Site';
+import { Button } from '@/components/ui/button';
 import { useInstitutionContent, parseLabeled, type ContentKind, type InstitutionItem } from '@/lib/institution-content';
 import { facilityImage, facilityImageList, initials, isDemo, photos, pick } from '@/lib/content';
 import { youtubeEmbed } from '@/lib/site-settings';
@@ -137,30 +138,30 @@ export function TestimonialSlider() {
   if (!cur) return null;
   const embed = cur.image_url ? youtubeEmbed(cur.image_url) : null;
   return (
-    <div className="grid gap-5 sm:gap-8 lg:grid-cols-[1.2fr_.8fr] lg:items-stretch">
-      <div className="relative flex flex-col rounded-3xl bg-background p-6 shadow-elegant sm:p-10 sm:min-h-[360px]">
-        <Quote className="size-10 text-gold sm:size-12" />
-        <p key={cur.id} className="fade-slide mt-5 flex-1 font-display text-lg leading-8 text-primary sm:mt-6 sm:text-2xl sm:leading-10">“{cur.body}”</p>
-        <div className="mt-7 flex items-center gap-4">
-          {cur.image_url && !embed ? <img src={cur.image_url} alt={cur.title} className="size-12 shrink-0 rounded-full object-cover sm:size-14" /> : <div className="grid size-12 shrink-0 place-items-center rounded-full bg-primary font-display text-lg text-gold-light sm:size-14">{initials(cur.title)}</div>}
+    <div className="grid gap-4 lg:grid-cols-[1.2fr_.8fr] lg:items-stretch lg:gap-6">
+      <div className="relative flex flex-col rounded-2xl bg-background p-5 shadow-elegant sm:p-7">
+        <Quote className="size-7 text-gold sm:size-9" />
+        <p key={cur.id} className="fade-slide mt-3 flex-1 font-display text-base leading-7 text-primary sm:mt-4 sm:text-xl sm:leading-8">“{cur.body}”</p>
+        <div className="mt-5 flex items-center gap-3">
+          {cur.image_url && !embed ? <img src={cur.image_url} alt={cur.title} className="size-10 shrink-0 rounded-full object-cover sm:size-11" /> : <div className="grid size-10 shrink-0 place-items-center rounded-full bg-primary font-display text-lg text-gold-light sm:size-11">{initials(cur.title)}</div>}
           <div className="min-w-0"><div className="truncate font-semibold text-primary">{cur.title}</div><div className="truncate text-sm text-muted-foreground">{cur.detail}</div></div>
           <div className="ms-auto"><DemoNote show={isDemo(cur.slug)} /></div>
         </div>
-        <div className="mt-7 flex items-center gap-3">
-          <button type="button" aria-label="আগের মতামত" onClick={() => setI((i - 1 + items.length) % items.length)} className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-primary hover:bg-gold"><ChevronLeft className="size-5 rtl:rotate-180" /></button>
-          <button type="button" aria-label="পরের মতামত" onClick={() => setI((i + 1) % items.length)} className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-primary hover:bg-gold"><ChevronRight className="size-5 rtl:rotate-180" /></button>
-          <div className="ms-2 flex gap-1.5">{items.map((t, k) => <button key={t.id} type="button" aria-label={`মতামত ${k + 1}`} onClick={() => setI(k)} className={`h-2 rounded-full transition-all ${k === i % items.length ? 'w-6 bg-gold' : 'w-2 bg-border'}`} />)}</div>
+        <div className="mt-5 flex items-center gap-2">
+          <Button type="button" variant="ghost" size="icon" aria-label="আগের মতামত" onClick={() => setI((i - 1 + items.length) % items.length)} className="size-9 rounded-full bg-secondary text-primary hover:bg-gold"><ChevronLeft className="size-5 rtl:rotate-180" /></Button>
+          <Button type="button" variant="ghost" size="icon" aria-label="পরের মতামত" onClick={() => setI((i + 1) % items.length)} className="size-9 rounded-full bg-secondary text-primary hover:bg-gold"><ChevronRight className="size-5 rtl:rotate-180" /></Button>
+          <div className="ms-2 flex gap-1.5">{items.map((t, k) => <Button key={t.id} type="button" variant="ghost" aria-label={`মতামত ${k + 1}`} onClick={() => setI(k)} className={`h-8 min-w-8 rounded-full px-0 transition-all ${k === i % items.length ? 'text-gold' : 'text-border'}`}><span className={`block h-2 rounded-full ${k === i % items.length ? 'w-6 bg-gold' : 'w-2 bg-border'}`} /></Button>)}</div>
         </div>
       </div>
-      <div className="grid gap-3 lg:content-start">
+      <div className="grid gap-2 lg:content-start">
         {embed ? <div className="aspect-video overflow-hidden rounded-2xl bg-primary"><iframe title={cur.title} src={embed} loading="lazy" allowFullScreen className="h-full w-full" /></div> : items.slice(0, 4).map((t, k) => {
           const tEmbed = t.image_url ? youtubeEmbed(t.image_url) : null;
           const active = k === i % items.length;
           return (
-            <button key={t.id} type="button" onClick={() => setI(k)} className={`flex h-[76px] items-center gap-3 rounded-2xl border-2 px-4 text-start text-foreground transition-colors ${active ? 'border-gold bg-gold-soft' : 'border-transparent bg-background hover:bg-accent'}`}>
-              {t.image_url && !tEmbed ? <img src={t.image_url} alt={t.title} loading="lazy" className={`size-10 shrink-0 rounded-full object-cover ring-2 ${active ? 'ring-gold' : 'ring-transparent'}`} /> : <div className={`grid size-10 shrink-0 place-items-center rounded-full font-display ${active ? 'bg-primary text-gold' : 'bg-secondary text-primary'}`}>{initials(t.title)}</div>}
-              <div className="min-w-0"><div className="truncate font-semibold">{t.title}</div><div className="truncate text-xs opacity-70">{t.detail}</div></div>
-            </button>
+            <Button key={t.id} type="button" variant="ghost" aria-pressed={active} onClick={() => setI(k)} className={`flex h-16 w-full min-w-0 justify-start gap-3 rounded-xl px-3 text-start font-normal text-primary transition-colors sm:h-[68px] ${active ? 'bg-gold hover:bg-gold' : 'bg-background hover:bg-accent'}`}>
+              {t.image_url && !tEmbed ? <img src={t.image_url} alt={t.title} loading="lazy" className="size-9 shrink-0 rounded-full object-cover sm:size-10" /> : <div className="grid size-9 shrink-0 place-items-center rounded-full bg-primary font-display text-gold sm:size-10">{initials(t.title)}</div>}
+              <span className="min-w-0"><span className="block truncate font-semibold">{t.title}</span><span className="block truncate text-xs text-muted-foreground">{t.detail}</span></span>
+            </Button>
           );
         })}
       </div>
