@@ -101,7 +101,14 @@ function Admission() {
 
       {/* দ্রুত নেভিগেশন */}
       <nav className="sticky top-[68px] z-30 px-2.5 py-2 sm:px-5" aria-label="ভর্তি পাতার অংশ">
-        <div className="mx-auto flex max-w-7xl gap-1.5 overflow-x-auto rounded-full bg-primary p-1.5 shadow-elegant sm:gap-2">{[['info', 'ভর্তির ধাপ'], ['programs', 'বিভাগ'], ['requirements', 'যোগ্যতা ও কাগজপত্র'], ['fees', 'ফি'], ['apply', 'আবেদন'], ['track', 'আবেদনের অবস্থা']].map(([id, l]) => <a key={id} href={`#${id}`} className="shrink-0 rounded-full px-3 py-1.5 text-[12px] font-semibold text-primary-foreground transition-colors hover:bg-gold hover:text-primary sm:px-4 sm:py-2 sm:text-sm">{l}</a>)}</div>
+        <div className="mx-auto grid max-w-7xl grid-cols-3 gap-1.5 rounded-2xl bg-primary p-1.5 shadow-elegant sm:grid-cols-6 sm:gap-2 sm:rounded-full sm:p-2">{[
+          ['info', 'ভর্তির ধাপ', ListOrdered],
+          ['programs', 'বিভাগ', BookOpen],
+          ['requirements', 'যোগ্যতা ও কাগজপত্র', FileCheck],
+          ['fees', 'ফি', Banknote],
+          ['apply', 'আবেদন', PenLine],
+          ['track', 'আবেদনের অবস্থা', SearchCheck],
+        ].map(([id, l, Icon]) => <a key={id as string} href={`#${id}`} className="flex min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-1.5 py-2 text-center text-[11px] font-semibold leading-tight text-primary-foreground transition-colors hover:bg-gold hover:text-primary sm:flex-row sm:gap-2 sm:rounded-full sm:px-3 sm:py-2.5 sm:text-sm"><Icon className="size-4 shrink-0 sm:size-[18px]" strokeWidth={2.2} /><span className="truncate">{l as string}</span></a>)}</div>
       </nav>
 
       {/* ভর্তি প্রক্রিয়া — হোমের মতো */}
