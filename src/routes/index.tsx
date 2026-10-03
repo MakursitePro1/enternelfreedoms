@@ -380,28 +380,31 @@ function Home() {
 
       {/* Admission banner */}
       <div className="px-2.5 pb-2.5 pt-2.5 max-[359px]:px-2 max-[359px]:pb-2 max-[359px]:pt-2 sm:px-5 sm:pb-5 sm:pt-5">
-        <section className="relative overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
-          <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
-          <div className="relative mx-auto grid max-w-6xl gap-7 px-4 py-9 max-[359px]:gap-6 max-[359px]:px-3 max-[359px]:py-8 sm:px-8 sm:py-14 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:gap-10 lg:px-10">
-            <div className="text-center lg:text-start">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary shadow-elegant sm:gap-2 sm:px-4 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />{s.admission_badge}</span>
-              <h2 className="mt-3 font-display text-[1.45rem] font-bold leading-[1.2] sm:mt-4 sm:text-4xl lg:text-[2.6rem] xl:text-[2.75rem]">সন্তানের শিক্ষাযাত্রা<br className="sm:hidden" /> শুরু হোক এখানে</h2>
-              <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-gold sm:mt-4 sm:w-24 lg:mx-0" />
-              <p className="mx-auto mt-3 max-w-2xl text-[12.5px] leading-6 text-primary-foreground/90 sm:mt-4 sm:text-base sm:leading-8 lg:mx-0">{s.admission_badge} — আসন সীমিত। আজই অনলাইনে আবেদন করুন অথবা ক্যাম্পাস পরিদর্শন করুন।</p>
-              <div className="mt-4 flex flex-wrap justify-center gap-1.5 sm:mt-6 sm:gap-2.5 lg:justify-start">
+        <section className="grid gap-2.5 max-[359px]:gap-2 sm:gap-4 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
+          <div className="relative overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
+            <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
+            <div className="relative flex h-full flex-col justify-center px-4 py-7 max-[359px]:px-3 max-[359px]:py-6 sm:px-8 sm:py-12 lg:px-10">
+              <span className="inline-flex self-start items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary shadow-elegant sm:gap-2 sm:px-4 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />{s.admission_badge}</span>
+              <h2 className="mt-3 font-display text-[1.45rem] font-bold leading-[1.2] sm:mt-4 sm:text-4xl lg:text-[2.5rem] xl:text-[2.6rem]">সন্তানের শিক্ষাযাত্রা<br className="sm:hidden" /> শুরু হোক এখানে</h2>
+              <div className="mt-3 h-1 w-16 rounded-full bg-gold sm:mt-4 sm:w-24" />
+              <p className="mt-3 max-w-2xl text-[12.5px] leading-6 text-primary-foreground/90 sm:mt-4 sm:text-base sm:leading-8">{s.admission_badge} — আসন সীমিত। আজই অনলাইনে আবেদন করুন অথবা ক্যাম্পাস পরিদর্শন করুন।</p>
+              <div className="mt-4 flex flex-wrap gap-1.5 sm:mt-6 sm:gap-2.5">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[10.5px] font-semibold text-primary sm:px-4 sm:py-1.5 sm:text-xs"><GraduationCap className="size-3 sm:size-3.5" />কুরআন ও জাতীয় পাঠক্রম</span>
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[10.5px] font-semibold text-primary sm:px-4 sm:py-1.5 sm:text-xs"><HomeIcon className="size-3 sm:size-3.5" />পূর্ণাঙ্গ আবাসিক ব্যবস্থা</span>
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[10.5px] font-semibold text-primary sm:px-4 sm:py-1.5 sm:text-xs"><ShieldCheck className="size-3 sm:size-3.5" />২৪ ঘণ্টা নিরাপত্তা</span>
               </div>
-              <div className="mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:justify-center sm:gap-3 lg:justify-start">
+            </div>
+          </div>
+          <div className="relative overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
+            <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
+            <div className="relative flex h-full flex-col p-2 max-[359px]:p-1.5 sm:p-3 lg:p-2.5">
+              <div className="relative h-36 max-[359px]:h-28 shrink-0 overflow-hidden rounded-[0.75rem] shadow-elegant sm:h-52 sm:rounded-[0.9rem] lg:h-auto lg:min-h-0 lg:flex-1">
+                <img src={facilityImages.classroom} alt="শ্রেণিকক্ষে পাঠরত শিক্ষার্থীরা" loading="lazy" className="h-full w-full object-cover" />
+                <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-1 text-[10px] font-bold text-primary shadow-elegant sm:bottom-4 sm:left-4 sm:px-3.5 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />আসন সীমিত</span>
+              </div>
+              <div className="mt-2.5 grid gap-2 sm:mt-3 sm:grid-cols-2 lg:grid-cols-2">
                 <Button asChild size="lg" className="max-sm:h-10 max-sm:w-full max-sm:justify-center max-sm:text-[13px] bg-gold text-primary shadow-elegant hover:bg-gold-light"><Link to="/admission">অনলাইনে আবেদন করুন <ArrowRight className="size-4 rtl:rotate-180" /></Link></Button>
                 <Button asChild size="lg" variant="outline" className="max-sm:h-10 max-sm:w-full max-sm:justify-center max-sm:text-[13px] border-primary-foreground/60 bg-primary-foreground/10 text-primary-foreground hover:bg-primary-foreground hover:text-primary"><Link to="/contact">যোগাযোগ করুন</Link></Button>
-              </div>
-            </div>
-            <div className="mt-1 lg:mt-0">
-              <div className="relative mx-auto w-full max-w-sm rounded-[1rem] bg-primary p-1.5 ring-1 ring-gold/60 sm:rounded-[1.25rem] sm:p-2 lg:max-w-none">
-                <img src={facilityImages.classroom} alt="শ্রেণিকক্ষে পাঠরত শিক্ষার্থীরা" loading="lazy" className="h-28 w-full rounded-[0.75rem] object-cover shadow-elegant max-[359px]:h-24 sm:h-44 sm:rounded-[0.9rem] lg:h-60 xl:h-64" />
-                <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-1 text-[10px] font-bold text-primary shadow-elegant sm:bottom-4 sm:left-4 sm:px-3.5 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />আসন সীমিত</span>
               </div>
             </div>
           </div>
