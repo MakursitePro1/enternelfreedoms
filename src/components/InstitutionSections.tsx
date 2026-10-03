@@ -273,7 +273,7 @@ export function FeeTable() {
           <div className="font-display text-xl font-bold text-primary">{f.detail}</div>
         </div>
       ))}
-      {items.some((f) => isDemo(f.slug)) && <div className="flex items-center justify-between gap-3 bg-accent p-4 text-xs text-muted-foreground"><span>চূড়ান্ত ফি প্রতিষ্ঠানের অফিস থেকে নিশ্চিত করুন।</span><DemoNote /></div>}
+      {items.some((f) => isDemo(f.slug)) && <div className="flex items-center justify-between gap-3 bg-accent p-4 text-xs text-muted-foreground sm:col-span-2"><span>চূড়ান্ত ফি প্রতিষ্ঠানের অফিস থেকে নিশ্চিত করুন।</span><DemoNote /></div>}
     </div>
   );
 }
