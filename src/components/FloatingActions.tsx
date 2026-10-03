@@ -26,9 +26,9 @@ export function FloatingActions() {
         type="button"
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         aria-label="উপরে যান"
-        className={`pointer-events-auto grid size-11 place-items-center rounded-full bg-primary text-gold shadow-elegant ring-1 ring-gold/40 transition-all duration-300 hover:bg-secondary hover:text-primary sm:size-12 ${showTop ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'}`}
+        className={`pointer-events-auto grid size-9 place-items-center rounded-full bg-primary text-gold shadow-elegant ring-1 ring-gold/40 transition-all duration-300 hover:bg-secondary hover:text-primary sm:size-10 ${showTop ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-3 opacity-0'}`}
       >
-        <ArrowUp className="size-5" strokeWidth={2.25} />
+        <ArrowUp className="size-4 sm:size-4.5" strokeWidth={2.25} />
       </button>
       {s.whatsapp && (
         <a
@@ -36,9 +36,9 @@ export function FloatingActions() {
           target="_blank"
           rel="noreferrer"
           aria-label="হোয়াটসঅ্যাপে কথা বলুন"
-          className="pointer-events-auto grid size-11 place-items-center rounded-full bg-[#25D366] text-white shadow-elegant ring-1 ring-black/10 transition-transform duration-200 hover:scale-105 sm:size-12"
+          className="pointer-events-auto grid size-9 place-items-center rounded-full bg-[#25D366] text-white shadow-elegant ring-1 ring-black/10 transition-transform duration-200 hover:scale-105 sm:size-10"
         >
-          <WhatsAppGlyph className="size-5.5 sm:size-6" />
+          <WhatsAppGlyph className="size-4.5 sm:size-5" />
         </a>
       )}
     </div>
