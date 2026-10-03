@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState, type FormEvent } from 'react';
 import { useServerFn } from '@tanstack/react-start';
-import { ArrowLeft, BookOpen, User, FileText, Truck, Wallet, Plus, Minus, CheckCircle2, ShieldCheck, PackageCheck, MapPin, Clock } from 'lucide-react';
+import { ArrowLeft, ArrowRight, BookOpen, User, FileText, Truck, Wallet, Plus, Minus, CheckCircle2, ShieldCheck, PackageCheck, MapPin, Clock } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { Site } from '@/components/Site';
 import { Button } from '@/components/ui/button';
@@ -129,7 +129,7 @@ function BookDetail() {
         </div>
       </section>
 
-      {others.length > 0 && <section className="bg-secondary px-5 py-16 lg:px-8"><div className="mx-auto max-w-6xl"><h2 className="mb-6 font-display text-2xl font-semibold text-primary">আরও বই</h2><div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{others.map((o, k) => <Link key={o.id} to="/books/$id" params={{ id: o.id }} className="overflow-hidden rounded-2xl bg-background shadow-elegant"><img src={o.cover_url ?? pick(bookCovers, k + 1)} alt={o.title} loading="lazy" className="aspect-[4/3] w-full object-cover" /><div className="p-4"><h3 className="font-semibold text-primary">{o.title}</h3><div className="mt-1 text-sm font-bold text-primary">৳ {bn(Number(o.price))}</div></div></Link>)}</div></div></section>}
+      {others.length > 0 && <section className="bg-secondary px-2.5 py-10 sm:px-5 sm:py-16 lg:px-8"><div className="mx-auto max-w-6xl"><div className="mb-5 flex items-end justify-between gap-4 sm:mb-8"><h2 className="flex items-center gap-2.5 font-display text-xl font-semibold text-primary sm:text-2xl"><span className="h-6 w-1.5 shrink-0 rounded-full bg-gold sm:h-7 sm:w-2" />আরও বই</h2><Link to="/books" className="inline-flex shrink-0 items-center gap-1.5 text-xs font-bold text-gold-deep hover:underline sm:text-sm">সব বই দেখুন <ArrowRight className="size-3.5 rtl:rotate-180 sm:size-4" /></Link></div><div className="grid grid-cols-2 gap-2.5 sm:gap-5 lg:grid-cols-4">{others.map((o, k) => <Link key={o.id} to="/books/$id" params={{ id: o.id }} className="group flex min-w-0 flex-col overflow-hidden rounded-md border border-border bg-card transition-shadow duration-300 hover:shadow-elegant sm:rounded-lg"><div className="relative flex aspect-[3/4] items-center justify-center overflow-hidden bg-secondary p-2 sm:p-4"><img src={o.cover_url ?? pick(bookCovers, k + 1)} alt={o.title} loading="lazy" width={768} height={1024} className="h-full w-full object-cover shadow-elegant" /><span className="absolute bottom-1.5 start-1.5 inline-flex items-center rounded bg-background px-1.5 py-0.5 text-[10px] font-bold text-primary sm:bottom-2.5 sm:start-2.5 sm:rounded-md sm:px-2 sm:py-1 sm:text-xs">৳ {bn(Number(o.price))}</span></div><div className="flex flex-1 flex-col p-2.5 sm:p-4"><h3 className="line-clamp-2 min-h-8 font-book-title text-xs font-bold leading-4 text-primary sm:min-h-10 sm:text-sm sm:leading-5">{o.title}</h3><div className="mt-auto flex items-center justify-between gap-1.5 pt-2 sm:pt-3.5"><span className="text-[10px] font-bold text-gold-deep sm:text-xs">বিস্তারিত দেখুন</span><ArrowRight className="size-3 shrink-0 text-gold-deep transition-transform duration-300 group-hover:translate-x-0.5 rtl:rotate-180 sm:size-3.5" /></div></div></Link>)}</div></div></section>}
     </Site>
   );
 }
