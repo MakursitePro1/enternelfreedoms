@@ -383,7 +383,7 @@ function Home() {
         <section className="grid gap-2.5 max-[359px]:gap-2 sm:gap-4 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
           <div className="relative overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
             <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
-            <div className="relative flex h-full items-center gap-6 px-4 py-7 max-[359px]:px-3 max-[359px]:py-6 sm:gap-8 sm:px-8 sm:py-12 lg:gap-10 lg:px-10">
+            <div className="relative flex h-full items-center gap-3.5 px-4 py-7 max-[359px]:px-3 max-[359px]:py-6 sm:gap-6 sm:px-8 sm:py-12 lg:gap-8 lg:px-10">
               <div className="flex min-w-0 flex-1 flex-col justify-center">
               <span className="inline-flex self-start items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary shadow-elegant sm:gap-2 sm:px-4 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />{s.admission_badge}</span>
               <h2 className="mt-3 font-display text-[1.45rem] font-bold leading-[1.2] sm:mt-4 sm:text-4xl lg:text-[2.5rem] xl:text-[2.6rem]">সন্তানের শিক্ষাযাত্রা<br className="sm:hidden" /> শুরু হোক এখানে</h2>
