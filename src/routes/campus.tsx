@@ -32,8 +32,7 @@ function Campus() {
     <Site>
       <div className="px-2.5 pt-2.5 sm:px-5 sm:pt-5">
         <section className="relative flex min-h-[440px] flex-col justify-end overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground sm:min-h-[570px] sm:rounded-[1.25rem]">
-          <img src={facilityImages.playground} alt="ক্যাম্পাসের খেলার মাঠ" className="absolute inset-0 h-full w-full object-cover" />
-          <div className="absolute inset-0 bg-primary/70" />
+          <img src={facilityImages.playground} alt="ক্যাম্পাসের খেলার মাঠ" className="absolute inset-0 h-full w-full object-cover brightness-[.55]" />
           <div className="relative mx-auto w-full max-w-7xl px-5 pb-12 pt-24 sm:px-8 sm:pb-20">
             <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-primary"><MapPin className="size-4" />গফরগাঁও, ময়মনসিংহ</span>
             <p className="mt-6 text-sm font-semibold text-gold-light">ক্যাম্পাস ও সুবিধা</p>
