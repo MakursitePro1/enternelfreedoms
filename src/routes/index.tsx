@@ -378,16 +378,27 @@ function Home() {
        {/* Contact */}
        <ContactSection />
 
-      {/* CTA */}
-      <section className="relative overflow-hidden bg-primary px-5 py-24 text-center text-primary-foreground">
-        <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
-        <div className="relative mx-auto max-w-3xl">
-          <CalendarDays className="mx-auto mb-5 size-10 text-gold" />
-          <h2 className="font-display text-3xl sm:text-5xl">সন্তানের শিক্ষাযাত্রা শুরু হোক এখানে</h2>
-          <p className="mt-5 leading-8 opacity-80">{s.admission_badge} — আসন সীমিত। আজই অনলাইনে আবেদন করুন অথবা ক্যাম্পাস পরিদর্শন করুন।</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3"><Button asChild size="lg" className="bg-gold text-primary hover:bg-gold-light"><Link to="/admission">ভর্তি আবেদন করুন <ArrowRight className="size-4 rtl:rotate-180" /></Link></Button><Button asChild size="lg" variant="outline" className="border-primary-foreground/60 bg-transparent text-primary-foreground hover:bg-primary-foreground hover:text-primary"><Link to="/contact">যোগাযোগ করুন</Link></Button></div>
-        </div>
-      </section>
+      {/* Admission banner */}
+      <div className="px-2.5 pb-2.5 pt-2.5 max-[359px]:px-2 max-[359px]:pb-2 max-[359px]:pt-2 sm:px-5 sm:pb-5 sm:pt-5">
+        <section className="relative overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
+          <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
+          <div className="relative mx-auto max-w-5xl px-4 py-9 text-center max-[359px]:px-3 max-[359px]:py-8 sm:px-8 sm:py-14">
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary shadow-elegant sm:gap-2 sm:px-4 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />{s.admission_badge}</span>
+            <h2 className="mt-3 font-display text-[1.45rem] font-bold leading-[1.2] sm:mt-4 sm:text-4xl lg:text-[2.75rem]">সন্তানের শিক্ষাযাত্রা<br className="sm:hidden" /> শুরু হোক এখানে</h2>
+            <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-gold sm:mt-4 sm:w-24" />
+            <p className="mx-auto mt-3 max-w-2xl text-[12.5px] leading-6 text-primary-foreground/90 sm:mt-4 sm:text-base sm:leading-8">{s.admission_badge} — আসন সীমিত। আজই অনলাইনে আবেদন করুন অথবা ক্যাম্পাস পরিদর্শন করুন।</p>
+            <div className="mt-4 flex flex-wrap justify-center gap-1.5 sm:mt-6 sm:gap-2.5">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[10.5px] font-semibold text-primary sm:px-4 sm:py-1.5 sm:text-xs"><GraduationCap className="size-3 sm:size-3.5" />কুরআন ও জাতীয় পাঠক্রম</span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[10.5px] font-semibold text-primary sm:px-4 sm:py-1.5 sm:text-xs"><HomeIcon className="size-3 sm:size-3.5" />পূর্ণাঙ্গ আবাসিক ব্যবস্থা</span>
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[10.5px] font-semibold text-primary sm:px-4 sm:py-1.5 sm:text-xs"><ShieldCheck className="size-3 sm:size-3.5" />২৪ ঘণ্টা নিরাপত্তা</span>
+            </div>
+            <div className="mt-6 flex flex-col gap-2.5 sm:mt-8 sm:flex-row sm:justify-center sm:gap-3">
+              <Button asChild size="lg" className="max-sm:h-10 max-sm:w-full max-sm:justify-center max-sm:text-[13px] bg-gold text-primary shadow-elegant hover:bg-gold-light"><Link to="/admission">অনলাইনে আবেদন করুন <ArrowRight className="size-4 rtl:rotate-180" /></Link></Button>
+              <Button asChild size="lg" variant="outline" className="max-sm:h-10 max-sm:w-full max-sm:justify-center max-sm:text-[13px] border-primary-foreground/60 bg-primary-foreground/10 text-primary-foreground hover:bg-primary-foreground hover:text-primary"><Link to="/contact">যোগাযোগ করুন</Link></Button>
+            </div>
+          </div>
+        </section>
+      </div>
     </Site>
   );
 }
