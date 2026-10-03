@@ -379,11 +379,11 @@ function Home() {
        <ContactSection />
 
       {/* Admission banner */}
-      <div className="px-2.5 pb-2.5 pt-2.5 max-[359px]:px-2 max-[359px]:pb-2 max-[359px]:pt-2 sm:px-5 sm:pb-5 sm:pt-5">
+      <div className="px-2.5 pb-8 pt-2.5 max-[359px]:px-2 max-[359px]:pb-6 max-[359px]:pt-2 sm:px-5 sm:pb-16 sm:pt-5">
         <section className="grid gap-2.5 max-[359px]:gap-2 sm:gap-4 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
           <div className="relative overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
             <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
-            <div className="absolute right-3 top-3 z-10 flex size-12 items-center justify-center rounded-2xl bg-gold shadow-elegant sm:right-5 sm:top-5 sm:size-14 sm:rounded-[1rem]">
+            <div className="absolute right-3 top-3 z-10 flex size-14 items-center justify-center rounded-2xl bg-gold shadow-elegant sm:right-5 sm:top-5 sm:size-14 sm:rounded-[1rem]">
               <GraduationCap className="size-6 text-primary sm:size-7" strokeWidth={1.75} />
             </div>
             <div className="relative flex h-full flex-col justify-center px-4 py-4 max-[359px]:px-3 sm:px-7 sm:py-6 lg:px-9">
