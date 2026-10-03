@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { ArrowRight, ArrowUpRight, Clock, Users, CalendarRange, GraduationCap, BookOpen, Sparkles, Phone, Check, Layers3 } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Clock, Users, GraduationCap, BookOpen, Sparkles, Phone, Check, Layers3 } from 'lucide-react';
 import { Site } from '@/components/Site';
 import { InstitutionSections, StatsBar } from '@/components/InstitutionSections';
 import { programs, facilityImages } from '@/lib/content';
