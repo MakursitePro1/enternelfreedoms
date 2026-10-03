@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState, type FormEvent } from 'react';
-import { ArrowLeft, ArrowRight, CheckCircle2, Search, Upload, FileText, X, ClipboardList, GraduationCap, FileCheck2, Wallet, Phone, MapPin, BadgeCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, Search, Upload, FileText, X, ClipboardList, FileCheck2, Phone, MapPin, BadgeCheck, ChevronRight } from 'lucide-react';
 import { useServerFn } from '@tanstack/react-start';
 import { Site, Heading } from '@/components/Site';
 import { FeeTable, StatsBar } from '@/components/InstitutionSections';
 import { useInstitutionContent } from '@/lib/institution-content';
 import { useSiteSettings, telHref } from '@/lib/site-settings';
-import { programs, admissionSteps, requiredDocs, eligibility, photos } from '@/lib/content';
+import { programs, admissionSteps, requiredDocs, eligibility, photos, facilityImages } from '@/lib/content';
 import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 import { submitAdmission, trackAdmission } from '@/lib/platform.functions';
@@ -69,42 +69,44 @@ function Admission() {
   }
   return (
     <Site>
-      {/* হিরো */}
-      <section className="bg-primary px-5 py-14 text-primary-foreground sm:py-20 lg:px-8">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 lg:grid-cols-2 lg:gap-12">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-primary sm:text-sm"><BadgeCheck className="size-4" />ভর্তি চলছে</span>
-            <h1 className="mt-5 font-display text-3xl font-semibold leading-tight sm:text-5xl">অনলাইন ভর্তি</h1>
-            <p className="mt-4 max-w-xl text-sm leading-7 text-primary-foreground/85 sm:text-base sm:leading-8">ভর্তির তথ্য জানতে বারবার ফোন করতে হবে না—বিভাগ, যোগ্যতা, ফি ও কাগজপত্র দেখে ঘরে বসেই চারটি সহজ ধাপে আবেদন করুন।</p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="bg-gold text-primary hover:bg-gold-light"><a href="#apply">এখনই আবেদন করুন <ArrowRight className="size-4 rtl:rotate-180" /></a></Button>
-              <Button asChild size="lg" variant="outline" className="border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"><a href={telHref(s.phone)}><Phone className="size-4" /> {s.phone}</a></Button>
+      {/* ভর্তি পৃষ্ঠার সূচনা */}
+      <div className="px-2.5 pt-2.5 sm:px-5 sm:pt-5">
+        <section className="relative overflow-hidden rounded-lg bg-primary text-primary-foreground sm:rounded-2xl">
+          <img src={photos[2]} alt="Eternal Freedom Institute Al Islamia-র শিক্ষার্থী ও শিক্ষকবৃন্দ" className="h-56 w-full object-cover object-center sm:h-80 lg:h-[440px]" />
+          <div className="relative mx-auto max-w-7xl px-5 py-7 sm:px-8 sm:py-10 lg:py-12">
+            <span className="inline-flex items-center gap-2 rounded-full bg-gold px-3 py-1 text-xs font-bold text-primary"><BadgeCheck className="size-4" />{s.admission_badge}</span>
+            <div className="mt-4 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p className="text-xs font-semibold text-gold-light sm:text-sm">ETERNAL FREEDOM INSTITUTE AL ISLAMIA</p>
+                <h1 className="mt-2 font-display text-3xl font-semibold leading-tight sm:text-5xl">অনলাইন ভর্তি</h1>
+                <p className="mt-3 max-w-2xl text-sm leading-7 sm:text-base sm:leading-8">আপনার সন্তানের নতুন শিক্ষাযাত্রার শুরু এখানেই। বিভাগ, যোগ্যতা, ফি ও কাগজপত্র দেখে ঘরে বসেই আবেদন করুন।</p>
+              </div>
+              <div className="flex shrink-0 flex-wrap gap-2.5">
+                <Button asChild size="lg" className="bg-gold text-primary hover:bg-gold-light"><a href="#apply">আবেদন শুরু করুন <ArrowRight className="size-4" /></a></Button>
+                <Button asChild size="lg" variant="outline" className="border-primary-foreground bg-primary text-primary-foreground hover:bg-primary-raised hover:text-primary-foreground"><a href={telHref(s.phone)}><Phone className="size-4" /> সরাসরি কথা বলুন</a></Button>
+              </div>
             </div>
-            <p className="mt-6 flex items-center gap-2 text-xs text-primary-foreground/70 sm:text-sm"><MapPin className="size-4 shrink-0 text-gold-light" />{s.address}</p>
+            <p className="mt-5 flex items-center gap-2 border-t border-primary-foreground/20 pt-4 text-xs sm:text-sm"><MapPin className="size-4 shrink-0 text-gold-light" />{s.address}</p>
           </div>
-          <div className="overflow-hidden rounded-3xl shadow-elegant">
-            <img src={photos[0]} alt="ভর্তি কার্যক্রম" className="aspect-[4/3] w-full object-cover sm:aspect-[16/10]" />
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      <StatsBar hero />
+      <div className="mx-auto max-w-7xl px-5 pt-5 sm:px-8"><div className="overflow-hidden rounded-lg bg-primary sm:rounded-xl"><StatsBar hero /></div></div>
 
-      {/* স্টিকি নেভি */}
-      <nav className="sticky top-[68px] z-30 border-b border-border bg-background px-5 lg:px-8" aria-label="ভর্তি পাতার অংশ">
-        <div className="mx-auto grid max-w-7xl grid-cols-4 gap-1 py-2 text-center text-xs sm:flex sm:overflow-x-auto sm:text-sm">{[['info', 'ভর্তি তথ্য'], ['programs', 'বিভাগ'], ['requirements', 'যোগ্যতা'], ['docs', 'কাগজপত্র'], ['fees', 'ফি'], ['apply', 'আবেদন'], ['track', 'ট্র্যাক']].map(([id, l]) => <a key={id} href={`#${id}`} className="rounded-md px-1 py-1.5 font-medium text-primary hover:bg-secondary sm:whitespace-nowrap sm:px-3">{l}</a>)}</div>
+      <nav className="sticky top-[68px] z-30 mt-5 border-y border-border bg-background px-5 lg:px-8" aria-label="ভর্তি পাতার অংশ">
+        <div className="mx-auto flex max-w-7xl gap-1 overflow-x-auto py-2 text-xs sm:gap-2 sm:text-sm">{[['info', 'ভর্তির ধাপ'], ['programs', 'বিভাগ'], ['requirements', 'যোগ্যতা'], ['docs', 'কাগজপত্র'], ['fees', 'ফি'], ['apply', 'আবেদন'], ['track', 'আবেদনের অবস্থা']].map(([id, l]) => <a key={id} href={`#${id}`} className="shrink-0 rounded-md px-3 py-2 font-semibold text-primary hover:bg-secondary">{l}</a>)}</div>
       </nav>
 
-      {/* ভর্তির ধাপ */}
+      {/* প্রক্রিয়া */}
       <section id="info" className="scroll-mt-32 px-5 py-14 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <Heading center eyebrow="ভর্তি তথ্য" title="চারটি সহজ ধাপে ভর্তি" description="আবেদন থেকে ভর্তি নিশ্চিত হওয়া পর্যন্ত পুরো প্রক্রিয়াটি সহজ ও স্বচ্ছ।" />
-          <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+          <div className="flex flex-wrap items-end justify-between gap-4"><Heading eyebrow="ভর্তির পথ" title="শুরু থেকে ভর্তি নিশ্চিত করা পর্যন্ত" description="কী করতে হবে, কখন করতে হবে—সব ধাপ এক জায়গায়।" /><a href="#apply" className="mb-10 inline-flex items-center gap-1.5 text-sm font-bold text-primary underline decoration-gold underline-offset-4">আবেদন ফর্মে যান <ArrowRight className="size-4" /></a></div>
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-4">
             {admissionSteps.map(([t, d], k) => (
-              <div key={t} className="rounded-2xl bg-secondary p-4 sm:p-7">
-                <div className="grid size-10 place-items-center rounded-full bg-primary font-display text-base text-gold-light sm:size-12 sm:text-xl">{bn(k + 1)}</div>
-                <h3 className="mt-3 font-display text-sm font-semibold text-primary sm:mt-5 sm:text-lg">{t}</h3>
-                <p className="mt-1.5 text-[11px] leading-5 text-muted-foreground sm:mt-2 sm:text-sm sm:leading-6">{d}</p>
+              <div key={t} className="min-w-0 rounded-lg border border-border bg-secondary p-3 sm:p-6">
+                <div className="flex items-center justify-between"><span className="font-display text-3xl font-bold text-gold-deep sm:text-5xl">{bn(k + 1)}</span><ArrowRight className="size-4 text-primary sm:size-5" /></div>
+                <h3 className="mt-5 font-display text-sm font-semibold leading-snug text-primary sm:text-lg">{t}</h3>
+                <p className="mt-2 text-xs leading-5 text-muted-foreground sm:text-sm sm:leading-6">{d}</p>
               </div>
             ))}
           </div>
@@ -114,46 +116,47 @@ function Admission() {
       {/* বিভাগ */}
       <section id="programs" className="scroll-mt-32 bg-secondary px-5 py-14 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <Heading eyebrow="বিভাগ" title="যে বিভাগগুলোতে ভর্তি চলছে" description="আপনার সন্তানের বয়স ও আগ্রহ অনুযায়ী বিভাগ বেছে নিন।" />
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          <Heading eyebrow="শিক্ষা কার্যক্রম" title="আপনার সন্তানের জন্য সঠিক বিভাগ" description="প্রতিটি বিভাগের পাঠ ও বয়সের তথ্য দেখে সিদ্ধান্ত নিন।" />
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-4">
             {programs.map((p) => (
-              <Link key={p.slug} to="/academics/$slug" params={{ slug: p.slug }} className="rounded-2xl bg-background p-4 shadow-elegant premium-card sm:p-5">
-                <GraduationCap className="size-5 text-gold sm:size-6" />
-                <h3 className="mt-2.5 text-sm font-semibold text-primary sm:mt-3 sm:text-base">{p.name}</h3>
-                <p className="mt-1 text-[11px] text-muted-foreground sm:text-xs">বয়স: {p.age}</p>
+              <Link key={p.slug} to="/academics/$slug" params={{ slug: p.slug }} className="group flex min-w-0 flex-col overflow-hidden rounded-lg bg-background transition-transform duration-300 hover:-translate-y-1">
+                <img src={p.image} alt={p.name} loading="lazy" className="aspect-[4/3] w-full object-cover" />
+                <div className="flex flex-1 flex-col p-3 sm:p-5"><span className="text-[10px] font-bold text-gold-deep sm:text-xs">{p.group} · {p.number}</span><h3 className="mt-2 font-display text-sm font-semibold leading-snug text-primary sm:text-base">{p.name}</h3><p className="mt-2 text-xs text-muted-foreground sm:text-sm">বয়স: {p.age}</p><span className="mt-auto flex items-center gap-1.5 pt-3 text-xs font-bold text-primary sm:text-sm">বিস্তারিত দেখুন <ChevronRight className="size-4" /></span></div>
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      {/* যোগ্যতা, কাগজপত্র, ফি */}
+      {/* যোগ্যতা এবং কাগজপত্র */}
       <section className="px-5 py-14 sm:py-20 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-4 sm:gap-6 lg:grid-cols-3">
-          <div id="requirements" className="scroll-mt-32 rounded-2xl bg-secondary p-5 sm:p-7">
-            <div className="grid size-11 place-items-center rounded-xl bg-primary sm:size-12"><ClipboardList className="size-5 text-gold-light sm:size-6" /></div>
-            <h2 className="mt-4 font-display text-xl font-semibold text-primary sm:text-2xl">ভর্তির যোগ্যতা</h2>
-            <ul className="mt-4 space-y-2.5">{eligibility.map((x) => <li key={x} className="flex gap-2 text-[13px] leading-6 text-muted-foreground sm:text-sm"><CheckCircle2 className="mt-0.5 size-4 shrink-0 text-gold" />{x}</li>)}</ul>
-          </div>
-          <div id="docs" className="scroll-mt-32 rounded-2xl bg-secondary p-5 sm:p-7">
-            <div className="grid size-11 place-items-center rounded-xl bg-primary sm:size-12"><FileCheck2 className="size-5 text-gold-light sm:size-6" /></div>
-            <h2 className="mt-4 font-display text-xl font-semibold text-primary sm:text-2xl">প্রয়োজনীয় কাগজপত্র</h2>
-            <ul className="mt-4 space-y-2.5">{requiredDocs.map((x) => <li key={x} className="flex gap-2 text-[13px] leading-6 text-muted-foreground sm:text-sm"><CheckCircle2 className="mt-0.5 size-4 shrink-0 text-gold" />{x}</li>)}</ul>
-          </div>
-          <div id="fees" className="scroll-mt-32">
-            <div className="mb-4 flex items-center gap-3">
-              <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-primary sm:size-12"><Wallet className="size-5 text-gold-light sm:size-6" /></div>
-              <h2 className="font-display text-xl font-semibold text-primary sm:text-2xl">ফি ও গুরুত্বপূর্ণ তথ্য</h2>
+        <div className="mx-auto max-w-7xl">
+          <Heading eyebrow="আবেদনের প্রস্তুতি" title="আবেদনের আগে যা জেনে নেবেন" description="যোগ্যতা ও প্রয়োজনীয় কাগজপত্র আগে দেখে নিলে আবেদন করা সহজ হবে।" />
+          <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
+            <div id="requirements" className="scroll-mt-32 border-t-2 border-primary pt-5">
+              <div className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-md bg-primary"><ClipboardList className="size-5 text-gold-light" /></span><h2 className="font-display text-xl font-semibold text-primary sm:text-2xl">ভর্তির যোগ্যতা</h2></div>
+              <ul className="mt-5 divide-y divide-border">{eligibility.map((x) => <li key={x} className="flex gap-3 py-3 text-sm leading-6 text-foreground"><CheckCircle2 className="mt-1 size-4 shrink-0 text-gold-deep" />{x}</li>)}</ul>
             </div>
-            <FeeTable />
+            <div id="docs" className="scroll-mt-32 border-t-2 border-primary pt-5">
+              <div className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-md bg-primary"><FileCheck2 className="size-5 text-gold-light" /></span><h2 className="font-display text-xl font-semibold text-primary sm:text-2xl">প্রয়োজনীয় কাগজপত্র</h2></div>
+              <ul className="mt-5 divide-y divide-border">{requiredDocs.map((x) => <li key={x} className="flex gap-3 py-3 text-sm leading-6 text-foreground"><CheckCircle2 className="mt-1 size-4 shrink-0 text-gold-deep" />{x}</li>)}</ul>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* ফি */}
+      <section id="fees" className="scroll-mt-32 bg-secondary px-5 py-14 sm:py-20 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[.75fr_1.25fr] lg:gap-14">
+          <div><Heading eyebrow="ফি সংক্রান্ত তথ্য" title="ফি ও গুরুত্বপূর্ণ তথ্য" description="আবেদনের আগে বিভাগের ফি ও সংশ্লিষ্ট তথ্য দেখে নিন।" /><div className="hidden overflow-hidden rounded-lg lg:block"><img src={facilityImages.classroom} alt="শ্রেণিকক্ষে পাঠরত শিক্ষার্থীরা" loading="lazy" className="aspect-[16/9] w-full object-cover" /></div></div>
+          <div className="min-w-0"><FeeTable /></div>
+        </div>
+      </section>
+
       {/* আবেদন ফর্ম + ট্র্যাক */}
-      <section id="apply" className="scroll-mt-32 bg-secondary px-5 py-14 sm:py-20 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-6 sm:gap-10 lg:grid-cols-[1.4fr_.6fr]">
-          <div className="rounded-3xl bg-background p-5 shadow-elegant sm:p-10">
+      <section id="apply" className="scroll-mt-32 px-5 py-14 sm:py-20 lg:px-8">
+        <div className="mx-auto grid max-w-7xl gap-7 lg:grid-cols-[minmax(0,1.5fr)_minmax(280px,.65fr)] lg:gap-10">
+          <div className="min-w-0 border-t-2 border-primary pt-5 sm:pt-7">
             {reference ? (
               <div className="py-6 text-center">
                 <div className="mx-auto grid size-20 place-items-center rounded-full bg-primary"><CheckCircle2 className="size-10 text-gold-light" /></div>
@@ -175,7 +178,7 @@ function Admission() {
                   {step === 2 && <div className="sm:col-span-2"><p className="mb-4 text-sm text-muted-foreground">ছবি ও কাগজপত্র যুক্ত করা ঐচ্ছিক, তবে দিলে ভর্তি দ্রুত হয়। (JPG/PNG/PDF, প্রতিটি ৩ MB পর্যন্ত)</p><div className="grid gap-3 sm:grid-cols-2">{docLabels.map((l) => { const d = docs.find((x) => x.label === l); return (
                     <div key={l} className={`rounded-xl border-2 border-dashed p-4 ${d ? 'border-primary bg-accent' : 'border-border'}`}>
                       <div className="text-sm font-semibold text-primary">{l}</div>
-                      {d ? <div className="mt-2 flex items-center justify-between gap-2 text-sm"><span className="flex min-w-0 items-center gap-2"><FileText className="size-4 shrink-0 text-gold" /><span className="truncate">{d.name}</span></span><button type="button" aria-label={`${l} সরান`} onClick={() => setDocs(docs.filter((x) => x.label !== l))}><X className="size-4" /></button></div>
+                      {d ? <div className="mt-2 flex items-center justify-between gap-2 text-sm"><span className="flex min-w-0 items-center gap-2"><FileText className="size-4 shrink-0 text-gold" /><span className="truncate">{d.name}</span></span><Button type="button" size="icon" variant="ghost" aria-label={`${l} সরান`} onClick={() => setDocs(docs.filter((x) => x.label !== l))}><X className="size-4" /></Button></div>
                         : <label className="mt-2 flex cursor-pointer items-center gap-2 text-sm text-muted-foreground hover:text-primary"><Upload className="size-4" />ফাইল নির্বাচন করুন<input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" className="sr-only" aria-label={`${l} আপলোড`} onChange={(e) => addDoc(l, e.target.files?.[0])} /></label>}
                     </div>
                   ); })}</div></div>}
@@ -187,21 +190,23 @@ function Admission() {
             </>)}
           </div>
           <aside id="track" className="h-fit scroll-mt-32 space-y-6">
-            <div className="rounded-2xl bg-primary p-6 text-primary-foreground shadow-elegant sm:p-7">
+            <div className="rounded-lg bg-primary p-5 text-primary-foreground sm:p-7">
               <h2 className="font-display text-xl sm:text-2xl">আবেদন ট্র্যাক করুন</h2>
               <p className="mt-2 text-xs leading-5 text-primary-foreground/75 sm:text-sm">আবেদন নম্বর ও অভিভাবকের ফোন দিয়ে সর্বশেষ অবস্থা জানুন।</p>
               <form onSubmit={lookup} className="mt-5 grid gap-3"><input aria-label="আবেদন নম্বর" placeholder="আবেদন নম্বর (EF-...)" required value={tracking.reference} onChange={(e) => setTracking({ ...tracking, reference: e.target.value })} className="min-w-0 rounded-lg bg-background px-4 py-3 text-foreground outline-none focus:ring-2 focus:ring-ring" /><input aria-label="অভিভাবকের ফোন" placeholder="অভিভাবকের ফোন" required value={tracking.phone} onChange={(e) => setTracking({ ...tracking, phone: e.target.value })} className="min-w-0 rounded-lg bg-background px-4 py-3 text-foreground outline-none focus:ring-2 focus:ring-ring" /><Button type="submit" disabled={busy} className="bg-gold text-primary hover:bg-gold-light"><Search className="size-4" /> খুঁজুন</Button></form>
               {tracked === null && <p className="mt-4 text-sm text-gold-light">এই নম্বর ও ফোন দিয়ে কোনো আবেদন পাওয়া যায়নি।</p>}
               {tracked && <p className="mt-4 rounded-lg bg-primary-foreground/10 p-3 text-sm">{tracked.student_name} · {tracked.program}<br />অবস্থা: <strong className="text-gold-light">{tracked.status}</strong></p>}
             </div>
-            {faqs.length > 0 && <div className="rounded-2xl bg-background p-6 shadow-elegant sm:p-7"><h2 className="font-display text-xl text-primary">ভর্তি সংক্রান্ত প্রশ্ন</h2><div className="mt-4 space-y-4">{faqs.map((f) => <div key={f.id}><div className="font-semibold text-primary">{f.title}</div><p className="mt-1 text-sm leading-6 text-muted-foreground">{f.body}</p></div>)}</div><Link to="/faq" className="mt-4 inline-block text-sm font-semibold text-primary underline decoration-gold underline-offset-4">সব প্রশ্ন দেখুন</Link></div>}
+            {faqs.length > 0 && <div className="border-t-2 border-primary pt-5 sm:pt-7"><h2 className="font-display text-xl text-primary">ভর্তি সংক্রান্ত প্রশ্ন</h2><div className="mt-4 space-y-4">{faqs.map((f) => <div key={f.id}><div className="font-semibold text-primary">{f.title}</div><p className="mt-1 text-sm leading-6 text-muted-foreground">{f.body}</p></div>)}</div><Link to="/faq" className="mt-4 inline-block text-sm font-semibold text-primary underline decoration-gold underline-offset-4">সব প্রশ্ন দেখুন</Link></div>}
           </aside>
         </div>
       </section>
 
       {/* সহায়তা ব্যানার */}
-      <section className="px-5 py-14 sm:py-20 lg:px-8">
-        <div className="mx-auto max-w-7xl rounded-3xl bg-primary p-7 text-primary-foreground shadow-elegant sm:p-12">
+      <section className="px-5 pb-10 pt-5 sm:pb-16 lg:px-8">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-lg bg-primary text-primary-foreground sm:rounded-xl">
+          <img src={facilityImages.quran} alt="কুরআন পাঠরত শিক্ষার্থীরা" loading="lazy" className="h-36 w-full object-cover sm:h-48" />
+          <div className="p-6 sm:p-10">
           <div className="grid items-center gap-6 lg:grid-cols-[1fr_auto]">
             <div>
               <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-primary">সহায়তা প্রয়োজন?</span>
@@ -212,6 +217,7 @@ function Admission() {
               <Button asChild size="lg" className="bg-gold text-primary hover:bg-gold-light"><a href={telHref(s.phone)}><Phone className="size-4" /> {s.phone}</a></Button>
               <Button asChild size="lg" variant="outline" className="border-primary-foreground/40 bg-transparent text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"><Link to="/contact">যোগাযোগ করুন</Link></Button>
             </div>
+          </div>
           </div>
         </div>
       </section>
