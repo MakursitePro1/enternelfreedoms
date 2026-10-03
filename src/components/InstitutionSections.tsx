@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { useInstitutionContent, parseLabeled, type ContentKind, type InstitutionItem } from '@/lib/institution-content';
 import { facilityImage, facilityImageList, initials, isDemo, photos, pick } from '@/lib/content';
 import { youtubeEmbed } from '@/lib/site-settings';
+import { teacherPath } from '@/lib/teacher-links';
 
 export function itemImage(item: InstitutionItem, index = 0) {
   if (item.image_url) return item.image_url;
@@ -64,7 +65,7 @@ export function StatsBar({ dark = false, hero = false }: { dark?: boolean; hero?
 export function TeacherCard({ item }: { item: InstitutionItem }) {
   const { fields } = parseLabeled(item.body);
   return (
-    <Link to="/teachers/$id" params={{ id: item.id }} className="group block h-full overflow-hidden rounded-xl border-[0.5px] border-border bg-card p-1 shadow-sm transition-transform duration-300 hover:-translate-y-0.5">
+    <Link to="/teachers/$id" params={{ id: teacherPath(item) }} className="group block h-full overflow-hidden rounded-xl border-[0.5px] border-border bg-card p-1 shadow-sm transition-transform duration-300 hover:-translate-y-0.5">
       <div className="flex h-full flex-col overflow-hidden rounded-[10px] bg-primary font-teacher text-primary-foreground">
         <div className="relative overflow-hidden">
           {item.image_url
