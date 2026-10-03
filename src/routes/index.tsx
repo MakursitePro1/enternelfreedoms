@@ -395,9 +395,9 @@ function Home() {
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[10.5px] font-semibold text-primary sm:px-4 sm:py-1.5 sm:text-xs"><ShieldCheck className="size-3 sm:size-3.5" />২৪ ঘণ্টা নিরাপত্তা</span>
               </div>
               </div>
-              <div className="hidden shrink-0 lg:flex lg:flex-col lg:items-center">
-                <div className="flex size-28 items-center justify-center rounded-[1.75rem] bg-gold shadow-elegant xl:size-32">
-                  <GraduationCap className="size-14 text-primary xl:size-16" strokeWidth={1.5} />
+              <div className="flex shrink-0 items-center">
+                <div className="flex size-14 items-center justify-center rounded-2xl bg-gold shadow-elegant sm:size-16 lg:size-20">
+                  <GraduationCap className="size-7 text-primary sm:size-8 lg:size-10" strokeWidth={1.75} />
                 </div>
               </div>
             </div>
