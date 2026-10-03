@@ -54,7 +54,7 @@ function Hero() {
           <div className="flex shrink-0 gap-1.5 sm:gap-2">{heroSlides.map((sl, k) => <button key={sl.src} type="button" aria-label={`ছবি ${k + 1}`} onClick={() => setI(k)} className={`h-1.5 rounded-full transition-all ${k === i ? 'w-8 bg-gold sm:w-10' : 'w-4 bg-primary-foreground/40 sm:w-5'}`} />)}</div>
         </div>
       </div>
-      <div className="relative w-full bg-primary/85 backdrop-blur-sm"><div className="mx-auto max-w-7xl sm:px-5 lg:px-8"><StatsBar hero /></div></div>
+      <div className="relative w-full px-2.5 pb-2.5 max-[359px]:px-2 max-[359px]:pb-2 sm:px-6 sm:pb-6 lg:px-8"><div className="mx-auto max-w-7xl overflow-hidden rounded-2xl bg-primary shadow-elegant sm:rounded-[1.25rem]"><StatsBar hero /></div></div>
     </section>
   );
 }
