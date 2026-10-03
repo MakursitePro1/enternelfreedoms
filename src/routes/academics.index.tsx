@@ -33,21 +33,21 @@ function AcademicsHero() {
   );
 }
 
-function ProgramCard({ p }: { p: (typeof programs)[number] }) {
+function ProgramCard({ p, featured = false }: { p: (typeof programs)[number]; featured?: boolean }) {
   return (
-    <Link to="/academics/$slug" params={{ slug: p.slug }} className="group grid min-w-0 grid-cols-[104px_minmax(0,1fr)] overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-elegant sm:flex sm:flex-col">
+    <Link to="/academics/$slug" params={{ slug: p.slug }} className={`group grid min-w-0 grid-cols-[104px_minmax(0,1fr)] overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-elegant ${featured ? 'sm:grid-cols-[32%_minmax(0,1fr)]' : 'sm:flex sm:flex-col'}`}>
       <div className="relative min-h-full overflow-hidden sm:min-h-0">
-        <img src={p.image} alt={p.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 sm:relative sm:aspect-[16/9]" />
+        <img src={p.image} alt={p.name} loading="lazy" className={`absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 ${featured ? '' : 'sm:relative sm:aspect-[16/9]'}`} />
         <span className="absolute left-2 top-2 rounded-md bg-gold px-2 py-0.5 font-display text-xs font-bold text-primary sm:left-3 sm:top-3">{p.number}</span>
       </div>
-      <div className="flex min-w-0 flex-col p-3.5 sm:flex-1 sm:p-4 lg:p-5">
+      <div className={`flex min-w-0 flex-col p-3.5 sm:flex-1 sm:p-4 lg:p-5 ${featured ? 'sm:justify-center' : ''}`}>
         <h3 className="font-display text-[15px] font-semibold leading-snug text-primary sm:text-lg">{p.name}</h3>
         <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground sm:mt-2 sm:text-[13px] sm:leading-6">{p.text}</p>
         <div className="mt-2 flex flex-wrap gap-x-3 gap-y-0.5 text-[11px] font-medium text-primary sm:mt-3 sm:text-xs">
           <span className="inline-flex items-center gap-1"><Users className="size-3 shrink-0 text-gold-deep" />{p.age}</span>
           <span className="inline-flex min-w-0 items-center gap-1"><Clock className="size-3 shrink-0 text-gold-deep" /><span className="truncate">{p.duration}</span></span>
         </div>
-        <span className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-primary group-hover:text-gold-deep sm:mt-auto sm:pt-3">বিস্তারিত দেখুন <ArrowUpRight className="size-3.5" /></span>
+        <span className={`mt-2 inline-flex items-center gap-1 text-xs font-bold text-primary group-hover:text-gold-deep sm:pt-3 ${featured ? '' : 'sm:mt-auto'}`}>বিস্তারিত দেখুন <ArrowUpRight className="size-3.5" /></span>
       </div>
     </Link>
   );
@@ -67,7 +67,7 @@ function GroupSection({ group, index }: { group: string; index: number }) {
           </div>
           <img src={image} alt="" loading="lazy" className="h-full w-full object-cover" />
         </div>
-        <div className="mt-4 grid gap-3 sm:mt-5 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">{items.map((p) => <ProgramCard key={p.slug} p={p} />)}</div>
+        <div className={`mt-4 grid gap-3 sm:mt-5 sm:gap-4 ${items.length === 1 ? '' : 'sm:grid-cols-2 lg:grid-cols-3'}`}>{items.map((p) => <ProgramCard key={p.slug} p={p} featured={items.length === 1} />)}</div>
       </div>
     </section>
   );
