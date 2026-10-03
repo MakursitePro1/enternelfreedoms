@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState, type FormEvent } from 'react';
-import { ArrowLeft, ArrowRight, CheckCircle2, Search, Upload, FileText, X, ClipboardList, FileCheck2, Wallet, Phone, MapPin, BadgeCheck, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, Search, Upload, FileText, X, ClipboardList, FileCheck2, Phone, MapPin, BadgeCheck, ChevronRight } from 'lucide-react';
 import { useServerFn } from '@tanstack/react-start';
 import { Site, Heading } from '@/components/Site';
 import { FeeTable, StatsBar } from '@/components/InstitutionSections';
@@ -100,7 +100,7 @@ function Admission() {
       {/* প্রক্রিয়া */}
       <section id="info" className="scroll-mt-32 px-5 py-14 sm:py-20 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <div className="flex flex-wrap items-end justify-between gap-4"><Heading eyebrow="ভর্তির পথ" title="শুরু থেকে ভর্তি নিশ্চিত করা পর্যন্ত" description="কী করতে হবে, কখন করতে হবে—সব ধাপ এক জায়গায়।" /><a href="#apply" className="inline-flex items-center gap-1.5 pb-2 text-sm font-bold text-primary underline decoration-gold underline-offset-4">আবেদন ফর্মে যান <ArrowRight className="size-4" /></a></div>
+          <div className="flex flex-wrap items-end justify-between gap-4"><Heading eyebrow="ভর্তির পথ" title="শুরু থেকে ভর্তি নিশ্চিত করা পর্যন্ত" description="কী করতে হবে, কখন করতে হবে—সব ধাপ এক জায়গায়।" /><a href="#apply" className="mb-10 inline-flex items-center gap-1.5 text-sm font-bold text-primary underline decoration-gold underline-offset-4">আবেদন ফর্মে যান <ArrowRight className="size-4" /></a></div>
           <div className="grid grid-cols-2 gap-2.5 sm:gap-4 lg:grid-cols-4">
             {admissionSteps.map(([t, d], k) => (
               <div key={t} className="min-w-0 rounded-lg border border-border bg-secondary p-3 sm:p-6">
@@ -178,7 +178,7 @@ function Admission() {
                   {step === 2 && <div className="sm:col-span-2"><p className="mb-4 text-sm text-muted-foreground">ছবি ও কাগজপত্র যুক্ত করা ঐচ্ছিক, তবে দিলে ভর্তি দ্রুত হয়। (JPG/PNG/PDF, প্রতিটি ৩ MB পর্যন্ত)</p><div className="grid gap-3 sm:grid-cols-2">{docLabels.map((l) => { const d = docs.find((x) => x.label === l); return (
                     <div key={l} className={`rounded-xl border-2 border-dashed p-4 ${d ? 'border-primary bg-accent' : 'border-border'}`}>
                       <div className="text-sm font-semibold text-primary">{l}</div>
-                      {d ? <div className="mt-2 flex items-center justify-between gap-2 text-sm"><span className="flex min-w-0 items-center gap-2"><FileText className="size-4 shrink-0 text-gold" /><span className="truncate">{d.name}</span></span><button type="button" aria-label={`${l} সরান`} onClick={() => setDocs(docs.filter((x) => x.label !== l))}><X className="size-4" /></button></div>
+                      {d ? <div className="mt-2 flex items-center justify-between gap-2 text-sm"><span className="flex min-w-0 items-center gap-2"><FileText className="size-4 shrink-0 text-gold" /><span className="truncate">{d.name}</span></span><Button type="button" size="icon" variant="ghost" aria-label={`${l} সরান`} onClick={() => setDocs(docs.filter((x) => x.label !== l))}><X className="size-4" /></Button></div>
                         : <label className="mt-2 flex cursor-pointer items-center gap-2 text-sm text-muted-foreground hover:text-primary"><Upload className="size-4" />ফাইল নির্বাচন করুন<input type="file" accept="image/jpeg,image/png,image/webp,application/pdf" className="sr-only" aria-label={`${l} আপলোড`} onChange={(e) => addDoc(l, e.target.files?.[0])} /></label>}
                     </div>
                   ); })}</div></div>}
