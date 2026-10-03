@@ -51,14 +51,14 @@ function QuestionCard({ q, index }: { q: (typeof parentQuestions)[number]; index
 
 function FacilityCard({ f, index }: { f: InstitutionItem; index: number }) {
   return (
-    <article className="group grid h-full min-w-0 grid-cols-[100px_minmax(0,1fr)] overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-elegant sm:flex sm:flex-col">
-      <div className="relative min-h-[110px] overflow-hidden sm:aspect-[4/3] sm:min-h-0">
+    <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-elegant">
+      <div className="relative aspect-[4/3] overflow-hidden">
         <img src={itemImage(f, index)} alt={f.title} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
         <span className="absolute left-2 top-2 rounded-md bg-gold px-2 py-0.5 font-display text-[11px] font-bold text-primary sm:left-3 sm:top-3 sm:text-xs">{bn(index + 1)}</span>
       </div>
-      <div className="flex min-w-0 flex-1 flex-col justify-center p-3.5 sm:justify-start sm:p-4 lg:p-5">
-        <div className="flex items-start justify-between gap-2"><h3 className="font-display text-[15px] font-semibold leading-snug text-primary sm:text-base lg:text-lg">{f.title}</h3><DemoNote show={isDemo(f.slug)} /></div>
-        <p className="mt-1 line-clamp-2 text-xs leading-5 text-muted-foreground sm:mt-1.5 sm:text-[13px] sm:leading-6">{f.body}</p>
+      <div className="flex min-w-0 flex-1 flex-col p-2.5 sm:p-4 lg:p-5">
+        <div className="flex items-start justify-between gap-2"><h3 className="font-display text-[13px] font-semibold leading-snug text-primary sm:text-base lg:text-lg">{f.title}</h3><DemoNote show={isDemo(f.slug)} /></div>
+        <p className="mt-1 line-clamp-2 text-[11px] leading-4 text-muted-foreground sm:mt-1.5 sm:text-[13px] sm:leading-6">{f.body}</p>
         {f.detail && <ul className="mt-2 hidden gap-1 sm:grid">{f.detail.split(',').slice(0, 3).map((b) => <li key={b} className="flex items-center gap-1.5 text-[11px] font-medium text-primary"><Check className="size-3.5 shrink-0 text-gold-deep" />{b.trim()}</li>)}</ul>}
       </div>
     </article>
@@ -105,12 +105,12 @@ function Residential() {
               </div>
             </div>
           </div>
-          <div className="grid min-w-0 gap-3 sm:grid-cols-3 sm:gap-4">
+          <div className="grid min-w-0 grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-4">
             {facilities.slice(0, 3).map((f, k) => <FacilityCard key={f.id} f={f} index={k} />)}
           </div>
         </div>
         {facilities.length > 3 && (
-          <div className="mt-3 grid gap-3 sm:mt-4 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+          <div className="mt-2.5 grid grid-cols-2 gap-2.5 sm:mt-4 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
             {facilities.slice(3).map((f, k) => <FacilityCard key={f.id} f={f} index={k + 3} />)}
           </div>
         )}
