@@ -208,8 +208,9 @@ function Admission() {
       </section>
 
       {/* আবেদন ফর্ম + ট্র্যাক */}
-      <div id="apply" className="scroll-mt-32 bg-secondary px-2.5 py-10 sm:px-5 sm:py-20 lg:px-8">
-        <section className="mx-auto grid max-w-7xl gap-2.5 sm:gap-5 lg:grid-cols-[minmax(0,1.55fr)_minmax(300px,.7fr)]">
+      <div id="apply" className="relative scroll-mt-32 bg-primary px-2.5 py-10 sm:px-5 sm:py-20 lg:px-8">
+        <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
+        <section className="relative mx-auto grid max-w-7xl gap-2.5 sm:gap-5 lg:grid-cols-[minmax(0,1.55fr)_minmax(300px,.7fr)]">
           <div className="min-w-0 rounded-[0.75rem] bg-background p-4 shadow-elegant sm:rounded-[1.25rem] sm:p-8 lg:p-10">
             {reference ? (
               <div className="py-6 text-center">
