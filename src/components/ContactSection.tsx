@@ -8,7 +8,7 @@ const CONTACT_MAP_EMBED = 'https://www.google.com/maps?q=24.4569854,90.5514883&z
 
 function InfoRow({ icon: Icon, label, children, href }: { icon: typeof MapPin; label: string; children: React.ReactNode; href?: string }) {
   const body = (
-    <div className="group flex items-center gap-3 rounded-2xl bg-secondary/70 px-3.5 py-3 transition-colors hover:bg-secondary sm:gap-4 sm:px-4">
+    <div className="group flex items-center gap-3 rounded-2xl border border-primary/10 bg-secondary/70 px-3.5 py-3 transition-colors hover:bg-secondary sm:gap-4 sm:px-4">
       <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-gold text-primary transition-colors group-hover:bg-gold-light sm:size-11">
         <Icon className="size-4.5" />
       </span>
@@ -60,15 +60,17 @@ export function ContactSection() {
               )}
             </div>
 
-            <div className="mt-4 overflow-hidden rounded-2xl bg-secondary shadow-md ring-1 ring-primary/5">
+            <div className="mt-4 overflow-hidden rounded-2xl border border-primary/10 bg-secondary shadow-md">
               <div className="flex items-center justify-between gap-3 px-4 py-2.5 sm:px-5">
                 <p className="flex items-center gap-2 text-sm font-bold text-primary"><MapPin className="size-4 text-gold-deep" /> প্রতিষ্ঠানের অবস্থান</p>
                 <span className="rounded-full bg-gold/20 px-2.5 py-1 text-[11px] font-bold text-gold-deep">লাইভ ম্যাপ</span>
               </div>
-              <iframe title="Eternal Freedom Institute Al Islamia-এর অবস্থান" src={CONTACT_MAP_EMBED} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-40 w-full border-0 sm:h-48 lg:h-56" />
-              <a href={CONTACT_MAP_URL} target="_blank" rel="noreferrer" className="flex items-center justify-between gap-3 bg-gold px-4 py-3 text-sm font-bold text-primary transition-colors hover:bg-gold-light sm:px-5">
-                <span>গুগল ম্যাপে সঠিক অবস্থান দেখুন</span><ArrowUpRight className="size-4 shrink-0" />
-              </a>
+              <div className="relative">
+                <iframe title="Eternal Freedom Institute Al Islamia-এর অবস্থান" src={CONTACT_MAP_EMBED} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-40 w-full border-0 sm:h-48 lg:h-56" />
+                <a href={CONTACT_MAP_URL} target="_blank" rel="noreferrer" className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-gold px-4 py-2 text-[13px] font-bold text-primary shadow-lg ring-2 ring-background/60 transition-all hover:-translate-y-0.5 hover:bg-gold-light sm:px-5 sm:py-2.5 sm:text-sm">
+                  <MapPin className="size-4 shrink-0" /> গুগল ম্যাপে সঠিক অবস্থান দেখুন <ArrowUpRight className="size-4 shrink-0" />
+                </a>
+              </div>
             </div>
           </div>
 
