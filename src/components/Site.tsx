@@ -177,7 +177,6 @@ export function Site({ children }: { children: ReactNode }) {
         </div>
         <div className="relative border-t border-primary-foreground/15 px-5 py-5 text-center text-xs opacity-70">
           © {new Date().getFullYear()} Eternal Freedom Institute Al Islamia. {t('সর্বস্বত্ব সংরক্ষিত।')}
-          <Link to="/admin" className="ms-3 hover:underline">{t('অ্যাডমিন')}</Link>
         </div>
       </footer>
     </div>
