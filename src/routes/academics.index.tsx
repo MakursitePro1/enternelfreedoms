@@ -112,7 +112,7 @@ function Academics() {
         <div className="mx-auto grid max-w-7xl overflow-hidden rounded-xl bg-secondary lg:grid-cols-[44%_56%] lg:rounded-[1.25rem]">
           <div className="relative min-h-48 sm:min-h-64 lg:min-h-full">
             <img src={facilityImages.library} alt="প্রতিষ্ঠানের লাইব্রেরি" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-            <span className="absolute bottom-3 left-3 rounded-lg bg-gold px-3 py-1.5 text-xs font-bold text-primary sm:bottom-5 sm:left-5 sm:text-sm">{programs.length.toLocaleString('bn-BD')}টি বিভাগ ও কার্যক্রম</span>
+            <span className="absolute bottom-3 left-3 rounded-lg bg-gold px-3 py-1.5 text-xs font-bold text-primary sm:bottom-5 sm:left-5 sm:text-sm">{bn(programs.length)}টি বিভাগ ও কার্যক্রম</span>
           </div>
           <div className="p-5 sm:p-8 lg:p-10">
             <span className="inline-flex items-center gap-2 rounded-full bg-primary px-3 py-1 text-xs font-bold text-gold"><BookOpen className="size-3.5" />পাঠক্রমের বৈশিষ্ট্য</span>
