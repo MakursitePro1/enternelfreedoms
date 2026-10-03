@@ -27,40 +27,40 @@ export function FeaturedBookBanner() {
   const s = slides[i]!;
   const Icon = s.icon;
   return (
-    <section className="px-2.5 py-12 sm:px-5 sm:py-16 lg:py-20">
-      <div className="islamic-pattern relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-primary p-4 text-primary-foreground shadow-elegant sm:p-8 lg:p-12">
-        <div className="relative grid items-center gap-6 sm:gap-8 md:grid-cols-[1.1fr_.9fr] lg:gap-14">
+    <section className="px-2.5 py-8 sm:px-5 sm:py-16 lg:py-20">
+      <div className="islamic-pattern relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-primary p-3.5 text-primary-foreground shadow-elegant sm:p-8 lg:p-12">
+        <div className="relative grid items-center gap-4 sm:gap-8 md:grid-cols-[1.1fr_.9fr] lg:gap-14">
           <div className="order-2 md:order-1">
-            <span className="inline-flex items-center gap-2 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary sm:text-xs"><span className="size-1.5 rounded-full bg-primary" />বিশেষ প্রকাশনা</span>
-            <h2 className="mt-3 font-display text-2xl font-bold leading-tight sm:mt-4 sm:text-4xl lg:text-5xl"><span className="text-gold">Magic English</span><br />Spoken & Written</h2>
-            <p className="mt-1.5 text-xs text-primary-foreground/80 sm:mt-2 sm:text-sm">লেখক: {book.author}</p>
+            <span className="inline-flex items-center gap-2 rounded-full bg-gold px-2.5 py-1 text-[10px] font-bold text-primary sm:px-3 sm:text-xs"><span className="size-1.5 rounded-full bg-primary" />বিশেষ প্রকাশনা</span>
+            <h2 className="mt-2 font-display text-xl font-bold leading-tight sm:mt-4 sm:text-4xl lg:text-5xl"><span className="text-gold">Magic English</span><br />Spoken & Written</h2>
+            <p className="mt-1 text-[11px] text-primary-foreground/80 sm:mt-2 sm:text-sm">লেখক: {book.author}</p>
 
-            <div className="mt-4 min-h-[132px] rounded-2xl bg-primary-raised p-4 sm:mt-6 sm:min-h-[140px] sm:p-5">
+            <div className="mt-3 min-h-[104px] rounded-2xl bg-primary-raised p-3 sm:mt-6 sm:min-h-[140px] sm:p-5">
               <div key={i} className="fade-slide">
-                <div className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-wide text-gold sm:text-xs"><Icon className="size-3.5 sm:size-4" />{s.tag}</div>
-                <h3 className="mt-1.5 font-display text-base font-semibold sm:mt-2 sm:text-lg lg:text-xl">{s.title}</h3>
-                <p className="mt-1 text-xs leading-5 text-primary-foreground/80 sm:mt-1.5 sm:text-sm sm:leading-6">{s.text}</p>
+                <div className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-wide text-gold sm:text-xs"><Icon className="size-3.5 sm:size-4" />{s.tag}</div>
+                <h3 className="mt-1 font-display text-sm font-semibold sm:mt-2 sm:text-lg lg:text-xl">{s.title}</h3>
+                <p className="mt-1 text-[11px] leading-5 text-primary-foreground/80 sm:mt-1.5 sm:text-sm sm:leading-6">{s.text}</p>
               </div>
-              <div className="mt-3 flex gap-1.5 sm:mt-4">
+              <div className="mt-2.5 flex gap-1.5 sm:mt-4">
                 {slides.map((x, k) => <button key={x.tag} type="button" aria-label={`স্লাইড ${k + 1}`} onClick={() => setI(k)} className={`h-1.5 rounded-full transition-all ${k === i ? 'w-8 bg-gold' : 'w-3 bg-primary-foreground/30'}`} />)}
               </div>
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center gap-3 sm:mt-6 sm:gap-4">
-              <div><div className="text-[11px] text-primary-foreground/70 sm:text-xs">মূল্য</div><div className="font-display text-2xl font-bold text-gold sm:text-3xl lg:text-4xl">৳ {Number(book.price).toLocaleString('bn-BD')}</div></div>
+            <div className="mt-3.5 grid gap-2.5 sm:mt-6 sm:flex sm:flex-wrap sm:items-center sm:gap-4">
+              <div><div className="text-[10px] text-primary-foreground/70 sm:text-xs">মূল্য</div><div className="font-display text-xl font-bold text-gold sm:text-3xl lg:text-4xl">৳ {Number(book.price).toLocaleString('bn-BD')}</div></div>
               <div className="flex flex-wrap gap-2 sm:gap-2.5">
-                <Button asChild size="lg" className="bg-gold px-4 text-sm text-primary hover:bg-gold-light sm:px-6 sm:text-base"><Link to="/books/$id" params={{ id: book.id }}><ShoppingBag className="size-4" />এখনই অর্ডার করুন</Link></Button>
-                <Button asChild size="lg" variant="secondary" className="px-4 text-sm sm:px-6 sm:text-base"><Link to="/books/$id" params={{ id: book.id }}>বিস্তারিত<ArrowRight className="size-4" /></Link></Button>
+                <Button asChild size="lg" className="bg-gold px-3.5 text-xs text-primary hover:bg-gold-light sm:px-6 sm:text-base"><Link to="/books/$id" params={{ id: book.id }}><ShoppingBag className="size-4" />এখনই অর্ডার করুন</Link></Button>
+                <Button asChild size="lg" variant="secondary" className="px-3.5 text-xs sm:px-6 sm:text-base"><Link to="/books/$id" params={{ id: book.id }}>বিস্তারিত<ArrowRight className="size-4" /></Link></Button>
               </div>
             </div>
-            <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 text-[11px] text-primary-foreground/85 sm:mt-5 sm:gap-x-5 sm:text-xs">
+            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[10px] text-primary-foreground/85 sm:mt-5 sm:gap-x-5 sm:text-xs">
               {['ক্যাশ অন ডেলিভারি', 'বিকাশ / নগদ', 'সারাদেশে হোম ডেলিভারি'].map((t) => <span key={t} className="flex items-center gap-1.5"><CheckCircle2 className="size-3.5 text-gold sm:size-4" />{t}</span>)}
             </div>
           </div>
 
-          <Link to="/books/$id" params={{ id: book.id }} className="group order-1 mx-auto w-full max-w-[210px] sm:max-w-[260px] md:order-2 md:max-w-[320px] lg:max-w-[400px]">
-            <div className="rounded-[1.5rem] bg-gold p-2 sm:p-2.5 shadow-elegant transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-1">
-              <img src={book.cover_url ?? cover.url} alt={book.title} className="aspect-[657/906] w-full rounded-2xl object-cover" />
+          <Link to="/books/$id" params={{ id: book.id }} className="group order-1 mx-auto w-full max-w-[150px] sm:max-w-[260px] md:order-2 md:max-w-[320px] lg:max-w-[400px]">
+            <div className="rounded-[1.5rem] bg-gold p-1.5 sm:p-2.5 shadow-elegant transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-1">
+              <img src={book.cover_url ?? cover.url} alt={book.title} className="aspect-[657/906] w-full rounded-xl sm:rounded-2xl object-cover" />
             </div>
           </Link>
         </div>
