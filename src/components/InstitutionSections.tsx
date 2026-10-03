@@ -154,7 +154,7 @@ export function TestimonialSlider() {
       </div>
       <div className="grid gap-3 lg:content-start">
         {embed ? <div className="aspect-video overflow-hidden rounded-2xl bg-primary"><iframe title={cur.title} src={embed} loading="lazy" allowFullScreen className="h-full w-full" /></div> : items.slice(0, 4).map((t, k) => (
-          <button key={t.id} type="button" onClick={() => setI(k)} className={`flex h-[76px] items-center gap-3 rounded-2xl px-4 text-start transition-colors ${k === i % items.length ? 'bg-primary text-primary-foreground' : 'bg-background hover:bg-accent'}`}>
+          <button key={t.id} type="button" onClick={() => setI(k)} className={`flex h-[76px] items-center gap-3 rounded-2xl border-2 px-4 text-start text-foreground transition-colors ${k === i % items.length ? 'border-gold bg-background' : 'border-transparent bg-background hover:bg-accent'}`}>
             <div className={`grid size-10 shrink-0 place-items-center rounded-full font-display ${k === i % items.length ? 'bg-gold text-primary' : 'bg-secondary text-primary'}`}>{initials(t.title)}</div>
             <div className="min-w-0"><div className="truncate font-semibold">{t.title}</div><div className="truncate text-xs opacity-70">{t.detail}</div></div>
           </button>
