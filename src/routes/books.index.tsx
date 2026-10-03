@@ -112,7 +112,7 @@ function Books() {
   async function checkOrder(e: FormEvent) { e.preventDefault(); setTrackingError(''); try { const found = await lookup({ data: tracking }); setTracked(found); if (!found) setTrackingError('এই নম্বরের সঙ্গে অর্ডার নম্বর মেলেনি।'); } catch { setTrackingError('অর্ডারের তথ্য পাওয়া যায়নি।'); } }
   const magic = books.find((book) => book.slug === 'magic-english');
   const catalogue = [
-    ...books.map((book, index) => ({ key: book.id, title: book.title, author: book.author ?? '', description: book.description, category: book.slug === 'magic-english' ? 'ইংরেজি শিক্ষা' : 'অন্যান্য', art: coverFor(book, index), light: false, book })),
+    ...books.map((book, index) => ({ key: book.id, title: book.title, author: book.author ?? '', description: book.description, category: categoryBySlug[book.slug ?? ''] ?? 'অন্যান্য', art: coverFor(book, index), light: false, book })),
     ...upcoming.filter((item) => !books.some((book) => book.title === item.title)).map((item) => ({ ...item, key: item.title, book: null as Book | null })),
   ];
   const filtered = catalogue.filter((item) => (category === 'সব বই' || item.category === category) && `${item.title} ${item.author} ${item.description}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()));
