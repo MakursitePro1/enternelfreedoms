@@ -38,7 +38,7 @@ export function ContactForm() {
       <label className="text-sm font-semibold text-gold-light">মোবাইল নম্বর *<input required type="tel" placeholder="01XXXXXXXXX" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={input} /></label>
       <label className="text-sm font-semibold text-gold-light">ইমেইল<input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={input} /></label>
       <label className="text-sm font-semibold text-gold-light">বিষয়<select value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} className={input}>{subjects.map((s) => <option key={s}>{s}</option>)}</select></label>
-      <label className="text-sm font-semibold text-gold-light sm:col-span-2">বার্তা *<textarea required minLength={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={`${input} min-h-28 resize-y`} /></label>
+      <label className="text-sm font-semibold text-gold-light sm:col-span-2">বার্তা *<textarea required minLength={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={`${input} min-h-24 resize-y`} /></label>
       {error && <p role="alert" className="text-sm font-semibold text-gold sm:col-span-2">{error}</p>}
       <div className="pt-1 sm:col-span-2"><Button type="submit" size="lg" disabled={busy} className="w-full bg-gold text-primary hover:bg-gold-light sm:w-auto"><Send className="size-4" />{busy ? 'পাঠানো হচ্ছে...' : t('বার্তা পাঠান')}</Button></div>
     </form>
