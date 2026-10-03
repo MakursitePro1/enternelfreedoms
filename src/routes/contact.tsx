@@ -1,5 +1,3 @@
-// ============= Full file contents =============
-
 import { createFileRoute } from '@tanstack/react-router';
 import { MapPin, Phone, Mail, Clock, Navigation } from 'lucide-react';
 import { Site, PageIntro, Heading } from '@/components/Site';
