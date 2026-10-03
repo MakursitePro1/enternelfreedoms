@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { ChevronLeft, ChevronRight, X, PlayCircle, Images, Sparkles, ArrowRight, Phone, ZoomIn } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, PlayCircle, Images, Sparkles, ArrowRight, Phone, ZoomIn, GraduationCap, ShieldCheck, Home as HomeIcon, Camera, Clapperboard } from 'lucide-react';
 import { Site, PageIntro, Heading } from '@/components/Site';
 import { StatsBar } from '@/components/InstitutionSections';
 import { Button } from '@/components/ui/button';
@@ -25,6 +25,8 @@ function Gallery() {
   const [view, setView] = useState<number | null>(null);
   const list = cat === 'সব' ? images : images.filter((i) => i.category === cat);
   const mainVideo = s.video_url ? youtubeEmbed(s.video_url) : null;
+  const featured = images.slice(0, 7);
+  const marqueeImgs = images.slice(0, 14);
   useEffect(() => {
     if (view === null) return;
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setView(null); if (e.key === 'ArrowRight') setView((v) => (v === null ? v : (v + 1) % list.length)); if (e.key === 'ArrowLeft') setView((v) => (v === null ? v : (v - 1 + list.length) % list.length)); };
@@ -36,59 +38,134 @@ function Gallery() {
       <PageIntro eyebrow="গ্যালারি" title="প্রতিষ্ঠানের বাস্তব পরিবেশ" description="প্রতিষ্ঠানের বাস্তব ছবিই আমাদের সবচেয়ে বড় আস্থার প্রমাণ। ক্যাম্পাস, শ্রেণিকক্ষ, আবাসিক জীবন ও শিক্ষার্থীদের কার্যক্রমের একঝাঁক মুহূর্ত।" image={facilityImages.quran} />
       <div className="relative w-full px-2.5 pb-2.5 max-[359px]:px-2 max-[359px]:pb-2 sm:px-6 sm:pb-6 lg:px-8"><div className="mx-auto max-w-7xl overflow-hidden rounded-2xl bg-primary shadow-elegant sm:rounded-[1.25rem]"><StatsBar hero /></div></div>
 
-      {/* ফটো গ্যালারি */}
-      <section className="px-2.5 py-10 sm:px-5 sm:py-16 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <Heading eyebrow="ফটো গ্যালারি" title="মুহূর্তগুলোর অ্যালবাম" description="বিভাগ বেছে নিন — প্রতিটি ছবিতে ক্লিক করলে বড় করে দেখতে পারবেন।" />
-          <div className="mb-6 flex flex-wrap items-center gap-2 sm:mb-8">
-            {['সব', ...galleryCategories].map((c) => (
-              <button key={c} type="button" onClick={() => { setCat(c); setView(null); }} className={`rounded-full border px-3 py-1.5 text-[11px] font-bold transition-colors sm:px-4 sm:py-2 sm:text-sm ${cat === c ? 'border-gold bg-primary text-gold-light' : 'border-gold/50 bg-card text-primary hover:bg-accent'}`}>{c}</button>
-            ))}
-          </div>
-          <p className="mb-4 flex items-center gap-2 text-xs font-semibold text-muted-foreground sm:mb-6 sm:text-sm"><Images className="size-4 text-gold-deep" />{cat === 'সব' ? 'সব বিভাগ' : cat} — {bn(list.length)}টি ছবি</p>
-          {list.length ? (
-            <div className="columns-2 gap-2.5 sm:columns-2 sm:gap-4 lg:columns-3">
-              {list.map((img, k) => (
-                <button key={img.src + k} type="button" onClick={() => setView(k)} className="group relative mb-2.5 block w-full overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-shadow duration-300 break-inside-avoid hover:shadow-elegant sm:mb-4 sm:rounded-2xl">
-                  <img src={img.src} alt={img.alt} loading="lazy" className={`w-full object-cover transition-transform duration-700 group-hover:scale-105 ${k % 3 === 0 ? 'aspect-[4/5]' : 'aspect-[4/3]'}`} />
-                  <span className="absolute end-1.5 top-1.5 grid size-7 place-items-center rounded-full bg-gold text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:end-2.5 sm:top-2.5 sm:size-9"><ZoomIn className="size-3.5 sm:size-4.5" /></span>
-                  <span className="absolute inset-x-0 bottom-0 translate-y-full bg-primary p-2 text-start transition-transform duration-300 group-hover:translate-y-0 sm:p-3.5">
-                    <span className="block text-[9px] font-bold text-gold-light sm:text-xs">{img.category}</span>
-                    <span className="block truncate text-[11px] font-semibold text-primary-foreground sm:text-sm">{img.alt}</span>
-                  </span>
+      {/* নির্বাচিত মুহূর্ত — মোজাইক */}
+      <div className="px-2.5 py-2.5 sm:px-5 sm:py-5">
+        <section className="relative overflow-hidden rounded-[0.75rem] bg-primary py-8 text-primary-foreground shadow-elegant max-[359px]:py-6 sm:rounded-[1.25rem] sm:py-12">
+          <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
+          <div className="relative mx-auto max-w-7xl px-3 sm:px-8 lg:px-10">
+            <Heading compact light eyebrow="নির্বাচিত মুহূর্ত" title="এক নজরে আমাদের প্রতিষ্ঠান" description="সবচেয়ে সুন্দর কয়েকটি মুহূর্ত — ক্লিক করলে বড় করে দেখতে পারবেন।" />
+            <div className="grid auto-rows-[130px] grid-cols-2 gap-2 max-[359px]:auto-rows-[110px] max-[359px]:gap-1.5 sm:auto-rows-[190px] sm:gap-3 md:grid-cols-4">
+              {featured.map((g, k) => (
+                <button key={g.src + k} type="button" onClick={() => { setCat('সব'); setView(k); }} className={`group relative min-w-0 overflow-hidden rounded-lg shadow-elegant max-[359px]:rounded-md sm:rounded-2xl ${k === 0 ? 'col-span-2 row-span-2' : ''}`}>
+                  <img src={g.src} alt={g.alt} loading={k > 2 ? 'lazy' : undefined} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <span className="absolute bottom-2 start-2 max-w-[calc(100%-1rem)] truncate rounded-full bg-background/90 px-2 py-0.5 text-[9.5px] font-semibold text-primary sm:bottom-3 sm:start-3 sm:px-3 sm:py-1 sm:text-xs">{g.category}</span>
+                  <span className="absolute end-2 top-2 grid size-7 place-items-center rounded-full bg-gold text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:end-3 sm:top-3 sm:size-9"><ZoomIn className="size-3.5 sm:size-4.5" /></span>
                 </button>
               ))}
             </div>
-          ) : <p className="rounded-2xl bg-secondary p-10 text-center text-muted-foreground">এই বিভাগের ছবি শীঘ্রই যুক্ত করা হবে।</p>}
-        </div>
-      </section>
+          </div>
+        </section>
+      </div>
 
-      {/* ভিডিও গ্যালারি */}
-      <section className="bg-primary px-2.5 py-12 text-primary-foreground sm:px-5 sm:py-20 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <Heading light eyebrow="ভিডিও" title="ক্যাম্পাস ট্যুর ও প্রতিষ্ঠানের ভিডিও" description="চোখে দেখুন আমাদের ক্যাম্পাস, ক্লাস ও দৈনন্দিন জীবন।" />
-          <div className="overflow-hidden rounded-xl border border-gold/40 shadow-elegant sm:rounded-3xl">{mainVideo ? <div className="aspect-video"><iframe title="ক্যাম্পাস ভিডিও" src={mainVideo} allowFullScreen className="h-full w-full" /></div> : <div className="relative aspect-video"><img src={facilityImages.playground} alt="ক্যাম্পাস" className="absolute inset-0 h-full w-full object-cover" /><div className="absolute inset-0 grid place-items-center bg-primary/80 text-center"><div><PlayCircle className="mx-auto size-14 text-gold-light sm:size-20" /><p className="mt-3 text-sm font-semibold sm:text-base">প্রতিষ্ঠানের ক্যাম্পাস ভিডিও শীঘ্রই প্রকাশিত হবে</p></div></div></div>}</div>
-          {videos.length > 0 && <div className="mt-5 grid gap-3.5 sm:mt-6 sm:gap-5 md:grid-cols-3">{videos.map((v) => { const e = v.image_url ? youtubeEmbed(v.image_url) : null; return e ? <div key={v.id} className="overflow-hidden rounded-xl border border-gold/30 bg-primary sm:rounded-2xl"><div className="aspect-video"><iframe title={v.title} src={e} loading="lazy" allowFullScreen className="h-full w-full" /></div><div className="p-3 text-sm font-semibold sm:p-4 sm:text-base">{v.title}</div></div> : null; })}</div>}
-        </div>
-      </section>
-
-      {/* ভর্তি CTA */}
-      <section className="px-2.5 py-10 sm:px-5 sm:py-16 lg:px-8">
-        <div className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl bg-primary px-5 py-9 text-primary-foreground shadow-elegant sm:rounded-[1.5rem] sm:px-10 sm:py-14">
-          <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
-          <div className="relative flex flex-col items-start gap-5 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3.5 py-1.5 text-[11px] font-bold text-primary sm:text-xs"><Sparkles className="size-3.5" />ভর্তি চলছে</span>
-              <h2 className="mt-4 max-w-2xl font-display text-2xl font-bold leading-snug sm:text-4xl">ছবিতে যা দেখলেন, বাস্তবে তার চেয়েও সুন্দর</h2>
-              <p className="mt-3 max-w-xl text-sm leading-7 text-primary-foreground/90 sm:text-base sm:leading-8">সরেজমিনে ক্যাম্পাস ঘুরে দেখুন অথবা আজই অনলাইনে আবেদন করুন।</p>
-            </div>
-            <div className="grid w-full grid-cols-2 gap-2 sm:w-auto sm:flex sm:flex-wrap sm:gap-3">
-              <Button asChild size="lg" className="bg-gold font-bold text-primary hover:bg-gold-light"><Link to="/admission">অনলাইনে আবেদন করুন<ArrowRight className="size-4 rtl:rotate-180" /></Link></Button>
-              <Button asChild size="lg" variant="outline" className="border-gold/60 bg-transparent font-bold text-gold-light hover:bg-primary-foreground/10"><a href="tel:+8801711022734"><Phone className="size-4" />কথা বলুন</a></Button>
+      {/* চলমান ছবির সারি */}
+      <div className="px-2.5 py-2.5 sm:px-5 sm:py-5">
+        <section className="overflow-hidden rounded-[0.75rem] py-4 sm:rounded-[1.25rem] sm:py-7">
+          <Heading compact eyebrow="চলমান অ্যালবাম" title="ছবির ধারায় আমাদের জীবন" />
+          <div className="marquee-fade mt-4 overflow-hidden sm:mt-7">
+            <div className="marquee-track flex w-max gap-2.5 sm:gap-5">
+              {[...marqueeImgs, ...marqueeImgs].map((g, i) => (
+                <button key={i} type="button" onClick={() => { setCat('সব'); setView(i % marqueeImgs.length); }} aria-label="ছবি বড় করে দেখুন" className="shrink-0 cursor-zoom-in focus-visible:outline-none">
+                  <img src={g.src} alt={g.alt} loading={i > 9 ? 'lazy' : undefined} className="h-36 w-[46.5vw] rounded-lg object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.03] max-[359px]:h-28 max-[359px]:w-[47vw] sm:h-52 sm:w-[30vw] sm:rounded-2xl lg:h-60 lg:w-[18vw]" />
+                </button>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
+
+      {/* ফটো গ্যালারি — বিভাগভিত্তিক */}
+      <div className="px-2.5 py-2.5 sm:px-5 sm:py-5">
+        <section className="relative overflow-hidden rounded-[0.75rem] bg-primary py-8 text-primary-foreground shadow-elegant max-[359px]:py-6 sm:rounded-[1.25rem] sm:py-12">
+          <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
+          <div className="relative mx-auto max-w-7xl px-3 sm:px-8 lg:px-10">
+            <Heading compact light eyebrow="ফটো গ্যালারি" title="মুহূর্তগুলোর অ্যালবাম" description="বিভাগ বেছে নিন — প্রতিটি ছবিতে ক্লিক করলে বড় করে দেখতে পারবেন।" />
+            <div className="mb-4 flex flex-wrap items-center gap-1.5 sm:mb-7 sm:gap-2">
+              {['সব', ...galleryCategories].map((c) => (
+                <button key={c} type="button" onClick={() => { setCat(c); setView(null); }} className={`shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-bold transition-colors sm:px-4 sm:py-2 sm:text-sm ${cat === c ? 'border-gold bg-gold text-primary' : 'border-gold/50 bg-primary-foreground/5 text-primary-foreground hover:bg-primary-foreground/15'}`}>{c}</button>
+              ))}
+            </div>
+            <p className="mb-3.5 flex min-w-0 items-center gap-2 text-[11px] font-semibold text-primary-foreground/80 sm:mb-5 sm:text-sm"><Images className="size-4 shrink-0 text-gold-light" /><span className="truncate">{cat === 'সব' ? 'সব বিভাগ' : cat} — {bn(list.length)}টি ছবি</span></p>
+            {list.length ? (
+              <div className="columns-2 gap-2.5 sm:columns-2 sm:gap-4 lg:columns-3">
+                {list.map((img, k) => (
+                  <button key={img.src + k} type="button" onClick={() => setView(k)} className="group relative mb-2.5 block w-full overflow-hidden rounded-lg border border-gold/25 bg-card shadow-elegant transition-shadow duration-300 break-inside-avoid hover:shadow-lg sm:mb-4 sm:rounded-2xl">
+                    <img src={img.src} alt={img.alt} loading="lazy" className={`w-full object-cover transition-transform duration-700 group-hover:scale-105 ${k % 3 === 0 ? 'aspect-[4/5]' : 'aspect-[4/3]'}`} />
+                    <span className="absolute end-1.5 top-1.5 grid size-7 place-items-center rounded-full bg-gold text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:end-2.5 sm:top-2.5 sm:size-9"><ZoomIn className="size-3.5 sm:size-4.5" /></span>
+                    <span className="absolute inset-x-0 bottom-0 translate-y-full bg-primary p-2 text-start transition-transform duration-300 group-hover:translate-y-0 sm:p-3.5">
+                      <span className="block text-[9px] font-bold text-gold-light sm:text-xs">{img.category}</span>
+                      <span className="block truncate text-[11px] font-semibold text-primary-foreground sm:text-sm">{img.alt}</span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            ) : <p className="rounded-2xl bg-primary-foreground/10 p-10 text-center text-primary-foreground/80">এই বিভাগের ছবি শীঘ্রই যুক্ত করা হবে।</p>}
+          </div>
+        </section>
+      </div>
+
+      {/* ভিডিও গ্যালারি — হোম স্টাইল স্প্লিট */}
+      <div className="px-2.5 py-2.5 sm:px-5 sm:py-5">
+        <section className="overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
+          <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
+          <div className="relative grid lg:grid-cols-2">
+            <div className="min-w-0 p-5 max-[359px]:p-4 sm:p-10 lg:p-12">
+              <Heading light compact eyebrow="ভিডিও" title="ক্যাম্পাস ট্যুর ও প্রতিষ্ঠানের ভিডিও" description="একটি ভিডিওতে পুরো ক্যাম্পাস, শ্রেণিকক্ষ, আবাসিক ভবন ও দৈনন্দিন জীবনের মনোরম দৃশ্য।" />
+              <ul className="mb-6 grid gap-1.5 sm:gap-2.5">
+                {[['camera', 'ক্যাম্পাসের প্রতিটি কোণের বাস্তব দৃশ্য'], ['clap', 'ক্লাস, হিফজ ও দৈনন্দিন রুটিনের ভিডিও']].map(([ic, txt]) => (
+                  <li key={txt} className="flex min-w-0 items-center gap-2 rounded-lg border border-gold/25 bg-primary-foreground/5 px-2.5 py-2 sm:gap-3 sm:rounded-xl sm:px-4 sm:py-3">
+                    <span className="grid size-6 shrink-0 place-items-center rounded-full bg-gold text-primary sm:size-8">{ic === 'camera' ? <Camera className="size-3 sm:size-4" /> : <Clapperboard className="size-3 sm:size-4" />}</span>
+                    <span className="min-w-0 text-[11px] font-semibold leading-snug sm:text-sm">{txt}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button asChild className="bg-gold font-bold text-primary hover:bg-gold-light"><a href="#gallery-photos" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>ফটো গ্যালারি দেখুন<ArrowRight className="size-4 rtl:rotate-180" /></a></Button>
+            </div>
+            <div className="relative min-h-60 sm:min-h-80">
+              {mainVideo ? <iframe title="ক্যাম্পাস ভিডিও" src={mainVideo} loading="lazy" allowFullScreen className="absolute inset-0 h-full w-full" /> : (<>
+                <img src={facilityImages.playground} alt="ক্যাম্পাসের দৃশ্য" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+                <div className="absolute inset-0 grid place-items-center bg-primary/50"><div className="text-center"><PlayCircle className="mx-auto size-14 text-gold-light sm:size-20" /><p className="mt-3 text-xs font-semibold sm:text-sm">ক্যাম্পাস ভিডিও শীঘ্রই প্রকাশিত হবে</p></div></div>
+              </>)}
+            </div>
+          </div>
+          {videos.length > 0 && <div className="relative grid gap-3 border-t border-gold/25 p-4 sm:grid-cols-3 sm:gap-5 sm:p-8">{videos.map((v) => { const e = v.image_url ? youtubeEmbed(v.image_url) : null; return e ? <div key={v.id} className="overflow-hidden rounded-xl border border-gold/30 bg-primary sm:rounded-2xl"><div className="aspect-video"><iframe title={v.title} src={e} loading="lazy" allowFullScreen className="h-full w-full" /></div><div className="p-3 text-sm font-semibold sm:p-4">{v.title}</div></div> : null; })}</div>}
+        </section>
+      </div>
+
+      {/* ভর্তি CTA — হোম স্টাইল দুই প্যানেল */}
+      <div className="px-2.5 pb-8 pt-2.5 max-[359px]:px-2 max-[359px]:pb-6 max-[359px]:pt-2 sm:px-5 sm:pb-16 sm:pt-5">
+        <section className="grid gap-2.5 max-[359px]:gap-2 sm:gap-4 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
+          <div className="relative overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
+            <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
+            <div className="absolute right-3 top-3 z-10 flex size-16 items-center justify-center rounded-2xl bg-gold shadow-elegant sm:right-5 sm:top-5 sm:size-14 sm:rounded-[1rem]">
+              <GraduationCap className="size-7 text-primary sm:size-7" strokeWidth={1.75} />
+            </div>
+            <div className="relative flex h-full flex-col justify-center px-4 py-4 max-[359px]:px-3 sm:px-7 sm:py-6 lg:px-9">
+              <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary shadow-elegant sm:gap-2 sm:px-4 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />{s.admission_badge}</span>
+              <h2 className="mt-2.5 font-display text-[1.35rem] font-bold leading-[1.2] sm:mt-3 sm:pr-16 sm:text-[1.9rem] lg:text-[1.8rem] xl:text-[2.1rem]">ছবিতে যা দেখলেন,<br className="sm:hidden" /> বাস্তবে তার চেয়েও সুন্দর</h2>
+              <div className="mt-2.5 h-1 w-16 rounded-full bg-gold sm:mt-3 sm:w-24" />
+              <p className="mt-2.5 text-[12.5px] leading-6 text-primary-foreground/90 sm:mt-3 sm:text-[15px] sm:leading-7">সরেজমিনে ক্যাম্পাস ঘুরে দেখুন অথবা আজই অনলাইনে আবেদন করুন। আসন সীমিত।</p>
+              <div className="mt-3 flex flex-wrap gap-1.5 sm:mt-4 sm:gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-1 text-[10.5px] font-semibold text-primary sm:px-3.5 sm:py-1.5 sm:text-[11.5px]"><GraduationCap className="size-3 sm:size-3.5" />কুরআন ও জাতীয় পাঠক্রম</span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-1 text-[10.5px] font-semibold text-primary sm:px-3.5 sm:py-1.5 sm:text-[11.5px]"><HomeIcon className="size-3 sm:size-3.5" />পূর্ণাঙ্গ আবাসিক ব্যবস্থা</span>
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-1 text-[10.5px] font-semibold text-primary sm:px-3.5 sm:py-1.5 sm:text-[11.5px]"><ShieldCheck className="size-3 sm:size-3.5" />২৪ ঘণ্টা নিরাপত্তা</span>
+              </div>
+            </div>
+          </div>
+          <div className="relative overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
+            <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
+            <div className="relative flex h-full flex-col p-2 max-[359px]:p-1.5 sm:p-3 lg:p-2.5">
+              <div className="relative h-28 shrink-0 overflow-hidden rounded-[0.75rem] shadow-elegant max-[359px]:h-24 sm:h-36 sm:rounded-[0.9rem] lg:h-44 xl:h-48">
+                <img src={facilityImages.classroom} alt="শ্রেণিকক্ষে পাঠরত শিক্ষার্থীরা" loading="lazy" className="h-full w-full object-cover" />
+                <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-1 text-[10px] font-bold text-primary shadow-elegant sm:bottom-4 sm:left-4 sm:px-3.5 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />আসন সীমিত</span>
+              </div>
+              <div className="mt-2 grid gap-2 sm:mt-2.5 sm:grid-cols-2 lg:grid-cols-2">
+                <Button asChild className="bg-gold text-primary shadow-elegant hover:bg-gold-light max-sm:h-10 max-sm:w-full max-sm:justify-center max-sm:text-[13px]"><Link to="/admission">অনলাইনে আবেদন করুন <ArrowRight className="size-4 rtl:rotate-180" /></Link></Button>
+                <Button asChild variant="outline" className="border-primary-foreground/60 bg-primary-foreground/10 text-primary-foreground hover:bg-primary-foreground hover:text-primary max-sm:h-10 max-sm:w-full max-sm:justify-center max-sm:text-[13px]"><a href="tel:+8801711022734"><Phone className="size-4" />কথা বলুন</a></Button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
 
       {/* লাইটবক্স */}
       {view !== null && list[view] && (
