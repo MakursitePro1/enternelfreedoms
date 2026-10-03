@@ -222,7 +222,7 @@ function Admission() {
               </div>
             ) : (<>
               <Heading compact eyebrow="অনলাইন আবেদন" title="ভর্তি আবেদন ফর্ম" description="চারটি ধাপে ফর্মটি পূরণ করুন। তারকাচিহ্নিত (*) ঘরগুলো অবশ্যই পূরণ করতে হবে।" />
-              <div className="mb-6 grid grid-cols-4 gap-1.5 sm:mb-8 sm:gap-2.5">
+              <div className="mb-5 grid grid-cols-4 gap-1.5 sm:mb-6 sm:gap-2.5">
                 {steps.map((st, i) => (
                   <div key={st} className={`flex flex-col items-center gap-1.5 rounded-xl px-1 py-2.5 text-center transition-colors sm:flex-row sm:justify-center sm:gap-2 sm:px-3 sm:py-3 ${step === i ? 'bg-primary text-primary-foreground shadow-elegant' : step > i ? 'bg-gold text-primary' : 'bg-secondary text-muted-foreground'}`}>
                     <span className={`grid size-6 shrink-0 place-items-center rounded-full font-display text-xs sm:size-7 sm:text-sm ${step === i ? 'bg-gold text-primary' : step > i ? 'bg-primary text-primary-foreground' : 'bg-background text-primary'}`}>{step > i ? <CheckCircle2 className="size-3.5" /> : bn(i + 1)}</span>
@@ -231,7 +231,7 @@ function Admission() {
                 ))}
               </div>
               <form onSubmit={submit}>
-                <div className="grid gap-5 sm:grid-cols-2">
+                <div className="grid gap-4 sm:grid-cols-2">
                   {step === 0 && <>{field('student_name', 'শিক্ষার্থীর নাম', true)}{field('birth_date', 'জন্ম তারিখ', false, 'date')}<label className="block text-sm font-semibold text-primary sm:col-span-2">বিভাগ *<select value={form.program} onChange={(e) => setForm({ ...form, program: e.target.value })} required className={input}><option value="">বিভাগ নির্বাচন করুন</option>{programs.map((p) => <option key={p.slug}>{p.name}</option>)}</select></label>{field('previous_school', 'আগের প্রতিষ্ঠান')}</>}
                   {step === 1 && <>{field('guardian_name', 'অভিভাবকের নাম', true)}{field('phone', 'মোবাইল নম্বর (১১ সংখ্যা)', true, 'tel')}<div className="sm:col-span-2">{field('address', 'সম্পূর্ণ ঠিকানা', true)}</div><label className="block text-sm font-semibold text-primary sm:col-span-2">অতিরিক্ত তথ্য<textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} className={`${input} min-h-28`} /></label></>}
                   {step === 2 && <div className="sm:col-span-2"><p className="mb-4 text-sm text-muted-foreground">ছবি ও কাগজপত্র যুক্ত করা ঐচ্ছিক, তবে দিলে ভর্তি দ্রুত হয়। (JPG/PNG/PDF, প্রতিটি ৩ MB পর্যন্ত)</p><div className="grid gap-3 sm:grid-cols-2">{docLabels.map((l) => { const d = docs.find((x) => x.label === l); return (
@@ -249,20 +249,21 @@ function Admission() {
             </>)}
           </div>
           <aside id="track" className="h-fit scroll-mt-32 space-y-2.5 sm:space-y-5">
-            <div className="relative overflow-hidden rounded-[0.75rem] bg-primary p-5 text-primary-foreground shadow-elegant sm:rounded-[1.25rem] sm:p-7">
+            <div className="relative overflow-hidden rounded-[0.75rem] bg-primary p-4 text-primary-foreground shadow-elegant sm:rounded-[1.25rem] sm:p-6">
               <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
               <div className="relative">
                 <span className="grid size-12 place-items-center rounded-xl bg-gold text-primary shadow-elegant"><Search className="size-6" /></span>
                 <h2 className="mt-4 font-display text-xl font-semibold sm:text-2xl">আবেদন ট্র্যাক করুন</h2>
                 <div className="mt-2.5 h-1 w-16 rounded-full bg-gold" />
                 <p className="mt-3 text-xs leading-5 text-primary-foreground/80 sm:text-sm">আবেদন নম্বর ও অভিভাবকের ফোন দিয়ে সর্বশেষ অবস্থা জানুন।</p>
-                <form onSubmit={lookup} className="mt-5 grid gap-3"><input aria-label="আবেদন নম্বর" placeholder="আবেদন নম্বর (EF-...)" required value={tracking.reference} onChange={(e) => setTracking({ ...tracking, reference: e.target.value })} className="min-w-0 rounded-lg bg-background px-4 py-3 text-foreground outline-none focus:ring-2 focus:ring-ring" /><input aria-label="অভিভাবকের ফোন" placeholder="অভিভাবকের ফোন" required value={tracking.phone} onChange={(e) => setTracking({ ...tracking, phone: e.target.value })} className="min-w-0 rounded-lg bg-background px-4 py-3 text-foreground outline-none focus:ring-2 focus:ring-ring" /><Button type="submit" disabled={busy} className="bg-gold text-primary hover:bg-gold-light"><Search className="size-4" /> খুঁজুন</Button></form>
+                <form onSubmit={lookup} className="mt-4 grid gap-3"><input aria-label="আবেদন নম্বর" placeholder="আবেদন নম্বর (EF-...)" required value={tracking.reference} onChange={(e) => setTracking({ ...tracking, reference: e.target.value })} className="min-w-0 rounded-lg border border-border bg-background px-4 py-3 text-foreground outline-none transition-colors focus:border-gold focus:ring-2 focus:ring-gold" /><input aria-label="অভিভাবকের ফোন" placeholder="অভিভাবকের ফোন" required value={tracking.phone} onChange={(e) => setTracking({ ...tracking, phone: e.target.value })} className="min-w-0 rounded-lg border border-border bg-background px-4 py-3 text-foreground outline-none transition-colors focus:border-gold focus:ring-2 focus:ring-gold" /><Button type="submit" disabled={busy} className="bg-gold text-primary hover:bg-gold-light"><Search className="size-4" /> খুঁজুন</Button></form>
                 {tracked === null && <p className="mt-4 text-sm text-gold-light">এই নম্বর ও ফোন দিয়ে কোনো আবেদন পাওয়া যায়নি।</p>}
                 {tracked && <p className="mt-4 rounded-lg bg-primary-foreground/10 p-3 text-sm">{tracked.student_name} · {tracked.program}<br />অবস্থা: <strong className="text-gold-light">{tracked.status}</strong></p>}
               </div>
             </div>
-            {faqs.length > 0 && <div className="rounded-[0.75rem] bg-background p-5 shadow-elegant sm:rounded-[1.25rem] sm:p-7"><h2 className="font-display text-xl font-semibold text-primary">ভর্তি সংক্রান্ত প্রশ্ন</h2><div className="mt-2.5 h-1 w-16 rounded-full bg-gold" /><div className="mt-4 divide-y divide-border">{faqs.map((f) => <div key={f.id} className="py-3"><div className="font-semibold text-primary">{f.title}</div><p className="mt-1 text-sm leading-6 text-muted-foreground">{f.body}</p></div>)}</div><Link to="/faq" className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-gold px-4 py-2 text-sm font-bold text-primary hover:bg-gold-light">সব প্রশ্ন দেখুন <ArrowRight className="size-4" /></Link></div>}
+            {faqs.length > 0 && <div className="rounded-[0.75rem] bg-background p-4 shadow-elegant sm:rounded-[1.25rem] sm:p-6"><h2 className="font-display text-xl font-semibold text-primary">ভর্তি সংক্রান্ত প্রশ্ন</h2><div className="mt-2.5 h-1 w-16 rounded-full bg-gold" /><div className="mt-4 divide-y divide-border">{faqs.map((f) => <div key={f.id} className="py-3"><div className="font-semibold text-primary">{f.title}</div><p className="mt-1 text-sm leading-6 text-muted-foreground">{f.body}</p></div>)}</div><Link to="/faq" className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-gold px-4 py-2 text-sm font-bold text-primary hover:bg-gold-light">সব প্রশ্ন দেখুন <ArrowRight className="size-4" /></Link></div>}
           </aside>
+          </div>
         </section>
       </div>
 
