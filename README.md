@@ -1,14 +1,37 @@
-# Welcome to your Lovable project
+# Al Islamia Digital Campus
+
+Eternal Freedom Institute Al Islamia (Gafargaon, Mymensingh)-এর জন্য একটি পূর্ণাঙ্গ, আধুনিক ও প্রিমিয়াম প্রাতিষ্ঠানিক ওয়েবসাইট ও ডিজিটাল প্ল্যাটফর্ম তৈরি করতে হবে।
+
+ইউজারের প্রপোজাল এবং মূল রিকোয়ারমেন্ট অনুযায়ী:
+1. ডিজাইন স্টাইল:
+- কোনো ব্যাকডেটেড গ্রেডিয়েন্ট বা ভারী বর্ডার থাকবে না। ডিজাইন হবে সম্পূর্ণ সলিড, ক্লিন, বর্ডারলেস এবং প্রিমিয়াম ইসলামিক লুক।
+- কালার প্যালেট: ডিপ ইসলামিক ফরেস্ট গ্রিন (#0D3B2E / #134E3F), সফট অফ-হোয়াইট / ক্রিম (#FBFBFA / #F4F6F4), মার্জিত গোল্ড অ্যাকসেন্ট (#D4AF37 / #C5A059) এবং প্রিমিয়াম টাইপোগ্রাফি (বাংলা ফন্ট সাপোর্ট সহ)।
+
+2. মূল পেজ ও সেকশনসমূহ:
+- হোমপেজ: প্রিমিয়াম হিরো সেকশন (ক্যাম্পাস ওভারভিউ, কল-টু-অ্যাকশন: অনলাইন ভর্তি ও ক্যাম্পাস ভ্রমণ), প্রাতিষ্ঠানিক হাইলাইটস, একাডেমিক প্রোগ্রাম কার্ড, প্রিন্সিপালের বাণী, শিক্ষার্থীদের দৈনিক রুটিন টাইমলাইন, সুবিধা ও নিরাপত্তা, নোটিশ বোর্ড, ফটো গ্যালারি, অভিভাবক মতামত ও যোগাযোগ।
+- প্রতিষ্ঠান পরিচিতি (About Us): ইতিহাস, লক্ষ্য ও উদ্দেশ্য, শিক্ষাদর্শ, প্রতিষ্ঠাতা ও প্রিন্সিপাল মোঃ আনছারুল হক সাহেবের প্রোফাইল ও বাণী, শিক্ষক ও স্টাফ তালিকা, অর্জনসমূহ।
+- একাডেমিক কার্যক্রম (Academics): নূরানী, নাজেরা, হিফজ ও কিতাব বিভাগ, জেনারেল এডুকেশন (প্লে - দশম/দাখিল), স্পোকেন ইংলিশ ও আইসিটি প্রশিক্ষণ।
+- আবাসিক জীবন ও পুষ্টি (Residential Life & Facilities): দৈনিক ২৪ ঘণ্টার রুটিন টাইমলাইন (ফজর থেকে ঘুমানো পর্যন্ত), পুষ্টিকর খাবার মেনু ও পরিবেশ, পরিষ্কার-পরিচ্ছন্নতা ও সিসিটিভি নিরাপত্তা ব্যবস্থা, ক্যাম্পাস সুযোগ-সুবিধা।
+- অনলাইন ভর্তি (Online Admission): পূর্ণাঙ্গ মাল্টি-স্টেপ অনলাইন ভর্তি আবেদন ফর্ম, তথ্য পূরণ, প্রয়োজনীয় ডকুমেন্টস সংক্রান্ত তথ্য ও আবেদন ট্র্যাকিং।
+- বুক স্টোর (Online Book Store): প্রতিষ্ঠানের নিজস্ব ইসলামিক বইসমূহের তালিকা, বইয়ের কভার, দাম, বিবরণ, কার্ট ও সহজ ক্যাশ অন ডেলিভারি / বিকাশ-নগদ পেমেন্ট ভেরিফিকেশন সহ সরাসরি অর্ডার সিস্টেম।
+- নোটিশ বোর্ড ও ইভেন্টস (Notice & Events): নোটিশ ফিল্টারিং (ভর্তি, পরীক্ষা, ছুটি), ডাউনলোড অপশন ও সাম্প্রতিক কার্যক্রম।
+- ফটো ও ভিডিও গ্যালারি: ক্যাটাগরিভিত্তিক ক্যাম্পাস ও শিক্ষার্থী কার্যক্রমের ছবি ও ভিডিও শোকেস।
+- অভিভাবক গাইডলাইন ও সচরাচর জিজ্ঞাসা (FAQ): ভর্তি ও আবাসিক নিয়মনীতি সংক্রান্ত প্রশ্ন-উত্তর।
+- অ্যাডমিন ড্যাশবোর্ড (Admin Dashboard): নোটিশ যোগ/সম্পাদনা, ভর্তি আবেদনসমূহ দেখা ও স্ট্যাটাস পরিবর্তন এবং বইয়ের অর্ডার ম্যানেজমেন্টের সহজ ব্যবস্থা।
+
+পুরো প্ল্যাটফর্মটি মোবাইল, ট্যাবলেট ও ডেস্কটপে ১০০% রেসপন্সিভ এবং ব্যবহারবান্ধব বাংলায় সাজাতে হবে।
 
 This project was built with [Lovable](https://lovable.dev).
 
+**Live app**: https://enternelfreedoms.lovable.app
+
 ## Build with Lovable
 
-Open your project in the [Lovable editor](https://lovable.dev) and keep building.
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/f20008e6-e895-4f3a-9494-5f06b4c2869c).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: connect the project to GitHub and every change made in Lovable is committed straight to your repository.
-- **Full ownership**: this code is yours. Push to your repository and your changes sync back into Lovable, ready for your next prompt.
+- **Stay in sync**: every change made in Lovable is committed straight to this repository.
+- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
 
@@ -20,10 +43,3 @@ cd <repository-name>
 npm i
 npm run dev
 ```
-
-## Built with
-
-- TanStack Start
-- TypeScript
-- React
-- Tailwind CSS
