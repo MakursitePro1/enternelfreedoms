@@ -25,3 +25,4 @@
 - [x] Redesign the campus page with home-style imagery, responsive facility content, and a non-empty public view; verify across devices.
 - [x] Redesign the activities page with home-style imagery, published events, achievements and gallery; verify phone, tablet and desktop.
 - [x] Redesign the books page with search, featured Magic English, book covers, catalogue pagination and responsive previews.
+- [x] Refine the existing books page presentation and verify phone, tablet and desktop without changing its ordering flows.
