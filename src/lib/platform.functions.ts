@@ -47,7 +47,8 @@ export const submitContact = createServerFn({ method: 'POST' }).validator((data)
   return { ok: true };
 });
 
-const orderSchema = z.object({ customer_name: z.string().trim().min(2).max(120), phone: z.string().regex(/^01[0-9]{9}$/), address: z.string().trim().min(8).max(500), payment_method: z.enum(['ক্যাশ অন ডেলিভারি', 'বিকাশ', 'নগদ']), payment_reference: z.string().trim().max(100).optional(), items: z.array(z.object({ id: z.string().uuid(), quantity: z.number().int().min(1).max(20) })).min(1).max(30) });
+export const DELIVERY_ZONES = { inside: { label: 'ঢাকা সিটির ভিতরে', charge: 70 }, outside: { label: 'ঢাকা সিটির বাইরে', charge: 130 } } as const;
+const orderSchema = z.object({ customer_name: z.string().trim().min(2).max(120), phone: z.string().regex(/^01[0-9]{9}$/), address: z.string().trim().min(8).max(500), payment_method: z.enum(['ক্যাশ অন ডেলিভারি', 'বিকাশ', 'নগদ']), payment_reference: z.string().trim().max(100).optional(), delivery_zone: z.enum(['inside', 'outside']).optional(), items: z.array(z.object({ id: z.string().uuid(), quantity: z.number().int().min(1).max(20) })).min(1).max(30) });
 export const submitOrder = createServerFn({ method: 'POST' }).validator((data) => orderSchema.parse(data)).handler(async ({ data }) => {
   const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
   if (data.payment_method !== 'ক্যাশ অন ডেলিভারি' && (!data.payment_reference || data.payment_reference.length < 5)) throw new Error('পেমেন্টের ট্রানজেকশন আইডি প্রয়োজন।');
@@ -55,8 +56,10 @@ export const submitOrder = createServerFn({ method: 'POST' }).validator((data) =
   const { data: books, error: bookError } = await supabaseAdmin.from('books').select('id,title,price,active').in('id', ids);
   if (bookError || !books || data.items.some((item) => !books.some((book) => book.id === item.id && book.active))) throw new Error('বইয়ের তথ্য পাওয়া যায়নি।');
   const items = data.items.map((item) => { const book = books.find((b) => b.id === item.id); if (!book) throw new Error('বইয়ের তথ্য পাওয়া যায়নি।'); return { id: book.id, title: book.title, price: Number(book.price), quantity: item.quantity }; });
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const { data: row, error } = await supabaseAdmin.from('orders').insert({ customer_name: data.customer_name, phone: data.phone, address: data.address, items, total, payment_method: data.payment_method, payment_reference: data.payment_method === 'ক্যাশ অন ডেলিভারি' ? null : data.payment_reference ?? null }).select('reference').single();
+  const zone = data.delivery_zone ? DELIVERY_ZONES[data.delivery_zone] : null;
+  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0) + (zone?.charge ?? 0);
+  const address = zone ? `[${zone.label} · ডেলিভারি ৳${zone.charge}] ${data.address}` : data.address;
+  const { data: row, error } = await supabaseAdmin.from('orders').insert({ customer_name: data.customer_name, phone: data.phone, address, items, total, payment_method: data.payment_method, payment_reference: data.payment_method === 'ক্যাশ অন ডেলিভারি' ? null : data.payment_reference ?? null }).select('reference').single();
   if (error) throw new Error('অর্ডার জমা দেওয়া যায়নি।');
   return row;
 });
