@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowRight, BookOpen, Check, ChefHat, Croissant, Home, Layers3, Phone, ShieldCheck, Sparkles, UtensilsCrossed } from 'lucide-react';
 import { Site, Heading, DemoNote } from '@/components/Site';
 import { StatsBar, MealTable, SafetyGrid, itemImage } from '@/components/InstitutionSections';
-import { useInstitutionContent } from '@/lib/institution-content';
+import { useInstitutionContent, type InstitutionItem } from '@/lib/institution-content';
 import { dayTimeline, parentQuestions, facilityImages, isDemo } from '@/lib/content';
 import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
@@ -49,7 +49,7 @@ function QuestionCard({ q, index }: { q: (typeof parentQuestions)[number]; index
   );
 }
 
-function FacilityCard({ f, index }: { f: Awaited<ReturnType<typeof useInstitutionContent<'facility'>>>[number]; index: number }) {
+function FacilityCard({ f, index }: { f: InstitutionItem; index: number }) {
   return (
     <article className="group grid h-full min-w-0 grid-cols-[100px_minmax(0,1fr)] overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-elegant sm:flex sm:flex-col">
       <div className="relative min-h-[110px] overflow-hidden sm:aspect-[4/3] sm:min-h-0">
@@ -191,8 +191,4 @@ function Residential() {
       <section className="px-5 pb-14 sm:pb-20"><div className="mx-auto max-w-7xl"><Heading center eyebrow="আরও দেখুন" title="প্রতিষ্ঠানের সব সুবিধা" /><div className="mt-6"><SafetyGridFallback /></div></div></section>
     </Site>
   );
-}
-
-function SafetyGridFallback() {
-  return <div className="text-center text-sm text-muted-foreground"><Check className="mx-auto mb-2 size-5 text-gold-deep" />আবাসিক জীবনের সব তথ্য উপরের সেকশনগুলোতে দেওয়া আছে।</div>;
 }
