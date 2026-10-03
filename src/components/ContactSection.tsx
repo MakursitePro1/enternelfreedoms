@@ -30,14 +30,14 @@ export function ContactSection() {
   return (
     <section id="contact" className="px-2.5 py-6 sm:px-5 sm:py-8">
       <div className="mx-auto max-w-[90rem]">
-        <div className="grid items-end gap-3 sm:gap-4 lg:grid-cols-[1fr_auto]">
-          <Heading compact eyebrow="যোগাযোগ" title="আমাদের সঙ্গে যোগাযোগ করুন" description="ভর্তি, আবাসিক ব্যবস্থা, বই অর্ডার বা যেকোনো প্রশ্নে সরাসরি বার্তা পাঠান।" />
+        <div className="grid items-end gap-2 sm:gap-3 lg:grid-cols-[1fr_auto]">
+          <Heading compact className="mb-0 sm:mb-7" eyebrow="যোগাযোগ" title="আমাদের সঙ্গে যোগাযোগ করুন" description="ভর্তি, আবাসিক ব্যবস্থা, বই অর্ডার বা যেকোনো প্রশ্নে সরাসরি বার্তা পাঠান।" />
           <a href={CONTACT_MAP_URL} target="_blank" rel="noreferrer" className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-4 py-2.5 text-sm font-bold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:bg-gold-light sm:mb-8 sm:w-fit sm:justify-start">
             <MapPin className="size-4 shrink-0" /> গফরগাঁও, ময়মনসিংহ <ArrowUpRight className="size-4 shrink-0" />
           </a>
         </div>
 
-        <div className="mt-4 grid items-start gap-4 sm:mt-5 sm:gap-6 lg:mt-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-8">
+        <div className="mt-3 grid items-start gap-3 sm:mt-5 sm:gap-6 lg:mt-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-8">
           <div className="min-w-0">
             <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
               <InfoRow icon={MapPin} label="অবস্থান">
