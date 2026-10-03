@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from 
 import { supabase } from '@/integrations/supabase/client';
 import { useSiteSettings, telHref } from '@/lib/site-settings';
 import { languages, useLang } from '@/lib/i18n';
+import { FloatingActions } from '@/components/FloatingActions';
 import logoAsset from '@/assets/institute-logo.jpeg.asset.json';
 
 function NoticeTicker() {
