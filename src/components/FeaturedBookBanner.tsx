@@ -49,7 +49,7 @@ export function FeaturedBookBanner() {
             <div className="mt-4 flex flex-wrap items-center gap-3 sm:mt-6 sm:gap-4">
               <div><div className="text-[11px] text-primary-foreground/70 sm:text-xs">মূল্য</div><div className="font-display text-2xl font-bold text-gold sm:text-3xl lg:text-4xl">৳ {Number(book.price).toLocaleString('bn-BD')}</div></div>
               <div className="flex flex-wrap gap-2 sm:gap-2.5">
-                <Button asChild size="lg" className="px-4 text-sm sm:px-6 sm:text-base"><Link to="/books/$id" params={{ id: book.id }}><ShoppingBag className="size-4" />এখনই অর্ডার করুন</Link></Button>
+                <Button asChild size="lg" className="bg-gold px-4 text-sm text-primary hover:bg-gold-light sm:px-6 sm:text-base"><Link to="/books/$id" params={{ id: book.id }}><ShoppingBag className="size-4" />এখনই অর্ডার করুন</Link></Button>
                 <Button asChild size="lg" variant="secondary" className="px-4 text-sm sm:px-6 sm:text-base"><Link to="/books/$id" params={{ id: book.id }}>বিস্তারিত<ArrowRight className="size-4" /></Link></Button>
               </div>
             </div>
