@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { ArrowRight, BookOpen, ShieldCheck, Heart, GraduationCap, MapPin, Home as HomeIcon, Trophy, Phone, Mail, Clock, PlayCircle, Sparkles, CheckCircle2, CalendarDays, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, BookOpen, ShieldCheck, Heart, GraduationCap, Home as HomeIcon, Trophy, Phone, PlayCircle, Sparkles, CheckCircle2, CalendarDays, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Site, Heading, TextLink, DemoNote } from '@/components/Site';
 import { StatsBar, TeachersCarousel, TestimonialSlider, ActivitiesTeaser, AchievementsGrid, SafetyGrid, MealTable, itemImage } from '@/components/InstitutionSections';
-import { ContactForm } from '@/components/ContactForm';
+import { ContactSection } from '@/components/ContactSection';
 import { photos, programs, dayTimeline, whyCards, parentQuestions, facilityImages, admissionSteps, galleryPhotos, bookCovers, isDemo, pick } from '@/lib/content';
 import { useInstitutionContent } from '@/lib/institution-content';
 import { useSiteSettings, telHref, youtubeEmbed } from '@/lib/site-settings';
@@ -376,22 +376,8 @@ function Home() {
       {/* Books */}
       <FeaturedBookBanner />
 
-      {/* Contact */}
-      <section className="bg-secondary px-5 py-24 lg:px-8">
-        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[.8fr_1.2fr]">
-          <div>
-            <Heading eyebrow="যোগাযোগ" title="আমাদের সঙ্গে যোগাযোগ করুন" description="ভর্তি, আবাসিক ব্যবস্থা বা যেকোনো প্রশ্নে আমরা আছি আপনার পাশে।" />
-            <div className="space-y-3">
-              {[[MapPin, 'ঠিকানা', s.address, undefined], [Phone, 'ফোন', s.phone, telHref(s.phone)], [Mail, 'ইমেইল', s.email, `mailto:${s.email}`], [Clock, 'অফিস সময়', s.office_hours, undefined]].map(([Icon, label, value, href]) => {
-                const I = Icon as typeof MapPin; const inner = <><div className="grid size-12 shrink-0 place-items-center rounded-xl bg-primary text-gold-light"><I className="size-5" /></div><div className="min-w-0"><div className="text-xs text-muted-foreground">{label as string}</div><div className="break-words font-semibold text-primary">{value as string}</div></div></>;
-                return href ? <a key={label as string} href={href as string} className="flex items-center gap-4 rounded-2xl bg-background p-4 shadow-elegant hover:bg-accent">{inner}</a> : <div key={label as string} className="flex items-center gap-4 rounded-2xl bg-background p-4 shadow-elegant">{inner}</div>;
-              })}
-            </div>
-            <div className="mt-5 overflow-hidden rounded-2xl shadow-elegant"><iframe title="গুগল ম্যাপে প্রতিষ্ঠানের অবস্থান" src="https://www.google.com/maps?q=Gafargaon,+Mymensingh&output=embed" loading="lazy" className="h-56 w-full border-0" /></div>
-          </div>
-          <ContactForm />
-        </div>
-      </section>
+       {/* Contact */}
+       <ContactSection />
 
       {/* CTA */}
       <section className="relative overflow-hidden bg-primary px-5 py-24 text-center text-primary-foreground">
