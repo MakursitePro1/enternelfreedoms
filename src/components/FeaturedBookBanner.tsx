@@ -27,7 +27,7 @@ export function FeaturedBookBanner() {
   const s = slides[i]!;
   const Icon = s.icon;
   return (
-    <section className="px-3 py-10 sm:px-5 sm:py-16 lg:py-20">
+    <section id="magic-english" className="scroll-mt-24 px-3 py-10 sm:px-5 sm:py-16 lg:py-20">
       <div className="islamic-pattern relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-primary p-4 text-primary-foreground shadow-elegant sm:p-8 lg:p-12">
         <div className="relative grid items-center gap-5 sm:gap-8 md:grid-cols-[1.1fr_.9fr] lg:gap-14">
           <div className="order-2 md:order-1">

@@ -48,10 +48,9 @@ function Hero() {
         <div className="mt-3.5 grid grid-cols-2 gap-2 sm:mt-6 sm:flex sm:flex-wrap sm:gap-3">
           <Button size="lg" asChild className="max-sm:h-10 max-sm:w-full max-sm:gap-1 max-sm:px-2 max-sm:text-[12.5px] max-[359px]:text-[11.5px] bg-gold text-primary hover:bg-gold-light"><Link to="/admission">{t('ভর্তি সম্পর্কে জানুন')} <ArrowRight className="size-3.5 sm:size-4 rtl:rotate-180" /></Link></Button>
           <Button size="lg" variant="outline" asChild className="max-sm:h-10 max-sm:w-full max-sm:px-2 max-sm:text-[12.5px] max-[359px]:text-[11.5px] border-primary-foreground/60 bg-primary-foreground/5 text-primary-foreground backdrop-blur-sm hover:bg-primary-foreground hover:text-primary"><Link to="/campus">{t('ক্যাম্পাস ঘুরে দেখুন')}</Link></Button>
-          <Button size="lg" variant="ghost" asChild className="max-sm:hidden text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"><a href={telHref(s.phone)}><Phone className="size-4" />{s.phone}</a></Button>
+          <Button size="lg" asChild className="max-sm:col-span-2 max-sm:h-10 max-sm:w-full max-sm:gap-1 max-sm:px-2 max-sm:text-[12.5px] max-[359px]:text-[11.5px] bg-primary-foreground text-primary shadow-elegant hover:bg-primary-foreground/90"><a href="#magic-english" onClick={(e) => { e.preventDefault(); document.getElementById('magic-english')?.scrollIntoView({ behavior: 'smooth' }); }}><BookOpen className="size-4" />{t('ম্যাজিক ইংলিশ বইটি দেখুন')}</a></Button>
         </div>
         <div className="mt-3.5 flex items-center justify-between gap-3 sm:mt-6 sm:justify-start">
-          <a href={telHref(s.phone)} className="inline-flex min-w-0 items-center gap-1.5 text-[12.5px] font-semibold text-primary-foreground/90 sm:hidden"><span className="grid size-6 shrink-0 place-items-center rounded-full bg-primary-foreground/15"><Phone className="size-3" /></span>{s.phone}</a>
           <div className="flex shrink-0 gap-1.5 sm:gap-2">{heroSlides.map((sl, k) => <button key={sl.src} type="button" aria-label={`ছবি ${k + 1}`} onClick={() => setI(k)} className={`h-1.5 rounded-full transition-all ${k === i ? 'w-8 bg-gold sm:w-10' : 'w-4 bg-primary-foreground/40 sm:w-5'}`} />)}</div>
         </div>
       </div>
