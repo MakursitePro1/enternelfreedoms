@@ -383,10 +383,10 @@ function Home() {
         <section className="grid gap-2.5 max-[359px]:gap-2 sm:gap-4 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
           <div className="relative overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
             <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
-            <div className="absolute right-3 top-3 z-10 flex size-9 items-center justify-center rounded-xl bg-gold shadow-elegant sm:right-5 sm:top-5 sm:size-11 sm:rounded-2xl">
-              <GraduationCap className="size-4.5 text-primary sm:size-5.5" strokeWidth={1.75} />
+            <div className="absolute right-3 top-3 z-10 flex size-10 items-center justify-center rounded-xl bg-gold shadow-elegant sm:right-5 sm:top-5 sm:size-12 sm:rounded-2xl">
+              <GraduationCap className="size-5 text-primary sm:size-6" strokeWidth={1.75} />
             </div>
-            <div className="relative flex h-full flex-col justify-center px-4 py-7 max-[359px]:px-3 max-[359px]:py-6 sm:px-8 sm:py-12 lg:px-10">
+            <div className="relative flex h-full flex-col justify-center px-4 py-5 max-[359px]:px-3 sm:px-8 sm:py-9 lg:px-10">
               <span className="inline-flex self-start items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary shadow-elegant sm:gap-2 sm:px-4 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />{s.admission_badge}</span>
               <h2 className="mt-3 font-display text-[1.45rem] font-bold leading-[1.2] sm:mt-4 sm:text-4xl lg:text-[2.5rem] xl:text-[2.6rem]">সন্তানের শিক্ষাযাত্রা<br className="sm:hidden" /> শুরু হোক এখানে</h2>
               <div className="mt-3 h-1 w-16 rounded-full bg-gold sm:mt-4 sm:w-24" />
@@ -401,7 +401,7 @@ function Home() {
           <div className="relative overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
             <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
             <div className="relative flex h-full flex-col p-2 max-[359px]:p-1.5 sm:p-3 lg:p-2.5">
-              <div className="relative h-36 max-[359px]:h-28 shrink-0 overflow-hidden rounded-[0.75rem] shadow-elegant sm:h-52 sm:rounded-[0.9rem] lg:h-auto lg:min-h-0 lg:flex-1">
+              <div className="relative h-32 max-[359px]:h-28 shrink-0 overflow-hidden rounded-[0.75rem] shadow-elegant sm:h-44 sm:rounded-[0.9rem] lg:h-auto lg:min-h-0 lg:flex-1">
                 <img src={facilityImages.classroom} alt="শ্রেণিকক্ষে পাঠরত শিক্ষার্থীরা" loading="lazy" className="h-full w-full object-cover" />
                 <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-1 text-[10px] font-bold text-primary shadow-elegant sm:bottom-4 sm:left-4 sm:px-3.5 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />আসন সীমিত</span>
               </div>
