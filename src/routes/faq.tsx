@@ -108,7 +108,7 @@ function Faq() {
                 <button key={c} type="button" onClick={() => { setCat(c); setOpen(0); }} className={`shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-bold transition-colors sm:px-4 sm:py-2 sm:text-sm ${cat === c ? 'border-gold bg-gold text-primary' : 'border-gold/50 bg-primary-foreground/5 text-primary-foreground hover:bg-primary-foreground/15'}`}>{c}</button>
               ))}
             </div>
-            <p className="mb-3.5 flex min-w-0 items-center gap-2 text-[11px] font-semibold text-primary-foreground/80 sm:mb-5 sm:text-sm"><MessageCircleQuestion className="size-4 shrink-0 text-gold-light" /><span className="truncate">{t('সব বিভাগ' as string) && (cat === 'সব' ? t('সব প্রশ্ন') : cat)} — {bn(list.length)}টি প্রশ্ন</span></p>
+            <p className="mb-3.5 flex min-w-0 items-center gap-2 text-[11px] font-semibold text-primary-foreground/80 sm:mb-5 sm:text-sm"><MessageCircleQuestion className="size-4 shrink-0 text-gold-light" /><span className="truncate">{cat === 'সব' ? t('সব প্রশ্ন') : cat} — {bn(list.length)}{t('টি প্রশ্ন')}</span></p>
             <div className="space-y-2 sm:space-y-3">
               {list.map((f, k) => (
                 <div key={f.q} className="overflow-hidden rounded-lg bg-background shadow-elegant transition-shadow duration-300 hover:shadow-lg max-[359px]:rounded-md sm:rounded-2xl">
