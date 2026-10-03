@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState, type FormEvent } from 'react';
-import { ArrowLeft, ArrowRight, CheckCircle2, Search, Upload, FileText, X, ClipboardList, FileCheck2, Phone, MapPin, Sparkles, ListOrdered, BookOpen, FileCheck, Banknote, PenLine, SearchCheck } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, Search, Upload, FileText, X, ClipboardList, FileCheck2, Phone, MapPin, Sparkles, ListOrdered, BookOpen, FileCheck, Banknote, PenLine, SearchCheck, type LucideIcon } from 'lucide-react';
 import { useServerFn } from '@tanstack/react-start';
 import { Site, Heading, TextLink } from '@/components/Site';
 import { FeeTable, StatsBar } from '@/components/InstitutionSections';
