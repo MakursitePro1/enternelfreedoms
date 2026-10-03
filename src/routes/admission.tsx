@@ -3,7 +3,7 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, Search, Upload, FileText, X, ClipboardList, FileCheck2, Phone, MapPin, Sparkles, ListOrdered, BookOpen, FileCheck, Banknote, PenLine, SearchCheck, type LucideIcon } from 'lucide-react';
 import { useServerFn } from '@tanstack/react-start';
 import { Site, Heading, TextLink } from '@/components/Site';
-import { FeeTable, StatsBar } from '@/components/InstitutionSections';
+import { FeeTable } from '@/components/InstitutionSections';
 import { useInstitutionContent } from '@/lib/institution-content';
 import { useSiteSettings, telHref } from '@/lib/site-settings';
 import { programs, admissionSteps, requiredDocs, eligibility, photos, facilityImages } from '@/lib/content';
