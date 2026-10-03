@@ -48,7 +48,7 @@ function Admission() {
   const s = useSiteSettings();
   const send = useServerFn(submitAdmission);
   const track = useServerFn(trackAdmission);
-  const input = 'mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-2.5 font-normal outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-gold';
+  const input = 'mt-2 w-full rounded-lg bg-secondary px-4 py-3 font-normal outline-none focus:ring-2 focus:ring-ring';
   function field(name: keyof Form, label: string, required = false, type = 'text') {
     return <label className="block text-sm font-semibold text-primary">{label}{required && ' *'}<input type={type} value={form[name]} onChange={(e) => setForm({ ...form, [name]: e.target.value })} required={required} className={input} /></label>;
   }
@@ -208,10 +208,10 @@ function Admission() {
       </section>
 
       {/* আবেদন ফর্ম + ট্র্যাক */}
-      <div id="apply" className="relative scroll-mt-32 bg-primary px-3 py-8 max-[359px]:px-2.5 sm:px-5 sm:py-14 lg:px-8">
+      <div id="apply" className="relative scroll-mt-32 bg-primary px-2.5 py-10 sm:px-5 sm:py-20 lg:px-8">
         <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
-        <section className="relative mx-auto grid max-w-6xl gap-2.5 sm:gap-5 lg:grid-cols-[minmax(0,1.55fr)_minmax(300px,.7fr)]">
-          <div className="min-w-0 rounded-[1rem] bg-background p-4 shadow-elegant max-[359px]:rounded-[0.85rem] sm:rounded-[1.25rem] sm:p-7 lg:p-8">
+        <section className="relative mx-auto grid max-w-7xl gap-2.5 sm:gap-5 lg:grid-cols-[minmax(0,1.55fr)_minmax(300px,.7fr)]">
+          <div className="min-w-0 rounded-[0.75rem] bg-background p-4 shadow-elegant sm:rounded-[1.25rem] sm:p-8 lg:p-10">
             {reference ? (
               <div className="py-6 text-center">
                 <div className="mx-auto grid size-20 place-items-center rounded-full bg-primary shadow-elegant"><CheckCircle2 className="size-10 text-gold-light" /></div>
@@ -255,7 +255,7 @@ function Admission() {
                 <h2 className="mt-4 font-display text-xl font-semibold sm:text-2xl">আবেদন ট্র্যাক করুন</h2>
                 <div className="mt-2.5 h-1 w-16 rounded-full bg-gold" />
                 <p className="mt-3 text-xs leading-5 text-primary-foreground/80 sm:text-sm">আবেদন নম্বর ও অভিভাবকের ফোন দিয়ে সর্বশেষ অবস্থা জানুন।</p>
-                <form onSubmit={lookup} className="mt-5 grid gap-3"><input aria-label="আবেদন নম্বর" placeholder="আবেদন নম্বর (EF-...)" required value={tracking.reference} onChange={(e) => setTracking({ ...tracking, reference: e.target.value })} className="min-w-0 rounded-lg border border-border bg-background px-4 py-2.5 text-foreground outline-none transition-colors focus:border-gold focus:ring-2 focus:ring-gold" /><input aria-label="অভিভাবকের ফোন" placeholder="অভিভাবকের ফোন" required value={tracking.phone} onChange={(e) => setTracking({ ...tracking, phone: e.target.value })} className="min-w-0 rounded-lg border border-border bg-background px-4 py-2.5 text-foreground outline-none transition-colors focus:border-gold focus:ring-2 focus:ring-gold" /><Button type="submit" disabled={busy} className="bg-gold text-primary hover:bg-gold-light"><Search className="size-4" /> খুঁজুন</Button></form>
+                <form onSubmit={lookup} className="mt-5 grid gap-3"><input aria-label="আবেদন নম্বর" placeholder="আবেদন নম্বর (EF-...)" required value={tracking.reference} onChange={(e) => setTracking({ ...tracking, reference: e.target.value })} className="min-w-0 rounded-lg bg-background px-4 py-3 text-foreground outline-none focus:ring-2 focus:ring-ring" /><input aria-label="অভিভাবকের ফোন" placeholder="অভিভাবকের ফোন" required value={tracking.phone} onChange={(e) => setTracking({ ...tracking, phone: e.target.value })} className="min-w-0 rounded-lg bg-background px-4 py-3 text-foreground outline-none focus:ring-2 focus:ring-ring" /><Button type="submit" disabled={busy} className="bg-gold text-primary hover:bg-gold-light"><Search className="size-4" /> খুঁজুন</Button></form>
                 {tracked === null && <p className="mt-4 text-sm text-gold-light">এই নম্বর ও ফোন দিয়ে কোনো আবেদন পাওয়া যায়নি।</p>}
                 {tracked && <p className="mt-4 rounded-lg bg-primary-foreground/10 p-3 text-sm">{tracked.student_name} · {tracked.program}<br />অবস্থা: <strong className="text-gold-light">{tracked.status}</strong></p>}
               </div>
