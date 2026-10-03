@@ -48,7 +48,7 @@ function Admission() {
   const s = useSiteSettings();
   const send = useServerFn(submitAdmission);
   const track = useServerFn(trackAdmission);
-  const input = 'mt-2 w-full rounded-xl border-2 border-field-border bg-background px-4 py-3 font-medium text-primary outline-none transition-colors focus:border-gold focus:ring-2 focus:ring-gold';
+  const input = 'mt-2 w-full rounded-xl border-[1.5px] border-field-border bg-background px-4 py-3 font-medium text-primary outline-none transition-colors focus:border-gold focus:ring-2 focus:ring-gold';
   function field(name: keyof Form, label: string, required = false, type = 'text') {
     return <label className="block text-sm font-semibold text-primary">{label}{required && ' *'}<input type={type} value={form[name]} onChange={(e) => setForm({ ...form, [name]: e.target.value })} required={required} className={input} /></label>;
   }
@@ -232,7 +232,7 @@ function Admission() {
               </div>
               <form onSubmit={submit}>
                 <div className="grid gap-4 sm:grid-cols-2">
-                  {step === 0 && <>{field('student_name', 'শিক্ষার্থীর নাম', true)}{field('birth_date', 'জন্ম তারিখ', false, 'date')}<label className="block text-sm font-semibold text-primary sm:col-span-2">বিভাগ *<select value={form.program} onChange={(e) => setForm({ ...form, program: e.target.value })} required className={input}><option value="">বিভাগ নির্বাচন করুন</option>{programs.map((p) => <option key={p.slug}>{p.name}</option>)}</select></label>{field('previous_school', 'আগের প্রতিষ্ঠান')}</>}
+                  {step === 0 && <>{field('student_name', 'শিক্ষার্থীর নাম', true)}{field('birth_date', 'জন্ম তারিখ', false, 'date')}<label className="block text-sm font-semibold text-primary sm:col-span-2">বিভাগ *<select value={form.program} onChange={(e) => setForm({ ...form, program: e.target.value })} required className={`${input} font-semibold`}><option value="">বিভাগ নির্বাচন করুন</option>{programs.map((p) => <option key={p.slug}>{p.name}</option>)}</select></label>{field('previous_school', 'আগের প্রতিষ্ঠান')}</>}
                   {step === 1 && <>{field('guardian_name', 'অভিভাবকের নাম', true)}{field('phone', 'মোবাইল নম্বর (১১ সংখ্যা)', true, 'tel')}<div className="sm:col-span-2">{field('address', 'সম্পূর্ণ ঠিকানা', true)}</div><label className="block text-sm font-semibold text-primary sm:col-span-2">অতিরিক্ত তথ্য<textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} className={`${input} min-h-28`} /></label></>}
                   {step === 2 && <div className="sm:col-span-2"><p className="mb-4 text-sm text-muted-foreground">ছবি ও কাগজপত্র যুক্ত করা ঐচ্ছিক, তবে দিলে ভর্তি দ্রুত হয়। (JPG/PNG/PDF, প্রতিটি ৩ MB পর্যন্ত)</p><div className="grid gap-3 sm:grid-cols-2">{docLabels.map((l) => { const d = docs.find((x) => x.label === l); return (
                     <div key={l} className={`rounded-xl border-2 border-dashed p-4 ${d ? 'border-primary bg-accent' : 'border-border'}`}>
