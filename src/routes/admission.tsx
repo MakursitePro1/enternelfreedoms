@@ -3,7 +3,7 @@ import { useEffect, useState, type FormEvent } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, Search, Upload, FileText, X, ClipboardList, FileCheck2, Phone, MapPin, Sparkles, ListOrdered, BookOpen, FileCheck, Banknote, PenLine, SearchCheck, type LucideIcon } from 'lucide-react';
 import { useServerFn } from '@tanstack/react-start';
 import { Site, Heading, TextLink } from '@/components/Site';
-import { FeeTable, StatsBar } from '@/components/InstitutionSections';
+import { FeeTable } from '@/components/InstitutionSections';
 import { useInstitutionContent } from '@/lib/institution-content';
 import { useSiteSettings, telHref } from '@/lib/site-settings';
 import { programs, admissionSteps, requiredDocs, eligibility, photos, facilityImages } from '@/lib/content';
@@ -95,7 +95,26 @@ function Admission() {
             </div>
             <div className="mt-3.5 flex gap-1.5 sm:mt-6 sm:gap-2">{heroSlides.map((sl, k) => <button key={sl.src} type="button" aria-label={`ছবি ${k + 1}`} onClick={() => setSlide(k)} className={`h-1.5 rounded-full transition-all ${k === slide ? 'w-8 bg-gold sm:w-10' : 'w-4 bg-primary-foreground/40 sm:w-5'}`} />)}</div>
           </div>
-          <div className="relative w-full px-2.5 pb-2.5 max-[359px]:px-2 max-[359px]:pb-2 sm:px-6 sm:pb-6 lg:px-8"><div className="mx-auto max-w-7xl overflow-hidden rounded-2xl bg-primary shadow-elegant sm:rounded-[1.25rem]"><StatsBar hero /></div></div>
+          <div className="relative w-full px-2.5 pb-2.5 max-[359px]:px-2 max-[359px]:pb-2 sm:px-6 sm:pb-6 lg:px-8">
+            <div className="mx-auto max-w-7xl rounded-2xl bg-primary p-4 shadow-elegant sm:rounded-[1.25rem] sm:p-5">
+              <div className="flex flex-col gap-3 sm:gap-4 lg:flex-row lg:items-center">
+                <div className="flex min-w-0 items-center gap-3 lg:shrink-0">
+                  <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-gold text-primary shadow-elegant sm:size-11"><SearchCheck className="size-5" strokeWidth={2.2} /></span>
+                  <div className="min-w-0">
+                    <p className="truncate font-display text-[15px] font-semibold text-primary-foreground sm:text-base">আবেদন ট্র্যাক করুন</p>
+                    <p className="text-[11px] text-primary-foreground/70 sm:text-xs">আবেদন নম্বর ও ফোন দিয়ে সর্বশেষ অবস্থা জানুন</p>
+                  </div>
+                </div>
+                <form onSubmit={lookup} className="grid min-w-0 flex-1 grid-cols-1 gap-2 sm:grid-cols-[1fr_1fr_auto] sm:gap-2.5">
+                  <input aria-label="আবেদন নম্বর" placeholder="আবেদন নম্বর (EF-...)" required value={tracking.reference} onChange={(e) => setTracking({ ...tracking, reference: e.target.value })} className="min-w-0 rounded-xl bg-background px-4 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-gold" />
+                  <input aria-label="অভিভাবকের ফোন" placeholder="অভিভাবকের ফোন" required value={tracking.phone} onChange={(e) => setTracking({ ...tracking, phone: e.target.value })} className="min-w-0 rounded-xl bg-background px-4 py-2.5 text-sm text-foreground outline-none focus:ring-2 focus:ring-gold" />
+                  <Button type="submit" disabled={busy} className="h-11 rounded-xl bg-gold px-5 text-sm font-bold text-primary hover:bg-gold-light"><Search className="size-4" /> খুঁজুন</Button>
+                </form>
+              </div>
+              {tracked === null && <p className="mt-3 rounded-xl border border-gold/40 px-4 py-2.5 text-[12.5px] text-gold-light">এই নম্বর ও ফোন দিয়ে কোনো আবেদন পাওয়া যায়নি।</p>}
+              {tracked && <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 rounded-xl bg-gold px-4 py-3 text-[13px] font-semibold text-primary sm:text-sm"><span>{tracked.student_name} · {tracked.program}</span><span className="inline-flex items-center gap-1.5"><CheckCircle2 className="size-4" />অবস্থা: {tracked.status}</span></div>}
+            </div>
+          </div>
         </section>
       </div>
 
