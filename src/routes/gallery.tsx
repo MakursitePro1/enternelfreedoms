@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, X, PlayCircle, Images, Sparkles, ArrowRight, Phone, ZoomIn, GraduationCap, ShieldCheck, Home as HomeIcon, Camera, Clapperboard } from 'lucide-react';
-import { Site, PageIntro, Heading } from '@/components/Site';
+import { Site, Heading } from '@/components/Site';
 import { StatsBar } from '@/components/InstitutionSections';
 import { Button } from '@/components/ui/button';
 import { useInstitutionContent } from '@/lib/institution-content';
@@ -15,6 +15,33 @@ export const Route = createFileRoute('/gallery')({
 });
 
 const bn = (n: number) => n.toLocaleString('bn-BD');
+
+function GalleryHero({ slides }: { slides: { src: string; alt: string }[] }) {
+  const [i, setI] = useState(0);
+  useEffect(() => { const id = window.setInterval(() => setI((x) => (x + 1) % slides.length), 6000); return () => window.clearInterval(id); }, [slides.length]);
+  const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  return (
+    <section className="relative flex flex-col justify-end overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:min-h-[calc(100svh-230px)] sm:rounded-[1.25rem]">
+      {slides.map((sl, k) => <img key={sl.src + k} src={sl.src} alt={sl.alt} className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${k === i ? 'opacity-100' : 'opacity-0'}`} />)}
+      <div className="absolute inset-0 bg-hero-overlay" />
+      <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-25" />
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pb-4 pt-16 max-[359px]:px-4 max-[359px]:pt-10 sm:justify-center sm:py-6 lg:px-8">
+        <span className="inline-flex self-start items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary shadow-elegant sm:gap-2 sm:px-4 sm:py-1.5 sm:text-xs"><Images className="size-3 shrink-0 sm:size-3.5" />ফটো ও ভিডিও গ্যালারি</span>
+        <p className="mt-2.5 flex items-center gap-2 text-[11px] font-semibold text-gold-light sm:mt-4 sm:gap-3 sm:text-sm"><span className="h-px w-5 shrink-0 bg-gold sm:w-8" />প্রতিষ্ঠানের বাস্তব পরিবেশ</p>
+        <h1 className="mt-1.5 max-w-5xl font-display text-[1.65rem] font-bold leading-[1.12] max-[359px]:text-[1.4rem] sm:mt-2.5 sm:text-5xl lg:text-6xl xl:text-7xl">মুহূর্তগুলোর<br /><span className="text-gold-light">বাস্তব গল্প</span></h1>
+        <p className="mt-2 max-w-xl text-[12.5px] leading-5 text-primary-foreground/90 sm:mt-2.5 sm:text-base sm:leading-7">প্রতিষ্ঠানের বাস্তব ছবিই আমাদের সবচেয়ে বড় আস্থার প্রমাণ — ক্যাম্পাস, শ্রেণিকক্ষ, আবাসিক জীবন ও শিক্ষার্থীদের কার্যক্রমের একঝাঁক মুহূর্ত।</p>
+        <div className="mt-3.5 grid grid-cols-2 gap-2 sm:mt-6 sm:flex sm:flex-wrap sm:gap-3">
+          <Button size="lg" className="max-sm:h-10 max-sm:w-full max-sm:gap-1 max-sm:px-2 max-sm:text-[12.5px] max-[359px]:text-[11.5px] bg-gold text-primary hover:bg-gold-light" onClick={() => go('gallery-photos')}>ছবিগুলো দেখুন <ArrowRight className="size-3.5 sm:size-4 rtl:rotate-180" /></Button>
+          <Button size="lg" variant="outline" className="max-sm:h-10 max-sm:w-full max-sm:px-2 max-sm:text-[12.5px] max-[359px]:text-[11.5px] border-primary-foreground/60 bg-primary-foreground/5 text-primary-foreground hover:bg-primary-foreground hover:text-primary" onClick={() => go('gallery-videos')}><PlayCircle className="size-4" />ভিডিও দেখুন</Button>
+        </div>
+        <div className="mt-3.5 flex items-center justify-between gap-3 sm:mt-6 sm:justify-start">
+          <div className="flex shrink-0 gap-1.5 sm:gap-2">{slides.map((_, k) => <button key={k} type="button" aria-label={`ছবি ${k + 1}`} onClick={() => setI(k)} className={`h-1.5 rounded-full transition-all ${k === i ? 'w-8 bg-gold sm:w-10' : 'w-4 bg-primary-foreground/40 sm:w-5'}`} />)}</div>
+        </div>
+      </div>
+      <div className="relative w-full px-2.5 pb-2.5 max-[359px]:px-2 max-[359px]:pb-2 sm:px-6 sm:pb-6 lg:px-8"><div className="mx-auto max-w-7xl overflow-hidden rounded-2xl bg-primary shadow-elegant sm:rounded-[1.25rem]"><StatsBar hero /></div></div>
+    </section>
+  );
+}
 
 function Gallery() {
   const dbPhotos = useInstitutionContent('gallery');
@@ -35,8 +62,7 @@ function Gallery() {
   }, [view, list.length]);
   return (
     <Site>
-      <PageIntro eyebrow="গ্যালারি" title="প্রতিষ্ঠানের বাস্তব পরিবেশ" description="প্রতিষ্ঠানের বাস্তব ছবিই আমাদের সবচেয়ে বড় আস্থার প্রমাণ। ক্যাম্পাস, শ্রেণিকক্ষ, আবাসিক জীবন ও শিক্ষার্থীদের কার্যক্রমের একঝাঁক মুহূর্ত।" image={facilityImages.quran} />
-      <div className="relative w-full px-2.5 pb-2.5 max-[359px]:px-2 max-[359px]:pb-2 sm:px-6 sm:pb-6 lg:px-8"><div className="mx-auto max-w-7xl overflow-hidden rounded-2xl bg-primary shadow-elegant sm:rounded-[1.25rem]"><StatsBar hero /></div></div>
+      <GalleryHero slides={[{ src: facilityImages.quran, alt: 'রেহালে কুরআন তিলাওয়াতরত শিক্ষার্থীরা' }, ...images.slice(0, 2)]} />
 
       {/* নির্বাচিত মুহূর্ত — মোজাইক */}
       <div className="px-2.5 py-2.5 sm:px-5 sm:py-5">
@@ -75,7 +101,7 @@ function Gallery() {
 
       {/* ফটো গ্যালারি — বিভাগভিত্তিক */}
       <div className="px-2.5 py-2.5 sm:px-5 sm:py-5">
-        <section className="relative overflow-hidden rounded-[0.75rem] bg-primary py-8 text-primary-foreground shadow-elegant max-[359px]:py-6 sm:rounded-[1.25rem] sm:py-12">
+        <section id="gallery-photos" className="relative scroll-mt-24 overflow-hidden rounded-[0.75rem] bg-primary py-8 text-primary-foreground shadow-elegant max-[359px]:py-6 sm:rounded-[1.25rem] sm:py-12">
           <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
           <div className="relative mx-auto max-w-7xl px-3 sm:px-8 lg:px-10">
             <Heading compact light eyebrow="ফটো গ্যালারি" title="মুহূর্তগুলোর অ্যালবাম" description="বিভাগ বেছে নিন — প্রতিটি ছবিতে ক্লিক করলে বড় করে দেখতে পারবেন।" />
@@ -91,9 +117,9 @@ function Gallery() {
                   <button key={img.src + k} type="button" onClick={() => setView(k)} className="group relative mb-2.5 block w-full overflow-hidden rounded-lg border border-gold/25 bg-card shadow-elegant transition-shadow duration-300 break-inside-avoid hover:shadow-lg sm:mb-4 sm:rounded-2xl">
                     <img src={img.src} alt={img.alt} loading="lazy" className={`w-full object-cover transition-transform duration-700 group-hover:scale-105 ${k % 3 === 0 ? 'aspect-[4/5]' : 'aspect-[4/3]'}`} />
                     <span className="absolute end-1.5 top-1.5 grid size-7 place-items-center rounded-full bg-gold text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:end-2.5 sm:top-2.5 sm:size-9"><ZoomIn className="size-3.5 sm:size-4.5" /></span>
-                    <span className="absolute inset-x-0 bottom-0 translate-y-full bg-primary p-2 text-start transition-transform duration-300 group-hover:translate-y-0 sm:p-3.5">
-                      <span className="block text-[9px] font-bold text-gold-light sm:text-xs">{img.category}</span>
-                      <span className="block truncate text-[11px] font-semibold text-primary-foreground sm:text-sm">{img.alt}</span>
+                    <span className="absolute inset-x-1.5 bottom-1.5 translate-y-[130%] rounded-lg bg-background p-2 text-start shadow-elegant transition-transform duration-300 group-hover:translate-y-0 sm:inset-x-2.5 sm:bottom-2.5 sm:rounded-xl sm:p-3">
+                      <span className="block text-[9px] font-bold text-gold-deep sm:text-xs">{img.category}</span>
+                      <span className="block truncate text-[11px] font-semibold text-primary sm:text-sm">{img.alt}</span>
                     </span>
                   </button>
                 ))}
@@ -105,7 +131,7 @@ function Gallery() {
 
       {/* ভিডিও গ্যালারি — হোম স্টাইল স্প্লিট */}
       <div className="px-2.5 py-2.5 sm:px-5 sm:py-5">
-        <section className="overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
+        <section id="gallery-videos" className="scroll-mt-24 overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
           <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
           <div className="relative grid lg:grid-cols-2">
             <div className="min-w-0 p-5 max-[359px]:p-4 sm:p-10 lg:p-12">
