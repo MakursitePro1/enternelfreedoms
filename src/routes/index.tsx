@@ -401,7 +401,7 @@ function Home() {
           <div className="relative overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
             <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
             <div className="relative flex h-full flex-col p-2 max-[359px]:p-1.5 sm:p-3 lg:p-2.5">
-              <div className="relative h-28 max-[359px]:h-24 shrink-0 overflow-hidden rounded-[0.75rem] shadow-elegant sm:h-36 sm:rounded-[0.9rem] lg:h-auto lg:min-h-0 lg:flex-1">
+              <div className="relative h-28 max-[359px]:h-24 shrink-0 overflow-hidden rounded-[0.75rem] shadow-elegant sm:h-36 sm:rounded-[0.9rem] lg:h-44 xl:h-48">
                 <img src={facilityImages.classroom} alt="শ্রেণিকক্ষে পাঠরত শিক্ষার্থীরা" loading="lazy" className="h-full w-full object-cover" />
                 <span className="absolute bottom-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-gold px-2.5 py-1 text-[10px] font-bold text-primary shadow-elegant sm:bottom-4 sm:left-4 sm:px-3.5 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />আসন সীমিত</span>
               </div>
