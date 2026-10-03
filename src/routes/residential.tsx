@@ -188,7 +188,6 @@ function Residential() {
         </div>
       </section>
 
-      <section className="px-5 pb-14 sm:pb-20"><div className="mx-auto max-w-7xl"><Heading center eyebrow="আরও দেখুন" title="প্রতিষ্ঠানের সব সুবিধা" /><div className="mt-6"><SafetyGridFallback /></div></div></section>
     </Site>
   );
 }
