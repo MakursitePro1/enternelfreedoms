@@ -21,3 +21,4 @@
 - [x] Pause the teacher carousel on hover or click, move every card label inside a taller floating rounded green panel, and remove all "নমুনা তথ্য"-style sample labels from public designs.
 - [x] Compact the guardian testimonials across devices, keep all four names masculine, and use solid gold for the active list card.
 - [x] Replace the unchanged home contact section and contact page with one premium responsive design, use the supplied map pin, and verify the preview.
+- [ ] Refresh the academics page with compact responsive programme cards and premium category banners; verify on mobile and desktop.
