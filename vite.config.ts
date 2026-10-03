@@ -12,4 +12,7 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Vercel deploy: build with BUILD_FOR_VERCEL=1 (outside the Lovable sandbox) to emit
+  // a Vercel-compatible nitro build. Default Lovable builds are unaffected.
+  ...(process.env.BUILD_FOR_VERCEL === "1" ? { nitro: { preset: "vercel" } } : {}),
 });
