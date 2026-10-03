@@ -46,14 +46,14 @@ function ProgramCard({ p, featured = false }: { p: (typeof programs)[number]; fe
         <img src={p.image} alt={p.name} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
         <span className="absolute left-2 top-2 rounded-md bg-gold px-2 py-0.5 font-display text-[11px] font-bold text-primary sm:left-3 sm:top-3 sm:text-xs">{p.number}</span>
       </div>
-      <div className="flex min-w-0 flex-1 flex-col justify-center p-3.5 sm:justify-start sm:p-4 lg:p-5">
+      <div className={`flex min-w-0 flex-1 flex-col justify-center p-3.5 sm:p-4 lg:p-6 ${featured ? '' : 'sm:justify-start lg:p-5'}`}>
         <h3 className="font-display text-[15px] font-semibold leading-snug text-primary sm:text-base lg:text-lg">{p.name}</h3>
         <p className={`mt-1 text-xs leading-5 text-muted-foreground sm:mt-1.5 sm:text-[13px] sm:leading-6 ${featured ? 'line-clamp-2 sm:line-clamp-none' : 'line-clamp-2'}`}>{p.text}</p>
         <div className="mt-2 flex flex-col gap-0.5 text-[11px] font-medium text-primary sm:mt-3 sm:gap-1 sm:text-xs">
           <span className="inline-flex min-w-0 items-center gap-1.5"><Users className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate">{p.age}</span></span>
           <span className="inline-flex min-w-0 items-center gap-1.5"><Clock className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate">{p.duration}</span></span>
         </div>
-        <span className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-primary group-hover:text-gold-deep sm:mt-auto sm:pt-3">বিস্তারিত দেখুন <ArrowUpRight className="size-3.5" /></span>
+        <span className={`mt-2 inline-flex items-center gap-1 text-xs font-bold text-primary group-hover:text-gold-deep sm:pt-3 ${featured ? 'sm:mt-2' : 'sm:mt-auto'}`}>বিস্তারিত দেখুন <ArrowUpRight className="size-3.5" /></span>
       </div>
     </Link>
   );
