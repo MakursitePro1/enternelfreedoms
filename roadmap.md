@@ -23,3 +23,4 @@
 - [x] Replace the unchanged home contact section and contact page with one premium responsive design, use the supplied map pin, and verify the preview.
 - [x] Refresh the academics page with compact responsive programme cards and premium category banners; verify on mobile and desktop.
 - [x] Redesign the campus page with home-style imagery, responsive facility content, and a non-empty public view; verify across devices.
+- [x] Redesign the activities page with home-style imagery, published events, achievements and gallery; verify phone, tablet and desktop.
