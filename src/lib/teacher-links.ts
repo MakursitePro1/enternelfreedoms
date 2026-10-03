@@ -5,8 +5,8 @@ const letters: Record<string, string> = {
   ক: 'k', খ: 'kh', গ: 'g', ঘ: 'gh', ঙ: 'ng', চ: 'ch', ছ: 'chh', জ: 'j', ঝ: 'jh', ঞ: 'n',
   ট: 't', ঠ: 'th', ড: 'd', ঢ: 'dh', ণ: 'n', ত: 't', থ: 'th', দ: 'd', ধ: 'dh', ন: 'n',
   প: 'p', ফ: 'f', ব: 'b', ভ: 'bh', ম: 'm', য: 'j', র: 'r', ল: 'l', শ: 'sh', ষ: 'sh', স: 's', হ: 'h',
-  ড়: 'r', ঢ়: 'rh', য়: 'y', ৎ: 't', ং: 'ng', ঃ: 'h', ঁ: 'n',
-  া: 'a', ি: 'i', ী: 'i', ু: 'u', ূ: 'u', ৃ: 'ri', ে: 'e', ৈ: 'oi', ো: 'o', ৌ: 'ou', ্: '',
+  'ড়': 'r', 'ঢ়': 'rh', 'য়': 'y', 'ৎ': 't', 'ং': 'ng', 'ঃ': 'h', 'ঁ': 'n',
+  'া': 'a', 'ি': 'i', 'ী': 'i', 'ু': 'u', 'ূ': 'u', 'ৃ': 'ri', 'ে': 'e', 'ৈ': 'oi', 'ো': 'o', 'ৌ': 'ou', '্': '',
 };
 
 /** Readable name in the URL; the short immutable ID keeps equal names unique. */
