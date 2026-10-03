@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { ArrowRight, BookOpen, ShieldCheck, Heart, GraduationCap, Home as HomeIcon, Trophy, Phone, PlayCircle, Sparkles, CheckCircle2, CalendarDays, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, BookOpen, ShieldCheck, Heart, GraduationCap, Home as HomeIcon, Trophy, PlayCircle, Sparkles, CheckCircle2, CalendarDays, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { Site, Heading, TextLink, DemoNote } from '@/components/Site';
@@ -8,7 +8,7 @@ import { StatsBar, TeachersCarousel, TestimonialSlider, ActivitiesTeaser, Achiev
 import { ContactSection } from '@/components/ContactSection';
 import { photos, programs, dayTimeline, whyCards, parentQuestions, facilityImages, admissionSteps, galleryPhotos, bookCovers, isDemo, pick } from '@/lib/content';
 import { useInstitutionContent } from '@/lib/institution-content';
-import { useSiteSettings, telHref, youtubeEmbed } from '@/lib/site-settings';
+import { useSiteSettings, youtubeEmbed } from '@/lib/site-settings';
 import { useLang } from '@/lib/i18n';
 import { seo } from '@/lib/seo';
 import { supabase } from '@/integrations/supabase/client';
