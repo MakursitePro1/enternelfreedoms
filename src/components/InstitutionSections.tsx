@@ -49,7 +49,7 @@ export function StatsBar({ dark = false, hero = false }: { dark?: boolean; hero?
   const items = useInstitutionContent('stat');
   if (!items.length) return null;
   return (
-    <div className={hero ? 'grid grid-cols-5 border-t border-primary-foreground/25 text-primary-foreground' : `grid grid-cols-2 gap-px overflow-hidden rounded-2xl sm:grid-cols-3 lg:grid-cols-5 ${dark ? 'bg-primary-foreground/15' : 'bg-border'} shadow-elegant`}>
+    <div className={hero ? 'grid grid-cols-5 text-primary-foreground' : `grid grid-cols-2 gap-px overflow-hidden rounded-2xl sm:grid-cols-3 lg:grid-cols-5 ${dark ? 'bg-primary-foreground/15' : 'bg-border'} shadow-elegant`}>
       {items.map((s) => (
         <div key={s.id} className={hero ? 'min-w-0 border-r border-primary-foreground/20 px-0.5 py-2 text-center last:border-r-0 sm:px-3 sm:py-3' : `p-6 text-center ${dark ? 'bg-primary text-primary-foreground' : 'bg-background'}`}>
           <div className={`font-display font-bold text-gold ${hero ? 'text-base leading-tight sm:text-3xl' : 'text-3xl sm:text-4xl'}`}>{s.detail}</div>
