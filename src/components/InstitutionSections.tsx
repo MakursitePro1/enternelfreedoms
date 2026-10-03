@@ -153,7 +153,7 @@ export function TestimonialSlider() {
           <div className="ms-2 flex gap-1.5">{items.map((t, k) => <Button key={t.id} type="button" variant="ghost" aria-label={`মতামত ${k + 1}`} onClick={() => setI(k)} className={`h-8 min-w-8 rounded-full px-0 transition-all ${k === i % items.length ? 'text-gold' : 'text-border'}`}><span className={`block h-2 rounded-full ${k === i % items.length ? 'w-6 bg-gold' : 'w-2 bg-border'}`} /></Button>)}</div>
         </div>
       </div>
-      <div className="grid gap-2 lg:content-start">
+      <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-1 lg:content-start">
         {embed ? <div className="aspect-video overflow-hidden rounded-2xl bg-primary"><iframe title={cur.title} src={embed} loading="lazy" allowFullScreen className="h-full w-full" /></div> : items.slice(0, 4).map((t, k) => {
           const tEmbed = t.image_url ? youtubeEmbed(t.image_url) : null;
           const active = k === i % items.length;
