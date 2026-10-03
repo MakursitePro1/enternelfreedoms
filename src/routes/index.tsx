@@ -368,7 +368,12 @@ function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="bg-secondary px-5 py-24 lg:px-8"><div className="mx-auto max-w-7xl"><Heading center eyebrow="অভিভাবকের কণ্ঠ" title="অভিভাবকদের মতামত" /><TestimonialSlider /></div></section>
+      <div className="px-2.5 pb-2.5 pt-2.5 sm:px-5 sm:pb-5 sm:pt-5">
+      <section className="relative overflow-hidden rounded-[0.75rem] bg-primary py-14 text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
+        <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-8 lg:px-10"><Heading center light eyebrow="অভিভাবকের কণ্ঠ" title="অভিভাবকদের মতামত" /><TestimonialSlider /></div>
+      </section>
+      </div>
 
       {/* Books */}
       {books.length > 0 && (
