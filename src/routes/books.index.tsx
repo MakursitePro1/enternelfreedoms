@@ -34,6 +34,7 @@ const upcoming = [
   { title: 'দৈনন্দিন দোয়া ও মাসনুন আমল', author: 'Eternal Freedom প্রকাশনা', description: 'প্রতিদিনের প্রয়োজনীয় দোয়া, অর্থ ও উচ্চারণসহ।', category: 'দোয়া ও আমল', art: duaArt, light: false },
 ];
 const categories = ['সব বই', 'ইংরেজি শিক্ষা', 'কুরআন শিক্ষা', 'শিশুদের বই', 'দোয়া ও আমল'];
+const categoryBySlug: Record<string, string> = { 'magic-english': 'ইংরেজি শিক্ষা', 'nurani-qaida': 'কুরআন শিক্ষা', 'hifz-sahayika': 'কুরআন শিক্ষা', 'adab-akhlaq': 'শিশুদের বই', 'dua-amal': 'দোয়া ও আমল' };
 const PAGE_SIZE = 4;
 
 export function CartDrawer({ books, onClose }: { books: Book[]; onClose: () => void }) {
