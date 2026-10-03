@@ -53,12 +53,12 @@ export function FeaturedBookBanner() {
                 <Button asChild size="lg" variant="secondary" className="px-2 text-xs sm:px-6 sm:text-base"><Link to="/books/$id" params={{ id: book.id }}>বিস্তারিত<ArrowRight className="size-4" /></Link></Button>
               </div>
             </div>
-            <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-[10px] text-primary-foreground/85 sm:mt-5 sm:gap-x-5 sm:text-xs">
+            <div className="mt-3 hidden flex-wrap gap-x-4 gap-y-1.5 text-[10px] text-primary-foreground/85 sm:mt-5 sm:flex sm:gap-x-5 sm:text-xs">
               {['ক্যাশ অন ডেলিভারি', 'বিকাশ / নগদ', 'সারাদেশে হোম ডেলিভারি'].map((t) => <span key={t} className="flex items-center gap-1.5"><CheckCircle2 className="size-3.5 text-gold sm:size-4" />{t}</span>)}
             </div>
           </div>
 
-          <Link to="/books/$id" params={{ id: book.id }} className="group order-1 mx-auto w-full max-w-[190px] sm:max-w-[260px] md:order-2 md:max-w-[320px] lg:max-w-[400px]">
+          <Link to="/books/$id" params={{ id: book.id }} className="group order-1 mx-auto w-full max-w-[215px] sm:max-w-[260px] md:order-2 md:max-w-[320px] lg:max-w-[400px]">
             <div className="rounded-[1.5rem] bg-gold p-1.5 sm:p-2.5 shadow-elegant transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-1">
               <img src={book.cover_url ?? cover.url} alt={book.title} className="aspect-[657/906] w-full rounded-xl sm:rounded-2xl object-cover" />
             </div>
