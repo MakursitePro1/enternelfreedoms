@@ -89,16 +89,16 @@ export function Site({ children }: { children: ReactNode }) {
           </Link>
           <nav className="hidden items-center gap-1 xl:flex">
             {nav.map(([href, label]) => (
-              <Link key={href} to={href} className={`whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-secondary hover:text-primary ${active(href) ? 'bg-secondary text-primary' : 'text-foreground/75'}`}>{t(label)}</Link>
+              <Link key={href} to={href} className={`whitespace-nowrap rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-secondary hover:text-primary ${active(href) ? 'bg-primary text-primary-foreground shadow-elegant' : 'text-foreground/75'}`}>{t(label)}</Link>
             ))}
             <div className="relative" ref={moreRef}>
-              <button type="button" onClick={() => setMore(!more)} aria-expanded={more} className={`flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium hover:bg-secondary hover:text-primary ${moreActive ? 'bg-secondary text-primary' : 'text-foreground/75'}`}>
+              <button type="button" onClick={() => setMore(!more)} aria-expanded={more} className={`flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium hover:bg-secondary hover:text-primary ${moreActive ? 'bg-primary text-primary-foreground shadow-elegant' : 'text-foreground/75'}`}>
                 {t('আরও')}<ChevronDown className={`size-4 transition-transform ${more ? 'rotate-180' : ''}`} />
               </button>
               {more && (
                 <div className="absolute end-0 top-full mt-2 w-60 rounded-xl border border-border bg-background p-2 shadow-elegant">
                   {moreNav.map(([href, label]) => (
-                    <Link key={href} to={href} onClick={() => setMore(false)} className={`block rounded-lg px-3 py-2.5 text-sm hover:bg-secondary ${active(href) ? 'text-primary font-semibold' : 'text-foreground/80'}`}>{t(label)}</Link>
+                    <Link key={href} to={href} onClick={() => setMore(false)} className={`block rounded-lg px-3 py-2.5 text-sm hover:bg-secondary ${active(href) ? 'bg-primary text-primary-foreground font-semibold' : 'text-foreground/80'}`}>{t(label)}</Link>
                   ))}
                 </div>
               )}
@@ -108,7 +108,7 @@ export function Site({ children }: { children: ReactNode }) {
             <Button asChild className="hidden sm:inline-flex"><Link to="/admission">{t('ভর্তি আবেদন')} <ArrowUpRight className="size-4" /></Link></Button>
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="xl:hidden" aria-label="মেনু খুলুন" aria-expanded={open}><Menu /></Button>
+                <Button variant="ghost" size="icon" className="xl:hidden bg-primary text-primary-foreground hover:bg-primary hover:text-gold-light" aria-label="মেনু খুলুন" aria-expanded={open}><Menu /></Button>
               </SheetTrigger>
               <SheetContent side="left" className="w-[86vw] max-w-sm gap-0 overflow-hidden rounded-r-2xl p-0 sm:max-w-sm">
                 <SheetTitle className="sr-only">মেনু</SheetTitle>
@@ -125,9 +125,9 @@ export function Site({ children }: { children: ReactNode }) {
                   </div>
                   <nav className="min-h-0 flex-1 overflow-auto px-2.5 py-3">
                     {allNav.map(([href, label]) => (
-                      <Link key={href} to={href} onClick={() => setOpen(false)} className={`group flex items-center justify-between gap-2 rounded-lg px-4 py-3 text-sm font-medium transition-colors ${active(href) ? 'bg-secondary text-primary' : 'text-foreground/85 hover:bg-secondary/60 hover:text-primary'}`}>
+                      <Link key={href} to={href} onClick={() => setOpen(false)} className={`group flex items-center justify-between gap-2 rounded-lg px-4 py-3 text-sm font-medium transition-colors ${active(href) ? 'bg-primary text-primary-foreground' : 'text-foreground/85 hover:bg-secondary/60 hover:text-primary'}`}>
                         <span className="truncate">{t(label)}</span>
-                        <ChevronRight className={`size-4 shrink-0 transition-transform group-hover:translate-x-0.5 ${active(href) ? 'text-gold' : 'text-muted-foreground/60'}`} />
+                        <ChevronRight className={`size-4 shrink-0 transition-transform group-hover:translate-x-0.5 ${active(href) ? 'text-gold-light' : 'text-muted-foreground/60'}`} />
                       </Link>
                     ))}
                   </nav>
