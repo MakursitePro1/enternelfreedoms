@@ -31,7 +31,7 @@ export function ContactSection() {
     <section id="contact" className="px-2.5 py-6 sm:px-5 sm:py-8">
       <div className="mx-auto max-w-[90rem]">
         <div className="grid items-end gap-2 sm:gap-3 lg:grid-cols-[1fr_auto]">
-          <Heading compact className="mb-0 sm:mb-7" eyebrow="যোগাযোগ" title="আমাদের সঙ্গে যোগাযোগ করুন" description="ভর্তি, আবাসিক ব্যবস্থা, বই অর্ডার বা যেকোনো প্রশ্নে সরাসরি বার্তা পাঠান।" />
+          <Heading compact className="mb-0 lg:mb-7" eyebrow="যোগাযোগ" title="আমাদের সঙ্গে যোগাযোগ করুন" description="ভর্তি, আবাসিক ব্যবস্থা, বই অর্ডার বা যেকোনো প্রশ্নে সরাসরি বার্তা পাঠান।" />
           <a href={CONTACT_MAP_URL} target="_blank" rel="noreferrer" className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-4 py-2.5 text-sm font-bold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:bg-gold-light sm:mb-8 sm:w-fit sm:justify-start">
             <MapPin className="size-4 shrink-0" /> গফরগাঁও, ময়মনসিংহ <ArrowUpRight className="size-4 shrink-0" />
           </a>
