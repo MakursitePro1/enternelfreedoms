@@ -266,7 +266,7 @@ export function FeeTable() {
   const items = useInstitutionContent('fee');
   if (!items.length) return null;
   return (
-    <div className="overflow-hidden rounded-2xl bg-background shadow-elegant">
+    <div className="grid grid-cols-1 overflow-hidden rounded-2xl bg-background shadow-elegant sm:grid-cols-2">
       {items.map((f, i) => (
         <div key={f.id} className={`flex flex-wrap items-center justify-between gap-3 p-5 ${i % 2 ? 'bg-secondary' : ''}`}>
           <div><div className="font-semibold text-primary">{f.title}</div><div className="text-xs text-muted-foreground">{f.category}{f.body ? ` · ${f.body}` : ''}</div></div>
