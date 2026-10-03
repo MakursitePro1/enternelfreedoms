@@ -8,13 +8,13 @@ const CONTACT_MAP_EMBED = 'https://www.google.com/maps?q=24.4569854,90.5514883&z
 
 function InfoRow({ icon: Icon, label, children, href }: { icon: typeof MapPin; label: string; children: React.ReactNode; href?: string }) {
   const body = (
-    <div className="group flex items-center gap-3 rounded-2xl border border-primary/25 bg-primary px-3.5 py-3 transition-colors hover:bg-primary/90 sm:gap-4 sm:px-4">
-      <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-gold text-primary sm:size-11">
-        <Icon className="size-4.5" />
+    <div className="group flex items-center gap-3 rounded-2xl border border-primary/25 bg-primary px-3 py-2.5 transition-colors hover:bg-primary/90 sm:gap-4 sm:px-4 sm:py-3">
+      <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-gold text-primary sm:size-11">
+        <Icon className="size-4 sm:size-4.5" />
       </span>
       <div className="min-w-0">
-        <p className="text-[11px] font-bold uppercase tracking-wide text-gold">{label}</p>
-        <div className="text-sm font-semibold leading-6 text-primary-foreground sm:text-[15px]">{children}</div>
+        <p className="text-[10px] font-bold uppercase tracking-wide text-gold sm:text-[11px]">{label}</p>
+        <div className="text-[13px] font-semibold leading-5 text-primary-foreground sm:text-[15px] sm:leading-6">{children}</div>
       </div>
     </div>
   );
@@ -30,14 +30,14 @@ export function ContactSection() {
   return (
     <section id="contact" className="px-2.5 py-6 sm:px-5 sm:py-8">
       <div className="mx-auto max-w-[90rem]">
-        <div className="grid items-end gap-4 lg:grid-cols-[1fr_auto]">
+        <div className="grid items-end gap-3 sm:gap-4 lg:grid-cols-[1fr_auto]">
           <Heading compact eyebrow="যোগাযোগ" title="আমাদের সঙ্গে যোগাযোগ করুন" description="ভর্তি, আবাসিক ব্যবস্থা, বই অর্ডার বা যেকোনো প্রশ্নে সরাসরি বার্তা পাঠান।" />
-          <a href={CONTACT_MAP_URL} target="_blank" rel="noreferrer" className="inline-flex w-fit items-center gap-2 rounded-xl bg-gold px-4 py-2.5 text-sm font-bold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:bg-gold-light sm:mb-8">
+          <a href={CONTACT_MAP_URL} target="_blank" rel="noreferrer" className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gold px-4 py-2.5 text-sm font-bold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:bg-gold-light sm:mb-8 sm:w-fit sm:justify-start">
             <MapPin className="size-4 shrink-0" /> গফরগাঁও, ময়মনসিংহ <ArrowUpRight className="size-4 shrink-0" />
           </a>
         </div>
 
-        <div className="grid items-start gap-5 sm:gap-6 lg:mt-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-8">
+        <div className="mt-4 grid items-start gap-4 sm:mt-5 sm:gap-6 lg:mt-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-8">
           <div className="min-w-0">
             <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
               <InfoRow icon={MapPin} label="অবস্থান">
