@@ -182,7 +182,7 @@ function Admission() {
               <div className="relative px-4 pb-5 pt-2 sm:px-7 sm:pb-8">
                 <div className="flex items-center gap-3"><span className="grid size-10 shrink-0 place-items-center rounded-xl bg-gold text-primary shadow-elegant sm:size-12"><b.icon className="size-5 sm:size-6" /></span><div><p className="text-[11px] font-semibold text-gold-light sm:text-xs">{b.eyebrow}</p><h2 className="font-display text-lg font-semibold sm:text-2xl">{b.title}</h2></div></div>
                 <div className="mt-3 h-1 w-16 rounded-full bg-gold sm:w-24" />
-                <ul className="mt-4 grid gap-1.5 sm:gap-2.5">
+                <ul className="mt-4 grid gap-1.5 sm:grid-cols-2 sm:gap-2.5">
                   {b.list.map((x) => (
                     <li key={x} className="flex items-center gap-2.5 rounded-xl border border-gold/25 bg-card px-3 py-2 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-gold/55 sm:px-4 sm:py-3">
                       <span className="grid size-6 shrink-0 place-items-center rounded-full bg-gold-soft ring-1 ring-gold/45 sm:size-7"><CheckCircle2 className="size-3.5 text-gold-deep sm:size-4" /></span>
