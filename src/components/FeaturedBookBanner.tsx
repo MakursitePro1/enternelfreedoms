@@ -58,9 +58,9 @@ export function FeaturedBookBanner() {
             </div>
           </div>
 
-          <Link to="/books/$id" params={{ id: book.id }} className="group order-1 mx-auto w-full max-w-[210px] sm:max-w-[260px] md:order-2 md:max-w-[320px] lg:max-w-[400px]">
-            <div className="rounded-[1.5rem] bg-gold p-2 sm:p-2.5 shadow-elegant transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-1">
-              <img src={book.cover_url ?? cover.url} alt={book.title} className="aspect-[657/906] w-full rounded-2xl object-cover" />
+          <Link to="/books/$id" params={{ id: book.id }} className="group order-1 mx-auto w-full max-w-[150px] sm:max-w-[260px] md:order-2 md:max-w-[320px] lg:max-w-[400px]">
+            <div className="rounded-[1.5rem] bg-gold p-1.5 sm:p-2.5 shadow-elegant transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-1">
+              <img src={book.cover_url ?? cover.url} alt={book.title} className="aspect-[657/906] w-full rounded-xl sm:rounded-2xl object-cover" />
             </div>
           </Link>
         </div>
