@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowRight, BookOpen, Check, ChefHat, Croissant, Home, Layers3, Phone, ShieldCheck, Sparkles, UtensilsCrossed } from 'lucide-react';
-import { Site, Heading, DemoNote } from '@/components/Site';
+import { Site, DemoNote } from '@/components/Site';
 import { StatsBar, MealTable, SafetyGrid, itemImage } from '@/components/InstitutionSections';
 import { useInstitutionContent, type InstitutionItem } from '@/lib/institution-content';
 import { dayTimeline, parentQuestions, facilityImages, isDemo } from '@/lib/content';
