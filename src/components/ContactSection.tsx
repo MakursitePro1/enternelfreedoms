@@ -4,7 +4,7 @@ import { Heading } from '@/components/Site';
 import { defaultSettings, telHref, useSiteSettings } from '@/lib/site-settings';
 
 export const CONTACT_MAP_URL = 'https://www.google.com/maps/place/Eternal+Freedom+Institute+Al+Islamia/@24.4569854,90.5489134,880m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3756619166939f13:0xf7a04cb7cd46f8de!8m2!3d24.4569854!4d90.5514883!16s%2Fg%2F11vdtqt29c';
-const CONTACT_MAP_EMBED = 'https://www.google.com/maps?q=24.4569854,90.5514883&z=17&hl=bn&output=embed';
+const CONTACT_MAP_EMBED = 'https://www.google.com/maps?q=24.4569854,90.5514883&z=14&hl=bn&output=embed';
 
 function InfoRow({ icon: Icon, label, children, href }: { icon: typeof MapPin; label: string; children: React.ReactNode; href?: string }) {
   const body = (
