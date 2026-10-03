@@ -28,7 +28,7 @@ const whyIcons = { book: BookOpen, grad: GraduationCap, home: HomeIcon, shield: 
 const galleryUnique = [...photos, facilityImages.dorm, facilityImages.dining, facilityImages.classroom, facilityImages.playground, facilityImages.library, facilityImages.quran];
 
 type Notice = { id: string; title: string; category: string; published_at: string };
-type Book = { id: string; title: string; description: string; price: number; cover_url: string | null; slug: string | null; author: string | null };
+import { FeaturedBookBanner } from '@/components/FeaturedBookBanner';
 
 function Hero() {
   const { t } = useLang();
@@ -65,14 +65,12 @@ function Home() {
   const s = useSiteSettings();
   const facilities = useInstitutionContent('facility');
   const [notices, setNotices] = useState<Notice[]>([]);
-  const [books, setBooks] = useState<Book[]>([]);
   const [day, setDay] = useState(0);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const video = s.video_url ? youtubeEmbed(s.video_url) : null;
   const [dTime, dAct, dDesc] = dayTimeline[day] ?? ['', '', ''];
   useEffect(() => {
     supabase.from('notices').select('id,title,category,published_at').order('published_at', { ascending: false }).limit(4).then(({ data }) => setNotices(data ?? []));
-    supabase.from('books').select('id,title,description,price,cover_url,slug,author').eq('active', true).order('created_at', { ascending: true }).limit(4).then(({ data }) => setBooks((data ?? []) as Book[]));
   }, []);
 
   return (
@@ -376,7 +374,7 @@ function Home() {
       </div>
 
       {/* Books */}
-      <FeaturedBookBanner />{books.length < 0 && pick(bookCovers, 0) && isDemo(null) && <DemoNote />}
+      <FeaturedBookBanner />
 
       {/* Contact */}
       <section className="bg-secondary px-5 py-24 lg:px-8">
