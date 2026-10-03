@@ -383,8 +383,8 @@ function Home() {
         <section className="grid gap-2.5 max-[359px]:gap-2 sm:gap-4 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
           <div className="relative overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
             <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
-            <div className="absolute right-3 top-3 z-10 flex size-14 items-center justify-center rounded-2xl bg-gold shadow-elegant sm:right-5 sm:top-5 sm:size-14 sm:rounded-[1rem]">
-              <GraduationCap className="size-6 text-primary sm:size-7" strokeWidth={1.75} />
+            <div className="absolute right-3 top-3 z-10 flex size-16 items-center justify-center rounded-2xl bg-gold shadow-elegant sm:right-5 sm:top-5 sm:size-14 sm:rounded-[1rem]">
+              <GraduationCap className="size-7 text-primary sm:size-7" strokeWidth={1.75} />
             </div>
             <div className="relative flex h-full flex-col justify-center px-4 py-4 max-[359px]:px-3 sm:px-7 sm:py-6 lg:px-9">
               <span className="inline-flex self-start items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary shadow-elegant sm:gap-2 sm:px-4 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />{s.admission_badge}</span>
