@@ -24,16 +24,16 @@ export function ContactForm() {
     finally { setBusy(false); }
   }
   if (done) return (
-    <div className="rounded-2xl bg-background p-8 text-center shadow-elegant">
+    <div className="rounded-[1.75rem] border border-border/60 bg-background p-6 text-center shadow-elegant sm:p-8">
       <CheckCircle2 className="mx-auto size-12 text-primary" />
       <h3 className="mt-4 font-display text-2xl text-primary">বার্তা পাঠানো হয়েছে</h3>
       <p className="mt-2 text-muted-foreground">প্রতিষ্ঠানের পক্ষ থেকে শীঘ্রই আপনার সঙ্গে যোগাযোগ করা হবে।</p>
       <Button variant="secondary" className="mt-5" onClick={() => setDone(false)}>আরেকটি বার্তা পাঠান</Button>
     </div>
   );
-  const input = 'mt-1.5 w-full bg-secondary px-4 py-3 font-normal outline-none focus:ring-2 focus:ring-ring';
+  const input = 'mt-1.5 w-full rounded-lg border border-border/60 bg-secondary px-3.5 py-2.5 text-sm font-normal outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-ring/40';
   return (
-    <form onSubmit={submit} className="grid gap-4 rounded-2xl bg-background p-6 shadow-elegant sm:grid-cols-2 sm:p-8">
+    <form onSubmit={submit} className="grid gap-4 rounded-[1.75rem] border border-border/60 bg-background p-5 shadow-elegant sm:grid-cols-2 sm:p-8">
       <label className="text-sm font-semibold text-primary">আপনার নাম *<input required minLength={2} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={input} /></label>
       <label className="text-sm font-semibold text-primary">মোবাইল নম্বর *<input required type="tel" placeholder="01XXXXXXXXX" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={input} /></label>
       <label className="text-sm font-semibold text-primary">ইমেইল<input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={input} /></label>
