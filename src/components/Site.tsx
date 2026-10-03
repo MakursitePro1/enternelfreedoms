@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from 
 import { supabase } from '@/integrations/supabase/client';
 import { useSiteSettings, telHref } from '@/lib/site-settings';
 import { languages, useLang } from '@/lib/i18n';
+import { FloatingActions } from '@/components/FloatingActions';
 import logoAsset from '@/assets/institute-logo.jpeg.asset.json';
 
 function NoticeTicker() {
@@ -141,6 +142,7 @@ export function Site({ children }: { children: ReactNode }) {
         </div>
       </header>
       <main>{children}</main>
+      <FloatingActions />
       <footer className="relative overflow-hidden bg-primary text-primary-foreground">
         <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-40" />
         <div className="relative mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
