@@ -101,7 +101,7 @@ function Gallery() {
 
       {/* ফটো গ্যালারি — বিভাগভিত্তিক */}
       <div className="px-2.5 py-2.5 sm:px-5 sm:py-5">
-        <section className="relative overflow-hidden rounded-[0.75rem] bg-primary py-8 text-primary-foreground shadow-elegant max-[359px]:py-6 sm:rounded-[1.25rem] sm:py-12">
+        <section id="gallery-photos" className="relative scroll-mt-24 overflow-hidden rounded-[0.75rem] bg-primary py-8 text-primary-foreground shadow-elegant max-[359px]:py-6 sm:rounded-[1.25rem] sm:py-12">
           <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
           <div className="relative mx-auto max-w-7xl px-3 sm:px-8 lg:px-10">
             <Heading compact light eyebrow="ফটো গ্যালারি" title="মুহূর্তগুলোর অ্যালবাম" description="বিভাগ বেছে নিন — প্রতিটি ছবিতে ক্লিক করলে বড় করে দেখতে পারবেন।" />
@@ -117,9 +117,9 @@ function Gallery() {
                   <button key={img.src + k} type="button" onClick={() => setView(k)} className="group relative mb-2.5 block w-full overflow-hidden rounded-lg border border-gold/25 bg-card shadow-elegant transition-shadow duration-300 break-inside-avoid hover:shadow-lg sm:mb-4 sm:rounded-2xl">
                     <img src={img.src} alt={img.alt} loading="lazy" className={`w-full object-cover transition-transform duration-700 group-hover:scale-105 ${k % 3 === 0 ? 'aspect-[4/5]' : 'aspect-[4/3]'}`} />
                     <span className="absolute end-1.5 top-1.5 grid size-7 place-items-center rounded-full bg-gold text-primary opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:end-2.5 sm:top-2.5 sm:size-9"><ZoomIn className="size-3.5 sm:size-4.5" /></span>
-                    <span className="absolute inset-x-0 bottom-0 translate-y-full bg-primary p-2 text-start transition-transform duration-300 group-hover:translate-y-0 sm:p-3.5">
-                      <span className="block text-[9px] font-bold text-gold-light sm:text-xs">{img.category}</span>
-                      <span className="block truncate text-[11px] font-semibold text-primary-foreground sm:text-sm">{img.alt}</span>
+                    <span className="absolute inset-x-1.5 bottom-1.5 translate-y-[130%] rounded-lg bg-background p-2 text-start shadow-elegant transition-transform duration-300 group-hover:translate-y-0 sm:inset-x-2.5 sm:bottom-2.5 sm:rounded-xl sm:p-3">
+                      <span className="block text-[9px] font-bold text-gold-deep sm:text-xs">{img.category}</span>
+                      <span className="block truncate text-[11px] font-semibold text-primary sm:text-sm">{img.alt}</span>
                     </span>
                   </button>
                 ))}
