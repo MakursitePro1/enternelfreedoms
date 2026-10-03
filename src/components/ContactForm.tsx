@@ -24,23 +24,23 @@ export function ContactForm() {
     finally { setBusy(false); }
   }
   if (done) return (
-    <div className="py-8 text-center">
-      <CheckCircle2 className="mx-auto size-12 text-primary" />
-      <h3 className="mt-4 font-display text-2xl text-primary">বার্তা পাঠানো হয়েছে</h3>
-      <p className="mt-2 text-muted-foreground">প্রতিষ্ঠানের পক্ষ থেকে শীঘ্রই আপনার সঙ্গে যোগাযোগ করা হবে।</p>
-      <Button variant="secondary" className="mt-5" onClick={() => setDone(false)}>আরেকটি বার্তা পাঠান</Button>
+    <div className="py-6 text-center">
+      <CheckCircle2 className="mx-auto size-11 text-gold" />
+      <h3 className="mt-3 font-display text-xl text-primary-foreground">বার্তা পাঠানো হয়েছে</h3>
+      <p className="mt-2 text-sm text-primary-foreground/80">প্রতিষ্ঠানের পক্ষ থেকে শীঘ্রই আপনার সঙ্গে যোগাযোগ করা হবে।</p>
+      <Button variant="secondary" className="mt-4" onClick={() => setDone(false)}>আরেকটি বার্তা পাঠান</Button>
     </div>
   );
-  const input = 'mt-1.5 block h-11 w-full min-w-0 rounded-md border border-input bg-secondary px-3.5 py-2 text-sm font-normal text-foreground outline-none transition-colors focus:border-primary focus:ring-2 focus:ring-ring/40';
+  const input = 'mt-1.5 block h-10 w-full min-w-0 rounded-md border-0 bg-background px-3.5 py-2 text-sm font-normal text-foreground outline-none transition-colors focus:ring-2 focus:ring-gold/70';
   return (
-    <form onSubmit={submit} className="grid gap-4 sm:grid-cols-2">
-      <label className="text-sm font-semibold text-primary">আপনার নাম *<input required minLength={2} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={input} /></label>
-      <label className="text-sm font-semibold text-primary">মোবাইল নম্বর *<input required type="tel" placeholder="01XXXXXXXXX" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={input} /></label>
-      <label className="text-sm font-semibold text-primary">ইমেইল<input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={input} /></label>
-      <label className="text-sm font-semibold text-primary">বিষয়<select value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} className={input}>{subjects.map((s) => <option key={s}>{s}</option>)}</select></label>
-      <label className="text-sm font-semibold text-primary sm:col-span-2">বার্তা *<textarea required minLength={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={`${input} min-h-32 resize-y`} /></label>
-      {error && <p role="alert" className="text-sm text-destructive sm:col-span-2">{error}</p>}
-      <div className="pt-1 sm:col-span-2"><Button type="submit" size="lg" disabled={busy} className="w-full bg-primary text-primary-foreground hover:bg-primary-raised sm:w-auto"><Send className="size-4" />{busy ? 'পাঠানো হচ্ছে...' : t('বার্তা পাঠান')}</Button></div>
+    <form onSubmit={submit} className="grid gap-3.5 sm:grid-cols-2">
+      <label className="text-sm font-semibold text-gold-light">আপনার নাম *<input required minLength={2} value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={input} /></label>
+      <label className="text-sm font-semibold text-gold-light">মোবাইল নম্বর *<input required type="tel" placeholder="01XXXXXXXXX" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={input} /></label>
+      <label className="text-sm font-semibold text-gold-light">ইমেইল<input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className={input} /></label>
+      <label className="text-sm font-semibold text-gold-light">বিষয়<select value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} className={input}>{subjects.map((s) => <option key={s}>{s}</option>)}</select></label>
+      <label className="text-sm font-semibold text-gold-light sm:col-span-2">বার্তা *<textarea required minLength={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className={`${input} min-h-28 resize-y`} /></label>
+      {error && <p role="alert" className="text-sm font-semibold text-gold sm:col-span-2">{error}</p>}
+      <div className="pt-1 sm:col-span-2"><Button type="submit" size="lg" disabled={busy} className="w-full bg-gold text-primary hover:bg-gold-light sm:w-auto"><Send className="size-4" />{busy ? 'পাঠানো হচ্ছে...' : t('বার্তা পাঠান')}</Button></div>
     </form>
   );
 }
