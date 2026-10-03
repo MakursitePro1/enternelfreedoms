@@ -383,8 +383,10 @@ function Home() {
         <section className="grid gap-2.5 max-[359px]:gap-2 sm:gap-4 lg:grid-cols-[1.08fr_0.92fr] lg:items-stretch">
           <div className="relative overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
             <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
-            <div className="relative flex h-full items-center gap-3.5 px-4 py-7 max-[359px]:px-3 max-[359px]:py-6 sm:gap-6 sm:px-8 sm:py-12 lg:gap-8 lg:px-10">
-              <div className="flex min-w-0 flex-1 flex-col justify-center">
+            <div className="absolute right-3 top-3 z-10 flex size-9 items-center justify-center rounded-xl bg-gold shadow-elegant sm:right-5 sm:top-5 sm:size-11 sm:rounded-2xl">
+              <GraduationCap className="size-4.5 text-primary sm:size-5.5" strokeWidth={1.75} />
+            </div>
+            <div className="relative flex h-full flex-col justify-center px-4 py-7 max-[359px]:px-3 max-[359px]:py-6 sm:px-8 sm:py-12 lg:px-10">
               <span className="inline-flex self-start items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary shadow-elegant sm:gap-2 sm:px-4 sm:py-1.5 sm:text-xs"><Sparkles className="size-3 shrink-0 sm:size-3.5" />{s.admission_badge}</span>
               <h2 className="mt-3 font-display text-[1.45rem] font-bold leading-[1.2] sm:mt-4 sm:text-4xl lg:text-[2.5rem] xl:text-[2.6rem]">সন্তানের শিক্ষাযাত্রা<br className="sm:hidden" /> শুরু হোক এখানে</h2>
               <div className="mt-3 h-1 w-16 rounded-full bg-gold sm:mt-4 sm:w-24" />
@@ -393,12 +395,6 @@ function Home() {
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[10.5px] font-semibold text-primary sm:px-4 sm:py-1.5 sm:text-xs"><GraduationCap className="size-3 sm:size-3.5" />কুরআন ও জাতীয় পাঠক্রম</span>
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[10.5px] font-semibold text-primary sm:px-4 sm:py-1.5 sm:text-xs"><HomeIcon className="size-3 sm:size-3.5" />পূর্ণাঙ্গ আবাসিক ব্যবস্থা</span>
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[10.5px] font-semibold text-primary sm:px-4 sm:py-1.5 sm:text-xs"><ShieldCheck className="size-3 sm:size-3.5" />২৪ ঘণ্টা নিরাপত্তা</span>
-              </div>
-              </div>
-              <div className="flex shrink-0 items-center">
-                <div className="flex size-14 items-center justify-center rounded-2xl bg-gold shadow-elegant sm:size-16 lg:size-20">
-                  <GraduationCap className="size-7 text-primary sm:size-8 lg:size-10" strokeWidth={1.75} />
-                </div>
               </div>
             </div>
           </div>
