@@ -1,6 +1,6 @@
 import { Link, useRouterState } from '@tanstack/react-router';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { ArrowUpRight, Menu, MapPin, ArrowRight, Phone, Mail, Clock, ChevronDown, ChevronRight, Megaphone, Globe, Facebook, Youtube } from 'lucide-react';
+import { ArrowUpRight, Menu, MapPin, ArrowRight, Phone, Mail, Clock, ChevronDown, ChevronRight, Megaphone, Globe, Facebook, Youtube, Music2, MessageCircle } from 'lucide-react';
 import { nav, moreNav, allNav } from '@/lib/content';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -150,6 +150,8 @@ export function Site({ children }: { children: ReactNode }) {
             <div className="mt-6 flex gap-2">
               {s.facebook && <a href={s.facebook} target="_blank" rel="noreferrer" aria-label="ফেসবুক" className="grid size-10 place-items-center rounded-lg bg-primary-foreground/10 hover:bg-gold hover:text-primary"><Facebook className="size-4" /></a>}
               {s.youtube && <a href={s.youtube} target="_blank" rel="noreferrer" aria-label="ইউটিউব" className="grid size-10 place-items-center rounded-lg bg-primary-foreground/10 hover:bg-gold hover:text-primary"><Youtube className="size-4" /></a>}
+              {s.tiktok && <a href={s.tiktok} target="_blank" rel="noreferrer" aria-label="টিকটক" className="grid size-10 place-items-center rounded-lg bg-primary-foreground/10 hover:bg-gold hover:text-primary"><Music2 className="size-4" /></a>}
+              {s.whatsapp && <a href={s.whatsapp} target="_blank" rel="noreferrer" aria-label="হোয়াটসঅ্যাপ" className="grid size-10 place-items-center rounded-lg bg-primary-foreground/10 hover:bg-gold hover:text-primary"><MessageCircle className="size-4" /></a>}
             </div>
           </div>
           <div>

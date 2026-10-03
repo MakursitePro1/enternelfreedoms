@@ -2,15 +2,17 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 export const defaultSettings = {
-  phone: '০১৭০০-০০০০০০',
+  phone: '০১৭১১-০২২৭৩৪',
   phone2: '',
   email: 'info@eternalfreedoms.com',
   address: 'গফরগাঁও, ময়মনসিংহ, বাংলাদেশ',
   office_hours: 'শনি–বৃহস্পতি, সকাল ৮টা – বিকেল ৫টা',
   bkash: '০১৭০০-০০০০০০',
   nagad: '০১৭০০-০০০০০০',
-  facebook: '',
-  youtube: '',
+  facebook: 'https://web.facebook.com/Eternalfreedom20',
+  youtube: 'https://www.youtube.com/@MagicEnglishLearningSchool',
+  tiktok: 'https://www.tiktok.com/@mdansarulhaque143',
+  whatsapp: 'https://wa.me/8801711022734',
   admission_badge: 'ভর্তি চলছে',
   video_url: '',
   is_demo: 'true',
@@ -20,7 +22,7 @@ export type SiteSettings = typeof defaultSettings;
 export const settingFields: [string, string][] = [
   ['phone', 'প্রধান ফোন নম্বর'], ['phone2', 'বিকল্প ফোন নম্বর'], ['email', 'ইমেইল'], ['address', 'ঠিকানা'],
   ['office_hours', 'অফিস সময়'], ['bkash', 'বিকাশ নম্বর (পেমেন্টের জন্য)'], ['nagad', 'নগদ নম্বর (পেমেন্টের জন্য)'],
-  ['facebook', 'ফেসবুক পেজ লিংক'], ['youtube', 'ইউটিউব চ্যানেল লিংক'], ['admission_badge', 'হোম পেজের ভর্তি ব্যাজ লেখা'],
+  ['facebook', 'ফেসবুক পেজ লিংক'], ['youtube', 'ইউটিউব চ্যানেল লিংক'], ['tiktok', 'টিকটক প্রোফাইল লিংক'], ['whatsapp', 'হোয়াটসঅ্যাপ লিংক (wa.me)'], ['admission_badge', 'হোম পেজের ভর্তি ব্যাজ লেখা'],
   ['video_url', 'ক্যাম্পাস ভিডিও (YouTube লিংক)'], ['is_demo', 'নমুনা তথ্যের নোট দেখাবে? (true / false)'],
 ];
 
