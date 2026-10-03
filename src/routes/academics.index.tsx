@@ -33,7 +33,7 @@ function AcademicsHero() {
   );
 }
 
-const bn = (n: number | string) => String(n).replace(/\d/g, (d) => '০১২৩৪৫৬৭৮৯'[Number(d)]);
+const bn = (n: number | string) => String(n).replace(/\d/g, (d) => '০১২৩৪৫৬৭৮৯'.charAt(Number(d)));
 
 function ProgramCard({ p, featured = false }: { p: (typeof programs)[number]; featured?: boolean }) {
   return (
