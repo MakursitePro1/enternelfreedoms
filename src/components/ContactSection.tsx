@@ -8,13 +8,13 @@ const CONTACT_MAP_EMBED = 'https://www.google.com/maps?q=24.4569854,90.5514883&z
 
 function InfoRow({ icon: Icon, label, children, href }: { icon: typeof MapPin; label: string; children: React.ReactNode; href?: string }) {
   const body = (
-    <div className="group flex items-center gap-3 rounded-2xl border border-primary/10 bg-secondary/70 px-3.5 py-3 transition-colors hover:bg-secondary sm:gap-4 sm:px-4">
-      <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-gold text-primary transition-colors group-hover:bg-gold-light sm:size-11">
+    <div className="group flex items-center gap-3 rounded-2xl border border-primary/25 bg-primary px-3.5 py-3 transition-colors hover:bg-primary/90 sm:gap-4 sm:px-4">
+      <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-gold text-primary sm:size-11">
         <Icon className="size-4.5" />
       </span>
       <div className="min-w-0">
-        <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">{label}</p>
-        <div className="text-sm font-semibold leading-6 text-primary sm:text-[15px]">{children}</div>
+        <p className="text-[11px] font-bold uppercase tracking-wide text-gold">{label}</p>
+        <div className="text-sm font-semibold leading-6 text-primary-foreground sm:text-[15px]">{children}</div>
       </div>
     </div>
   );
@@ -60,14 +60,14 @@ export function ContactSection() {
               )}
             </div>
 
-            <div className="mt-4 overflow-hidden rounded-2xl border border-primary/10 bg-secondary shadow-md">
+            <div className="mt-4 overflow-hidden rounded-2xl border border-primary/25 bg-secondary shadow-md">
               <div className="flex items-center justify-between gap-3 px-4 py-2.5 sm:px-5">
                 <p className="flex items-center gap-2 text-sm font-bold text-primary"><MapPin className="size-4 text-gold-deep" /> প্রতিষ্ঠানের অবস্থান</p>
                 <span className="rounded-full bg-gold/20 px-2.5 py-1 text-[11px] font-bold text-gold-deep">লাইভ ম্যাপ</span>
               </div>
-              <div className="relative">
-                <iframe title="Eternal Freedom Institute Al Islamia-এর অবস্থান" src={CONTACT_MAP_EMBED} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-40 w-full border-0 sm:h-48 lg:h-56" />
-                <a href={CONTACT_MAP_URL} target="_blank" rel="noreferrer" className="absolute bottom-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-gold px-4 py-2 text-[13px] font-bold text-primary shadow-lg ring-2 ring-background/60 transition-all hover:-translate-y-0.5 hover:bg-gold-light sm:px-5 sm:py-2.5 sm:text-sm">
+              <iframe title="Eternal Freedom Institute Al Islamia-এর অবস্থান" src={CONTACT_MAP_EMBED} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-40 w-full border-0 sm:h-48 lg:h-56" />
+              <div className="flex justify-center px-3 pb-3 pt-3 sm:pb-4">
+                <a href={CONTACT_MAP_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 whitespace-nowrap rounded-full bg-gold px-5 py-2.5 text-[13px] font-bold text-primary shadow-md transition-all hover:-translate-y-0.5 hover:bg-gold-light sm:px-6 sm:text-sm">
                   <MapPin className="size-4 shrink-0" /> গুগল ম্যাপে সঠিক অবস্থান দেখুন <ArrowUpRight className="size-4 shrink-0" />
                 </a>
               </div>
