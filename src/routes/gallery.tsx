@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, X, PlayCircle, Images, Sparkles, ArrowRight, Phone, ZoomIn, GraduationCap, ShieldCheck, Home as HomeIcon, Camera, Clapperboard } from 'lucide-react';
-import { Site, PageIntro, Heading } from '@/components/Site';
+import { Site, Heading } from '@/components/Site';
 import { StatsBar } from '@/components/InstitutionSections';
 import { Button } from '@/components/ui/button';
 import { useInstitutionContent } from '@/lib/institution-content';
@@ -131,7 +131,7 @@ function Gallery() {
 
       {/* ভিডিও গ্যালারি — হোম স্টাইল স্প্লিট */}
       <div className="px-2.5 py-2.5 sm:px-5 sm:py-5">
-        <section className="overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
+        <section id="gallery-videos" className="scroll-mt-24 overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:rounded-[1.25rem]">
           <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
           <div className="relative grid lg:grid-cols-2">
             <div className="min-w-0 p-5 max-[359px]:p-4 sm:p-10 lg:p-12">
