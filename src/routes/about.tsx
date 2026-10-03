@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Target, Eye, BookOpen, Sparkles, Rocket, ArrowRight, Phone, Quote } from 'lucide-react';
 import { Site, Heading, TextLink } from '@/components/Site';
-import { StatsBar, AchievementsGrid, TeachersGrid } from '@/components/InstitutionSections';
+import { StatsBar, AchievementsGrid, TeachersCarousel } from '@/components/InstitutionSections';
 import { photos, whyCards, programs } from '@/lib/content';
 import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
@@ -145,7 +145,7 @@ function About() {
       <div className="px-2.5 py-2.5 sm:px-5 sm:py-5">
         <section className="mx-auto max-w-7xl">
           <div className="flex flex-wrap items-end justify-between gap-4"><Heading compact eyebrow="শিক্ষকমণ্ডলী" title="আমাদের শিক্ষক" /><TextLink to="/teachers">সব শিক্ষক</TextLink></div>
-          <div className="mt-6 sm:mt-8"><TeachersGrid limit={4} /></div>
+          <div className="mt-6 sm:mt-8"><TeachersCarousel /></div>
         </section>
       </div>
 
