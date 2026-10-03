@@ -376,21 +376,7 @@ function Home() {
       </div>
 
       {/* Books */}
-      {books.length > 0 && (
-        <section className="px-5 py-24 lg:px-8">
-          <div className="mx-auto max-w-7xl">
-            <div className="flex flex-wrap items-end justify-between gap-5"><Heading eyebrow="অনলাইন বইয়ের দোকান" title="প্রতিষ্ঠানের নিজস্ব প্রকাশনা" description="ঘরে বসেই অর্ডার করুন—ক্যাশ অন ডেলিভারি, বিকাশ বা নগদে পেমেন্ট।" /><TextLink to="/books">সব বই দেখুন</TextLink></div>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {books.map((b, k) => (
-                <Link key={b.id} to="/books/$id" params={{ id: b.id }} className="group overflow-hidden rounded-2xl bg-secondary premium-card shadow-elegant">
-                  <div className="relative aspect-[3/4] overflow-hidden"><img src={b.cover_url ?? pick(bookCovers, k)} alt={b.title} loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />{!b.cover_url && <div className="absolute inset-x-6 top-1/2 -translate-y-1/2 rounded-lg bg-background/90 p-3 text-center font-display text-sm font-semibold text-primary">{b.title}</div>}</div>
-                  <div className="p-5"><div className="flex items-center gap-2"><span className="text-xs text-muted-foreground">{b.author}</span><DemoNote show={isDemo(b.slug)} /></div><h3 className="mt-1 font-display text-lg font-semibold text-primary">{b.title}</h3><div className="mt-3 flex items-center justify-between"><strong className="text-lg text-primary">৳ {Number(b.price).toLocaleString('bn-BD')}</strong><span className="inline-flex items-center gap-1 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground"><ShoppingBag className="size-3.5" />{t('এখনই কিনুন')}</span></div></div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      <FeaturedBookBanner />{books.length < 0 && pick(bookCovers, 0) && isDemo(null) && <DemoNote />}
 
       {/* Contact */}
       <section className="bg-secondary px-5 py-24 lg:px-8">
