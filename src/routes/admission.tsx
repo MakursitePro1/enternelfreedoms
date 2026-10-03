@@ -48,7 +48,7 @@ function Admission() {
   const s = useSiteSettings();
   const send = useServerFn(submitAdmission);
   const track = useServerFn(trackAdmission);
-  const input = 'mt-2 w-full rounded-lg border border-border bg-secondary px-4 py-3 font-normal outline-none transition-colors focus:border-gold focus:ring-2 focus:ring-gold';
+  const input = 'mt-2 w-full rounded-xl border-2 border-field-border bg-background px-4 py-3 font-medium text-primary outline-none transition-colors focus:border-gold focus:ring-2 focus:ring-gold';
   function field(name: keyof Form, label: string, required = false, type = 'text') {
     return <label className="block text-sm font-semibold text-primary">{label}{required && ' *'}<input type={type} value={form[name]} onChange={(e) => setForm({ ...form, [name]: e.target.value })} required={required} className={input} /></label>;
   }
