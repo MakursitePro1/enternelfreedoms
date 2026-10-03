@@ -6,6 +6,21 @@ import { defaultSettings, telHref, useSiteSettings } from '@/lib/site-settings';
 export const CONTACT_MAP_URL = 'https://www.google.com/maps/place/Eternal+Freedom+Institute+Al+Islamia/@24.4569854,90.5489134,880m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3756619166939f13:0xf7a04cb7cd46f8de!8m2!3d24.4569854!4d90.5514883!16s%2Fg%2F11vdtqt29c';
 const CONTACT_MAP_EMBED = 'https://www.google.com/maps?q=24.4569854,90.5514883&z=17&hl=bn&output=embed';
 
+function InfoRow({ icon: Icon, label, children, href }: { icon: typeof MapPin; label: string; children: React.ReactNode; href?: string }) {
+  const body = (
+    <div className="group flex items-center gap-3 rounded-2xl bg-secondary/70 px-3.5 py-3 transition-colors hover:bg-secondary sm:gap-4 sm:px-4">
+      <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-gold text-primary transition-colors group-hover:bg-gold-light sm:size-11">
+        <Icon className="size-4.5" />
+      </span>
+      <div className="min-w-0">
+        <p className="text-[11px] font-bold uppercase tracking-wide text-muted-foreground">{label}</p>
+        <div className="text-sm font-semibold leading-6 text-primary sm:text-[15px]">{children}</div>
+      </div>
+    </div>
+  );
+  return href ? <a href={href} className="block">{body}</a> : body;
+}
+
 export function ContactSection() {
   const s = useSiteSettings();
   const phone = s.phone && s.phone !== defaultSettings.phone ? s.phone : '';
@@ -17,33 +32,61 @@ export function ContactSection() {
       <div className="mx-auto max-w-[90rem]">
         <div className="grid items-end gap-4 lg:grid-cols-[1fr_auto]">
           <Heading compact eyebrow="যোগাযোগ" title="আমাদের সঙ্গে যোগাযোগ করুন" description="ভর্তি, আবাসিক ব্যবস্থা, বই অর্ডার বা যেকোনো প্রশ্নে সরাসরি বার্তা পাঠান।" />
-          <a href={CONTACT_MAP_URL} target="_blank" rel="noreferrer" className="inline-flex w-fit items-center gap-2 rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-primary transition-colors hover:bg-gold-light sm:mb-8">
+          <a href={CONTACT_MAP_URL} target="_blank" rel="noreferrer" className="inline-flex w-fit items-center gap-2 rounded-xl bg-gold px-4 py-2.5 text-sm font-bold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:bg-gold-light sm:mb-8">
             <MapPin className="size-4 shrink-0" /> গফরগাঁও, ময়মনসিংহ <ArrowUpRight className="size-4 shrink-0" />
           </a>
         </div>
-        <div className="grid items-start gap-5 sm:gap-6 lg:mt-1 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-9">
+
+        <div className="grid items-start gap-5 sm:gap-6 lg:mt-1 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-8">
           <div className="min-w-0">
-            <h3 className="font-display text-base font-semibold text-primary sm:text-lg">প্রতিষ্ঠানের ঠিকানা</h3>
-            <div className="mt-3 space-y-3">
-              <div className="flex gap-3 sm:gap-3.5"><MapPin className="mt-0.5 size-4 shrink-0 text-gold-deep" /><div className="min-w-0"><p className="text-xs font-semibold text-muted-foreground">অবস্থান</p><p className="text-sm font-semibold leading-6 text-primary sm:text-[15px]">Eternal Freedom Institute Al Islamia<br />গফরগাঁও, ময়মনসিংহ, বাংলাদেশ</p></div></div>
-              {phone && <a href={telHref(phone)} className="flex gap-3 transition-colors hover:text-gold-deep sm:gap-3.5"><Phone className="mt-0.5 size-4 shrink-0 text-gold-deep" /><div><p className="text-xs font-semibold text-muted-foreground">ফোন</p><p className="text-sm font-semibold text-primary sm:text-[15px]">{phone}{s.phone2 ? `, ${s.phone2}` : ''}</p></div></a>}
-              {email && <a href={`mailto:${email}`} className="flex gap-3 transition-colors hover:text-gold-deep sm:gap-3.5"><Mail className="mt-0.5 size-4 shrink-0 text-gold-deep" /><div className="min-w-0"><p className="text-xs font-semibold text-muted-foreground">ইমেইল</p><p className="break-all text-sm font-semibold text-primary sm:text-[15px]">{email}</p></div></a>}
-              {hours && <div className="flex gap-3 sm:gap-3.5"><Clock3 className="mt-0.5 size-4 shrink-0 text-gold-deep" /><div><p className="text-xs font-semibold text-muted-foreground">অফিস সময়</p><p className="text-sm font-semibold text-primary sm:text-[15px]">{hours}</p></div></div>}
+            <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
+              <InfoRow icon={MapPin} label="অবস্থান">
+                Eternal Freedom Institute Al Islamia<br />গফরগাঁও, ময়মনসিংহ, বাংলাদেশ
+              </InfoRow>
+              {phone && (
+                <InfoRow icon={Phone} label="ফোন" href={telHref(phone)}>
+                  {phone}{s.phone2 ? `, ${s.phone2}` : ''}
+                </InfoRow>
+              )}
+              {email && (
+                <InfoRow icon={Mail} label="ইমেইল" href={`mailto:${email}`}>
+                  <span className="break-all">{email}</span>
+                </InfoRow>
+              )}
+              {hours && (
+                <InfoRow icon={Clock3} label="অফিস সময়">
+                  {hours}
+                </InfoRow>
+              )}
             </div>
-            <div className="mt-4 overflow-hidden rounded-xl bg-secondary shadow-sm">
-              <iframe title="Eternal Freedom Institute Al Islamia-এর অবস্থান" src={CONTACT_MAP_EMBED} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-32 w-full border-0 sm:h-40 lg:h-52" />
-              <a href={CONTACT_MAP_URL} target="_blank" rel="noreferrer" className="flex items-center justify-between gap-3 bg-gold px-4 py-2.5 text-sm font-bold text-primary transition-colors hover:bg-gold-light sm:px-5">
+
+            <div className="mt-4 overflow-hidden rounded-2xl bg-secondary shadow-md ring-1 ring-primary/5">
+              <div className="flex items-center justify-between gap-3 px-4 py-2.5 sm:px-5">
+                <p className="flex items-center gap-2 text-sm font-bold text-primary"><MapPin className="size-4 text-gold-deep" /> প্রতিষ্ঠানের অবস্থান</p>
+                <span className="rounded-full bg-gold/20 px-2.5 py-1 text-[11px] font-bold text-gold-deep">লাইভ ম্যাপ</span>
+              </div>
+              <iframe title="Eternal Freedom Institute Al Islamia-এর অবস্থান" src={CONTACT_MAP_EMBED} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-40 w-full border-0 sm:h-48 lg:h-56" />
+              <a href={CONTACT_MAP_URL} target="_blank" rel="noreferrer" className="flex items-center justify-between gap-3 bg-gold px-4 py-3 text-sm font-bold text-primary transition-colors hover:bg-gold-light sm:px-5">
                 <span>গুগল ম্যাপে সঠিক অবস্থান দেখুন</span><ArrowUpRight className="size-4 shrink-0" />
               </a>
             </div>
           </div>
-          <div className="min-w-0 rounded-2xl bg-primary p-4 text-primary-foreground sm:p-5 lg:p-6">
-            <div className="mb-3.5">
-              <p className="text-xs font-bold text-gold">সরাসরি বার্তা</p>
-              <h3 className="mt-0.5 font-display text-lg font-semibold text-primary-foreground sm:text-xl">আমাদের লিখুন</h3>
-              <p className="mt-0.5 text-[13px] text-primary-foreground/75">আপনার প্রশ্ন বা মতামত লিখে পাঠান।</p>
+
+          <div className="relative min-w-0 overflow-hidden rounded-2xl bg-primary p-4 text-primary-foreground shadow-lg sm:p-6 lg:p-7">
+            <div className="pointer-events-none absolute inset-0 islamic-pattern opacity-[0.06]" aria-hidden="true" />
+            <div className="relative">
+              <div className="mb-4 flex items-center gap-3">
+                <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-gold text-primary">
+                  <Mail className="size-5" />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-[11px] font-bold uppercase tracking-wide text-gold">সরাসরি বার্তা</p>
+                  <h3 className="font-display text-lg font-semibold text-primary-foreground sm:text-xl">আমাদের লিখুন</h3>
+                </div>
+              </div>
+              <p className="mb-4 text-[13px] leading-6 text-primary-foreground/75">আপনার প্রশ্ন বা মতামত লিখে পাঠান — দ্রুত উত্তর দেওয়া হবে ইনশাআল্লাহ।</p>
+              <ContactForm />
             </div>
-            <ContactForm />
           </div>
         </div>
       </div>
