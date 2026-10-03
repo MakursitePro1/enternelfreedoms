@@ -137,24 +137,24 @@ export function TestimonialSlider() {
   if (!cur) return null;
   const embed = cur.image_url ? youtubeEmbed(cur.image_url) : null;
   return (
-    <div className="grid gap-8 lg:grid-cols-[1.2fr_.8fr] lg:items-center">
-      <div className="relative rounded-3xl bg-background p-8 shadow-elegant sm:p-12">
-        <Quote className="size-12 text-gold" />
-        <p key={cur.id} className="fade-slide mt-6 font-display text-xl leading-9 text-primary sm:text-2xl sm:leading-10">“{cur.body}”</p>
-        <div className="mt-8 flex items-center gap-4">
-          {cur.image_url && !embed ? <img src={cur.image_url} alt={cur.title} className="size-14 rounded-full object-cover" /> : <div className="grid size-14 place-items-center rounded-full bg-primary font-display text-lg text-gold-light">{initials(cur.title)}</div>}
-          <div><div className="font-semibold text-primary">{cur.title}</div><div className="text-sm text-muted-foreground">{cur.detail}</div></div>
+    <div className="grid gap-5 sm:gap-8 lg:grid-cols-[1.2fr_.8fr] lg:items-stretch">
+      <div className="relative flex flex-col rounded-3xl bg-background p-6 shadow-elegant sm:p-10 sm:min-h-[360px]">
+        <Quote className="size-10 text-gold sm:size-12" />
+        <p key={cur.id} className="fade-slide mt-5 flex-1 font-display text-lg leading-8 text-primary sm:mt-6 sm:text-2xl sm:leading-10">“{cur.body}”</p>
+        <div className="mt-7 flex items-center gap-4">
+          {cur.image_url && !embed ? <img src={cur.image_url} alt={cur.title} className="size-12 shrink-0 rounded-full object-cover sm:size-14" /> : <div className="grid size-12 shrink-0 place-items-center rounded-full bg-primary font-display text-lg text-gold-light sm:size-14">{initials(cur.title)}</div>}
+          <div className="min-w-0"><div className="truncate font-semibold text-primary">{cur.title}</div><div className="truncate text-sm text-muted-foreground">{cur.detail}</div></div>
           <div className="ms-auto"><DemoNote show={isDemo(cur.slug)} /></div>
         </div>
-        <div className="mt-8 flex items-center gap-3">
-          <button type="button" aria-label="আগের মতামত" onClick={() => setI((i - 1 + items.length) % items.length)} className="grid size-10 place-items-center rounded-full bg-secondary text-primary hover:bg-gold"><ChevronLeft className="size-5 rtl:rotate-180" /></button>
-          <button type="button" aria-label="পরের মতামত" onClick={() => setI((i + 1) % items.length)} className="grid size-10 place-items-center rounded-full bg-secondary text-primary hover:bg-gold"><ChevronRight className="size-5 rtl:rotate-180" /></button>
+        <div className="mt-7 flex items-center gap-3">
+          <button type="button" aria-label="আগের মতামত" onClick={() => setI((i - 1 + items.length) % items.length)} className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-primary hover:bg-gold"><ChevronLeft className="size-5 rtl:rotate-180" /></button>
+          <button type="button" aria-label="পরের মতামত" onClick={() => setI((i + 1) % items.length)} className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-primary hover:bg-gold"><ChevronRight className="size-5 rtl:rotate-180" /></button>
           <div className="ms-2 flex gap-1.5">{items.map((t, k) => <button key={t.id} type="button" aria-label={`মতামত ${k + 1}`} onClick={() => setI(k)} className={`h-2 rounded-full transition-all ${k === i % items.length ? 'w-6 bg-gold' : 'w-2 bg-border'}`} />)}</div>
         </div>
       </div>
-      <div className="grid gap-3">
+      <div className="grid gap-3 lg:content-start">
         {embed ? <div className="aspect-video overflow-hidden rounded-2xl bg-primary"><iframe title={cur.title} src={embed} loading="lazy" allowFullScreen className="h-full w-full" /></div> : items.slice(0, 4).map((t, k) => (
-          <button key={t.id} type="button" onClick={() => setI(k)} className={`flex items-center gap-3 rounded-2xl p-4 text-start transition-colors ${k === i % items.length ? 'bg-primary text-primary-foreground' : 'bg-background hover:bg-accent'}`}>
+          <button key={t.id} type="button" onClick={() => setI(k)} className={`flex h-[76px] items-center gap-3 rounded-2xl border-2 px-4 text-start text-foreground transition-colors ${k === i % items.length ? 'border-gold bg-background' : 'border-transparent bg-background hover:bg-accent'}`}>
             <div className={`grid size-10 shrink-0 place-items-center rounded-full font-display ${k === i % items.length ? 'bg-gold text-primary' : 'bg-secondary text-primary'}`}>{initials(t.title)}</div>
             <div className="min-w-0"><div className="truncate font-semibold">{t.title}</div><div className="truncate text-xs opacity-70">{t.detail}</div></div>
           </button>
