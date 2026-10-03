@@ -127,7 +127,7 @@ function Admission() {
           ['fees', 'ফি', Banknote],
           ['apply', 'আবেদন', PenLine],
           ['track', 'আবেদনের অবস্থা', SearchCheck],
-        ] as [string, string, LucideIcon][]).map(([id, l, Icon]) => <a key={id} href={`#${id}`} className="flex min-w-0 flex-col items-center justify-center gap-1 rounded-xl px-1.5 py-2 text-center text-[11px] font-semibold leading-tight text-primary-foreground transition-colors hover:bg-gold hover:text-primary sm:flex-row sm:gap-2 sm:rounded-full sm:px-3 sm:py-2.5 sm:text-sm"><Icon className="size-4 shrink-0 sm:size-[18px]" strokeWidth={2.2} /><span className="truncate">{l}</span></a>)}</div>
+        ] as [string, string, LucideIcon][]).map(([id, l, Icon]) => <a key={id} href={`#${id}`} className="flex min-w-0 flex-col items-center justify-center gap-1 rounded-xl border border-gold/50 bg-primary-foreground/10 px-1.5 py-2 text-center text-[11px] font-semibold leading-tight text-primary-foreground shadow-sm transition-colors hover:border-gold hover:bg-gold hover:text-primary sm:flex-row sm:gap-2 sm:rounded-full sm:px-3 sm:py-2.5 sm:text-sm"><Icon className="size-4 shrink-0 sm:size-[18px]" strokeWidth={2.2} /><span className="truncate">{l}</span></a>)}</div>
       </nav>
 
       {/* ভর্তি প্রক্রিয়া — হোমের মতো */}
