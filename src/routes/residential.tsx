@@ -105,10 +105,15 @@ function Residential() {
               </div>
             </div>
           </div>
-          <div className="grid min-w-0 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
-            {facilities.map((f, k) => <FacilityCard key={f.id} f={f} index={k} />)}
+          <div className="grid min-w-0 gap-3 sm:grid-cols-3 sm:gap-4">
+            {facilities.slice(0, 3).map((f, k) => <FacilityCard key={f.id} f={f} index={k} />)}
           </div>
         </div>
+        {facilities.length > 3 && (
+          <div className="mt-3 grid gap-3 sm:mt-4 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+            {facilities.slice(3).map((f, k) => <FacilityCard key={f.id} f={f} index={k + 3} />)}
+          </div>
+        )}
       </section>
 
       <section className="px-3 py-8 sm:px-5 sm:py-12 lg:px-8">
