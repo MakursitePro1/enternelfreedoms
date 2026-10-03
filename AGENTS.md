@@ -15,3 +15,4 @@
 - Keep the home hero's English heading font in its own theme token and load it from the root head, so Bengali display typography remains unchanged.
 - Keep the home teacher carousel sourced from shared published teacher records and use Embla Auto Scroll for continuous motion, so admin edits and the teacher directory stay in sync while the cards never pause between steps.
 - Render home and dedicated contact content through one shared contact section, so the same verified location and responsive design appear in both places.
+- Keep campus facility records authoritative and show only existing local campus imagery and neutral space labels when no records are published, so the public page never appears empty or invents detailed claims.
