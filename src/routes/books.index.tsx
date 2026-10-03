@@ -25,7 +25,8 @@ function SeeMoreClamp({ as = 'h3', to, className, children }: { as?: 'h3' | 'p';
     const ro = new ResizeObserver(check);
     ro.observe(el);
     document.fonts?.ready.then(check).catch(() => {});
-    return () => ro.disconnect();
+    window.addEventListener('resize', check);
+    return () => { ro.disconnect(); window.removeEventListener('resize', check); };
   }, []);
   return (
     <>
