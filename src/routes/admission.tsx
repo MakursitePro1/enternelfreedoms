@@ -1,3 +1,4 @@
+import { AdmissionInfoBanner } from '@/components/AdmissionInfoBanner';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState, type FormEvent } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle2, Search, Upload, FileText, X, ClipboardList, FileCheck2, Phone, MapPin, Sparkles, ListOrdered, BookOpen, FileCheck, Banknote, PenLine, SearchCheck, ChevronDown, type LucideIcon } from 'lucide-react';
@@ -196,11 +197,13 @@ function Admission() {
         </section>
       </div>
 
+      <AdmissionInfoBanner />
+
       {/* ফি — হোমের খাবার সেকশনের ধরন */}
       <section id="fees" className="scroll-mt-32 px-5 py-14 max-[359px]:px-4 sm:py-20 lg:px-8">
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-center lg:gap-12 [&>*]:min-w-0">
           <div>
-            <Heading compact eyebrow="ফি সংক্রান্ত তথ্য" title="ফি ও গুরুত্বপূর্ণ তথ্য" description="আবেদনের আগে বিভাগভিত্তিক ভর্তি ফি, মাসিক বেতন ও আবাসিক খরচ দেখে নিন।" />
+            <Heading compact eyebrow="ফি সংক্রান্ত তথ্য" title="ফি ও গুরুত্বপূর্ণ তথ্য" description="আবেদনের আগে ভর্তি ফি, মাসিক বেতন ও আবাসিক খরচ দেখে নিন।" />
             <img src={facilityImages.dorm} alt="আবাসিক ভবনের কক্ষ" loading="lazy" className="mt-5 aspect-[16/10] w-full rounded-lg object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] sm:mt-7 sm:rounded-xl lg:aspect-[4/3]" />
           </div>
           <div><FeeTable /></div>
