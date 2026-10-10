@@ -1,6 +1,7 @@
 import { Outlet, useNavigate, useRouterState } from '@tanstack/react-router';
 import { AdminPageContext } from './AdminPage';
 import { AdminOverview } from './AdminOverview';
+import { AdminAdmissions } from './AdminAdmissions';
 import type { AdminPageKey, AdminTab } from '@/lib/admin-pages';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useServerFn } from '@tanstack/react-start';
@@ -146,7 +147,7 @@ export function AdminWorkspace() {
         <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-background px-3 py-2.5 sm:px-6">
           <button type="button" aria-label="মেনু খুলুন" onClick={() => setMenuOpen(true)} className="grid size-10 place-items-center rounded-xl bg-primary text-primary-foreground lg:hidden"><Menu className="size-5" /></button>
           <p className="min-w-0 flex-1 truncate font-display text-base font-bold text-primary">{heroes[tab][0]}</p>
-          {(tab === 'admissions' || tab === 'orders' || tab === 'messages') && <label className="relative hidden sm:block"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="নাম, ফোন বা নম্বর খুঁজুন" className="h-10 w-64 rounded-xl border-2 border-border bg-background pl-9 pr-3 text-sm outline-none focus:border-primary" /></label>}
+          {(tab === 'orders' || tab === 'messages') && <label className="relative hidden sm:block"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="নাম, ফোন বা নম্বর খুঁজুন" className="h-10 w-64 rounded-xl border-2 border-border bg-background pl-9 pr-3 text-sm outline-none focus:border-primary" /></label>}
           <button type="button" onClick={logout} className="hidden items-center gap-2 rounded-xl bg-secondary px-3 py-2 text-sm font-semibold text-primary sm:flex"><LogOut className="size-4" />লগআউট</button>
         </header>
         <main className="min-w-0 p-3 sm:p-6 lg:p-8">
@@ -167,7 +168,7 @@ export function AdminWorkspace() {
               </div>
             </div>
           </section>
-          {(tab === 'admissions' || tab === 'orders' || tab === 'messages') && <label className="relative mb-4 block sm:hidden"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="নাম, ফোন বা নম্বর খুঁজুন" className="h-11 w-full rounded-xl border-2 border-border bg-background pl-9 pr-3 text-sm outline-none focus:border-primary" /></label>}
+          {(tab === 'orders' || tab === 'messages') && <label className="relative mb-4 block sm:hidden"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="নাম, ফোন বা নম্বর খুঁজুন" className="h-11 w-full rounded-xl border-2 border-border bg-background pl-9 pr-3 text-sm outline-none focus:border-primary" /></label>}
           {message && <p className="mb-4 rounded-lg bg-accent p-3 text-sm text-primary">{message}</p>}
           {error && <p role="alert" className="mb-4 rounded-lg bg-secondary p-3 text-sm text-destructive">{error}</p>}
           {loading && <p>তথ্য আসছে...</p>}
@@ -175,7 +176,7 @@ export function AdminWorkspace() {
           <AdminPageContext.Provider value={data && counts ? <>
             {tab === 'overview' && <AdminOverview data={data} go={go} refresh={refresh} />}
 
-            {tab === 'admissions' && <div className="space-y-3">{data.admissions.filter(match).map((a) => { const docs = Array.isArray(a.documents) ? (a.documents as { label: string; name: string; path: string }[]) : []; return <Card key={a.id} className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-start"><div className="min-w-0"><strong className="text-primary">{a.student_name}</strong> · {a.program}<p className="mt-1 text-sm text-muted-foreground">{a.reference} · {a.guardian_name} · {a.phone} · {a.address}</p>{a.notes && <p className="mt-1 text-sm">{a.notes}</p>}{docs.length > 0 && <div className="mt-3 flex flex-wrap gap-2">{docs.map((d) => <button key={d.path} type="button" onClick={() => openDoc(d.path)} className="flex items-center gap-1 rounded-lg bg-secondary px-3 py-1.5 text-xs font-semibold text-primary hover:bg-accent"><FileText className="size-3.5 text-gold" />{d.label}</button>)}</div>}<p className="mt-2 text-xs text-muted-foreground">{new Date(a.created_at).toLocaleString('bn-BD')}</p></div><select aria-label={`${a.student_name} এর অবস্থা`} value={a.status} onChange={(e) => run({ kind: 'admission', id: a.id, status: e.target.value as 'নতুন' }, 'অবস্থা হালনাগাদ হয়েছে।')} className="bg-secondary px-3 py-2">{['নতুন', 'যাচাই চলছে', 'অনুমোদিত', 'বাতিল'].map((x) => <option key={x}>{x}</option>)}</select></Card>; })}{!data.admissions.length && <p>এখনো কোনো আবেদন নেই।</p>}</div>}
+            {tab === 'admissions' && <AdminAdmissions admissions={data.admissions} query={q} setQuery={setQ} openDoc={openDoc} onStatusChange={(id, status) => run({ kind: 'admission', id, status }, 'অবস্থা হালনাগাদ হয়েছে।')} />}
 
             {tab === 'orders' && <div className="space-y-3">{data.orders.filter(match).map((o) => <Card key={o.id} className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"><div className="min-w-0"><strong className="text-primary">{o.customer_name}</strong> · {o.reference}<p className="mt-1 text-sm text-muted-foreground">{o.phone} · {o.address} · ৳ {Number(o.total).toLocaleString('bn-BD')} · {o.payment_method}{o.payment_reference ? ` · ট্রানজেকশন: ${o.payment_reference} (যাচাই করুন)` : ''}</p><p className="mt-1 text-sm">{Array.isArray(o.items) ? (o.items as { title: string; quantity: number }[]).map((i) => `${i.title} × ${i.quantity}`).join(', ') : ''}</p></div><select aria-label={`${o.customer_name} এর অর্ডারের অবস্থা`} value={o.status} onChange={(e) => run({ kind: 'order', id: o.id, status: e.target.value as 'নতুন' }, 'অর্ডারের অবস্থা হালনাগাদ হয়েছে।')} className="bg-secondary px-3 py-2">{['নতুন', 'প্রক্রিয়াধীন', 'পাঠানো হয়েছে', 'সম্পন্ন', 'বাতিল'].map((x) => <option key={x}>{x}</option>)}</select></Card>)}{!data.orders.length && <p>এখনো কোনো অর্ডার নেই।</p>}</div>}
 
