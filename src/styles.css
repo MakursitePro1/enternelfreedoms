@@ -70,6 +70,11 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-panel-dark: var(--panel-dark);
+  --color-panel-dark-soft: var(--panel-dark-soft);
+  --color-panel-dark-border: var(--panel-dark-border);
+  --color-panel-dark-foreground: var(--panel-dark-foreground);
+  --color-panel-dark-muted: var(--panel-dark-muted);
 }
 
 :root {
@@ -111,6 +116,11 @@
   --sidebar-accent-foreground: #0D3B2E;
   --sidebar-border: #e7ece7;
   --sidebar-ring: #C5A059;
+  --panel-dark: #0C110F;
+  --panel-dark-soft: #141B18;
+  --panel-dark-border: #242C28;
+  --panel-dark-foreground: #F3F6F4;
+  --panel-dark-muted: #9AA9A2;
 }
 
 @layer base {
