@@ -19,6 +19,7 @@ export type Database = {
           address: string
           birth_date: string | null
           created_at: string
+          deleted_at: string | null
           documents: Json
           guardian_name: string
           id: string
@@ -34,6 +35,7 @@ export type Database = {
           address: string
           birth_date?: string | null
           created_at?: string
+          deleted_at?: string | null
           documents?: Json
           guardian_name: string
           id?: string
@@ -49,6 +51,7 @@ export type Database = {
           address?: string
           birth_date?: string | null
           created_at?: string
+          deleted_at?: string | null
           documents?: Json
           guardian_name?: string
           id?: string

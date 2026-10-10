@@ -96,6 +96,7 @@ export const getAdminData = createServerFn({ method: 'POST' }).validator((data) 
 const contentKindEnum = z.enum(['teacher', 'achievement', 'event', 'gallery', 'testimonial', 'facility', 'meal', 'program', 'stat', 'video', 'safety', 'fee', 'faq', 'news']);
 const editSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('admission'), id: z.string().uuid(), status: z.enum(['নতুন', 'যাচাই চলছে', 'অনুমোদিত', 'বাতিল']) }),
+  z.object({ kind: z.literal('admission_trash'), id: z.string().uuid(), trashed: z.boolean() }),
   z.object({ kind: z.literal('order'), id: z.string().uuid(), status: z.enum(['নতুন', 'প্রক্রিয়াধীন', 'পাঠানো হয়েছে', 'সম্পন্ন', 'বাতিল']) }),
   z.object({ kind: z.literal('message'), id: z.string().uuid(), status: z.enum(['নতুন', 'উত্তর দেওয়া হয়েছে', 'সম্পন্ন']) }),
   z.object({ kind: z.literal('notice'), id: z.string().uuid().optional(), title: z.string().min(3).max(200), body: z.string().max(5000), category: z.string().min(1).max(50), file_url: z.string().url().optional() }),
@@ -114,6 +115,7 @@ export const adminSave = createServerFn({ method: 'POST' }).validator((data) => 
     const table = change.target === 'notice' ? 'notices' : change.target === 'book' ? 'books' : change.target === 'message' ? 'contact_messages' : 'institution_content';
     result = await db.from(table).delete().eq('id', change.id);
   } else if (change.kind === 'admission') result = await db.from('admissions').update({ status: change.status }).eq('id', change.id);
+  else if (change.kind === 'admission_trash') result = await db.from('admissions').update({ deleted_at: change.trashed ? new Date().toISOString() : null }).eq('id', change.id);
   else if (change.kind === 'order') result = await db.from('orders').update({ status: change.status }).eq('id', change.id);
   else if (change.kind === 'message') result = await db.from('contact_messages').update({ status: change.status }).eq('id', change.id);
   else if (change.kind === 'notice') { const payload = { title: change.title, body: change.body, category: change.category, file_url: change.file_url || null }; result = change.id ? await db.from('notices').update(payload).eq('id', change.id) : await db.from('notices').insert(payload); }
