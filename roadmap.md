@@ -33,4 +33,4 @@
 - [x] Redesign admin admissions with isolated fictional preview records and verify filtering, details and status controls.
 - [x] Add protected individual admission detail pages showing every submitted field and document; verify navigation and responsive previews.
 - [x] Upgrade book-order management with isolated fictional orders, payment review, approval-gated delivery and private customer progress; verify the full flow.
-- [ ] Refine order management cards and detailed presentation without changing order handling; verify signed-in desktop and phone previews.
+- [x] Refine order management cards and detailed presentation without changing order handling; verify signed-in desktop and phone previews.
