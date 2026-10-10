@@ -34,3 +34,4 @@
 - [x] Add protected individual admission detail pages showing every submitted field and document; verify navigation and responsive previews.
 - [x] Upgrade book-order management with isolated fictional orders, payment review, approval-gated delivery and private customer progress; verify the full flow.
 - [x] Refine order management cards and detailed presentation without changing order handling; verify signed-in desktop and phone previews.
+- [x] Give the payment and order-decision section a floating solid green background panel; verify desktop and mobile previews.
