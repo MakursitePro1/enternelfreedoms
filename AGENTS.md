@@ -26,3 +26,5 @@
 - Render individual admission detail URLs through the persistent admin workspace using authorized records and the same mounted admissions state for previews, so all submitted fields remain private and preview changes stay isolated.
 - Share order detail and progress presentation between customer tracking and admin management; keep fictional orders in local state outside live metrics and mutations.
 - Enforce order transitions, payment verification and approval-before-dispatch in a database trigger; reveal customer order details only after matching both reference and phone.
+
+- Keep admin book editing and cover selection in a dedicated UI module with workspace-owned drafts and authenticated publishing callbacks, so catalogue management remains isolated without duplicating server handlers.
