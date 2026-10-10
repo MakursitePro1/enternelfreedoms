@@ -117,7 +117,7 @@ export const adminSave = createServerFn({ method: 'POST' }).validator((data) => 
     result = await db.from(table).delete().eq('id', change.id);
   } else if (change.kind === 'admission') result = await db.from('admissions').update({ status: change.status }).eq('id', change.id);
   else if (change.kind === 'admission_trash') result = await db.from('admissions').update({ deleted_at: change.trashed ? new Date().toISOString() : null }).eq('id', change.id);
-   else if (change.kind === 'order') { const { kind: _kind, id, ...fields } = change; result = await db.from('orders').update(fields).eq('id', id); }
+   else if (change.kind === 'order') { const fields = { status: change.status, ...(change.payment_status !== undefined ? { payment_status: change.payment_status } : {}), ...(change.paid_amount !== undefined ? { paid_amount: change.paid_amount } : {}), ...(change.courier_name !== undefined ? { courier_name: change.courier_name } : {}), ...(change.tracking_number !== undefined ? { tracking_number: change.tracking_number } : {}), ...(change.delivery_note !== undefined ? { delivery_note: change.delivery_note } : {}) }; result = await db.from('orders').update(fields).eq('id', change.id); }
   else if (change.kind === 'message') result = await db.from('contact_messages').update({ status: change.status }).eq('id', change.id);
   else if (change.kind === 'notice') { const payload = { title: change.title, body: change.body, category: change.category, file_url: change.file_url || null }; result = change.id ? await db.from('notices').update(payload).eq('id', change.id) : await db.from('notices').insert(payload); }
   else if (change.kind === 'book') {
