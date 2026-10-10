@@ -4,6 +4,31 @@
 
 @custom-variant dark (&:is(.dark *));
 
+.admin-book-editor {
+  --background: var(--card);
+  --foreground: var(--panel-green-foreground);
+  --border: var(--panel-green-border);
+  --field-border: var(--panel-green-border);
+}
+.admin-book-editor fieldset { color: var(--panel-green-foreground); }
+.admin-book-editor fieldset input:not([type="checkbox"]),
+.admin-book-editor fieldset textarea { color: var(--card-foreground); border-color: var(--panel-green-border); }
+.admin-book-editor [role="tablist"] { background: var(--panel-green-soft); }
+.admin-book-editor [role="tab"] { color: var(--panel-green-muted); }
+.admin-book-editor [role="tab"][aria-selected="true"] {
+  background: var(--panel-green);
+  color: var(--gold-light);
+  border-color: var(--gold);
+}
+.admin-book-editor fieldset .text-muted-foreground { color: var(--panel-green-muted); }
+.admin-book-editor fieldset .text-primary { color: var(--gold-light); }
+.admin-book-editor fieldset .bg-secondary { background: var(--panel-green-soft); }
+.admin-book-editor fieldset .bg-card { background: var(--panel-green); }
+.admin-book-editor > div:last-child { background: var(--panel-green-soft); }
+.admin-book-editor > div:last-child button:first-child { color: var(--panel-green-foreground); }
+.admin-book-editor > div:last-child button[type="submit"] { background: var(--gold); color: var(--primary); }
+.admin-book-editor > div:last-child button[type="submit"]:hover { background: var(--gold-light); }
+
 /*
  * Design system definition.
  *
