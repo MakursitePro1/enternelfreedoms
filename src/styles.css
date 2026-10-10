@@ -48,7 +48,7 @@
   .admin-auth .auth-lock { display: none; }
   .admin-auth .auth-title { margin-top: .5rem; font-size: 1.25rem; }
   .admin-auth .auth-form { margin-top: .65rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
-  .admin-auth .auth-form > * + * { margin-top: 0; }
+  .admin-auth .auth-form > * { margin-block: 0; }
   .admin-auth .auth-form > :not(label) { grid-column: 1 / -1; }
   .admin-auth .auth-field, .admin-auth .auth-submit { height: 2.5rem; }
   .admin-auth .auth-return { margin-top: .65rem; padding-top: .5rem; }
