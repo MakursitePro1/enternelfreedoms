@@ -37,6 +37,7 @@ export function AdminWorkspace() {
   const [session, setSession] = useState(false);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<Data | null>(null);
+  const [trashed, setTrashed] = useState<Data['admissions']>([]);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
@@ -50,7 +51,7 @@ export function AdminWorkspace() {
 
   async function token() { const { data } = await supabase.auth.getSession(); if (!data.session) throw new Error('লগইন প্রয়োজন।'); return data.session.access_token; }
   async function refresh() {
-    try { const d = await fetchAdmin({ data: { token: await token() } }); setData(d); setSettings(Object.fromEntries(d.settings.map((s) => [s.key, s.value]))); setError(''); }
+    try { const d = await fetchAdmin({ data: { token: await token() } }); setTrashed(d.admissions.filter((a) => a.deleted_at)); setData({ ...d, admissions: d.admissions.filter((a) => !a.deleted_at) }); setSettings(Object.fromEntries(d.settings.map((s) => [s.key, s.value]))); setError(''); }
     catch { setData(null); setError('এই অ্যাকাউন্টে অ্যাডমিন অনুমতি নেই। অনুমোদিত অ্যাকাউন্ট দিয়ে প্রবেশ করুন।'); }
     finally { setLoading(false); }
   }
@@ -190,7 +191,7 @@ export function AdminWorkspace() {
           <AdminPageContext.Provider value={data && counts ? <>
             {tab === 'overview' && <AdminOverview data={data} go={go} refresh={refresh} />}
 
-            {tab === 'admissions' && <AdminAdmissions admissionId={admissionId} admissions={data.admissions} query={q} setQuery={setQ} openDoc={openDoc} onStatusChange={(id, status) => run({ kind: 'admission', id, status }, 'অবস্থা হালনাগাদ হয়েছে।')} onTrash={(id, trashed) => run({ kind: 'admission_trash', id, trashed }, trashed ? 'আবেদন ডিলিট ফাইলে সরানো হয়েছে।' : 'আবেদন ফিরিয়ে আনা হয়েছে।')} />}
+            {tab === 'admissions' && <AdminAdmissions admissionId={admissionId} admissions={data.admissions} trashed={trashed} query={q} setQuery={setQ} openDoc={openDoc} onStatusChange={(id, status) => run({ kind: 'admission', id, status }, 'অবস্থা হালনাগাদ হয়েছে।')} onTrash={(id, trashed) => run({ kind: 'admission_trash', id, trashed }, trashed ? 'আবেদন ডিলিট ফাইলে সরানো হয়েছে।' : 'আবেদন ফিরিয়ে আনা হয়েছে।')} />}
 
             {tab === 'orders' && <div className="space-y-3">{data.orders.filter(match).map((o) => <Card key={o.id} className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"><div className="min-w-0"><strong className="text-primary">{o.customer_name}</strong> · {o.reference}<p className="mt-1 text-sm text-muted-foreground">{o.phone} · {o.address} · ৳ {Number(o.total).toLocaleString('bn-BD')} · {o.payment_method}{o.payment_reference ? ` · ট্রানজেকশন: ${o.payment_reference} (যাচাই করুন)` : ''}</p><p className="mt-1 text-sm">{Array.isArray(o.items) ? (o.items as { title: string; quantity: number }[]).map((i) => `${i.title} × ${i.quantity}`).join(', ') : ''}</p></div><select aria-label={`${o.customer_name} এর অর্ডারের অবস্থা`} value={o.status} onChange={(e) => run({ kind: 'order', id: o.id, status: e.target.value as 'নতুন' }, 'অর্ডারের অবস্থা হালনাগাদ হয়েছে।')} className="bg-secondary px-3 py-2">{['নতুন', 'প্রক্রিয়াধীন', 'পাঠানো হয়েছে', 'সম্পন্ন', 'বাতিল'].map((x) => <option key={x}>{x}</option>)}</select></Card>)}{!data.orders.length && <p>এখনো কোনো অর্ডার নেই।</p>}</div>}
 
