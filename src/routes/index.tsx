@@ -1,3 +1,4 @@
+import { AdmissionInfoBanner } from '@/components/AdmissionInfoBanner';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { ArrowRight, BookOpen, ShieldCheck, Heart, GraduationCap, Home as HomeIcon, Trophy, PlayCircle, Sparkles, CheckCircle2, CalendarDays, ShoppingBag, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -374,6 +375,8 @@ function Home() {
 
       {/* Books */}
       <FeaturedBookBanner />
+
+       <AdmissionInfoBanner />
 
        {/* Contact */}
        <ContactSection />
