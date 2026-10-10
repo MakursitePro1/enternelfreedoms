@@ -75,6 +75,11 @@
   --color-panel-dark-border: var(--panel-dark-border);
   --color-panel-dark-foreground: var(--panel-dark-foreground);
   --color-panel-dark-muted: var(--panel-dark-muted);
+  --color-panel-green: var(--panel-green);
+  --color-panel-green-soft: var(--panel-green-soft);
+  --color-panel-green-border: var(--panel-green-border);
+  --color-panel-green-foreground: var(--panel-green-foreground);
+  --color-panel-green-muted: var(--panel-green-muted);
 }
 
 :root {
@@ -121,6 +126,11 @@
   --panel-dark-border: #242C28;
   --panel-dark-foreground: #F3F6F4;
   --panel-dark-muted: #9AA9A2;
+  --panel-green: #0D3B2E;
+  --panel-green-soft: #134E3F;
+  --panel-green-border: #2E6B57;
+  --panel-green-foreground: #F3F7F4;
+  --panel-green-muted: #A9C3B8;
 }
 
 @layer base {
