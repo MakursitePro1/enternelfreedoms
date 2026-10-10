@@ -30,3 +30,4 @@
 - [x] Give every admin management page a separate private URL while retaining login protection and existing forms.
 - [x] Upgrade the admin overview with detailed live summaries and verify signed-in navigation on desktop and mobile.
 - [x] Add solid premium banners with working page-specific buttons to every admin management page and verify signed-in previews.
+- [ ] Redesign admin admissions with isolated fictional preview records and verify filtering, details and status controls.
