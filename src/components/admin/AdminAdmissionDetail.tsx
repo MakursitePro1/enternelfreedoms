@@ -1,10 +1,20 @@
+import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { ArrowLeft, FileText, GraduationCap, CalendarDays, Users, ClipboardList } from 'lucide-react';
+import { ArrowLeft, FileText, GraduationCap, Users, ClipboardList, ShieldCheck, CheckCircle2, XCircle, Clock3, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { Database } from '@/integrations/supabase/types';
 
 type Admission = Database['public']['Tables']['admissions']['Row'];
-export function AdminAdmissionDetail({ row, openDoc }: { row: Admission | undefined; openDoc: (path: string) => void }) {
+const statuses = ['নতুন', 'যাচাই চলছে', 'অনুমোদিত', 'বাতিল'] as const;
+type Status = typeof statuses[number];
+const statusMeta: Record<Status, { Icon: typeof Clock3; active: string }> = {
+  'নতুন': { Icon: Sparkles, active: 'border-gold bg-gold-soft text-gold-deep' },
+  'যাচাই চলছে': { Icon: Clock3, active: 'border-gold bg-gold-soft text-gold-deep' },
+  'অনুমোদিত': { Icon: CheckCircle2, active: 'border-gold bg-gold text-primary' },
+  'বাতিল': { Icon: XCircle, active: 'border-destructive bg-destructive text-primary-foreground' },
+};
+export function AdminAdmissionDetail({ row, openDoc, onStatusChange }: { row: Admission | undefined; openDoc: (path: string) => void; onStatusChange?: (id: string, status: Status) => Promise<boolean> }) {
+  const [saving, setSaving] = useState(false);
   const back = <Button asChild size="sm" className="border border-panel-dark-border bg-panel-dark-soft text-panel-dark-foreground hover:bg-panel-dark hover:text-gold"><Link to="/Eternelfreeadmingo/$page" params={{ page: 'admissions' }}><ArrowLeft />আবেদন তালিকা</Link></Button>;
   if (!row) return <section aria-label="আবেদনের সম্পূর্ণ বিস্তারিত">
     <div className="premium-panel min-w-0 rounded-2xl border border-panel-dark-border bg-panel-dark p-4 sm:p-6">
