@@ -10,13 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EternelfreeadmingoRouteImport } from './routes/Eternelfreeadmingo'
 import { Route as AboutRouteImport } from './routes/about'
-import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdmissionRouteImport } from './routes/admission'
 import { Route as CampusRouteImport } from './routes/campus'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ResidentialRouteImport } from './routes/residential'
 import { Route as AcademicsIndexRouteImport } from './routes/academics.index'
 import { Route as AcademicsSlugRouteImport } from './routes/academics.$slug'
@@ -34,14 +35,14 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EternelfreeadmingoRoute = EternelfreeadmingoRouteImport.update({
+  id: '/Eternelfreeadmingo',
+  path: '/Eternelfreeadmingo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdmissionRoute = AdmissionRouteImport.update({
@@ -67,6 +68,11 @@ const FaqRoute = FaqRouteImport.update({
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResidentialRoute = ResidentialRouteImport.update({
@@ -127,13 +133,14 @@ const TeachersIdRoute = TeachersIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/Eternelfreeadmingo': typeof EternelfreeadmingoRoute
   '/about': typeof AboutRoute
-  '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
   '/campus': typeof CampusRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
@@ -148,13 +155,14 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/Eternelfreeadmingo': typeof EternelfreeadmingoRoute
   '/about': typeof AboutRoute
-  '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
   '/campus': typeof CampusRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
@@ -170,13 +178,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/Eternelfreeadmingo': typeof EternelfreeadmingoRoute
   '/about': typeof AboutRoute
-  '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
   '/campus': typeof CampusRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
@@ -193,13 +202,14 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/Eternelfreeadmingo'
     | '/about'
-    | '/admin'
     | '/admission'
     | '/campus'
     | '/contact'
     | '/faq'
     | '/gallery'
+    | '/reset-password'
     | '/residential'
     | '/academics/$slug'
     | '/activities/$id'
@@ -214,13 +224,14 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/Eternelfreeadmingo'
     | '/about'
-    | '/admin'
     | '/admission'
     | '/campus'
     | '/contact'
     | '/faq'
     | '/gallery'
+    | '/reset-password'
     | '/residential'
     | '/academics/$slug'
     | '/activities/$id'
@@ -235,13 +246,14 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/Eternelfreeadmingo'
     | '/about'
-    | '/admin'
     | '/admission'
     | '/campus'
     | '/contact'
     | '/faq'
     | '/gallery'
+    | '/reset-password'
     | '/residential'
     | '/academics/$slug'
     | '/activities/$id'
@@ -257,13 +269,14 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EternelfreeadmingoRoute: typeof EternelfreeadmingoRoute
   AboutRoute: typeof AboutRoute
-  AdminRoute: typeof AdminRoute
   AdmissionRoute: typeof AdmissionRoute
   CampusRoute: typeof CampusRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ResidentialRoute: typeof ResidentialRoute
   AcademicsSlugRoute: typeof AcademicsSlugRoute
   ActivitiesIdRoute: typeof ActivitiesIdRoute
@@ -286,18 +299,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/Eternelfreeadmingo': {
+      id: '/Eternelfreeadmingo'
+      path: '/Eternelfreeadmingo'
+      fullPath: '/Eternelfreeadmingo'
+      preLoaderRoute: typeof EternelfreeadmingoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admission': {
@@ -333,6 +346,13 @@ declare module '@tanstack/react-router' {
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/residential': {
@@ -417,13 +437,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EternelfreeadmingoRoute: EternelfreeadmingoRoute,
   AboutRoute: AboutRoute,
-  AdminRoute: AdminRoute,
   AdmissionRoute: AdmissionRoute,
   CampusRoute: CampusRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ResidentialRoute: ResidentialRoute,
   AcademicsSlugRoute: AcademicsSlugRoute,
   ActivitiesIdRoute: ActivitiesIdRoute,

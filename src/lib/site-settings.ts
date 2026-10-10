@@ -23,7 +23,7 @@ export const settingFields: [string, string][] = [
   ['phone', 'প্রধান ফোন নম্বর'], ['phone2', 'বিকল্প ফোন নম্বর'], ['email', 'ইমেইল'], ['address', 'ঠিকানা'],
   ['office_hours', 'অফিস সময়'], ['bkash', 'বিকাশ নম্বর (পেমেন্টের জন্য)'], ['nagad', 'নগদ নম্বর (পেমেন্টের জন্য)'],
   ['facebook', 'ফেসবুক পেজ লিংক'], ['youtube', 'ইউটিউব চ্যানেল লিংক'], ['tiktok', 'টিকটক প্রোফাইল লিংক'], ['whatsapp', 'হোয়াটসঅ্যাপ লিংক (wa.me)'], ['admission_badge', 'হোম পেজের ভর্তি ব্যাজ লেখা'],
-  ['video_url', 'ক্যাম্পাস ভিডিও (YouTube লিংক)'], ['is_demo', 'নমুনা তথ্যের নোট দেখাবে? (true / false)'],
+  ['video_url', 'ক্যাম্পাস ভিডিও (YouTube লিংক)'], 
 ];
 
 let cache: SiteSettings | null = null;
