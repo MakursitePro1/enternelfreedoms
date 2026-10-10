@@ -37,4 +37,4 @@
 - [x] Give the payment and order-decision section a floating solid green background panel; verify desktop and mobile previews.
 - [x] Add detailed isolated fictional book orders, compact premium order cards and 12-order pagination; verify signed-in previews.
 - [x] Upgrade admin books catalogue, book editor and cover-upload workflow using existing publishing; verify saving and signed-in preview.
-- [ ] Upgrade teacher/staff management and synchronize every public teacher surface instantly; verify signed-in edits, uploads and open public pages.
+- [x] Upgrade teacher/staff management and synchronize every public teacher surface instantly; verify signed-in edits, uploads and open public pages.
