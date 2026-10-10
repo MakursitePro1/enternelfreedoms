@@ -66,7 +66,8 @@ export const submitOrder = createServerFn({ method: 'POST' }).validator((data) =
 
 export const trackOrder = createServerFn({ method: 'POST' }).validator((data) => z.object({ reference: z.string().trim().max(30), phone: z.string().regex(/^01[0-9]{9}$/) }).parse(data)).handler(async ({ data }) => {
   const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
-  const { data: row } = await supabaseAdmin.from('orders').select('status,created_at,total,payment_method').eq('reference', data.reference.toUpperCase()).eq('phone', data.phone).maybeSingle();
+   const { data: row, error } = await supabaseAdmin.from('orders').select('reference,customer_name,phone,address,items,status,created_at,total,payment_method,payment_reference,payment_status,paid_amount,approved_at,courier_name,tracking_number,delivery_note,history,updated_at').eq('reference', data.reference.toUpperCase()).eq('phone', data.phone).maybeSingle();
+   if (error) throw new Error('অর্ডারের তথ্য পাওয়া যায়নি।');
   return row;
 });
 
@@ -97,7 +98,7 @@ const contentKindEnum = z.enum(['teacher', 'achievement', 'event', 'gallery', 't
 const editSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('admission'), id: z.string().uuid(), status: z.enum(['নতুন', 'যাচাই চলছে', 'অনুমোদিত', 'বাতিল']) }),
   z.object({ kind: z.literal('admission_trash'), id: z.string().uuid(), trashed: z.boolean() }),
-  z.object({ kind: z.literal('order'), id: z.string().uuid(), status: z.enum(['নতুন', 'প্রক্রিয়াধীন', 'পাঠানো হয়েছে', 'সম্পন্ন', 'বাতিল']) }),
+  z.object({ kind: z.literal('order'), id: z.string().uuid(), status: z.enum(['নতুন', 'যাচাই চলছে', 'অনুমোদিত', 'প্রক্রিয়াধীন', 'পাঠানো হয়েছে', 'সম্পন্ন', 'বাতিল']), payment_status: z.enum(['অপরিশোধিত', 'যাচাই অপেক্ষায়', 'পরিশোধিত', 'পেমেন্ট বাতিল', 'ফেরত দেওয়া হয়েছে']).optional(), paid_amount: z.number().nonnegative().optional(), courier_name: z.string().trim().max(100).optional(), tracking_number: z.string().trim().max(100).optional(), delivery_note: z.string().trim().max(1000).optional() }),
   z.object({ kind: z.literal('message'), id: z.string().uuid(), status: z.enum(['নতুন', 'উত্তর দেওয়া হয়েছে', 'সম্পন্ন']) }),
   z.object({ kind: z.literal('notice'), id: z.string().uuid().optional(), title: z.string().min(3).max(200), body: z.string().max(5000), category: z.string().min(1).max(50), file_url: z.string().url().optional() }),
   z.object({ kind: z.literal('book'), id: z.string().uuid().optional(), title: z.string().min(2).max(200), description: z.string().max(3000), details: z.string().max(5000).optional(), author: z.string().max(150).optional(), pages: z.number().int().min(0).max(5000).optional(), price: z.number().nonnegative(), cover_url: z.string().url().optional(), active: z.boolean() }),
@@ -116,7 +117,7 @@ export const adminSave = createServerFn({ method: 'POST' }).validator((data) => 
     result = await db.from(table).delete().eq('id', change.id);
   } else if (change.kind === 'admission') result = await db.from('admissions').update({ status: change.status }).eq('id', change.id);
   else if (change.kind === 'admission_trash') result = await db.from('admissions').update({ deleted_at: change.trashed ? new Date().toISOString() : null }).eq('id', change.id);
-  else if (change.kind === 'order') result = await db.from('orders').update({ status: change.status }).eq('id', change.id);
+   else if (change.kind === 'order') { const { kind: _kind, id, ...fields } = change; result = await db.from('orders').update(fields).eq('id', id); }
   else if (change.kind === 'message') result = await db.from('contact_messages').update({ status: change.status }).eq('id', change.id);
   else if (change.kind === 'notice') { const payload = { title: change.title, body: change.body, category: change.category, file_url: change.file_url || null }; result = change.id ? await db.from('notices').update(payload).eq('id', change.id) : await db.from('notices').insert(payload); }
   else if (change.kind === 'book') {

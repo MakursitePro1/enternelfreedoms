@@ -32,3 +32,4 @@
 - [x] Add solid premium banners with working page-specific buttons to every admin management page and verify signed-in previews.
 - [x] Redesign admin admissions with isolated fictional preview records and verify filtering, details and status controls.
 - [x] Add protected individual admission detail pages showing every submitted field and document; verify navigation and responsive previews.
+- [ ] Upgrade book-order management with isolated fictional orders, payment review, approval-gated delivery and private customer progress; verify the full flow.
