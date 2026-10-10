@@ -45,11 +45,12 @@ function BookDetail() {
 
   async function checkout(e: FormEvent) {
     e.preventDefault(); setError('');
+    if (!book) return;
     if (!/^01\d{9}$/.test(form.phone)) { setError('১১ সংখ্যার সঠিক মোবাইল নম্বর দিন।'); return; }
     if (form.address.trim().length < 8) { setError('সম্পূর্ণ ঠিকানা লিখুন।'); return; }
     if (form.payment_method !== 'ক্যাশ অন ডেলিভারি' && form.payment_reference.trim().length < 5) { setError('পেমেন্টের ট্রানজেকশন আইডি দিন।'); return; }
     setBusy(true);
-    try { const r = await order({ data: { ...form, payment_reference: form.payment_reference || undefined, delivery_zone: zone, items: [{ id: book!.id, quantity: qty }] } }); setReference(r.reference); }
+    try { const r = await order({ data: { ...form, payment_reference: form.payment_reference || undefined, delivery_zone: zone, items: [{ id: book.id, quantity: qty }] } }); setReference(r.reference); }
     catch (err) { setError(err instanceof Error ? err.message : 'অর্ডার জমা দেওয়া যায়নি।'); }
     finally { setBusy(false); }
   }

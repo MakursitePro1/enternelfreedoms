@@ -15,6 +15,7 @@ import duaArt from '@/assets/book-dua-art.jpg';
 import { useCart } from '@/lib/cart';
 import { useSiteSettings } from '@/lib/site-settings';
 import { seo } from '@/lib/seo';
+import { OrderDetails } from '@/components/orders/OrderDetails';
 
 function SeeMoreClamp({ as = 'h3', to, className, children }: { as?: 'h3' | 'p'; to: string; className: string; children: React.ReactNode }) {
   const [over, setOver] = useState(false);
@@ -136,7 +137,7 @@ function Books() {
   const [trackingError, setTrackingError] = useState('');
   useEffect(() => { supabase.from('books').select('id,title,description,price,cover_url,slug,author,pages,details').eq('active', true).order('created_at', { ascending: true }).then(({ data }) => { setBooks((data ?? []) as Book[]); setLoading(false); }); }, []);
   useEffect(() => { if (search.cart) setOpen(true); }, [search.cart]);
-  async function checkOrder(e: FormEvent) { e.preventDefault(); setTrackingError(''); try { const found = await lookup({ data: tracking }); setTracked(found); if (!found) setTrackingError('এই নম্বরের সঙ্গে অর্ডার নম্বর মেলেনি।'); } catch { setTrackingError('অর্ডারের তথ্য পাওয়া যায়নি।'); } }
+   async function checkOrder(e: FormEvent) { e.preventDefault(); setTracked(undefined); setTrackingError(''); try { const found = await lookup({ data: tracking }); setTracked(found); if (!found) setTrackingError('এই নম্বরের সঙ্গে অর্ডার নম্বর মেলেনি।'); } catch { setTrackingError('অর্ডারের তথ্য পাওয়া যায়নি।'); } }
   const magic = books.find((book) => book.slug === 'magic-english');
   const catalogue = [
     ...books.map((book, index) => ({ key: book.id, title: book.title, author: book.author ?? '', description: book.description, category: categoryBySlug[book.slug ?? ''] ?? 'অন্যান্য', art: coverFor(book, index), light: false, book })),
