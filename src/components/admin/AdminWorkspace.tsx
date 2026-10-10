@@ -140,7 +140,10 @@ export function AdminWorkspace() {
           <button type="button" onClick={logout} className="hidden items-center gap-2 rounded-xl bg-secondary px-3 py-2 text-sm font-semibold text-primary sm:flex"><LogOut className="size-4" />লগআউট</button>
         </header>
         <main className="min-w-0 p-3 sm:p-6 lg:p-8">
-          <section className="relative mb-5 overflow-hidden rounded-[1.25rem] bg-primary p-5 text-primary-foreground shadow-elegant sm:mb-7 sm:p-8">
+          {tab === 'overview' ? <section className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b-2 border-input pb-5">
+            <div><p className="font-brand text-xs font-bold text-gold-deep">Eternal Freedom Institute Al Islamia</p><h1 className="mt-2 font-teacher text-2xl font-bold text-primary sm:text-3xl">সারসংক্ষেপ</h1><p className="mt-2 text-sm text-muted-foreground">ভর্তি, অর্ডার ও প্রকাশনার সর্বশেষ হিসাব</p></div>
+            <p className="flex items-center gap-2 rounded-lg border border-input bg-card px-3 py-2.5 text-xs font-semibold text-primary"><CalendarDays className="size-4 text-gold-deep" />{new Date().toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+          </section> : <section className="relative mb-5 overflow-hidden rounded-[1.25rem] bg-primary p-5 text-primary-foreground shadow-elegant sm:mb-7 sm:p-8">
             <div className="relative flex flex-wrap items-end justify-between gap-4">
               <div className="min-w-0">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary">Eternal Freedom · অ্যাডমিন</span>
@@ -150,7 +153,7 @@ export function AdminWorkspace() {
               </div>
               <p className="rounded-xl bg-background px-4 py-2 text-xs font-bold text-primary">{new Date().toLocaleDateString('bn-BD', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</p>
             </div>
-          </section>
+          </section>}
           {(tab === 'admissions' || tab === 'orders' || tab === 'messages') && <label className="relative mb-4 block sm:hidden"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="নাম, ফোন বা নম্বর খুঁজুন" className="h-11 w-full rounded-xl border-2 border-border bg-background pl-9 pr-3 text-sm outline-none focus:border-primary" /></label>}
           {message && <p className="mb-4 rounded-lg bg-accent p-3 text-sm text-primary">{message}</p>}
           {error && <p role="alert" className="mb-4 rounded-lg bg-secondary p-3 text-sm text-destructive">{error}</p>}
