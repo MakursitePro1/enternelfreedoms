@@ -1,4 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { Outlet, useNavigate, useRouterState } from '@tanstack/react-router';
+import { AdminPageContext } from './AdminPage';
+import { AdminOverview } from './AdminOverview';
+import type { AdminPageKey, AdminTab } from '@/lib/admin-pages';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useServerFn } from '@tanstack/react-start';
 import { LayoutDashboard, GraduationCap, ShoppingBag, MessageSquare, Megaphone, BookOpen, Layers, Settings, LogOut, Upload, Trash2, Pencil, FileText, Plus } from 'lucide-react';
@@ -12,13 +15,8 @@ import logoAsset from '@/assets/institute-logo.jpeg.asset.json';
 import { AdminAuth, ALIVE_KEY, REMEMBER_KEY } from '@/components/admin/AdminAuth';
 import { Menu, X, Search, ExternalLink, Users, Images, Video, Trophy, CalendarDays, MessageCircleHeart, Building2, Utensils, BarChart3, ShieldCheck, Banknote, HelpCircle, BookMarked, Newspaper } from 'lucide-react';
 
-export const Route = createFileRoute('/Eternelfreeadmingo')({
-  head: () => ({ ...seo('অ্যাডমিন ড্যাশবোর্ড', 'Eternal Freedom Institute Al Islamia-এর অনুমোদিত প্রশাসনিক ব্যবস্থাপনা।'), meta: [...seo('অ্যাডমিন ড্যাশবোর্ড', 'Eternal Freedom Institute Al Islamia-এর অনুমোদিত প্রশাসনিক ব্যবস্থাপনা।').meta, { name: 'robots', content: 'noindex' }] }),
-  component: Admin,
-});
-
 type Data = Awaited<ReturnType<typeof getAdminData>>;
-type Tab = 'overview' | 'admissions' | 'orders' | 'messages' | 'notices' | 'books' | 'content' | 'settings';
+type Tab = AdminTab;
 const tabs: [Tab, string, typeof LayoutDashboard][] = [['overview', 'সারসংক্ষেপ', LayoutDashboard], ['admissions', 'ভর্তি আবেদন', GraduationCap], ['orders', 'বইয়ের অর্ডার', ShoppingBag], ['messages', 'বার্তা', MessageSquare], ['notices', 'নোটিশ', Megaphone], ['books', 'বই', BookOpen], ['content', 'ওয়েবসাইটের তথ্য', Layers], ['settings', 'সেটিংস', Settings]];
 const emptyNotice = { id: '', title: '', body: '', category: 'সাধারণ', file_url: '' };
 const emptyBook = { id: '', title: '', description: '', details: '', author: '', pages: '', price: '', cover_url: '', active: true };
@@ -27,18 +25,22 @@ const field = 'w-full bg-secondary px-4 py-3 text-sm outline-none focus:ring-2 f
 
 function Card({ children, className = '' }: { children: ReactNode; className?: string }) { return <div className={`rounded-2xl bg-background p-5 shadow-elegant ${className}`}>{children}</div>; }
 
-function Admin() {
+export function AdminWorkspace() {
+  const navigate = useNavigate();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const page = pathname.split('/').filter(Boolean)[1] ?? 'overview';
+  const contentPage = contentKinds.find((item) => item.key === page);
+  const tab: Tab = contentPage ? 'content' : (['overview', 'admissions', 'orders', 'messages', 'notices', 'books', 'settings'].includes(page) ? page as Tab : 'overview');
+  const kind: ContentKind = contentPage?.key ?? 'teacher';
   const [session, setSession] = useState(false);
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<Data | null>(null);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
-  const [tab, setTab] = useState<Tab>('overview');
   const [menuOpen, setMenuOpen] = useState(false);
   const [q, setQ] = useState('');
   const [notice, setNotice] = useState(emptyNotice);
   const [book, setBook] = useState(emptyBook);
-  const [kind, setKind] = useState<ContentKind>('teacher');
   const [content, setContent] = useState(emptyContent);
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [uploading, setUploading] = useState(false);
@@ -68,9 +70,12 @@ function Admin() {
     catch { setError('ছবি আপলোড করা যায়নি।'); } finally { setUploading(false); }
   }
   async function openDoc(path: string) { try { const { url } = await docLink({ data: { token: await token(), path } }); window.open(url, '_blank', 'noopener'); } catch { setError('ফাইল খোলা যায়নি।'); } }
-  const kindInfo = contentKinds.find((k) => k.key === kind)!;
+  const kindInfo = contentPage ?? contentKinds[0];
+  if (!kindInfo) return null;
   const kindItems = useMemo(() => (data?.content ?? []).filter((c) => c.kind === kind), [data, kind]);
   const counts = data ? { admissions: data.admissions.filter((a) => a.status === 'নতুন').length, orders: data.orders.filter((o) => o.status === 'নতুন').length, messages: data.messages.filter((m) => m.status === 'নতুন').length, notices: data.notices.length } : null;
+
+  useEffect(() => { setQ(''); setMenuOpen(false); setContent(emptyContent); setMessage(''); setError(''); }, [page]);
 
   const ImageInput = ({ value, onChange, label = 'ছবির লিংক' }: { value: string; onChange: (v: string) => void; label?: string }) => (
     <div className="sm:col-span-2"><div className="flex gap-2"><input aria-label={label} placeholder={label} value={value} onChange={(e) => onChange(e.target.value)} className={field} /><label className="flex shrink-0 cursor-pointer items-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground"><Upload className="size-4" />{uploading ? '...' : 'আপলোড'}<input type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(e) => pickImage(e.target.files?.[0], onChange)} /></label></div>{value && <img src={value} alt="" className="mt-2 h-20 rounded-lg object-cover" />}</div>
@@ -91,13 +96,18 @@ function Admin() {
     content: [kindInfo.label, `ওয়েবসাইটে দেখানো ${kindInfo.label} যোগ, সম্পাদনা ও লুকান।`],
     settings: ['ওয়েবসাইট সেটিংস', 'ফোন, ইমেইল, ঠিকানা, পেমেন্ট নম্বর ও সামাজিক লিংক।'],
   };
-  const go = (t: Tab, k?: ContentKind) => { setTab(t); if (k) { setKind(k); setContent(emptyContent); } setMessage(''); setError(''); setQ(''); setMenuOpen(false); };
-  const navBtn = (active: boolean) => `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-[13.5px] transition-colors ${active ? 'bg-gold font-bold text-primary' : 'text-primary-foreground/85 hover:bg-primary-raised'}`;
+  const go = (t: Tab, k?: ContentKind) => {
+    if (t === 'overview') void navigate({ to: '/Eternelfreeadmingo/' });
+    else void navigate({ to: '/Eternelfreeadmingo/$page', params: { page: (t === 'content' ? k ?? 'teacher' : t) as AdminPageKey } });
+    setContent(emptyContent); setMessage(''); setError(''); setQ(''); setMenuOpen(false);
+  };
+
+  const navBtn = (active: boolean) => `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-[13.5px] transition-colors ${active ? 'bg-gold font-bold text-primary' : 'text-primary-foreground hover:bg-primary-raised'}`;
   const logout = async () => { await supabase.auth.signOut(); sessionStorage.removeItem(ALIVE_KEY); setSession(false); };
 
   return (
     <div className="min-h-screen bg-secondary">
-      {menuOpen && <button type="button" aria-label="মেনু বন্ধ করুন" onClick={() => setMenuOpen(false)} className="fixed inset-0 z-40 bg-foreground/40 lg:hidden" />}
+      {menuOpen && <button type="button" aria-label="মেনু বন্ধ করুন" onClick={() => setMenuOpen(false)} className="fixed inset-0 z-40 bg-secondary lg:hidden" />}
       <aside className={`fixed inset-y-0 left-0 z-50 flex w-[272px] flex-col bg-primary text-primary-foreground shadow-elegant transition-transform lg:translate-x-0 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex items-center gap-3 border-b border-primary-raised p-4">
           <img src={logoAsset.url} alt="Eternal Freedom লোগো" className="size-11 shrink-0 rounded-full bg-background object-contain p-0.5" />
@@ -106,7 +116,7 @@ function Admin() {
         </div>
         <nav className="min-h-0 flex-1 space-y-5 overflow-y-auto p-3">
           <div><p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">প্রধান</p>
-            {tabs.filter(([k]) => ['overview', 'admissions', 'orders', 'messages'].includes(k)).map(([k, l, Icon]) => <button key={k} type="button" onClick={() => go(k)} className={navBtn(tab === k)}><Icon className="size-4 shrink-0" /><span className="flex-1 text-start">{l}</span>{!!badge[k] && <span className={`rounded-full px-2 py-0.5 text-[10.5px] font-bold ${tab === k ? 'bg-primary text-primary-foreground' : 'bg-gold text-primary'}`}>{badge[k]!.toLocaleString('bn-BD')}</span>}</button>)}
+            {tabs.filter(([k]) => ['overview', 'admissions', 'orders', 'messages'].includes(k)).map(([k, l, Icon]) => <button key={k} type="button" onClick={() => go(k)} className={navBtn(tab === k)}><Icon className="size-4 shrink-0" /><span className="flex-1 text-start">{l}</span>{!!badge[k] && <span className={`rounded-full px-2 py-0.5 text-[10.5px] font-bold ${tab === k ? 'bg-primary text-primary-foreground' : 'bg-gold text-primary'}`}>{(badge[k] ?? 0).toLocaleString('bn-BD')}</span>}</button>)}
           </div>
           <div><p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">প্রকাশনা</p>
             {tabs.filter(([k]) => ['notices', 'books'].includes(k)).map(([k, l, Icon]) => <button key={k} type="button" onClick={() => go(k)} className={navBtn(tab === k)}><Icon className="size-4 shrink-0" /><span className="flex-1 text-start">{l}</span></button>)}
@@ -132,26 +142,22 @@ function Admin() {
         </header>
         <main className="min-w-0 p-3 sm:p-6 lg:p-8">
           <section className="relative mb-5 overflow-hidden rounded-[1.25rem] bg-primary p-5 text-primary-foreground shadow-elegant sm:mb-7 sm:p-8">
-            <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-30" />
             <div className="relative flex flex-wrap items-end justify-between gap-4">
               <div className="min-w-0">
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary">Eternal Freedom · অ্যাডমিন</span>
                 <h1 className="mt-3 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">{heroes[tab][0]}</h1>
                 <div className="mt-2.5 h-1 w-16 rounded-full bg-gold sm:w-24" />
-                <p className="mt-2.5 max-w-xl text-sm leading-6 text-primary-foreground/85">{heroes[tab][1]}</p>
+                <p className="mt-2.5 max-w-xl text-sm leading-6 text-primary-foreground">{heroes[tab][1]}</p>
               </div>
               <p className="rounded-xl bg-background px-4 py-2 text-xs font-bold text-primary">{new Date().toLocaleDateString('bn-BD', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</p>
             </div>
           </section>
           {(tab === 'admissions' || tab === 'orders' || tab === 'messages') && <label className="relative mb-4 block sm:hidden"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="নাম, ফোন বা নম্বর খুঁজুন" className="h-11 w-full rounded-xl border-2 border-border bg-background pl-9 pr-3 text-sm outline-none focus:border-primary" /></label>}
           {message && <p className="mb-4 rounded-lg bg-accent p-3 text-sm text-primary">{message}</p>}
-          {error && <p role="alert" className="mb-4 rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{error}</p>}
+          {error && <p role="alert" className="mb-4 rounded-lg bg-secondary p-3 text-sm text-destructive">{error}</p>}
           {loading && <p>তথ্য আসছে...</p>}
-          {data && counts && <>
-            {tab === 'overview' && <div className="space-y-6">
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{([['admissions', 'নতুন ভর্তি আবেদন', counts.admissions, GraduationCap], ['orders', 'নতুন বইয়ের অর্ডার', counts.orders, ShoppingBag], ['messages', 'নতুন বার্তা', counts.messages, MessageSquare], ['notices', 'প্রকাশিত নোটিশ', counts.notices, Megaphone]] as const).map(([k, l, n, Icon]) => <button key={k} type="button" onClick={() => setTab(k)} className="rounded-2xl bg-background p-6 text-start shadow-elegant premium-card"><Icon className="size-7 text-gold" /><div className="mt-4 font-display text-4xl font-bold text-primary">{n.toLocaleString('bn-BD')}</div><div className="text-sm text-muted-foreground">{l}</div></button>)}</div>
-              <div className="grid gap-6 lg:grid-cols-2"><Card><h2 className="font-semibold text-primary">সাম্প্রতিক ভর্তি আবেদন</h2>{data.admissions.slice(0, 5).map((a) => <div key={a.id} className="flex justify-between border-b border-border py-3 text-sm last:border-0"><span>{a.student_name} · {a.program}</span><span className="text-gold">{a.status}</span></div>)}{!data.admissions.length && <p className="mt-3 text-sm text-muted-foreground">এখনো কোনো আবেদন নেই।</p>}</Card><Card><h2 className="font-semibold text-primary">সাম্প্রতিক অর্ডার</h2>{data.orders.slice(0, 5).map((o) => <div key={o.id} className="flex justify-between border-b border-border py-3 text-sm last:border-0"><span>{o.customer_name} · ৳ {Number(o.total).toLocaleString('bn-BD')}</span><span className="text-gold">{o.status}</span></div>)}{!data.orders.length && <p className="mt-3 text-sm text-muted-foreground">এখনো কোনো অর্ডার নেই।</p>}</Card></div>
-            </div>}
+          <AdminPageContext.Provider value={data && counts ? <>
+            {tab === 'overview' && <AdminOverview data={data} go={go} refresh={refresh} />}
 
             {tab === 'admissions' && <div className="space-y-3">{data.admissions.filter(match).map((a) => { const docs = Array.isArray(a.documents) ? (a.documents as { label: string; name: string; path: string }[]) : []; return <Card key={a.id} className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-start"><div className="min-w-0"><strong className="text-primary">{a.student_name}</strong> · {a.program}<p className="mt-1 text-sm text-muted-foreground">{a.reference} · {a.guardian_name} · {a.phone} · {a.address}</p>{a.notes && <p className="mt-1 text-sm">{a.notes}</p>}{docs.length > 0 && <div className="mt-3 flex flex-wrap gap-2">{docs.map((d) => <button key={d.path} type="button" onClick={() => openDoc(d.path)} className="flex items-center gap-1 rounded-lg bg-secondary px-3 py-1.5 text-xs font-semibold text-primary hover:bg-accent"><FileText className="size-3.5 text-gold" />{d.label}</button>)}</div>}<p className="mt-2 text-xs text-muted-foreground">{new Date(a.created_at).toLocaleString('bn-BD')}</p></div><select aria-label={`${a.student_name} এর অবস্থা`} value={a.status} onChange={(e) => run({ kind: 'admission', id: a.id, status: e.target.value as 'নতুন' }, 'অবস্থা হালনাগাদ হয়েছে।')} className="bg-secondary px-3 py-2">{['নতুন', 'যাচাই চলছে', 'অনুমোদিত', 'বাতিল'].map((x) => <option key={x}>{x}</option>)}</select></Card>; })}{!data.admissions.length && <p>এখনো কোনো আবেদন নেই।</p>}</div>}
 
@@ -182,7 +188,7 @@ function Admin() {
             </div>}
 
             {tab === 'settings' && <Card className="max-w-3xl"><form onSubmit={async (e) => { e.preventDefault(); await run({ kind: 'settings', values: settings }, 'সেটিংস সংরক্ষণ হয়েছে। ওয়েবসাইট রিফ্রেশ করলে দেখা যাবে।'); }} className="grid gap-4 sm:grid-cols-2">{settingFields.map(([k, l]) => <label key={k} className="text-sm font-semibold text-primary">{l}<input value={settings[k] ?? ''} onChange={(e) => setSettings({ ...settings, [k]: e.target.value })} className={`${field} mt-1.5 font-normal`} /></label>)}<div className="sm:col-span-2"><Button type="submit">সেটিংস সংরক্ষণ</Button></div></form></Card>}
-          </>}
+          </> : null}><Outlet /></AdminPageContext.Provider>
         </main>
       </div>
     </div>
