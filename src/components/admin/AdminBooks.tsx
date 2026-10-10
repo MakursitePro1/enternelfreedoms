@@ -111,8 +111,17 @@ export function AdminBooks({ books, draft, setDraft, onSave, onUpload }: Props) 
             <label className="block text-xs font-semibold">প্রচ্ছদের লিংক<input type="url" aria-label="প্রচ্ছদের লিংক" maxLength={4000} value={draft.cover_url} onChange={(e) => { setFile(null); set('cover_url', e.target.value); }} placeholder="https://" className={`${input} mt-1.5`} /></label>
           </div>}
 {tab === 'review' && <div className="space-y-3">
-            <div className="flex justify-center"><Cover medium url={cover} title={draft.title} /></div>
-            <div className="text-center"><h3 className="break-words text-sm font-bold text-primary">{draft.title || 'বইয়ের নাম'}</h3>{draft.author && <p className="mt-0.5 text-[11px] text-muted-foreground">{draft.author}</p>}<p className="mt-1.5 font-brand text-lg font-bold text-primary">{money(Number(draft.price) || 0)}</p>{draft.pages && <p className="text-[11px] text-muted-foreground">{num(Number(draft.pages))} পৃষ্ঠা</p>}</div>
+            <section aria-label="বইয়ের পরিচিতি" className="overflow-hidden rounded-lg border border-panel-green-border bg-panel-green-soft">
+              <div className="flex justify-center px-4 pb-4 pt-5"><Cover medium url={cover} title={draft.title} /></div>
+              <div className="min-w-0 border-t border-panel-green-border px-3 py-3 text-center">
+                <h3 className="break-words text-sm font-bold leading-6 text-gold">{draft.title || 'বইয়ের নাম'}</h3>
+                {draft.author && <p className="mt-1 break-words text-[11px] leading-5 text-panel-green-muted">{draft.author}</p>}
+                <div className="mt-3 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 border-t border-panel-green-border pt-2.5">
+                  <p className="font-brand text-xl font-bold text-gold">{money(Number(draft.price) || 0)}</p>
+                  {draft.pages && <span className="flex items-center gap-1.5 text-[11px] text-panel-green-foreground"><BookOpen className="size-3.5 text-panel-green-muted" />{num(Number(draft.pages))} পৃষ্ঠা</span>}
+                </div>
+              </div>
+            </section>
             {draft.description && <div><h4 className="mb-1 text-xs font-bold">সংক্ষিপ্ত বিবরণ</h4><p className="whitespace-pre-wrap break-words text-xs leading-6 text-muted-foreground">{draft.description}</p></div>}
             {draft.details && <div><h4 className="mb-1 text-xs font-bold">বইয়ের বিস্তারিত</h4><p className="whitespace-pre-wrap break-words text-xs leading-6 text-muted-foreground">{draft.details}</p></div>}
             <div className="space-y-2 border-t border-border pt-3">{[{ label: 'বইয়ের নাম', ok: draft.title.trim().length >= 2 }, { label: 'মূল্য', ok: !!draft.price.trim() && Number(draft.price) >= 0 }, { label: 'প্রচ্ছদ', ok: !!cover }].map((item) => <div key={item.label} className="flex items-center justify-between text-xs"><span>{item.label}</span>{item.ok ? <Check className="size-4 text-primary" /> : <span className="text-muted-foreground">{item.label === 'প্রচ্ছদ' ? 'যুক্ত নেই' : 'অসম্পূর্ণ'}</span>}</div>)}</div>
