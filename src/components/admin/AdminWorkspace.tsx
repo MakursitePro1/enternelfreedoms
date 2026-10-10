@@ -123,10 +123,11 @@ export function AdminWorkspace() {
   return (
     <div className="min-h-screen bg-secondary">
       {menuOpen && <button type="button" aria-label="মেনু বন্ধ করুন" onClick={() => setMenuOpen(false)} className="fixed inset-0 z-40 bg-secondary lg:hidden" />}
-      <aside className={`fixed inset-y-0 left-0 z-50 flex w-[272px] flex-col bg-primary text-primary-foreground shadow-elegant transition-transform lg:translate-x-0 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed inset-y-0 left-0 z-50 flex w-[272px] flex-col bg-primary text-primary-foreground shadow-elegant transition-[width,transform] duration-300 lg:translate-x-0 ${collapsed ? 'lg:w-[76px]' : 'lg:w-[272px]'} ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex items-center gap-3 border-b border-primary-raised p-4">
           <img src={logoAsset.url} alt="Eternal Freedom লোগো" className="size-11 shrink-0 rounded-full bg-background object-contain p-0.5" />
-          <div className="min-w-0 flex-1"><div className="font-brand font-bold">Eternal Freedom</div><div className="text-[11px] text-gold">অ্যাডমিন প্যানেল</div></div>
+          {(!collapsed || menuOpen) && <div className="min-w-0 flex-1"><div className="font-brand font-bold">Eternal Freedom</div><div className="text-[11px] text-gold">অ্যাডমিন প্যানেল</div></div>}
+          <button type="button" aria-label={collapsed ? 'মেনু প্রসারিত করুন' : 'মেনু সংকুচিত করুন'} onClick={() => setCollapsed((c) => !c)} className="ml-auto hidden size-8 shrink-0 place-items-center rounded-lg text-gold hover:bg-primary-raised lg:grid">{collapsed ? <PanelLeftOpen className="size-5" /> : <PanelLeftClose className="size-5" />}</button>
           <button type="button" aria-label="বন্ধ" onClick={() => setMenuOpen(false)} className="lg:hidden"><X className="size-5" /></button>
         </div>
         <nav className="min-h-0 flex-1 space-y-5 overflow-y-auto p-3">
