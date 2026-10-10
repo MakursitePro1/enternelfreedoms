@@ -36,4 +36,4 @@
 - [x] Refine order management cards and detailed presentation without changing order handling; verify signed-in desktop and phone previews.
 - [x] Give the payment and order-decision section a floating solid green background panel; verify desktop and mobile previews.
 - [x] Add detailed isolated fictional book orders, compact premium order cards and 12-order pagination; verify signed-in previews.
-- [ ] Upgrade admin books catalogue, book editor and cover-upload workflow using existing publishing; verify saving and signed-in preview.
+- [x] Upgrade admin books catalogue, book editor and cover-upload workflow using existing publishing; verify saving and signed-in preview.
