@@ -4,7 +4,7 @@ import { AdminOverview } from './AdminOverview';
 import type { AdminPageKey, AdminTab } from '@/lib/admin-pages';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useServerFn } from '@tanstack/react-start';
-import { LayoutDashboard, GraduationCap, ShoppingBag, MessageSquare, Megaphone, BookOpen, Layers, Settings, LogOut, Upload, Trash2, Pencil, FileText, Plus } from 'lucide-react';
+import { LayoutDashboard, GraduationCap, ShoppingBag, MessageSquare, Megaphone, BookOpen, Layers, Settings, LogOut, Upload, Trash2, Pencil, FileText, Plus, RefreshCw, ArrowRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { adminSave, adminUpload, adminDocumentLink, getAdminData, type AdminChange } from '@/lib/platform.functions';
 import { contentKinds, type ContentKind } from '@/lib/institution-content';
@@ -103,6 +103,16 @@ export function AdminWorkspace() {
 
   const navBtn = (active: boolean) => `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-[13.5px] transition-colors ${active ? 'bg-gold font-bold text-primary' : 'text-primary-foreground hover:bg-primary-raised'}`;
   const logout = async () => { await supabase.auth.signOut(); sessionStorage.removeItem(ALIVE_KEY); setSession(false); };
+  const BannerIcon = tab === 'content' ? contentIcons[kind] : tabs.find(([key]) => key === tab)?.[2] ?? LayoutDashboard;
+  const hasForm = ['notices', 'books', 'content', 'settings'].includes(tab);
+  const bannerAction = tab === 'overview' ? 'ভর্তি আবেদন দেখুন' : tab === 'settings' ? 'তথ্য সম্পাদনা করুন' : hasForm ? 'তথ্য যোগ করুন' : 'তালিকা দেখুন';
+  const focusPageContent = () => {
+    if (tab === 'overview') { go('admissions'); return; }
+    const section = document.getElementById('admin-page-content');
+    if (!section) return;
+    section.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
+    section.querySelector<HTMLElement>(hasForm ? 'form input, form textarea' : 'select, input')?.focus({ preventScroll: true });
+  };
 
   return (
     <div className="min-h-screen bg-secondary">
@@ -140,24 +150,28 @@ export function AdminWorkspace() {
           <button type="button" onClick={logout} className="hidden items-center gap-2 rounded-xl bg-secondary px-3 py-2 text-sm font-semibold text-primary sm:flex"><LogOut className="size-4" />লগআউট</button>
         </header>
         <main className="min-w-0 p-3 sm:p-6 lg:p-8">
-          {tab === 'overview' ? <section className="mb-6 flex flex-wrap items-center justify-between gap-4 border-b-2 border-input pb-5">
-            <div><p className="font-brand text-xs font-bold text-gold-deep">Eternal Freedom Institute Al Islamia</p><h1 className="mt-2 font-teacher text-2xl font-bold text-primary sm:text-3xl">সারসংক্ষেপ</h1><p className="mt-2 text-sm text-muted-foreground">ভর্তি, অর্ডার ও প্রকাশনার সর্বশেষ হিসাব</p></div>
-            <p className="flex items-center gap-2 rounded-lg border border-input bg-card px-3 py-2.5 text-xs font-semibold text-primary"><CalendarDays className="size-4 text-gold-deep" />{new Date().toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-          </section> : <section className="relative mb-5 overflow-hidden rounded-[1.25rem] bg-primary p-5 text-primary-foreground shadow-elegant sm:mb-7 sm:p-8">
-            <div className="relative flex flex-wrap items-end justify-between gap-4">
-              <div className="min-w-0">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 text-[11px] font-bold text-primary">Eternal Freedom · অ্যাডমিন</span>
-                <h1 className="mt-3 font-display text-2xl font-bold sm:text-3xl lg:text-4xl">{heroes[tab][0]}</h1>
-                <div className="mt-2.5 h-1 w-16 rounded-full bg-gold sm:w-24" />
-                <p className="mt-2.5 max-w-xl text-sm leading-6 text-primary-foreground">{heroes[tab][1]}</p>
-              </div>
-              <p className="rounded-xl bg-background px-4 py-2 text-xs font-bold text-primary">{new Date().toLocaleDateString('bn-BD', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</p>
+          <section aria-label="পাতার ব্যানার" className="mb-6 overflow-hidden rounded-lg border border-primary-raised bg-primary text-primary-foreground sm:mb-7">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-primary-raised px-5 py-3 sm:px-7">
+              <p className="font-brand text-xs font-semibold leading-5 text-gold">Eternal Freedom Institute Al Islamia</p>
+              <p className="flex items-center gap-2 text-xs"><CalendarDays className="size-4 shrink-0 text-gold" />{new Date().toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
             </div>
-          </section>}
+            <div className="flex items-start gap-4 px-5 py-6 sm:gap-5 sm:px-7 sm:py-7">
+              <div className="hidden size-14 shrink-0 place-items-center rounded-lg border border-gold bg-primary-raised text-gold sm:grid"><BannerIcon className="size-7" /></div>
+              <div className="min-w-0 flex-1">
+                <h1 className="font-teacher text-2xl font-bold leading-snug sm:text-3xl">{tab === 'overview' ? 'সারসংক্ষেপ' : heroes[tab][0]}</h1>
+                <p className="mt-2 max-w-2xl text-sm leading-7">{tab === 'overview' ? 'ভর্তি, অর্ডার ও প্রকাশনার সর্বশেষ হিসাব' : heroes[tab][1]}</p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <Button type="button" variant="secondary" disabled={!data} onClick={focusPageContent} className="h-10 bg-gold px-4 text-primary hover:bg-gold-light">{hasForm ? <Pencil /> : <ArrowRight />}{bannerAction}</Button>
+                  <Button type="button" variant="outline" disabled={loading || !data} onClick={async () => { setLoading(true); await refresh(); }} className="h-10 border-primary-foreground bg-primary px-4 text-primary-foreground hover:bg-primary-raised hover:text-primary-foreground"><RefreshCw />তথ্য হালনাগাদ</Button>
+                </div>
+              </div>
+            </div>
+          </section>
           {(tab === 'admissions' || tab === 'orders' || tab === 'messages') && <label className="relative mb-4 block sm:hidden"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="নাম, ফোন বা নম্বর খুঁজুন" className="h-11 w-full rounded-xl border-2 border-border bg-background pl-9 pr-3 text-sm outline-none focus:border-primary" /></label>}
           {message && <p className="mb-4 rounded-lg bg-accent p-3 text-sm text-primary">{message}</p>}
           {error && <p role="alert" className="mb-4 rounded-lg bg-secondary p-3 text-sm text-destructive">{error}</p>}
           {loading && <p>তথ্য আসছে...</p>}
+          <div id="admin-page-content" className="scroll-mt-24">
           <AdminPageContext.Provider value={data && counts ? <>
             {tab === 'overview' && <AdminOverview data={data} go={go} refresh={refresh} />}
 
@@ -191,6 +205,7 @@ export function AdminWorkspace() {
 
             {tab === 'settings' && <Card className="max-w-3xl"><form onSubmit={async (e) => { e.preventDefault(); await run({ kind: 'settings', values: settings }, 'সেটিংস সংরক্ষণ হয়েছে। ওয়েবসাইট রিফ্রেশ করলে দেখা যাবে।'); }} className="grid gap-4 sm:grid-cols-2">{settingFields.map(([k, l]) => <label key={k} className="text-sm font-semibold text-primary">{l}<input value={settings[k] ?? ''} onChange={(e) => setSettings({ ...settings, [k]: e.target.value })} className={`${field} mt-1.5 font-normal`} /></label>)}<div className="sm:col-span-2"><Button type="submit">সেটিংস সংরক্ষণ</Button></div></form></Card>}
           </> : null}><Outlet /></AdminPageContext.Provider>
+          </div>
         </main>
       </div>
     </div>
