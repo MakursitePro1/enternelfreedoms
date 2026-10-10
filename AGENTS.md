@@ -23,3 +23,4 @@
 - Calculate overview metrics and charts from authorized live management records, distinguishing completed order values from pending orders, so summaries do not imply unverified revenue.
 - Render admin page banners in the persistent workspace with page-specific actions tied to existing navigation and forms, so all management pages remain visually consistent without duplicating handlers.
 - Keep fictional admission design-preview records in local component state, separate from live records and server mutations, so preview interactions never affect real applications or overview totals.
+- Render individual admission detail URLs through the persistent admin workspace using authorized records and the same mounted admissions state for previews, so all submitted fields remain private and preview changes stay isolated.
