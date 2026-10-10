@@ -32,12 +32,14 @@ export function AdminMessages({ messages, onStatus, onDelete }: { messages: Mess
   const [filter, setFilter] = useState('');
   const [q, setQ] = useState('');
   const [chosenId, setChosenId] = useState<string | null>(null);
+  const [touched, setTouched] = useState(false);
   const rows = useMemo(() => [...messages, ...layouts].sort((a, b) => b.created_at.localeCompare(a.created_at)), [messages, layouts]);
   const shown = rows.filter((m) => (!filter || m.status === filter) && (!q.trim() || `${m.name} ${m.phone} ${m.subject} ${m.message} ${m.email ?? ''}`.toLowerCase().includes(q.trim().toLowerCase())));
-  const chosen = rows.find((m) => m.id === chosenId) ?? null;
+  const chosen = touched ? (rows.find((m) => m.id === chosenId) ?? shown[0] ?? null) : (shown[0] ?? null);
+  const activeId = chosen?.id ?? null;
   const isLocal = (id: string) => layouts.some((m) => m.id === id);
   const setStatus = (id: string, status: string) => isLocal(id) ? setLayouts((l) => l.map((m) => m.id === id ? { ...m, status } : m)) : onStatus(id, status);
-  const remove = (id: string) => { if (!window.confirm('বার্তাটি মুছে ফেলবেন?')) return; if (isLocal(id)) setLayouts((l) => l.filter((m) => m.id !== id)); else onDelete(id); setChosenId(null); };
+  const remove = (id: string) => { if (!window.confirm('বার্তাটি মুছে ফেলবেন?')) return; if (isLocal(id)) setLayouts((l) => l.filter((m) => m.id !== id)); else onDelete(id); setChosenId(null); setTouched(false); };
   const count = (s: string) => rows.filter((m) => m.status === s).length;
   const stats = [
     { label: 'মোট বার্তা', value: rows.length, Icon: Inbox, cls: 'bg-primary text-primary-foreground' },
@@ -66,7 +68,7 @@ export function AdminMessages({ messages, onStatus, onDelete }: { messages: Mess
 
     <div className="grid gap-4 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)]">
       <div className={`space-y-2.5 ${chosen ? 'hidden lg:block' : ''}`}>
-        {shown.map((m) => <button key={m.id} type="button" onClick={() => setChosenId(m.id)} className={`w-full rounded-2xl border p-3.5 text-start transition-colors ${chosenId === m.id ? 'border-primary bg-accent' : 'border-border bg-card hover:border-primary'}`}>
+        {shown.map((m) => <button key={m.id} type="button" onClick={() => { setChosenId(m.id); setTouched(true); }} className={`w-full rounded-2xl border p-3.5 text-start transition-colors ${activeId === m.id ? 'border-primary bg-accent' : 'border-border bg-card hover:border-primary'}`}>
           <div className="flex items-start gap-3">
             <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary text-sm font-bold text-primary-foreground">{initials(m.name)}</span>
             <div className="min-w-0 flex-1">
@@ -83,7 +85,7 @@ export function AdminMessages({ messages, onStatus, onDelete }: { messages: Mess
       <div className={`${chosen ? '' : 'hidden lg:block'}`}>
         {chosen ? <article className="overflow-hidden rounded-2xl border border-border bg-card lg:sticky lg:top-24">
           <header className="bg-primary p-4 text-primary-foreground sm:p-5">
-            <button type="button" onClick={() => setChosenId(null)} className="mb-3 inline-flex items-center gap-1.5 rounded-lg bg-background px-2.5 py-1 text-xs font-semibold text-primary lg:hidden"><ArrowLeft className="size-3.5" />তালিকা</button>
+            <button type="button" onClick={() => setTouched(false)} className="mb-3 inline-flex items-center gap-1.5 rounded-lg bg-background px-2.5 py-1 text-xs font-semibold text-primary lg:hidden"><ArrowLeft className="size-3.5" />তালিকা</button>
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="flex min-w-0 items-center gap-3"><span className="grid size-12 shrink-0 place-items-center rounded-xl bg-gold text-lg font-bold text-primary">{initials(chosen.name)}</span><div className="min-w-0"><h3 className="truncate text-lg font-bold">{chosen.name}</h3><p className="text-xs opacity-80">{new Date(chosen.created_at).toLocaleString('bn-BD')}</p></div></div>
               <span className={`rounded-full px-2.5 py-1 text-[11px] font-bold ${chosen.status === 'উত্তর দেওয়া হয়েছে' ? 'bg-background text-primary' : tone[chosen.status]}`}>{chosen.status}</span>
