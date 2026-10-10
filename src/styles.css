@@ -29,6 +29,34 @@
 .admin-book-editor > div:last-child button[type="submit"] { background: var(--gold); color: var(--primary); }
 .admin-book-editor > div:last-child button[type="submit"]:hover { background: var(--gold-light); }
 
+/* Compact the private sign-in view on short screens without hiding controls. */
+@media (max-height: 700px) {
+  .admin-auth .auth-panel { padding: 1rem; }
+  .admin-auth .auth-mobile-brand { padding-bottom: .65rem; }
+  .admin-auth .auth-lock { margin-top: .75rem; width: 2.5rem; height: 2.5rem; }
+  .admin-auth .auth-title { margin-top: .65rem; font-size: 1.5rem; }
+  .admin-auth .auth-form { margin-top: 1rem; }
+  .admin-auth .auth-form > * + * { margin-top: .75rem; }
+  .admin-auth .auth-return { margin-top: 1rem; padding-top: .75rem; }
+}
+@media (max-height: 520px) {
+  .admin-auth { padding: .5rem; }
+  .admin-auth .auth-panel { padding: .75rem 1rem; }
+  .admin-auth .auth-content { max-width: 34rem; }
+  .admin-auth .auth-mobile-brand { padding-bottom: .4rem; }
+  .admin-auth .auth-mobile-brand img { width: 2rem; height: 2rem; }
+  .admin-auth .auth-lock { display: none; }
+  .admin-auth .auth-title { margin-top: .5rem; font-size: 1.25rem; }
+  .admin-auth .auth-form { margin-top: .65rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem; }
+  .admin-auth .auth-form > * + * { margin-top: 0; }
+  .admin-auth .auth-form > :not(label) { grid-column: 1 / -1; }
+  .admin-auth .auth-field, .admin-auth .auth-submit { height: 2.5rem; }
+  .admin-auth .auth-return { margin-top: .65rem; padding-top: .5rem; }
+  .admin-auth .auth-brand { padding: 1rem; }
+  .admin-auth .auth-brand h2 { font-size: 1.75rem; }
+  .admin-auth .auth-brand p { font-size: .75rem; line-height: 1.5; }
+}
+
 /*
  * Design system definition.
  *
