@@ -47,7 +47,7 @@ export function AdminOrders({ orders, query, books, onSave }: { orders: OrderRec
   </section>
      <div className="flex items-center justify-between"><h3 className="text-sm font-bold text-primary">অর্ডার তালিকা</h3><p className="text-xs text-muted-foreground">{filtered.length.toLocaleString('bn-BD')}টি অর্ডার</p></div>
    <div className="grid min-w-0 gap-3 lg:grid-cols-2 2xl:grid-cols-3">{filtered.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE).map((o) => {
-    const items = orderItems(o.items), first = items[0], count = items.reduce((sum, i) => sum + i.quantity, 0);
+    const items = orderItems(o.items), first = items[0], count = items.reduce((sum, i) => sum + i.quantity, 0), due = Math.max(0, o.total - o.paid_amount);
     const badge = (value: string) => ['বাতিল', 'পেমেন্ট বাতিল'].includes(value) ? 'bg-destructive text-destructive-foreground' : ['অনুমোদিত', 'সম্পন্ন', 'পরিশোধিত'].includes(value) ? 'bg-primary text-primary-foreground' : 'bg-gold-soft text-gold-deep';
     return <article key={o.id} className="group min-w-0 overflow-hidden rounded-lg border border-field-border bg-card transition-colors hover:border-primary">
      <header className="flex items-center justify-between gap-2 border-b border-border bg-secondary px-3 py-2"><span className="flex min-w-0 items-center gap-2 font-brand text-[11px] font-bold text-primary"><ReceiptText className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate">{o.reference}</span></span><span className={`shrink-0 rounded-md px-2.5 py-1 text-[10px] font-semibold ${badge(o.status)}`}>{o.status}</span></header>
