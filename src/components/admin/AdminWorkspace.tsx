@@ -10,7 +10,6 @@ import { adminSave, adminUpload, adminDocumentLink, getAdminData, type AdminChan
 import { contentKinds, type ContentKind } from '@/lib/institution-content';
 import { settingFields } from '@/lib/site-settings';
 import { Button } from '@/components/ui/button';
-import { seo } from '@/lib/seo';
 import logoAsset from '@/assets/institute-logo.jpeg.asset.json';
 import { AdminAuth, ALIVE_KEY, REMEMBER_KEY } from '@/components/admin/AdminAuth';
 import { Menu, X, Search, ExternalLink, Users, Images, Video, Trophy, CalendarDays, MessageCircleHeart, Building2, Utensils, BarChart3, ShieldCheck, Banknote, HelpCircle, BookMarked, Newspaper } from 'lucide-react';
@@ -21,9 +20,9 @@ const tabs: [Tab, string, typeof LayoutDashboard][] = [['overview', 'সার�
 const emptyNotice = { id: '', title: '', body: '', category: 'সাধারণ', file_url: '' };
 const emptyBook = { id: '', title: '', description: '', details: '', author: '', pages: '', price: '', cover_url: '', active: true };
 const emptyContent = { id: '', title: '', body: '', image_url: '', detail: '', category: '', published: true, sort_order: 0 };
-const field = 'w-full bg-secondary px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-ring';
+const field = 'min-w-0 w-full bg-secondary px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-ring';
 
-function Card({ children, className = '' }: { children: ReactNode; className?: string }) { return <div className={`rounded-2xl bg-background p-5 shadow-elegant ${className}`}>{children}</div>; }
+function Card({ children, className = '' }: { children: ReactNode; className?: string }) { return <div className={`min-w-0 rounded-2xl bg-background p-5 shadow-elegant ${className}`}>{children}</div>; }
 
 export function AdminWorkspace() {
   const navigate = useNavigate();
@@ -70,12 +69,12 @@ export function AdminWorkspace() {
     catch { setError('ছবি আপলোড করা যায়নি।'); } finally { setUploading(false); }
   }
   async function openDoc(path: string) { try { const { url } = await docLink({ data: { token: await token(), path } }); window.open(url, '_blank', 'noopener'); } catch { setError('ফাইল খোলা যায়নি।'); } }
-  const kindInfo = contentPage ?? contentKinds[0];
-  if (!kindInfo) return null;
   const kindItems = useMemo(() => (data?.content ?? []).filter((c) => c.kind === kind), [data, kind]);
   const counts = data ? { admissions: data.admissions.filter((a) => a.status === 'নতুন').length, orders: data.orders.filter((o) => o.status === 'নতুন').length, messages: data.messages.filter((m) => m.status === 'নতুন').length, notices: data.notices.length } : null;
 
   useEffect(() => { setQ(''); setMenuOpen(false); setContent(emptyContent); setMessage(''); setError(''); }, [page]);
+  const kindInfo = contentPage ?? contentKinds[0];
+  if (!kindInfo) return null;
 
   const ImageInput = ({ value, onChange, label = 'ছবির লিংক' }: { value: string; onChange: (v: string) => void; label?: string }) => (
     <div className="sm:col-span-2"><div className="flex gap-2"><input aria-label={label} placeholder={label} value={value} onChange={(e) => onChange(e.target.value)} className={field} /><label className="flex shrink-0 cursor-pointer items-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground"><Upload className="size-4" />{uploading ? '...' : 'আপলোড'}<input type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(e) => pickImage(e.target.files?.[0], onChange)} /></label></div>{value && <img src={value} alt="" className="mt-2 h-20 rounded-lg object-cover" />}</div>
@@ -97,7 +96,7 @@ export function AdminWorkspace() {
     settings: ['ওয়েবসাইট সেটিংস', 'ফোন, ইমেইল, ঠিকানা, পেমেন্ট নম্বর ও সামাজিক লিংক।'],
   };
   const go = (t: Tab, k?: ContentKind) => {
-    if (t === 'overview') void navigate({ to: '/Eternelfreeadmingo/' });
+    if (t === 'overview') void navigate({ to: '/Eternelfreeadmingo' });
     else void navigate({ to: '/Eternelfreeadmingo/$page', params: { page: (t === 'content' ? k ?? 'teacher' : t) as AdminPageKey } });
     setContent(emptyContent); setMessage(''); setError(''); setQ(''); setMenuOpen(false);
   };
