@@ -152,21 +152,33 @@ export function AdminWorkspace() {
         </header>
         <main className="min-w-0 p-3 sm:p-6 lg:p-8">
           <section aria-label="পাতার ব্যানার" className="mb-6 overflow-hidden rounded-lg border border-primary-raised bg-primary text-primary-foreground sm:mb-7">
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-primary-raised px-5 py-3 sm:px-7">
-              <p className="font-brand text-xs font-semibold leading-5 text-gold">Eternal Freedom Institute Al Islamia</p>
-              <p className="flex items-center gap-2 text-xs"><CalendarDays className="size-4 shrink-0 text-gold" />{new Date().toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+            <div className={tab === 'admissions' ? "grid min-w-0 gap-3 border-b border-primary-raised px-4 py-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:px-5" : "flex flex-wrap items-center justify-between gap-3 border-b border-primary-raised px-5 py-3 sm:px-7"}>
+              <p className={tab === 'admissions' ? "w-fit max-w-full rounded-md border border-primary-raised bg-primary-raised px-3 py-1.5 font-brand text-[11px] font-semibold leading-5 text-gold" : "font-brand text-xs font-semibold leading-5 text-gold"}>Eternal Freedom Institute Al Islamia</p>
+              <p className="flex shrink-0 items-center gap-2 text-xs"><CalendarDays className="size-4 shrink-0 text-gold" />{new Date().toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
             </div>
-            <div className={tab === 'admissions' ? "flex items-start gap-3 px-4 py-4 sm:px-5" : "flex items-start gap-4 px-5 py-6 sm:gap-5 sm:px-7 sm:py-7"}>
+            {tab === 'admissions' ? <div className="grid min-w-0 items-center gap-5 px-4 py-5 sm:px-5 lg:grid-cols-[minmax(0,1fr)_auto]">
+              <div className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-start gap-3 sm:items-center sm:gap-4">
+                <div className="grid size-10 shrink-0 place-items-center rounded-lg border border-gold bg-primary-raised text-gold sm:size-12"><BannerIcon className="size-5 sm:size-6" /></div>
+                <div className="min-w-0">
+                  <h1 className="font-teacher text-xl font-bold leading-snug sm:text-2xl">{heroes[tab][0]}</h1>
+                  <p className="mt-1.5 max-w-xl text-xs leading-6 sm:text-sm">{heroes[tab][1]}</p>
+                </div>
+              </div>
+              <div className="grid min-w-0 grid-cols-2 gap-2 justify-self-end lg:shrink-0">
+                <Button type="button" variant="secondary" disabled={!data} onClick={focusPageContent} className="h-10 gap-1.5 bg-gold px-3 text-xs text-primary hover:bg-gold-light sm:px-4 sm:text-sm"><ArrowRight className="size-4" />{bannerAction}</Button>
+                <Button type="button" variant="outline" disabled={loading || !data} onClick={async () => { setLoading(true); await refresh(); }} className="h-10 gap-1.5 border-primary-foreground bg-primary px-3 text-xs text-primary-foreground hover:bg-primary-raised hover:text-primary-foreground sm:px-4 sm:text-sm"><RefreshCw className="size-4" />তথ্য হালনাগাদ</Button>
+              </div>
+            </div> : <div className="flex items-start gap-4 px-5 py-6 sm:gap-5 sm:px-7 sm:py-7">
               <div className="hidden size-14 shrink-0 place-items-center rounded-lg border border-gold bg-primary-raised text-gold sm:grid"><BannerIcon className="size-7" /></div>
               <div className="min-w-0 flex-1">
-                <h1 className={tab === 'admissions' ? "font-teacher text-xl font-bold leading-snug sm:text-2xl" : "font-teacher text-2xl font-bold leading-snug sm:text-3xl"}>{tab === 'overview' ? 'সারসংক্ষেপ' : heroes[tab][0]}</h1>
+                <h1 className="font-teacher text-2xl font-bold leading-snug sm:text-3xl">{tab === 'overview' ? 'সারসংক্ষেপ' : heroes[tab][0]}</h1>
                 <p className="mt-2 max-w-2xl text-sm leading-7">{tab === 'overview' ? 'ভর্তি, অর্ডার ও প্রকাশনার সর্বশেষ হিসাব' : heroes[tab][1]}</p>
-                <div className={tab === 'admissions' ? "mt-3 grid grid-cols-2 gap-2 sm:flex" : "mt-5 flex flex-wrap gap-3"}>
+                <div className="mt-5 flex flex-wrap gap-3">
                   <Button type="button" variant="secondary" disabled={!data} onClick={focusPageContent} className="h-10 bg-gold px-4 text-primary hover:bg-gold-light">{hasForm ? <Pencil /> : <ArrowRight />}{bannerAction}</Button>
                   <Button type="button" variant="outline" disabled={loading || !data} onClick={async () => { setLoading(true); await refresh(); }} className="h-10 border-primary-foreground bg-primary px-4 text-primary-foreground hover:bg-primary-raised hover:text-primary-foreground"><RefreshCw />তথ্য হালনাগাদ</Button>
                 </div>
               </div>
-            </div>
+            </div>}
           </section>
           {(tab === 'orders' || tab === 'messages') && <label className="relative mb-4 block sm:hidden"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="নাম, ফোন বা নম্বর খুঁজুন" className="h-11 w-full rounded-xl border-2 border-border bg-background pl-9 pr-3 text-sm outline-none focus:border-primary" /></label>}
           {message && <p className="mb-4 rounded-lg bg-accent p-3 text-sm text-primary">{message}</p>}
