@@ -19,7 +19,7 @@ export function AdminOrders({ orders, query, books, onSave }: { orders: OrderRec
  const rows = layout ? layouts : orders;
  const chosen = rows.find((o) => o.id === selected);
  useEffect(() => { if (chosen) { setForm({ payment_status: chosen.payment_status as PaymentStatus, paid_amount: String(chosen.paid_amount), courier_name: chosen.courier_name || '', tracking_number: chosen.tracking_number || '', delivery_note: chosen.delivery_note || '' }); setError(''); } }, [chosen]);
- const covers = useMemo(() => ({ ...Object.fromEntries(books.filter((b) => b.cover_url).map((b) => [b.id, b.cover_url as string])), 'fictional-magic-english': magicEnglish.url }), [books]);
+ const covers = useMemo<Record<string, string>>(() => ({ ...Object.fromEntries(books.filter((b) => b.cover_url).map((b) => [b.id, b.cover_url as string])), 'fictional-magic-english': magicEnglish.url }), [books]);
  const filtered = rows.filter((o) => (!status || o.status === status) && (!payment || o.payment_status === payment) && `${o.customer_name} ${o.reference} ${o.phone} ${o.address} ${orderItems(o.items).map((i) => i.title).join(' ')}`.toLowerCase().includes(query.toLowerCase()));
  const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE)), current = Math.max(1, Math.min(page, pages));
  async function update(stage: OrderStatus) {
