@@ -18,3 +18,4 @@
 - Keep campus facility records authoritative and show only existing local campus imagery and neutral space labels when no records are published, so the public page never appears empty or invents detailed claims.
 - Keep every catalogue book published as an active book record with its own price and cover, so all listed books are fully orderable end-to-end.
 - Derive teacher profile URLs from the published name plus an immutable short ID and accept legacy UUID links, so names read naturally while duplicates and old bookmarks remain valid.
+- Admin panel lives only at a secret non-'admin' route with no public links and signup disabled, so the admin area is not discoverable.
