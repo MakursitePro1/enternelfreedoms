@@ -14,7 +14,7 @@ import { settingFields } from '@/lib/site-settings';
 import { Button } from '@/components/ui/button';
 import logoAsset from '@/assets/institute-logo.jpeg.asset.json';
 import { AdminAuth, ALIVE_KEY, REMEMBER_KEY } from '@/components/admin/AdminAuth';
-import { Menu, X, Search, ExternalLink, Users, Images, Video, Trophy, CalendarDays, MessageCircleHeart, Building2, Utensils, BarChart3, ShieldCheck, Banknote, HelpCircle, BookMarked, Newspaper } from 'lucide-react';
+import { Menu, X, Search, ExternalLink, Users, Images, Video, Trophy, CalendarDays, MessageCircleHeart, Building2, Utensils, BarChart3, ShieldCheck, Banknote, HelpCircle, BookMarked, Newspaper, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 
 type Data = Awaited<ReturnType<typeof getAdminData>>;
 type Tab = AdminTab;
@@ -42,6 +42,7 @@ export function AdminWorkspace() {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
   const [q, setQ] = useState('');
   const [notice, setNotice] = useState(emptyNotice);
   const [book, setBook] = useState(emptyBook);
@@ -106,7 +107,7 @@ export function AdminWorkspace() {
     setContent(emptyContent); setMessage(''); setError(''); setQ(''); setMenuOpen(false);
   };
 
-  const navBtn = (active: boolean) => `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-[13.5px] transition-colors ${active ? 'bg-gold font-bold text-primary' : 'text-primary-foreground hover:bg-primary-raised'}`;
+  const navBtn = (active: boolean) => `flex w-full items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-xl px-3 py-2.5 text-[13.5px] transition-colors ${active ? 'bg-gold font-bold text-primary' : 'text-primary-foreground hover:bg-primary-raised'}`;
   const logout = async () => { await supabase.auth.signOut(); sessionStorage.removeItem(ALIVE_KEY); setSession(false); };
   const BannerIcon = tab === 'content' ? contentIcons[kind] : tabs.find(([key]) => key === tab)?.[2] ?? LayoutDashboard;
   const hasForm = ['notices', 'books', 'content', 'settings'].includes(tab);
@@ -122,32 +123,33 @@ export function AdminWorkspace() {
   return (
     <div className="min-h-screen bg-secondary">
       {menuOpen && <button type="button" aria-label="মেনু বন্ধ করুন" onClick={() => setMenuOpen(false)} className="fixed inset-0 z-40 bg-secondary lg:hidden" />}
-      <aside className={`fixed inset-y-0 left-0 z-50 flex w-[272px] flex-col bg-primary text-primary-foreground shadow-elegant transition-transform lg:translate-x-0 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+      <aside className={`fixed inset-y-0 left-0 z-50 flex w-[272px] flex-col bg-primary text-primary-foreground shadow-elegant transition-[width,transform] duration-300 lg:translate-x-0 ${collapsed ? 'lg:w-[76px]' : 'lg:w-[272px]'} ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex items-center gap-3 border-b border-primary-raised p-4">
           <img src={logoAsset.url} alt="Eternal Freedom লোগো" className="size-11 shrink-0 rounded-full bg-background object-contain p-0.5" />
-          <div className="min-w-0 flex-1"><div className="font-brand font-bold">Eternal Freedom</div><div className="text-[11px] text-gold">অ্যাডমিন প্যানেল</div></div>
+          {(!collapsed || menuOpen) && <div className="min-w-0 flex-1"><div className="font-brand font-bold">Eternal Freedom</div><div className="text-[11px] text-gold">অ্যাডমিন প্যানেল</div></div>}
+          <button type="button" aria-label={collapsed ? 'মেনু প্রসারিত করুন' : 'মেনু সংকুচিত করুন'} onClick={() => setCollapsed((c) => !c)} className="ml-auto hidden size-8 shrink-0 place-items-center rounded-lg text-gold hover:bg-primary-raised lg:grid">{collapsed ? <PanelLeftOpen className="size-5" /> : <PanelLeftClose className="size-5" />}</button>
           <button type="button" aria-label="বন্ধ" onClick={() => setMenuOpen(false)} className="lg:hidden"><X className="size-5" /></button>
         </div>
         <nav className="min-h-0 flex-1 space-y-5 overflow-y-auto p-3">
-          <div><p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">প্রধান</p>
-            {tabs.filter(([k]) => ['overview', 'admissions', 'orders', 'messages'].includes(k)).map(([k, l, Icon]) => <button key={k} type="button" onClick={() => go(k)} className={navBtn(tab === k)}><Icon className="size-4 shrink-0" /><span className="flex-1 text-start">{l}</span>{!!badge[k] && <span className={`rounded-full px-2 py-0.5 text-[10.5px] font-bold ${tab === k ? 'bg-primary text-primary-foreground' : 'bg-gold text-primary'}`}>{(badge[k] ?? 0).toLocaleString('bn-BD')}</span>}</button>)}
+          <div>{!collapsed && <p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">প্রধান</p>}
+            {tabs.filter(([k]) => ['overview', 'admissions', 'orders', 'messages'].includes(k)).map(([k, l, Icon]) => <button key={k} type="button" title={l} onClick={() => go(k)} className={navBtn(tab === k)}><Icon className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">{l}</span>}{!collapsed && !!badge[k] && <span className={`rounded-full px-2 py-0.5 text-[10.5px] font-bold ${tab === k ? 'bg-primary text-primary-foreground' : 'bg-gold text-primary'}`}>{(badge[k] ?? 0).toLocaleString('bn-BD')}</span>}</button>)}
           </div>
-          <div><p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">প্রকাশনা</p>
-            {tabs.filter(([k]) => ['notices', 'books'].includes(k)).map(([k, l, Icon]) => <button key={k} type="button" onClick={() => go(k)} className={navBtn(tab === k)}><Icon className="size-4 shrink-0" /><span className="flex-1 text-start">{l}</span></button>)}
+          <div>{!collapsed && <p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">প্রকাশনা</p>}
+            {tabs.filter(([k]) => ['notices', 'books'].includes(k)).map(([k, l, Icon]) => <button key={k} type="button" title={l} onClick={() => go(k)} className={navBtn(tab === k)}><Icon className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">{l}</span>}</button>)}
           </div>
-          <div><p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">ওয়েবসাইটের তথ্য</p>
-            {contentKinds.map((k) => { const Icon = contentIcons[k.key]; return <button key={k.key} type="button" onClick={() => go('content', k.key)} className={navBtn(tab === 'content' && kind === k.key)}><Icon className="size-4 shrink-0" /><span className="flex-1 text-start">{k.label}</span></button>; })}
+          <div>{!collapsed && <p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">ওয়েবসাইটের তথ্য</p>}
+            {contentKinds.map((k) => { const Icon = contentIcons[k.key]; return <button key={k.key} type="button" title={k.label} onClick={() => go('content', k.key)} className={navBtn(tab === 'content' && kind === k.key)}><Icon className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">{k.label}</span>}</button>; })}
           </div>
-          <div><p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">সিস্টেম</p>
-            <button type="button" onClick={() => go('settings')} className={navBtn(tab === 'settings')}><Settings className="size-4 shrink-0" /><span className="flex-1 text-start">সেটিংস</span></button>
+          <div>{!collapsed && <p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">সিস্টেম</p>}
+            <button type="button" title="সেটিংস" onClick={() => go('settings')} className={navBtn(tab === 'settings')}><Settings className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">সেটিংস</span>}</button>
           </div>
         </nav>
         <div className="space-y-1 border-t border-primary-raised p-3">
-          <a href="/" target="_blank" rel="noreferrer" className={navBtn(false)}><ExternalLink className="size-4" />ওয়েবসাইট দেখুন</a>
-          <button type="button" onClick={logout} className={navBtn(false)}><LogOut className="size-4" />লগআউট</button>
+          <a href="/" target="_blank" rel="noreferrer" title="ওয়েবসাইট দেখুন" className={navBtn(false)}><ExternalLink className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">ওয়েবসাইট দেখুন</span>}</a>
+          <button type="button" title="লগআউট" onClick={logout} className={navBtn(false)}><LogOut className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">লগআউট</span>}</button>
         </div>
       </aside>
-      <div className="lg:pl-[272px]">
+      <div className={`transition-[padding] duration-300 ${collapsed ? 'lg:pl-[76px]' : 'lg:pl-[272px]'}`}>
         <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-background px-3 py-2.5 sm:px-6">
           <button type="button" aria-label="মেনু খুলুন" onClick={() => setMenuOpen(true)} className="grid size-10 place-items-center rounded-xl bg-primary text-primary-foreground lg:hidden"><Menu className="size-5" /></button>
           <p className="min-w-0 flex-1 truncate font-display text-base font-bold text-primary">{heroes[tab][0]}</p>
