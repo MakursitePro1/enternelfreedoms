@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { BookOpen, PlayCircle, Truck, ShoppingBag, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import cover from '@/assets/magic-english.jpg.asset.json';
+import readerImage from '@/assets/magic-english-reader.jpg.asset.json';
 
 type Featured = { id: string; title: string; price: number; cover_url: string | null; author: string | null };
 
@@ -60,7 +60,7 @@ export function FeaturedBookBanner() {
 
           <Link to="/books/$id" params={{ id: book.id }} className="group order-1 mx-auto w-full max-w-[215px] sm:max-w-[260px] md:order-2 md:max-w-[320px] lg:max-w-[400px]">
             <div className="rounded-[1.5rem] bg-gold p-1.5 sm:p-2.5 shadow-elegant transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-1">
-              <img src={book.cover_url ?? cover.url} alt={book.title} className="aspect-[657/906] w-full rounded-xl sm:rounded-2xl object-cover" />
+              <img src={readerImage.url} alt="ম্যাজিক ইংলিশ বই পড়ছে একজন শিক্ষার্থী" className="aspect-[657/906] w-full rounded-xl sm:rounded-2xl object-cover" />
             </div>
           </Link>
         </div>
