@@ -17,6 +17,7 @@ import { Route as CampusRouteImport } from './routes/campus'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ResidentialRouteImport } from './routes/residential'
 import { Route as AcademicsIndexRouteImport } from './routes/academics.index'
 import { Route as AcademicsSlugRouteImport } from './routes/academics.$slug'
@@ -67,6 +68,11 @@ const FaqRoute = FaqRouteImport.update({
 const GalleryRoute = GalleryRouteImport.update({
   id: '/gallery',
   path: '/gallery',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResidentialRoute = ResidentialRouteImport.update({
@@ -134,6 +140,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
@@ -155,6 +162,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
@@ -177,6 +185,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
@@ -200,6 +209,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/gallery'
+    | '/reset-password'
     | '/residential'
     | '/academics/$slug'
     | '/activities/$id'
@@ -221,6 +231,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/gallery'
+    | '/reset-password'
     | '/residential'
     | '/academics/$slug'
     | '/activities/$id'
@@ -242,6 +253,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/faq'
     | '/gallery'
+    | '/reset-password'
     | '/residential'
     | '/academics/$slug'
     | '/activities/$id'
@@ -264,6 +276,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ResidentialRoute: typeof ResidentialRoute
   AcademicsSlugRoute: typeof AcademicsSlugRoute
   ActivitiesIdRoute: typeof ActivitiesIdRoute
@@ -333,6 +346,13 @@ declare module '@tanstack/react-router' {
       path: '/gallery'
       fullPath: '/gallery'
       preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/residential': {
@@ -424,6 +444,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ResidentialRoute: ResidentialRoute,
   AcademicsSlugRoute: AcademicsSlugRoute,
   ActivitiesIdRoute: ActivitiesIdRoute,
