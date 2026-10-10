@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { z } from 'zod';
-import { BookOpen, BookMarked, Eye, EyeOff, ImagePlus, Upload, Check, Plus, Pencil, Trash2, Search, ChevronLeft, ChevronRight, Save, Loader2, X, FileText, CheckCircle2, ExternalLink, LayoutGrid, List, ImageOff } from 'lucide-react';
+import { BookOpen, BookMarked, Eye, EyeOff, ImagePlus, Upload, Check, Plus, Pencil, Trash2, Search, ChevronLeft, ChevronRight, Save, Loader2, X, FileText, CheckCircle2, ExternalLink, LayoutGrid, List } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { Database } from '@/integrations/supabase/types';
 import type { AdminChange } from '@/lib/platform.functions';
