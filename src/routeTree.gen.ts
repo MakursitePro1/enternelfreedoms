@@ -10,8 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EternelfreeadmingoRouteImport } from './routes/Eternelfreeadmingo'
 import { Route as AboutRouteImport } from './routes/about'
-import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AdmissionRouteImport } from './routes/admission'
 import { Route as CampusRouteImport } from './routes/campus'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -35,14 +35,14 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EternelfreeadmingoRoute = EternelfreeadmingoRouteImport.update({
+  id: '/Eternelfreeadmingo',
+  path: '/Eternelfreeadmingo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdmissionRoute = AdmissionRouteImport.update({
@@ -133,8 +133,8 @@ const TeachersIdRoute = TeachersIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/Eternelfreeadmingo': typeof EternelfreeadmingoRoute
   '/about': typeof AboutRoute
-  '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
   '/campus': typeof CampusRoute
   '/contact': typeof ContactRoute
@@ -155,8 +155,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/Eternelfreeadmingo': typeof EternelfreeadmingoRoute
   '/about': typeof AboutRoute
-  '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
   '/campus': typeof CampusRoute
   '/contact': typeof ContactRoute
@@ -178,8 +178,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/Eternelfreeadmingo': typeof EternelfreeadmingoRoute
   '/about': typeof AboutRoute
-  '/admin': typeof AdminRoute
   '/admission': typeof AdmissionRoute
   '/campus': typeof CampusRoute
   '/contact': typeof ContactRoute
@@ -202,8 +202,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/Eternelfreeadmingo'
     | '/about'
-    | '/admin'
     | '/admission'
     | '/campus'
     | '/contact'
@@ -224,8 +224,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/Eternelfreeadmingo'
     | '/about'
-    | '/admin'
     | '/admission'
     | '/campus'
     | '/contact'
@@ -246,8 +246,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/Eternelfreeadmingo'
     | '/about'
-    | '/admin'
     | '/admission'
     | '/campus'
     | '/contact'
@@ -269,8 +269,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EternelfreeadmingoRoute: typeof EternelfreeadmingoRoute
   AboutRoute: typeof AboutRoute
-  AdminRoute: typeof AdminRoute
   AdmissionRoute: typeof AdmissionRoute
   CampusRoute: typeof CampusRoute
   ContactRoute: typeof ContactRoute
@@ -299,18 +299,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/Eternelfreeadmingo': {
+      id: '/Eternelfreeadmingo'
+      path: '/Eternelfreeadmingo'
+      fullPath: '/Eternelfreeadmingo'
+      preLoaderRoute: typeof EternelfreeadmingoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin': {
-      id: '/admin'
-      path: '/admin'
-      fullPath: '/admin'
-      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admission': {
@@ -437,8 +437,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EternelfreeadmingoRoute: EternelfreeadmingoRoute,
   AboutRoute: AboutRoute,
-  AdminRoute: AdminRoute,
   AdmissionRoute: AdmissionRoute,
   CampusRoute: CampusRoute,
   ContactRoute: ContactRoute,
