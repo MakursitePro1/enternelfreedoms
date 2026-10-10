@@ -107,7 +107,7 @@ export function AdminWorkspace() {
     setContent(emptyContent); setMessage(''); setError(''); setQ(''); setMenuOpen(false);
   };
 
-  const navBtn = (active: boolean) => `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-[13.5px] transition-colors ${active ? 'bg-gold font-bold text-primary' : 'text-primary-foreground hover:bg-primary-raised'}`;
+  const navBtn = (active: boolean) => `flex w-full items-center ${collapsed ? 'justify-center' : 'gap-3'} rounded-xl px-3 py-2.5 text-[13.5px] transition-colors ${active ? 'bg-gold font-bold text-primary' : 'text-primary-foreground hover:bg-primary-raised'}`;
   const logout = async () => { await supabase.auth.signOut(); sessionStorage.removeItem(ALIVE_KEY); setSession(false); };
   const BannerIcon = tab === 'content' ? contentIcons[kind] : tabs.find(([key]) => key === tab)?.[2] ?? LayoutDashboard;
   const hasForm = ['notices', 'books', 'content', 'settings'].includes(tab);
