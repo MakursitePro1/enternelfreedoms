@@ -29,7 +29,7 @@ export function AdminAdmissions({ admissions, trashed, query, setQuery, onStatus
   useEffect(() => setPage(1), [view, status, program, query]);
   const metrics = [{ label: 'মোট আবেদন', count: admissions.length, Icon: GraduationCap }, { label: 'যাচাই বাকি', count: admissions.filter((r) => ['নতুন', 'যাচাই চলছে'].includes(r.status)).length, Icon: Clock3 }, { label: 'অনুমোদিত', count: admissions.filter((r) => r.status === 'অনুমোদিত').length, Icon: CheckCircle2 }, { label: 'বাতিল', count: admissions.filter((r) => r.status === 'বাতিল').length, Icon: XCircle }];
   async function act(id: string, fn: () => Promise<boolean>) { setSaving(id); try { await fn(); } finally { setSaving(null); } }
-  if (admissionId) return <AdminAdmissionDetail row={[...admissions, ...trashed].find((row) => row.id === admissionId)} openDoc={openDoc} />;
+  if (admissionId) return <AdminAdmissionDetail row={[...admissions, ...trashed].find((row) => row.id === admissionId)} openDoc={openDoc} onStatusChange={onStatusChange} />;
   return <section aria-label="ভর্তি আবেদন তালিকা" className="space-y-4">
     <div className="grid min-w-0 gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
       <div className="min-w-0"><h2 className="font-teacher text-base font-bold text-primary">ভর্তি কার্যক্রম</h2><p className="mt-1 text-xs text-muted-foreground">শিক্ষার্থী ও আবেদনের অবস্থা</p></div>
