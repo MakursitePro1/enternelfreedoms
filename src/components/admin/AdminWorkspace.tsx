@@ -156,12 +156,12 @@ export function AdminWorkspace() {
               <p className="font-brand text-xs font-semibold leading-5 text-gold">Eternal Freedom Institute Al Islamia</p>
               <p className="flex items-center gap-2 text-xs"><CalendarDays className="size-4 shrink-0 text-gold" />{new Date().toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
             </div>
-            <div className="flex items-start gap-4 px-5 py-6 sm:gap-5 sm:px-7 sm:py-7">
+            <div className={tab === 'admissions' ? "flex items-start gap-3 px-4 py-4 sm:px-5" : "flex items-start gap-4 px-5 py-6 sm:gap-5 sm:px-7 sm:py-7"}>
               <div className="hidden size-14 shrink-0 place-items-center rounded-lg border border-gold bg-primary-raised text-gold sm:grid"><BannerIcon className="size-7" /></div>
               <div className="min-w-0 flex-1">
-                <h1 className="font-teacher text-2xl font-bold leading-snug sm:text-3xl">{tab === 'overview' ? 'সারসংক্ষেপ' : heroes[tab][0]}</h1>
+                <h1 className={tab === 'admissions' ? "font-teacher text-xl font-bold leading-snug sm:text-2xl" : "font-teacher text-2xl font-bold leading-snug sm:text-3xl"}>{tab === 'overview' ? 'সারসংক্ষেপ' : heroes[tab][0]}</h1>
                 <p className="mt-2 max-w-2xl text-sm leading-7">{tab === 'overview' ? 'ভর্তি, অর্ডার ও প্রকাশনার সর্বশেষ হিসাব' : heroes[tab][1]}</p>
-                <div className="mt-5 flex flex-wrap gap-3">
+                <div className={tab === 'admissions' ? "mt-3 grid grid-cols-2 gap-2 sm:flex" : "mt-5 flex flex-wrap gap-3"}>
                   <Button type="button" variant="secondary" disabled={!data} onClick={focusPageContent} className="h-10 bg-gold px-4 text-primary hover:bg-gold-light">{hasForm ? <Pencil /> : <ArrowRight />}{bannerAction}</Button>
                   <Button type="button" variant="outline" disabled={loading || !data} onClick={async () => { setLoading(true); await refresh(); }} className="h-10 border-primary-foreground bg-primary px-4 text-primary-foreground hover:bg-primary-raised hover:text-primary-foreground"><RefreshCw />তথ্য হালনাগাদ</Button>
                 </div>
