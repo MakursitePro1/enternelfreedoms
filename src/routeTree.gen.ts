@@ -19,6 +19,8 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ResidentialRouteImport } from './routes/residential'
+import { Route as EternelfreeadmingoIndexRouteImport } from './routes/Eternelfreeadmingo.index'
+import { Route as EternelfreeadmingoPageRouteImport } from './routes/Eternelfreeadmingo.$page'
 import { Route as AcademicsIndexRouteImport } from './routes/academics.index'
 import { Route as AcademicsSlugRouteImport } from './routes/academics.$slug'
 import { Route as ActivitiesIndexRouteImport } from './routes/activities.index'
@@ -80,6 +82,16 @@ const ResidentialRoute = ResidentialRouteImport.update({
   path: '/residential',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EternelfreeadmingoIndexRoute = EternelfreeadmingoIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EternelfreeadmingoRoute,
+} as any)
+const EternelfreeadmingoPageRoute = EternelfreeadmingoPageRouteImport.update({
+  id: '/$page',
+  path: '/$page',
+  getParentRoute: () => EternelfreeadmingoRoute,
+} as any)
 const AcademicsIndexRoute = AcademicsIndexRouteImport.update({
   id: '/academics/',
   path: '/academics/',
@@ -133,7 +145,7 @@ const TeachersIdRoute = TeachersIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/Eternelfreeadmingo': typeof EternelfreeadmingoRoute
+  '/Eternelfreeadmingo': typeof EternelfreeadmingoRouteWithChildren
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
   '/campus': typeof CampusRoute
@@ -142,11 +154,13 @@ export interface FileRoutesByFullPath {
   '/gallery': typeof GalleryRoute
   '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
+  '/Eternelfreeadmingo/$page': typeof EternelfreeadmingoPageRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
   '/books/$id': typeof BooksIdRoute
   '/notices/$id': typeof NoticesIdRoute
   '/teachers/$id': typeof TeachersIdRoute
+  '/Eternelfreeadmingo/': typeof EternelfreeadmingoIndexRoute
   '/academics/': typeof AcademicsIndexRoute
   '/activities/': typeof ActivitiesIndexRoute
   '/books/': typeof BooksIndexRoute
@@ -155,7 +169,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/Eternelfreeadmingo': typeof EternelfreeadmingoRoute
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
   '/campus': typeof CampusRoute
@@ -164,11 +177,13 @@ export interface FileRoutesByTo {
   '/gallery': typeof GalleryRoute
   '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
+  '/Eternelfreeadmingo/$page': typeof EternelfreeadmingoPageRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
   '/books/$id': typeof BooksIdRoute
   '/notices/$id': typeof NoticesIdRoute
   '/teachers/$id': typeof TeachersIdRoute
+  '/Eternelfreeadmingo': typeof EternelfreeadmingoIndexRoute
   '/academics': typeof AcademicsIndexRoute
   '/activities': typeof ActivitiesIndexRoute
   '/books': typeof BooksIndexRoute
@@ -178,7 +193,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/Eternelfreeadmingo': typeof EternelfreeadmingoRoute
+  '/Eternelfreeadmingo': typeof EternelfreeadmingoRouteWithChildren
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
   '/campus': typeof CampusRoute
@@ -187,11 +202,13 @@ export interface FileRoutesById {
   '/gallery': typeof GalleryRoute
   '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
+  '/Eternelfreeadmingo/$page': typeof EternelfreeadmingoPageRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
   '/books/$id': typeof BooksIdRoute
   '/notices/$id': typeof NoticesIdRoute
   '/teachers/$id': typeof TeachersIdRoute
+  '/Eternelfreeadmingo/': typeof EternelfreeadmingoIndexRoute
   '/academics/': typeof AcademicsIndexRoute
   '/activities/': typeof ActivitiesIndexRoute
   '/books/': typeof BooksIndexRoute
@@ -211,11 +228,13 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/reset-password'
     | '/residential'
+    | '/Eternelfreeadmingo/$page'
     | '/academics/$slug'
     | '/activities/$id'
     | '/books/$id'
     | '/notices/$id'
     | '/teachers/$id'
+    | '/Eternelfreeadmingo/'
     | '/academics/'
     | '/activities/'
     | '/books/'
@@ -224,7 +243,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/Eternelfreeadmingo'
     | '/about'
     | '/admission'
     | '/campus'
@@ -233,11 +251,13 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/reset-password'
     | '/residential'
+    | '/Eternelfreeadmingo/$page'
     | '/academics/$slug'
     | '/activities/$id'
     | '/books/$id'
     | '/notices/$id'
     | '/teachers/$id'
+    | '/Eternelfreeadmingo'
     | '/academics'
     | '/activities'
     | '/books'
@@ -255,11 +275,13 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/reset-password'
     | '/residential'
+    | '/Eternelfreeadmingo/$page'
     | '/academics/$slug'
     | '/activities/$id'
     | '/books/$id'
     | '/notices/$id'
     | '/teachers/$id'
+    | '/Eternelfreeadmingo/'
     | '/academics/'
     | '/activities/'
     | '/books/'
@@ -269,7 +291,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  EternelfreeadmingoRoute: typeof EternelfreeadmingoRoute
+  EternelfreeadmingoRoute: typeof EternelfreeadmingoRouteWithChildren
   AboutRoute: typeof AboutRoute
   AdmissionRoute: typeof AdmissionRoute
   CampusRoute: typeof CampusRoute
@@ -362,6 +384,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResidentialRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/Eternelfreeadmingo/': {
+      id: '/Eternelfreeadmingo/'
+      path: '/'
+      fullPath: '/Eternelfreeadmingo/'
+      preLoaderRoute: typeof EternelfreeadmingoIndexRouteImport
+      parentRoute: typeof EternelfreeadmingoRoute
+    }
+    '/Eternelfreeadmingo/$page': {
+      id: '/Eternelfreeadmingo/$page'
+      path: '/$page'
+      fullPath: '/Eternelfreeadmingo/$page'
+      preLoaderRoute: typeof EternelfreeadmingoPageRouteImport
+      parentRoute: typeof EternelfreeadmingoRoute
+    }
     '/academics/': {
       id: '/academics/'
       path: '/academics'
@@ -435,9 +471,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface EternelfreeadmingoRouteChildren {
+  EternelfreeadmingoPageRoute: typeof EternelfreeadmingoPageRoute
+  EternelfreeadmingoIndexRoute: typeof EternelfreeadmingoIndexRoute
+}
+
+const EternelfreeadmingoRouteChildren: EternelfreeadmingoRouteChildren = {
+  EternelfreeadmingoPageRoute: EternelfreeadmingoPageRoute,
+  EternelfreeadmingoIndexRoute: EternelfreeadmingoIndexRoute,
+}
+
+const EternelfreeadmingoRouteWithChildren =
+  EternelfreeadmingoRoute._addFileChildren(EternelfreeadmingoRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  EternelfreeadmingoRoute: EternelfreeadmingoRoute,
+  EternelfreeadmingoRoute: EternelfreeadmingoRouteWithChildren,
   AboutRoute: AboutRoute,
   AdmissionRoute: AdmissionRoute,
   CampusRoute: CampusRoute,
