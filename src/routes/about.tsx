@@ -1,3 +1,4 @@
+import { usePrincipal } from '@/lib/principal';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Target, Eye, BookOpen, Sparkles, Rocket, ArrowRight, Phone, Quote } from 'lucide-react';
 import { Site, Heading, TextLink } from '@/components/Site';
@@ -41,6 +42,7 @@ function AboutHero() {
 }
 
 function About() {
+  const principal = usePrincipal();
   return (
     <Site>
       <div className="px-2.5 pb-2.5 pt-2.5 sm:px-5 sm:pb-5 sm:pt-5">
@@ -105,15 +107,15 @@ function About() {
               <blockquote className="mt-5 border-s-4 border-gold ps-4 font-display text-base leading-8 sm:mt-6 sm:ps-6 sm:text-lg sm:leading-9">“আমরা বিশ্বাস করি, প্রকৃত শিক্ষা মানুষকে জ্ঞানী করার পাশাপাশি চরিত্রবান ও দায়িত্বশীল করে তোলে। কুরআনের আলোয় আলোকিত হৃদয় এবং আধুনিক জ্ঞানে সমৃদ্ধ মেধা—এই দুইয়ের সমন্বয়েই আমরা প্রতিটি শিক্ষার্থীকে গড়ে তুলতে চাই।”</blockquote>
               <p className="mt-5 text-sm leading-7 text-primary-foreground/85 sm:mt-6 sm:leading-8">প্রতিষ্ঠার শুরু থেকেই তিনি একটি স্বপ্ন লালন করেছেন—গ্রামীণ জনপদেও যেন শহরের মানসম্মত শিক্ষা ও নিরাপদ আবাসিক পরিবেশ পাওয়া যায়। তাঁর নেতৃত্বে প্রতিষ্ঠানটি আজ অভিভাবকদের আস্থার নাম।</p>
               <div className="mt-6 flex items-center gap-3 sm:mt-7">
-                <div className="grid size-11 place-items-center rounded-full bg-gold font-display text-lg font-bold text-primary sm:size-12">আ</div>
+                <div className="grid size-11 place-items-center rounded-full bg-gold font-display text-lg font-bold text-primary sm:size-12">{principal.name.slice(0, 1)}</div>
                 <div>
-                  <div className="font-semibold text-gold-light">মোঃ আনছারুল হক (আনছার)</div>
-                  <div className="text-xs text-primary-foreground/70 sm:text-sm">Founder Principal &amp; Director</div>
+                  <div className="font-semibold text-gold-light">{principal.name}</div>
+                  <div className="text-xs text-primary-foreground/70 sm:text-sm">{principal.role}</div>
                 </div>
               </div>
             </div>
           </div>
-          <img src={photos[5]} alt="মোঃ আনছারুল হক" className="h-72 w-full rounded-[0.75rem] object-cover object-top shadow-elegant sm:h-[440px] sm:rounded-[1.25rem]" />
+          <img src={principal.image || undefined} alt={principal.name} className="h-72 w-full rounded-[0.75rem] object-cover object-top shadow-elegant sm:h-[440px] sm:rounded-[1.25rem]" />
         </section>
       </div>
 
