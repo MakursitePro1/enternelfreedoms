@@ -28,7 +28,9 @@ function Card({ children, className = '' }: { children: ReactNode; className?: s
 export function AdminWorkspace() {
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
-  const page = pathname.split('/').filter(Boolean)[1] ?? 'overview';
+  const segments = pathname.split('/').filter(Boolean);
+  const page = segments[1] ?? 'overview';
+  const admissionId = page === 'admissions' ? segments[2] : undefined;
   const contentPage = contentKinds.find((item) => item.key === page);
   const tab: Tab = contentPage ? 'content' : (['overview', 'admissions', 'orders', 'messages', 'notices', 'books', 'settings'].includes(page) ? page as Tab : 'overview');
   const kind: ContentKind = contentPage?.key ?? 'teacher';
@@ -88,7 +90,7 @@ export function AdminWorkspace() {
   const contentIcons: Record<ContentKind, typeof LayoutDashboard> = { teacher: Users, event: CalendarDays, gallery: Images, video: Video, testimonial: MessageCircleHeart, achievement: Trophy, facility: Building2, meal: Utensils, stat: BarChart3, safety: ShieldCheck, fee: Banknote, faq: HelpCircle, program: BookMarked, news: Newspaper };
   const heroes: Record<Tab, [string, string]> = {
     overview: ['স্বাগতম, অ্যাডমিন', 'ওয়েবসাইটের সব কার্যক্রমের এক নজরে সারসংক্ষেপ।'],
-    admissions: ['ভর্তি আবেদন ব্যবস্থাপনা', 'নতুন আবেদন যাচাই, কাগজপত্র দেখা ও অবস্থা হালনাগাদ করুন।'],
+    admissions: admissionId ? ['ভর্তি আবেদনের বিস্তারিত', 'শিক্ষার্থী, অভিভাবক ও জমা দেওয়া কাগজপত্র।'] : ['ভর্তি আবেদন ব্যবস্থাপনা', 'নতুন আবেদন যাচাই, কাগজপত্র দেখা ও অবস্থা হালনাগাদ করুন।'],
     orders: ['বইয়ের অর্ডার', 'অর্ডার, পেমেন্ট ট্রানজেকশন ও ডেলিভারির অবস্থা পরিচালনা করুন।'],
     messages: ['যোগাযোগ বার্তা', 'দর্শকদের পাঠানো প্রশ্ন ও বার্তার উত্তর দিন।'],
     notices: ['নোটিশ বোর্ড', 'নতুন নোটিশ প্রকাশ, সম্পাদনা ও মুছে ফেলুন।'],
@@ -108,7 +110,7 @@ export function AdminWorkspace() {
   const hasForm = ['notices', 'books', 'content', 'settings'].includes(tab);
   const bannerAction = tab === 'overview' ? 'ভর্তি আবেদন দেখুন' : tab === 'settings' ? 'তথ্য সম্পাদনা করুন' : hasForm ? 'তথ্য যোগ করুন' : 'তালিকা দেখুন';
   const focusPageContent = () => {
-    if (tab === 'overview') { go('admissions'); return; }
+    if (tab === 'overview' || admissionId) { go('admissions'); return; }
     const section = document.getElementById('admin-page-content');
     if (!section) return;
     section.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
@@ -188,7 +190,7 @@ export function AdminWorkspace() {
           <AdminPageContext.Provider value={data && counts ? <>
             {tab === 'overview' && <AdminOverview data={data} go={go} refresh={refresh} />}
 
-            {tab === 'admissions' && <AdminAdmissions admissions={data.admissions} query={q} setQuery={setQ} openDoc={openDoc} onStatusChange={(id, status) => run({ kind: 'admission', id, status }, 'অবস্থা হালনাগাদ হয়েছে।')} />}
+            {tab === 'admissions' && <AdminAdmissions admissionId={admissionId} admissions={data.admissions} query={q} setQuery={setQ} openDoc={openDoc} onStatusChange={(id, status) => run({ kind: 'admission', id, status }, 'অবস্থা হালনাগাদ হয়েছে।')} />}
 
             {tab === 'orders' && <div className="space-y-3">{data.orders.filter(match).map((o) => <Card key={o.id} className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"><div className="min-w-0"><strong className="text-primary">{o.customer_name}</strong> · {o.reference}<p className="mt-1 text-sm text-muted-foreground">{o.phone} · {o.address} · ৳ {Number(o.total).toLocaleString('bn-BD')} · {o.payment_method}{o.payment_reference ? ` · ট্রানজেকশন: ${o.payment_reference} (যাচাই করুন)` : ''}</p><p className="mt-1 text-sm">{Array.isArray(o.items) ? (o.items as { title: string; quantity: number }[]).map((i) => `${i.title} × ${i.quantity}`).join(', ') : ''}</p></div><select aria-label={`${o.customer_name} এর অর্ডারের অবস্থা`} value={o.status} onChange={(e) => run({ kind: 'order', id: o.id, status: e.target.value as 'নতুন' }, 'অর্ডারের অবস্থা হালনাগাদ হয়েছে।')} className="bg-secondary px-3 py-2">{['নতুন', 'প্রক্রিয়াধীন', 'পাঠানো হয়েছে', 'সম্পন্ন', 'বাতিল'].map((x) => <option key={x}>{x}</option>)}</select></Card>)}{!data.orders.length && <p>এখনো কোনো অর্ডার নেই।</p>}</div>}
 
