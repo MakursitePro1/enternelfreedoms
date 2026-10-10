@@ -162,7 +162,7 @@ export function AdminWorkspace() {
               <p className={tab === 'admissions' ? "w-fit max-w-full rounded-md border border-primary-raised bg-primary-raised px-3 py-1.5 font-brand text-[11px] font-semibold leading-5 text-gold" : "font-brand text-xs font-semibold leading-5 text-gold"}>Eternal Freedom Institute Al Islamia</p>
               <p className="flex shrink-0 items-center gap-2 text-xs"><CalendarDays className="size-4 shrink-0 text-gold" />{new Date().toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
             </div>
-            <div className="grid min-w-0 items-center gap-5 px-4 py-5 sm:px-5 xl:grid-cols-[minmax(0,1fr)_auto]">
+            <div className="grid min-w-0 items-center gap-5 px-4 py-5 sm:px-5 lg:grid-cols-[minmax(0,1fr)_auto]">
               <div className="grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-start gap-3 sm:items-center sm:gap-4">
                 <div className="grid size-10 shrink-0 place-items-center rounded-lg border border-gold bg-primary-raised text-gold sm:size-12"><BannerIcon className="size-5 sm:size-6" /></div>
                 <div className="min-w-0">
@@ -170,7 +170,7 @@ export function AdminWorkspace() {
                   <p className="mt-1.5 max-w-xl text-xs leading-6 sm:text-sm">{heroes[tab][1]}</p>
                 </div>
               </div>
-              <div className="grid min-w-0 grid-cols-2 gap-2 justify-self-end xl:shrink-0">
+              <div className="grid min-w-0 grid-cols-2 gap-2 justify-self-end lg:shrink-0">
                 <Button type="button" variant="secondary" disabled={!data} onClick={focusPageContent} className="h-10 gap-1.5 bg-gold px-3 text-xs text-primary hover:bg-gold-light sm:px-4 sm:text-sm"><ArrowRight className="size-4" />{bannerAction}</Button>
                 <Button type="button" variant="outline" disabled={loading || !data} onClick={async () => { setLoading(true); await refresh(); }} className="h-10 gap-1.5 border-primary-foreground bg-primary px-3 text-xs text-primary-foreground hover:bg-primary-raised hover:text-primary-foreground sm:px-4 sm:text-sm"><RefreshCw className="size-4" />তথ্য হালনাগাদ</Button>
               </div>
