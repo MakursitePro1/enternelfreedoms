@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as EternelfreeadmingoRouteImport } from './routes/Eternelfreeadmingo'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdmissionRouteImport } from './routes/admission'
 import { Route as CampusRouteImport } from './routes/campus'
@@ -33,11 +32,6 @@ import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const EternelfreeadmingoRoute = EternelfreeadmingoRouteImport.update({
-  id: '/Eternelfreeadmingo',
-  path: '/Eternelfreeadmingo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -133,7 +127,6 @@ const TeachersIdRoute = TeachersIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/Eternelfreeadmingo': typeof EternelfreeadmingoRoute
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
   '/campus': typeof CampusRoute
@@ -155,7 +148,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/Eternelfreeadmingo': typeof EternelfreeadmingoRoute
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
   '/campus': typeof CampusRoute
@@ -178,7 +170,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/Eternelfreeadmingo': typeof EternelfreeadmingoRoute
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
   '/campus': typeof CampusRoute
@@ -202,7 +193,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/Eternelfreeadmingo'
     | '/about'
     | '/admission'
     | '/campus'
@@ -224,7 +214,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/Eternelfreeadmingo'
     | '/about'
     | '/admission'
     | '/campus'
@@ -246,7 +235,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/Eternelfreeadmingo'
     | '/about'
     | '/admission'
     | '/campus'
@@ -269,7 +257,6 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  EternelfreeadmingoRoute: typeof EternelfreeadmingoRoute
   AboutRoute: typeof AboutRoute
   AdmissionRoute: typeof AdmissionRoute
   CampusRoute: typeof CampusRoute
@@ -297,13 +284,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/Eternelfreeadmingo': {
-      id: '/Eternelfreeadmingo'
-      path: '/Eternelfreeadmingo'
-      fullPath: '/Eternelfreeadmingo'
-      preLoaderRoute: typeof EternelfreeadmingoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -437,7 +417,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  EternelfreeadmingoRoute: EternelfreeadmingoRoute,
   AboutRoute: AboutRoute,
   AdmissionRoute: AdmissionRoute,
   CampusRoute: CampusRoute,
