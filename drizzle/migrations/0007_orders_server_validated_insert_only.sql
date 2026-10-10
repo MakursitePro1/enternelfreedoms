@@ -1,0 +1,2 @@
+REVOKE INSERT ON public.orders FROM anon, authenticated;
+COMMENT ON TABLE public.orders IS 'Order creation is server-validated only; customer reads require matching reference and phone; delivery transitions require administrator approval.';

@@ -2,6 +2,7 @@ import { Outlet, useNavigate, useRouterState } from '@tanstack/react-router';
 import { AdminPageContext } from './AdminPage';
 import { AdminOverview } from './AdminOverview';
 import { AdminAdmissions } from './AdminAdmissions';
+import { AdminOrders } from './AdminOrders';
 import type { AdminPageKey, AdminTab } from '@/lib/admin-pages';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useServerFn } from '@tanstack/react-start';
@@ -193,7 +194,7 @@ export function AdminWorkspace() {
 
             {tab === 'admissions' && <AdminAdmissions admissionId={admissionId} admissions={data.admissions} trashed={trashed} query={q} setQuery={setQ} openDoc={openDoc} onStatusChange={(id, status) => run({ kind: 'admission', id, status }, 'অবস্থা হালনাগাদ হয়েছে।')} onTrash={(id, trashed) => run({ kind: 'admission_trash', id, trashed }, trashed ? 'আবেদন ডিলিট ফাইলে সরানো হয়েছে।' : 'আবেদন ফিরিয়ে আনা হয়েছে।')} />}
 
-            {tab === 'orders' && <div className="space-y-3">{data.orders.filter(match).map((o) => <Card key={o.id} className="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-center"><div className="min-w-0"><strong className="text-primary">{o.customer_name}</strong> · {o.reference}<p className="mt-1 text-sm text-muted-foreground">{o.phone} · {o.address} · ৳ {Number(o.total).toLocaleString('bn-BD')} · {o.payment_method}{o.payment_reference ? ` · ট্রানজেকশন: ${o.payment_reference} (যাচাই করুন)` : ''}</p><p className="mt-1 text-sm">{Array.isArray(o.items) ? (o.items as { title: string; quantity: number }[]).map((i) => `${i.title} × ${i.quantity}`).join(', ') : ''}</p></div><select aria-label={`${o.customer_name} এর অর্ডারের অবস্থা`} value={o.status} onChange={(e) => run({ kind: 'order', id: o.id, status: e.target.value as 'নতুন' }, 'অর্ডারের অবস্থা হালনাগাদ হয়েছে।')} className="bg-secondary px-3 py-2">{['নতুন', 'প্রক্রিয়াধীন', 'পাঠানো হয়েছে', 'সম্পন্ন', 'বাতিল'].map((x) => <option key={x}>{x}</option>)}</select></Card>)}{!data.orders.length && <p>এখনো কোনো অর্ডার নেই।</p>}</div>}
+             {tab === 'orders' && <AdminOrders orders={data.orders} books={data.books} query={q} onSave={(change) => run(change, 'অর্ডারের তথ্য সংরক্ষিত হয়েছে।')} />}
 
             {tab === 'messages' && <div className="space-y-3">{data.messages.filter(match).map((m) => <Card key={m.id}><div className="flex flex-wrap items-start justify-between gap-3"><div className="min-w-0"><strong className="text-primary">{m.name}</strong> · {m.subject}<p className="text-sm text-muted-foreground">{m.phone}{m.email ? ` · ${m.email}` : ''} · {new Date(m.created_at).toLocaleString('bn-BD')}</p></div><div className="flex gap-2"><select aria-label="বার্তার অবস্থা" value={m.status} onChange={(e) => run({ kind: 'message', id: m.id, status: e.target.value as 'নতুন' }, 'হালনাগাদ হয়েছে।')} className="bg-secondary px-3 py-2 text-sm">{['নতুন', 'উত্তর দেওয়া হয়েছে', 'সম্পন্ন'].map((x) => <option key={x}>{x}</option>)}</select><Button variant="ghost" size="icon" aria-label="মুছুন" onClick={() => window.confirm('বার্তাটি মুছে ফেলবেন?') && run({ kind: 'delete', target: 'message', id: m.id }, 'মুছে ফেলা হয়েছে।')}><Trash2 className="size-4" /></Button></div></div><p className="mt-3 whitespace-pre-line text-sm leading-7">{m.message}</p></Card>)}{!data.messages.length && <p>এখনো কোনো বার্তা নেই।</p>}</div>}
 
