@@ -45,7 +45,7 @@ export function AdminAdmissions({ admissions, query, setQuery, onStatusChange, o
     </div>
     <div className="flex items-center justify-between gap-2"><h3 className="font-semibold text-primary">{preview ? 'আবেদনের প্রিভিউ' : 'সকল ভর্তি আবেদন'}</h3><span className="text-xs text-muted-foreground">{filtered.length.toLocaleString('bn-BD')}টি আবেদন</span></div>
     <div className="space-y-4">{filtered.map((row) => {
-      const docs = Array.isArray(row.documents) ? row.documents.filter((doc): doc is { label: string; name: string; path: string } => typeof doc === 'object' && doc !== null && !Array.isArray(doc) && typeof doc.label === 'string' && typeof doc.name === 'string' && typeof doc.path === 'string') : [];
+      const docs = Array.isArray(row.documents) ? row.documents.filter((doc): doc is { label: string; name: string; path: string } => typeof doc === 'object' && doc !== null && !Array.isArray(doc) && typeof doc['label'] === 'string' && typeof doc['name'] === 'string' && typeof doc['path'] === 'string') : [];
       const open = expanded === row.id;
       return <article key={row.id} aria-label={`${row.student_name} এর আবেদন`} className="overflow-hidden rounded-lg border border-input bg-background">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-4 py-3 sm:px-5"><p className="font-brand text-xs font-semibold text-muted-foreground">{row.reference}</p><span className={`rounded-md px-2.5 py-1 text-xs font-semibold ${statusStyle[row.status] ?? 'bg-secondary text-primary'}`}>{row.status}</span></div>
