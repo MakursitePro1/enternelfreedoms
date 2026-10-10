@@ -28,3 +28,4 @@
 - Enforce order transitions, payment verification and approval-before-dispatch in a database trigger; reveal customer order details only after matching both reference and phone.
 
 - Keep admin book editing and cover selection in a dedicated UI module with workspace-owned drafts and authenticated publishing callbacks, so catalogue management remains isolated without duplicating server handlers.
+- Keep teacher management in a dedicated editor using the existing content records and authenticated workspace callbacks; synchronize public teacher reads through Realtime, cross-tab invalidation and recovery reads so published identities stay consistent without page reloads.

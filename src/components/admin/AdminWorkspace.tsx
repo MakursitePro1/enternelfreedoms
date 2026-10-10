@@ -6,13 +6,14 @@ import { AdminOrders } from './AdminOrders';
 import { AdminMessages } from './AdminMessages';
 import { AdminNotices } from './AdminNotices';
 import { AdminBooks, emptyBook } from './AdminBooks';
+import { AdminTeachers, emptyTeacher } from './AdminTeachers';
 import type { AdminPageKey, AdminTab } from '@/lib/admin-pages';
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useServerFn } from '@tanstack/react-start';
 import { LayoutDashboard, GraduationCap, ShoppingBag, MessageSquare, Megaphone, BookOpen, Layers, Settings, LogOut, Upload, Trash2, Pencil, FileText, Plus, RefreshCw, ArrowRight } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { adminSave, adminUpload, adminDocumentLink, getAdminData, type AdminChange } from '@/lib/platform.functions';
-import { contentKinds, type ContentKind } from '@/lib/institution-content';
+import { contentKinds, notifyInstitutionContentChanged, type ContentKind, type InstitutionItem } from '@/lib/institution-content';
 import { settingFields } from '@/lib/site-settings';
 import { Button } from '@/components/ui/button';
 import logoAsset from '@/assets/institute-logo.jpeg.asset.json';
@@ -47,6 +48,7 @@ export function AdminWorkspace() {
   const [q, setQ] = useState('');
   const [book, setBook] = useState(emptyBook);
   const [content, setContent] = useState(emptyContent);
+  const [teacher, setTeacher] = useState(emptyTeacher);
   const [settings, setSettings] = useState<Record<string, string>>({});
   const [uploading, setUploading] = useState(false);
   const fetchAdmin = useServerFn(getAdminData), save = useServerFn(adminSave), upload = useServerFn(adminUpload), docLink = useServerFn(adminDocumentLink);
@@ -64,7 +66,7 @@ export function AdminWorkspace() {
   }, []);
   function flash(m: string) { setMessage(m); setError(''); window.setTimeout(() => setMessage(''), 3000); }
   async function run(change: AdminChange, ok: string) {
-    try { await save({ data: { token: await token(), change } }); flash(ok); await refresh(); return true; }
+    try { await save({ data: { token: await token(), change } }); if (change.kind === 'content' || (change.kind === 'delete' && change.target === 'content')) notifyInstitutionContentChanged(); flash(ok); await refresh(); return true; }
     catch { setError('সংরক্ষণ করা যায়নি। তথ্য যাচাই করুন।'); return false; }
   }
   async function pickImage(file: File | undefined, set: (url: string) => void) {
@@ -194,7 +196,9 @@ export function AdminWorkspace() {
 
             {tab === 'books' && <AdminBooks books={data.books} draft={book} setDraft={setBook} onSave={(change) => run(change, change.kind === 'delete' ? 'বই মুছে ফেলা হয়েছে।' : 'বই সংরক্ষণ হয়েছে।')} onUpload={async (file) => { const dataUrl = await new Promise<string>((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = reject; reader.readAsDataURL(file); }); const { url } = await upload({ data: { token: await token(), file: { name: file.name, type: file.type, data: dataUrl } } }); return url; }} />}
 
-            {tab === 'content' && <div className="space-y-6">
+            {tab === 'content' && kind === 'teacher' && <AdminTeachers items={kindItems as InstitutionItem[]} draft={teacher} setDraft={setTeacher} onSave={(change) => run(change, change.kind === 'delete' ? 'পরিচিতি মুছে ফেলা হয়েছে।' : 'শিক্ষক ও কর্মীর পরিচিতি সংরক্ষিত হয়েছে।')} onUpload={async (file) => { const dataUrl = await new Promise<string>((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = reject; reader.readAsDataURL(file); }); const { url } = await upload({ data: { token: await token(), file: { name: file.name, type: file.type, data: dataUrl } } }); return url; }} />}
+
+            {tab === 'content' && kind !== 'teacher' && <div className="space-y-6">
               <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)]">
                 <Card><h2 className="mb-4 flex items-center gap-2 font-semibold text-primary">{content.id ? <Pencil className="size-4" /> : <Plus className="size-4" />}{content.id ? `${kindInfo.label} সম্পাদনা` : `নতুন ${kindInfo.label}`}</h2>
                   <form onSubmit={async (e) => { e.preventDefault(); if (await run({ kind: 'content', id: content.id || undefined, content_kind: kind, title: content.title, body: content.body, image_url: content.image_url || undefined, detail: content.detail || undefined, category: content.category || undefined, published: content.published, sort_order: Number(content.sort_order) }, 'তথ্য সংরক্ষণ হয়েছে।')) setContent(emptyContent); }} className="grid gap-3 sm:grid-cols-2">

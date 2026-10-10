@@ -129,8 +129,8 @@ export const adminSave = createServerFn({ method: 'POST' }).validator((data) => 
     result = await db.from('site_settings').upsert(rows, { onConflict: 'key' });
   } else {
     const payload = { kind: change.content_kind, title: change.title, body: change.body, image_url: change.image_url || null, detail: change.detail || null, category: change.category || null, published: change.published, sort_order: change.sort_order };
-    // Editing a demo row turns it into real content, so the "নমুনা" badge disappears.
-    result = change.id ? await db.from('institution_content').update({ ...payload, slug: null }).eq('id', change.id) : await db.from('institution_content').insert(payload);
+    // Keep teacher identity markers stable when names and profile fields change.
+    result = change.id ? await db.from('institution_content').update(change.content_kind === 'teacher' ? payload : { ...payload, slug: null }).eq('id', change.id) : await db.from('institution_content').insert(payload);
   }
   if (result.error) throw new Error('পরিবর্তন সংরক্ষণ করা যায়নি।');
   return { ok: true };

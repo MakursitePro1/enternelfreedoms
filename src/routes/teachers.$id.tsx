@@ -1,9 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
 import { ArrowLeft, GraduationCap, BriefcaseBusiness, BookOpen, BadgeCheck, IdCard, UserRound, Award } from 'lucide-react';
 import { Site } from '@/components/Site';
-import { supabase } from '@/integrations/supabase/client';
-import { parseLabeled, type InstitutionItem } from '@/lib/institution-content';
+import { parseLabeled, usePublishedContent } from '@/lib/institution-content';
 import { initials } from '@/lib/content';
 import { teacherPath } from '@/lib/teacher-links';
 import { seo } from '@/lib/seo';
@@ -16,18 +14,9 @@ export const Route = createFileRoute('/teachers/$id')({
 
 function TeacherProfile() {
   const { id } = Route.useParams();
-  const [teachers, setTeachers] = useState<InstitutionItem[] | null>(null);
-  useEffect(() => {
-    let alive = true;
-    setTeachers(null);
-    supabase.from('institution_content').select('*').eq('kind', 'teacher').eq('published', true)
-      .order('sort_order', { ascending: true }).then(({ data }) => {
-        if (alive) setTeachers((data ?? []) as InstitutionItem[]);
-      });
-    return () => { alive = false; };
-  }, [id]);
-  const item = teachers?.find((teacher) => teacherPath(teacher) === id || teacher.id === id || (teacher.slug && !teacher.slug.startsWith('demo-') && teacher.slug === id));
-  if (!teachers) return <Site><div className="mx-auto max-w-7xl px-2.5 py-5 sm:px-5"><div className="h-72 animate-pulse rounded-xl bg-secondary" /></div></Site>;
+  const { items: teachers, loaded } = usePublishedContent('teacher');
+  const item = teachers.find((teacher) => teacherPath(teacher) === id || teacher.id === id || id.endsWith(`-${teacher.id.slice(0, 8)}`) || (teacher.slug && !teacher.slug.startsWith('demo-') && teacher.slug === id));
+  if (!loaded) return <Site><div className="mx-auto max-w-7xl px-2.5 py-5 sm:px-5"><div className="h-72 animate-pulse rounded-xl bg-secondary" /></div></Site>;
   if (!item) return <Site><section className="mx-auto max-w-3xl px-5 py-24 text-center"><h1 className="font-display text-3xl text-primary">প্রোফাইল পাওয়া যায়নি</h1><Button asChild className="mt-6"><Link to="/teachers">সব শিক্ষক</Link></Button></section></Site>;
   const { fields, text } = parseLabeled(item.body);
   const stats = [

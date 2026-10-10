@@ -1,3 +1,4 @@
+import { usePrincipal } from '@/lib/principal';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Sparkles, ArrowRight, Phone, GraduationCap, HeartHandshake, BookOpenCheck, ShieldCheck, Quote, Award } from 'lucide-react';
 import { Site, Heading } from '@/components/Site';
@@ -40,6 +41,7 @@ function TeachersHero() {
 }
 
 function Teachers() {
+  const principal = usePrincipal();
   return (
     <Site>
       <div className="px-2.5 pb-2.5 pt-2.5 sm:px-5 sm:pb-5 sm:pt-5">
@@ -103,15 +105,15 @@ function Teachers() {
               <span className="inline-flex items-center gap-2 rounded-full bg-gold px-3.5 py-1.5 text-[11px] font-bold text-primary sm:text-xs"><Quote className="size-3.5" />শিক্ষকদের প্রতি অধ্যক্ষের বার্তা</span>
               <blockquote className="mt-5 border-s-4 border-gold ps-4 font-display text-base leading-8 sm:mt-6 sm:ps-6 sm:text-lg sm:leading-9">“শিক্ষক শুধু পাঠদান করেন না, তিনি গড়েন চরিত্র। আমাদের প্রতিটি শিক্ষক এই দায়িত্বটুকুই সবচেয়ে বড় আমানত মনে করেন।”</blockquote>
               <div className="mt-6 flex items-center gap-3 sm:mt-7">
-                <div className="grid size-11 place-items-center rounded-full bg-gold font-display text-lg font-bold text-primary sm:size-12">আ</div>
+                <div className="grid size-11 place-items-center rounded-full bg-gold font-display text-lg font-bold text-primary sm:size-12">{principal.name.slice(0, 1)}</div>
                 <div>
-                  <div className="font-semibold text-gold-light">মোঃ আনছারুল হক (আনছার)</div>
-                  <div className="text-xs text-primary-foreground/70 sm:text-sm">Founder Principal &amp; Director</div>
+                  <div className="font-semibold text-gold-light">{principal.name}</div>
+                  <div className="text-xs text-primary-foreground/70 sm:text-sm">{principal.role}</div>
                 </div>
               </div>
             </div>
           </div>
-          <img src={photos[5]} alt="মোঃ আনছারুল হক" className="h-72 w-full rounded-[0.75rem] object-cover object-top shadow-elegant sm:h-[440px] sm:rounded-[1.25rem]" />
+          <img src={principal.image || undefined} alt={principal.name} className="h-72 w-full rounded-[0.75rem] object-cover object-top shadow-elegant sm:h-[440px] sm:rounded-[1.25rem]" />
         </section>
       </div>
 
