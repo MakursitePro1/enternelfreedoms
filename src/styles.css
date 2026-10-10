@@ -202,6 +202,10 @@ html[dir="rtl"] .ticker-track { animation-direction: reverse; }
   -webkit-mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
   mask-image: linear-gradient(to right, transparent, black 2%, black 98%, transparent);
 }
+.admin-progress { appearance: none; background: var(--secondary); }
+.admin-progress::-webkit-progress-bar { background: var(--secondary); }
+.admin-progress::-webkit-progress-value { background: var(--primary); border-radius: var(--radius); }
+.admin-progress::-moz-progress-bar { background: var(--primary); border-radius: var(--radius); }
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
 }
