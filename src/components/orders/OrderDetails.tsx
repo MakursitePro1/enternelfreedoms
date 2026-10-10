@@ -1,13 +1,13 @@
 import { BookOpen, Check, Clock3, MapPin, Phone, Truck, Wallet, ShieldCheck, ReceiptText } from 'lucide-react';
 import { money, orderItems, orderStages, type OrderRecord } from '@/lib/order-workflow';
-export function OrderDetails({ order, covers = {} }: { order: OrderRecord; covers?: Record<string, string> }) {
+export function OrderDetails({ order, covers = {}, compact = false }: { order: OrderRecord; covers?: Record<string, string>; compact?: boolean }) {
  const items = orderItems(order.items), subtotal = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
  const stage = orderStages.findIndex((s) => s === order.status);
  const history = (Array.isArray(order.history) ? order.history : []).filter((h) => h && typeof h === 'object' && !Array.isArray(h));
-  return <div className="min-w-0 space-y-7 text-foreground">
-   <header className="flex flex-wrap items-start justify-between gap-4 border-b border-border pb-5">
+  return <div className={compact ? 'min-w-0 space-y-5 text-foreground [&_.text-xl]:text-lg [&_.text-lg]:text-base [&_.text-sm]:text-xs [&_.mb-4]:mb-3 [&_.mb-5]:mb-3 [&_.mt-4]:mt-3 [&_.space-y-3]:space-y-2 [&_.py-6]:py-4 [&_.py-4]:py-3 [&_.pt-6]:pt-4 [&_.pt-4]:pt-3 [&_.pb-5]:pb-3 [&_.pb-3]:pb-2 [&_.leading-6]:leading-5 [&_.h-16]:h-12 [&_.w-12]:w-9 [&_.gap-y-4]:gap-y-3 [&_.size-6]:size-5' : 'min-w-0 space-y-7 text-foreground'}>
+   <header className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3 border-b border-border pb-5 sm:flex sm:justify-between">
     <div className="min-w-0"><p className="flex items-center gap-2 font-brand text-[11px] font-bold text-gold-deep"><ReceiptText className="size-4" />{order.reference}</p><h2 className="mt-2 break-words font-teacher text-xl font-bold text-primary">{order.customer_name}</h2><p className="mt-1.5 text-xs text-muted-foreground">{new Date(order.created_at).toLocaleString('bn-BD')}</p></div>
-    <div className="flex flex-col items-end gap-2"><span className={`rounded-md px-3 py-1.5 text-[11px] font-semibold ${order.status === 'বাতিল' ? 'bg-destructive text-destructive-foreground' : 'bg-primary text-primary-foreground'}`}>{order.status}</span><strong className="text-xl font-bold tabular-nums text-primary">{money(order.total)}</strong></div>
+    <div className="flex shrink-0 flex-col items-end gap-2"><span className={`rounded-md px-3 py-1.5 text-[11px] font-semibold ${order.status === 'বাতিল' ? 'bg-destructive text-destructive-foreground' : 'bg-primary text-primary-foreground'}`}>{order.status}</span><strong className="text-xl font-bold tabular-nums text-primary">{money(order.total)}</strong></div>
    </header>
    <section>
     <div className="mb-4 flex items-center justify-between gap-2"><h3 className="flex items-center gap-2 text-sm font-bold text-primary"><Clock3 className="size-4 text-gold-deep" />অর্ডারের অগ্রগতি</h3><span className="text-[11px] font-semibold text-muted-foreground">{order.status === 'বাতিল' ? 'বাতিল' : `${Math.max(0, stage + 1).toLocaleString('bn-BD')} / ${orderStages.length.toLocaleString('bn-BD')}`}</span></div>
