@@ -29,4 +29,4 @@
 - [x] Redesign teacher detail pages and give each teacher a unique name-based URL; preserve old links and verify responsive previews.
 - [x] Give every admin management page a separate private URL while retaining login protection and existing forms.
 - [x] Upgrade the admin overview with detailed live summaries and verify signed-in navigation on desktop and mobile.
-- [ ] Add solid premium banners with working page-specific buttons to every admin management page and verify signed-in previews.
+- [x] Add solid premium banners with working page-specific buttons to every admin management page and verify signed-in previews.

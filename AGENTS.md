@@ -21,3 +21,4 @@
 - Admin panel lives only at a secret non-'admin' route with no public links and signup disabled, so the admin area is not discoverable.
 - Keep admin authentication, data and existing forms in one persistent workspace layout, rendering registered URL-selected pages through an Outlet and shared page context, so deep links and browser history work without duplicating management handlers.
 - Calculate overview metrics and charts from authorized live management records, distinguishing completed order values from pending orders, so summaries do not imply unverified revenue.
+- Render admin page banners in the persistent workspace with page-specific actions tied to existing navigation and forms, so all management pages remain visually consistent without duplicating handlers.
