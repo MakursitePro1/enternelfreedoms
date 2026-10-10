@@ -39,3 +39,4 @@
 - [x] Upgrade admin books catalogue, book editor and cover-upload workflow using existing publishing; verify saving and signed-in preview.
 - [x] Upgrade teacher/staff management and synchronize every public teacher surface instantly; verify signed-in edits, uploads and open public pages.
 - [x] Refine admin book editor with solid green styling and clickable premium responsive catalogue cards; verify signed-in interactions.
+- [x] Refine private login with a solid black form surface and one-screen layouts across devices; preserve authentication behavior and verify previews.
