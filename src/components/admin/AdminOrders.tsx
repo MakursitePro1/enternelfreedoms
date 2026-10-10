@@ -1,6 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useNavigate, useRouterState } from '@tanstack/react-router';
-import { ShoppingBag, Wallet, ShieldCheck, Truck, Eye, ArrowLeft, CheckCircle2, Save, XCircle, BookOpen, ChevronLeft, ChevronRight, Phone, MapPin, ArrowUpRight, ReceiptText } from 'lucide-react';
+import { ShoppingBag, Wallet, ShieldCheck, Truck, Eye, ArrowLeft, CheckCircle2, Save, XCircle, BookOpen, ChevronLeft, ChevronRight, Phone, MapPin, ArrowUpRight, ReceiptText, Banknote, CalendarDays } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { OrderDetails } from '@/components/orders/OrderDetails';
