@@ -20,7 +20,7 @@ const catTone: Record<string, string> = {
   'সাধারণ': 'bg-secondary text-muted-foreground border border-border',
 };
 
-export function AdminNotices({ notices, onSave, onDelete }: { notices: NoticeRow[]; onSave: (n: { id?: string; title: string; body: string; category: string; file_url?: string }) => Promise<boolean>; onDelete: (id: string) => void }) {
+export function AdminNotices({ notices, onSave, onDelete }: { notices: NoticeRow[]; onSave: (n: { id?: string | undefined; title: string; body: string; category: string; file_url?: string | undefined }) => Promise<boolean>; onDelete: (id: string) => void }) {
   const [form, setForm] = useState(emptyForm);
   const [q, setQ] = useState('');
   const [cat, setCat] = useState('');
