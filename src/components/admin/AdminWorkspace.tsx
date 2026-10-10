@@ -14,7 +14,7 @@ import { settingFields } from '@/lib/site-settings';
 import { Button } from '@/components/ui/button';
 import logoAsset from '@/assets/institute-logo.jpeg.asset.json';
 import { AdminAuth, ALIVE_KEY, REMEMBER_KEY } from '@/components/admin/AdminAuth';
-import { Menu, X, Search, ExternalLink, Users, Images, Video, Trophy, CalendarDays, MessageCircleHeart, Building2, Utensils, BarChart3, ShieldCheck, Banknote, HelpCircle, BookMarked, Newspaper } from 'lucide-react';
+import { Menu, X, Search, ExternalLink, Users, Images, Video, Trophy, CalendarDays, MessageCircleHeart, Building2, Utensils, BarChart3, ShieldCheck, Banknote, HelpCircle, BookMarked, Newspaper, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 
 type Data = Awaited<ReturnType<typeof getAdminData>>;
 type Tab = AdminTab;
@@ -42,6 +42,7 @@ export function AdminWorkspace() {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
   const [q, setQ] = useState('');
   const [notice, setNotice] = useState(emptyNotice);
   const [book, setBook] = useState(emptyBook);
