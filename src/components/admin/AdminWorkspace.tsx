@@ -131,22 +131,22 @@ export function AdminWorkspace() {
           <button type="button" aria-label="বন্ধ" onClick={() => setMenuOpen(false)} className="lg:hidden"><X className="size-5" /></button>
         </div>
         <nav className="min-h-0 flex-1 space-y-5 overflow-y-auto p-3">
-          <div><p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">প্রধান</p>
-            {tabs.filter(([k]) => ['overview', 'admissions', 'orders', 'messages'].includes(k)).map(([k, l, Icon]) => <button key={k} type="button" onClick={() => go(k)} className={navBtn(tab === k)}><Icon className="size-4 shrink-0" /><span className="flex-1 text-start">{l}</span>{!!badge[k] && <span className={`rounded-full px-2 py-0.5 text-[10.5px] font-bold ${tab === k ? 'bg-primary text-primary-foreground' : 'bg-gold text-primary'}`}>{(badge[k] ?? 0).toLocaleString('bn-BD')}</span>}</button>)}
+          <div>{!collapsed && <p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">প্রধান</p>}
+            {tabs.filter(([k]) => ['overview', 'admissions', 'orders', 'messages'].includes(k)).map(([k, l, Icon]) => <button key={k} type="button" title={l} onClick={() => go(k)} className={navBtn(tab === k)}><Icon className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">{l}</span>}{!collapsed && !!badge[k] && <span className={`rounded-full px-2 py-0.5 text-[10.5px] font-bold ${tab === k ? 'bg-primary text-primary-foreground' : 'bg-gold text-primary'}`}>{(badge[k] ?? 0).toLocaleString('bn-BD')}</span>}</button>)}
           </div>
-          <div><p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">প্রকাশনা</p>
-            {tabs.filter(([k]) => ['notices', 'books'].includes(k)).map(([k, l, Icon]) => <button key={k} type="button" onClick={() => go(k)} className={navBtn(tab === k)}><Icon className="size-4 shrink-0" /><span className="flex-1 text-start">{l}</span></button>)}
+          <div>{!collapsed && <p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">প্রকাশনা</p>}
+            {tabs.filter(([k]) => ['notices', 'books'].includes(k)).map(([k, l, Icon]) => <button key={k} type="button" title={l} onClick={() => go(k)} className={navBtn(tab === k)}><Icon className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">{l}</span>}</button>)}
           </div>
-          <div><p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">ওয়েবসাইটের তথ্য</p>
-            {contentKinds.map((k) => { const Icon = contentIcons[k.key]; return <button key={k.key} type="button" onClick={() => go('content', k.key)} className={navBtn(tab === 'content' && kind === k.key)}><Icon className="size-4 shrink-0" /><span className="flex-1 text-start">{k.label}</span></button>; })}
+          <div>{!collapsed && <p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">ওয়েবসাইটের তথ্য</p>}
+            {contentKinds.map((k) => { const Icon = contentIcons[k.key]; return <button key={k.key} type="button" title={k.label} onClick={() => go('content', k.key)} className={navBtn(tab === 'content' && kind === k.key)}><Icon className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">{k.label}</span>}</button>; })}
           </div>
-          <div><p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">সিস্টেম</p>
-            <button type="button" onClick={() => go('settings')} className={navBtn(tab === 'settings')}><Settings className="size-4 shrink-0" /><span className="flex-1 text-start">সেটিংস</span></button>
+          <div>{!collapsed && <p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">সিস্টেম</p>}
+            <button type="button" title="সেটিংস" onClick={() => go('settings')} className={navBtn(tab === 'settings')}><Settings className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">সেটিংস</span>}</button>
           </div>
         </nav>
         <div className="space-y-1 border-t border-primary-raised p-3">
-          <a href="/" target="_blank" rel="noreferrer" className={navBtn(false)}><ExternalLink className="size-4" />ওয়েবসাইট দেখুন</a>
-          <button type="button" onClick={logout} className={navBtn(false)}><LogOut className="size-4" />লগআউট</button>
+          <a href="/" target="_blank" rel="noreferrer" title="ওয়েবসাইট দেখুন" className={navBtn(false)}><ExternalLink className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">ওয়েবসাইট দেখুন</span>}</a>
+          <button type="button" title="লগআউট" onClick={logout} className={navBtn(false)}><LogOut className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">লগআউট</span>}</button>
         </div>
       </aside>
       <div className="lg:pl-[272px]">
