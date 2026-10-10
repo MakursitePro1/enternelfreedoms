@@ -21,16 +21,58 @@ export const contentKinds: { key: ContentKind; label: string; titleLabel: string
   { key: 'program', label: 'বিভাগের অতিরিক্ত তথ্য', titleLabel: 'শিরোনাম', detailLabel: 'ছোট তথ্য', categoryLabel: 'বিভাগ', bodyLabel: 'বিস্তারিত' },
 ];
 
-export function useInstitutionContent(kind?: ContentKind) {
+const CONTENT_CHANGED = 'ef-institution-content-changed';
+export function notifyInstitutionContentChanged() {
+  window.dispatchEvent(new Event(CONTENT_CHANGED));
+  localStorage.setItem(CONTENT_CHANGED, `${Date.now()}-${Math.random()}`);
+}
+
+export function usePublishedContent(kind?: ContentKind) {
   const [items, setItems] = useState<InstitutionItem[]>([]);
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     let alive = true;
-    let query = supabase.from('institution_content').select('*').eq('published', true).order('sort_order', { ascending: true }).order('created_at', { ascending: false });
-    if (kind) query = query.eq('kind', kind);
-    query.then(({ data }) => { if (alive) setItems((data ?? []) as InstitutionItem[]); });
-    return () => { alive = false; };
+    let generation = 0;
+    const refresh = async () => {
+      const current = ++generation;
+      let query = supabase.from('institution_content').select('*').eq('published', true).order('sort_order', { ascending: true }).order('created_at', { ascending: false });
+      if (kind) query = query.eq('kind', kind);
+      const { data, error } = await query;
+      if (alive && current === generation && !error) {
+        setItems((previous) => JSON.stringify(previous) === JSON.stringify(data) ? previous : (data ?? []) as InstitutionItem[]);
+        setLoaded(true);
+      }
+    };
+    void refresh();
+    if (kind && kind !== 'teacher') return () => { alive = false; };
+    const visibleRefresh = () => { if (document.visibilityState === 'visible') void refresh(); };
+    const storageRefresh = (event: StorageEvent) => { if (event.key === CONTENT_CHANGED) void refresh(); };
+    const channel = supabase.channel(`published-content-${kind ?? 'all'}-${Math.random()}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'institution_content' }, () => void refresh())
+      .subscribe((status) => { if (status === 'SUBSCRIBED') void refresh(); });
+    // Recovery reads cover disconnects and rows hidden by SELECT policies after unpublishing.
+    const timer = window.setInterval(visibleRefresh, 5000);
+    window.addEventListener(CONTENT_CHANGED, visibleRefresh);
+    window.addEventListener('storage', storageRefresh);
+    window.addEventListener('focus', visibleRefresh);
+    window.addEventListener('online', visibleRefresh);
+    document.addEventListener('visibilitychange', visibleRefresh);
+    return () => {
+      alive = false;
+      window.clearInterval(timer);
+      void supabase.removeChannel(channel);
+      window.removeEventListener(CONTENT_CHANGED, visibleRefresh);
+      window.removeEventListener('storage', storageRefresh);
+      window.removeEventListener('focus', visibleRefresh);
+      window.removeEventListener('online', visibleRefresh);
+      document.removeEventListener('visibilitychange', visibleRefresh);
+    };
   }, [kind]);
-  return items;
+  return { items, loaded };
+}
+
+export function useInstitutionContent(kind?: ContentKind) {
+  return usePublishedContent(kind).items;
 }
 
 export function parseLabeled(body: string) {
