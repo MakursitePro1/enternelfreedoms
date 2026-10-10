@@ -149,7 +149,7 @@ export function AdminWorkspace() {
           <button type="button" title="লগআউট" onClick={logout} className={navBtn(false)}><LogOut className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">লগআউট</span>}</button>
         </div>
       </aside>
-      <div className="lg:pl-[272px]">
+      <div className={`transition-[padding] duration-300 ${collapsed ? 'lg:pl-[76px]' : 'lg:pl-[272px]'}`}>
         <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-background px-3 py-2.5 sm:px-6">
           <button type="button" aria-label="মেনু খুলুন" onClick={() => setMenuOpen(true)} className="grid size-10 place-items-center rounded-xl bg-primary text-primary-foreground lg:hidden"><Menu className="size-5" /></button>
           <p className="min-w-0 flex-1 truncate font-display text-base font-bold text-primary">{heroes[tab][0]}</p>
