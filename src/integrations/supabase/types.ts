@@ -212,42 +212,66 @@ export type Database = {
       orders: {
         Row: {
           address: string
+          approved_at: string | null
+          courier_name: string | null
           created_at: string
           customer_name: string
+          delivery_note: string | null
+          history: Json
           id: string
           items: Json
+          paid_amount: number
           payment_method: string
           payment_reference: string | null
+          payment_status: string
           phone: string
           reference: string
           status: string
           total: number
+          tracking_number: string | null
+          updated_at: string
         }
         Insert: {
           address: string
+          approved_at?: string | null
+          courier_name?: string | null
           created_at?: string
           customer_name: string
+          delivery_note?: string | null
+          history?: Json
           id?: string
           items: Json
+          paid_amount?: number
           payment_method?: string
           payment_reference?: string | null
+          payment_status?: string
           phone: string
           reference?: string
           status?: string
           total: number
+          tracking_number?: string | null
+          updated_at?: string
         }
         Update: {
           address?: string
+          approved_at?: string | null
+          courier_name?: string | null
           created_at?: string
           customer_name?: string
+          delivery_note?: string | null
+          history?: Json
           id?: string
           items?: Json
+          paid_amount?: number
           payment_method?: string
           payment_reference?: string | null
+          payment_status?: string
           phone?: string
           reference?: string
           status?: string
           total?: number
+          tracking_number?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
