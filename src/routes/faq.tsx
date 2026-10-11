@@ -12,7 +12,7 @@ import { faq as staticFaq, parentRules, prepareList, requiredDocs, facilityImage
 import { jsonLd } from '@/lib/seo';
 
 export const Route = createFileRoute('/faq')({
-  head: (ctx) => ({ ...pageSeo(ctx, '/faq'), scripts: [jsonLd({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: staticFaq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) })] }),
+  head: (ctx) => { const base = pageSeo(ctx, '/faq'); return { ...base, scripts: [...(base.scripts ?? []), jsonLd({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: staticFaq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) })] }; },
   component: Faq,
 });
 
