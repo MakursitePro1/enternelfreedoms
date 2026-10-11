@@ -29,6 +29,15 @@
 .admin-book-editor > div:last-child button[type="submit"] { background: var(--gold); color: var(--primary); }
 .admin-book-editor > div:last-child button[type="submit"]:hover { background: var(--gold-light); }
 
+/* Teacher workspace sizing follows its available width, including the sidebar. */
+.admin-teachers { container-type: inline-size; }
+@container (min-width: 580px) {
+  .teacher-card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container (min-width: 1000px) {
+  .teacher-management-grid { grid-template-columns: minmax(320px, .8fr) minmax(0, 1.3fr); }
+}
+
 /* Compact the private sign-in view on short screens without hiding controls. */
 @media (max-height: 700px) {
   .admin-auth .auth-panel { padding: 1rem; }
