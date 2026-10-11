@@ -85,9 +85,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Eternal Freedom Institute Al Islamia" },
       { property: "og:description", content: "গফরগাঁও, ময়মনসিংহের সমন্বিত ইসলামি ও সাধারণ শিক্ষা প্রতিষ্ঠান" },
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Eternal Freedom Institute Al Islamia" },
+      { property: "og:locale", content: "bn_BD" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
+    scripts: [{ type: "application/ld+json", children: JSON.stringify(organizationLd) }],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
