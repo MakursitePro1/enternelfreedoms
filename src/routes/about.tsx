@@ -8,7 +8,7 @@ import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/about')({
-  head: () => seo('প্রতিষ্ঠান পরিচিতি', 'Eternal Freedom Institute Al Islamia-এর ইতিহাস, প্রতিষ্ঠাতা, লক্ষ্য-উদ্দেশ্য, শিক্ষাদর্শ, বিশেষত্ব, শিক্ষক-শিক্ষার্থী সংখ্যা, অর্জন ও ভবিষ্যৎ লক্ষ্য।'),
+  head: () => seo('প্রতিষ্ঠান পরিচিতি', 'Eternal Freedom Institute Al Islamia-এর ইতিহাস, প্রতিষ্ঠাতা, লক্ষ্য-উদ্দেশ্য, শিক্ষাদর্শ, বিশেষত্ব, শিক্ষক-শিক্ষার্থী সংখ্যা, অর্জন ও ভবিষ্যৎ লক্ষ্য।', '/about', 'ইটারনাল ফ্রিডম ইনস্টিটিউট, মাদ্রাসা পরিচিতি'),
   component: About,
 });
 

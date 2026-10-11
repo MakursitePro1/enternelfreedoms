@@ -11,7 +11,7 @@ export const Route = createFileRoute('/academics/$slug')({
     if (!program) throw notFound();
     return { program };
   },
-  head: ({ loaderData }) => loaderData ? seo(loaderData.program.name, loaderData.program.text) : { meta: [{ title: 'বিভাগ পাওয়া যায়নি' }, { name: 'robots', content: 'noindex' }] },
+  head: ({ loaderData }) => loaderData ? seo(loaderData.program.name, loaderData.program.text, '/academics') : { meta: [{ title: 'বিভাগ পাওয়া যায়নি' }, { name: 'robots', content: 'noindex' }] },
   notFoundComponent: ProgramNotFound,
   component: ProgramDetail,
 });

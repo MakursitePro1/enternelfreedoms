@@ -18,11 +18,12 @@ import { settingFields } from '@/lib/site-settings';
 import { Button } from '@/components/ui/button';
 import logoAsset from '@/assets/institute-logo.jpeg.asset.json';
 import { AdminAuth, ALIVE_KEY, REMEMBER_KEY } from '@/components/admin/AdminAuth';
-import { Menu, X, Search, ExternalLink, Users, Images, Video, Trophy, CalendarDays, MessageCircleHeart, Building2, Utensils, BarChart3, ShieldCheck, Banknote, HelpCircle, BookMarked, Newspaper, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { Menu, X, Search, ExternalLink, Users, Images, Video, Trophy, CalendarDays, MessageCircleHeart, Building2, Utensils, BarChart3, ShieldCheck, Banknote, HelpCircle, BookMarked, Newspaper, PanelLeftClose, PanelLeftOpen, Globe } from 'lucide-react';
+import { AdminSeo } from './AdminSeo';
 
 type Data = Awaited<ReturnType<typeof getAdminData>>;
 type Tab = AdminTab;
-const tabs: [Tab, string, typeof LayoutDashboard][] = [['overview', 'সারসংক্ষেপ', LayoutDashboard], ['admissions', 'ভর্তি আবেদন', GraduationCap], ['orders', 'বইয়ের অর্ডার', ShoppingBag], ['messages', 'বার্তা', MessageSquare], ['notices', 'নোটিশ', Megaphone], ['books', 'বই', BookOpen], ['content', 'ওয়েবসাইটের তথ্য', Layers], ['settings', 'সেটিংস', Settings]];
+const tabs: [Tab, string, typeof LayoutDashboard][] = [['overview', 'সারসংক্ষেপ', LayoutDashboard], ['admissions', 'ভর্তি আবেদন', GraduationCap], ['orders', 'বইয়ের অর্ডার', ShoppingBag], ['messages', 'বার্তা', MessageSquare], ['notices', 'নোটিশ', Megaphone], ['books', 'বই', BookOpen], ['content', 'ওয়েবসাইটের তথ্য', Layers], ['seo', 'SEO', Globe], ['settings', 'সেটিংস', Settings]];
 const emptyContent = { id: '', title: '', body: '', image_url: '', detail: '', category: '', published: true, sort_order: 0 };
 const field = 'min-w-0 w-full bg-secondary px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-ring';
 
@@ -35,7 +36,7 @@ export function AdminWorkspace() {
   const page = segments[1] ?? 'overview';
   const admissionId = page === 'admissions' ? segments[2] : undefined;
   const contentPage = contentKinds.find((item) => item.key === page);
-  const tab: Tab = contentPage ? 'content' : (['overview', 'admissions', 'orders', 'messages', 'notices', 'books', 'settings'].includes(page) ? page as Tab : 'overview');
+  const tab: Tab = contentPage ? 'content' : (['overview', 'admissions', 'orders', 'messages', 'notices', 'books', 'seo', 'settings'].includes(page) ? page as Tab : 'overview');
   const kind: ContentKind = contentPage?.key ?? 'teacher';
   const [session, setSession] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -101,6 +102,7 @@ export function AdminWorkspace() {
     notices: ['নোটিশ বোর্ড', 'নতুন নোটিশ প্রকাশ, সম্পাদনা ও মুছে ফেলুন।'],
     books: ['বইয়ের দোকান', 'বই যোগ, দাম, প্রচ্ছদ ও বিস্তারিত পরিচালনা করুন।'],
     content: [kindInfo.label, `ওয়েবসাইটে দেখানো ${kindInfo.label} যোগ, সম্পাদনা ও লুকান।`],
+    seo: ['সার্চ ইঞ্জিন অপটিমাইজেশন (SEO)', 'সব পাবলিক পেজের SEO অবস্থা, স্কোর ও সার্চ ইঞ্জিন সংযোগ।'],
     settings: ['ওয়েবসাইট সেটিংস', 'ফোন, ইমেইল, ঠিকানা, পেমেন্ট নম্বর ও সামাজিক লিংক।'],
   };
   const go = (t: Tab, k?: ContentKind) => {
@@ -143,6 +145,7 @@ export function AdminWorkspace() {
             {contentKinds.map((k) => { const Icon = contentIcons[k.key]; return <button key={k.key} type="button" title={k.label} onClick={() => go('content', k.key)} className={navBtn(tab === 'content' && kind === k.key)}><Icon className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">{k.label}</span>}</button>; })}
           </div>
           <div>{!collapsed && <p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">সিস্টেম</p>}
+            <button type="button" title="SEO" onClick={() => go('seo')} className={navBtn(tab === 'seo')}><Globe className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">SEO</span>}</button>
             <button type="button" title="সেটিংস" onClick={() => go('settings')} className={navBtn(tab === 'settings')}><Settings className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">সেটিংস</span>}</button>
           </div>
         </nav>
@@ -215,6 +218,8 @@ export function AdminWorkspace() {
                 <div className="space-y-3">{kindItems.map((c) => <Card key={c.id} className="flex items-start justify-between gap-3"><div className="flex min-w-0 gap-3">{c.image_url && <img src={c.image_url} alt="" className="size-12 rounded-lg object-cover" />}<div className="min-w-0"><h3 className="font-semibold text-primary">{c.title}</h3><p className="text-xs text-muted-foreground">{[c.detail, c.category].filter(Boolean).join(' · ')}{c.published ? '' : ' · লুকানো'}</p></div></div><div className="flex shrink-0"><Button variant="ghost" size="icon" aria-label="সম্পাদনা" onClick={() => setContent({ id: c.id, title: c.title, body: c.body, image_url: c.image_url ?? '', detail: c.detail ?? '', category: c.category ?? '', published: c.published, sort_order: c.sort_order })}><Pencil className="size-4" /></Button><Button variant="ghost" size="icon" aria-label="মুছুন" onClick={() => window.confirm('এই তথ্য মুছে ফেলবেন?') && run({ kind: 'delete', target: 'content', id: c.id }, 'মুছে ফেলা হয়েছে।')}><Trash2 className="size-4" /></Button></div></Card>)}{!kindItems.length && <p className="text-sm text-muted-foreground">এই বিভাগে এখনো কোনো তথ্য নেই।</p>}</div>
               </div>
             </div>}
+
+            {tab === 'seo' && <AdminSeo />}
 
             {tab === 'settings' && <Card className="max-w-3xl"><form onSubmit={async (e) => { e.preventDefault(); await run({ kind: 'settings', values: settings }, 'সেটিংস সংরক্ষণ হয়েছে। ওয়েবসাইট রিফ্রেশ করলে দেখা যাবে।'); }} className="grid gap-4 sm:grid-cols-2">{settingFields.map(([k, l]) => <label key={k} className="text-sm font-semibold text-primary">{l}<input value={settings[k] ?? ''} onChange={(e) => setSettings({ ...settings, [k]: e.target.value })} className={`${field} mt-1.5 font-normal`} /></label>)}<div className="sm:col-span-2"><Button type="submit">সেটিংস সংরক্ষণ</Button></div></form></Card>}
           </> : null}><Outlet /></AdminPageContext.Provider>

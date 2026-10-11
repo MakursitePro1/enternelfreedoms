@@ -12,11 +12,11 @@ import { photos, programs, dayTimeline, whyCards, parentQuestions, facilityImage
 import { useInstitutionContent } from '@/lib/institution-content';
 import { useSiteSettings, youtubeEmbed } from '@/lib/site-settings';
 import { useLang } from '@/lib/i18n';
-import { seo } from '@/lib/seo';
+import { seo, jsonLd, SITE_URL, SITE_NAME } from '@/lib/seo';
 import { supabase } from '@/integrations/supabase/client';
 
 export const Route = createFileRoute('/')({
-  head: () => ({ ...seo('হোম', 'Eternal Freedom Institute Al Islamia, গফরগাঁও, ময়মনসিংহ—কুরআনকেন্দ্রিক ইসলামী ও সাধারণ শিক্ষার সমন্বিত পূর্ণাঙ্গ আবাসিক প্রতিষ্ঠান। ভর্তি, শিক্ষক, আবাসিক জীবন ও বইয়ের দোকান।'), links: [{ rel: 'preload', as: 'image', href: photos[2], fetchPriority: 'high' }] }),
+  head: () => ({ ...seo('হোম', 'Eternal Freedom Institute Al Islamia, গফরগাঁও, ময়মনসিংহ—কুরআনকেন্দ্রিক ইসলামী ও সাধারণ শিক্ষার সমন্বিত পূর্ণাঙ্গ আবাসিক প্রতিষ্ঠান। ভর্তি, শিক্ষক, আবাসিক জীবন ও বইয়ের দোকান।', '/', 'গফরগাঁও আবাসিক মাদ্রাসা, ময়মনসিংহ ইসলামী প্রতিষ্ঠান'), links: [{ rel: 'preload', as: 'image', href: photos[2], fetchPriority: 'high' }, { rel: 'canonical', href: `${SITE_URL}/` }], scripts: [jsonLd({ '@context': 'https://schema.org', '@type': 'WebSite', name: SITE_NAME, url: SITE_URL, inLanguage: 'bn' })] }),
   component: Home,
 });
 

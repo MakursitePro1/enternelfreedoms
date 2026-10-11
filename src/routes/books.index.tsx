@@ -46,7 +46,7 @@ function SeeMoreClamp({ as = 'h3', to, className, children }: { as?: 'h3' | 'p';
 
 export const Route = createFileRoute('/books/')({
   validateSearch: (s: Record<string, unknown>): { cart?: number } => (s['cart'] ? { cart: 1 } : {}),
-  head: () => seo('অনলাইন বইয়ের দোকান', 'Eternal Freedom প্রকাশনার বই দেখুন, বিস্তারিত পড়ুন এবং ক্যাশ অন ডেলিভারি, বিকাশ বা নগদে অর্ডার করুন।'),
+  head: () => seo('অনলাইন বইয়ের দোকান', 'Eternal Freedom প্রকাশনার বই দেখুন, বিস্তারিত পড়ুন এবং ক্যাশ অন ডেলিভারি, বিকাশ বা নগদে অর্ডার করুন।', '/books', 'বই কিনুন, বিকাশ নগদ অর্ডার, ম্যাজিক ইংলিশ বই'),
   component: Books,
 });
 

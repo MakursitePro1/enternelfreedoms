@@ -11,7 +11,7 @@ import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/activities/$id')({
-  head: () => seo('খবর ও অনুষ্ঠানের বিস্তারিত', 'Eternal Freedom Institute Al Islamia-এর অনুষ্ঠান ও কার্যক্রমের বিস্তারিত খবর।'),
+  head: () => seo('খবর ও অনুষ্ঠানের বিস্তারিত', 'Eternal Freedom Institute Al Islamia-এর অনুষ্ঠান ও কার্যক্রমের বিস্তারিত খবর।', '/activities'),
   component: ActivityDetail,
 });
 
