@@ -16,7 +16,7 @@ import { seo } from '@/lib/seo';
 import { supabase } from '@/integrations/supabase/client';
 
 export const Route = createFileRoute('/')({
-  head: () => seo('হোম', 'Eternal Freedom Institute Al Islamia, গফরগাঁও, ময়মনসিংহ—কুরআনকেন্দ্রিক ইসলামী ও সাধারণ শিক্ষার সমন্বিত পূর্ণাঙ্গ আবাসিক প্রতিষ্ঠান। ভর্তি, শিক্ষক, আবাসিক জীবন ও বইয়ের দোকান।'),
+  head: () => ({ ...seo('হোম', 'Eternal Freedom Institute Al Islamia, গফরগাঁও, ময়মনসিংহ—কুরআনকেন্দ্রিক ইসলামী ও সাধারণ শিক্ষার সমন্বিত পূর্ণাঙ্গ আবাসিক প্রতিষ্ঠান। ভর্তি, শিক্ষক, আবাসিক জীবন ও বইয়ের দোকান।'), links: [{ rel: 'preload', as: 'image', href: photos[2], fetchPriority: 'high' }] }),
   component: Home,
 });
 
@@ -39,7 +39,7 @@ function Hero() {
   useEffect(() => { const id = window.setInterval(() => setI((x) => (x + 1) % heroSlides.length), 6000); return () => window.clearInterval(id); }, []);
   return (
     <section className="relative flex flex-col justify-end overflow-hidden rounded-[0.75rem] bg-primary text-primary-foreground shadow-elegant sm:min-h-[calc(100svh-230px)] sm:rounded-[1.25rem]">
-      {heroSlides.map((sl, k) => <img key={sl.src} src={sl.src} alt={sl.alt} className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${k === i ? 'opacity-100' : 'opacity-0'}`} />)}
+      {heroSlides.map((sl, k) => <img key={sl.src} src={sl.src} alt={sl.alt} loading={k === 0 ? 'eager' : 'lazy'} fetchPriority={k === 0 ? 'high' : undefined} decoding="async" className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ${k === i ? 'opacity-100' : 'opacity-0'}`} />)}
       <div className="absolute inset-0 bg-hero-overlay" />
       <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-25" />
       <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-end px-5 pb-4 pt-16 max-[359px]:px-4 max-[359px]:pt-10 sm:justify-center sm:py-6 lg:px-8">
