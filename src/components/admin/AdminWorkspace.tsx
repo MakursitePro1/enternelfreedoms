@@ -22,6 +22,7 @@ import { Menu, X, Search, ExternalLink, Users, Images, Video, Trophy, CalendarDa
 import { AdminSeo } from './AdminSeo';
 import { AdminIntegrations } from './AdminIntegrations';
 import { AdminPayments } from './AdminPayments';
+import { AdminHeader } from './AdminHeader';
 
 type Data = Awaited<ReturnType<typeof getAdminData>>;
 type Tab = AdminTab;
@@ -161,12 +162,11 @@ export function AdminWorkspace() {
         </div>
       </aside>
       <div className={`transition-[padding] duration-300 ${collapsed ? 'lg:pl-[76px]' : 'lg:pl-[272px]'}`}>
-        <header className="sticky top-0 z-30 flex items-center gap-3 border-b border-border bg-background px-3 py-2.5 sm:px-6">
-          <button type="button" aria-label="মেনু খুলুন" onClick={() => setMenuOpen(true)} className="grid size-10 place-items-center rounded-xl bg-primary text-primary-foreground lg:hidden"><Menu className="size-5" /></button>
-          <p className="min-w-0 flex-1 truncate font-display text-base font-bold text-primary">{heroes[tab][0]}</p>
-          {tab === 'orders' && <label className="relative hidden sm:block"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="নাম, ফোন বা নম্বর খুঁজুন" className="h-10 w-64 rounded-xl border-2 border-border bg-background pl-9 pr-3 text-sm outline-none focus:border-primary" /></label>}
-          <button type="button" onClick={logout} className="hidden items-center gap-2 rounded-xl bg-secondary px-3 py-2 text-sm font-semibold text-primary sm:flex"><LogOut className="size-4" />লগআউট</button>
-        </header>
+        <AdminHeader title={heroes[tab][0]} page={page} data={data} onMenu={() => setMenuOpen(true)} onLogout={logout} onNavigate={(target, id) => {
+          if (id) void navigate({ to: '/Eternelfreeadmingo/$page/$admissionId', params: { page: 'admissions', admissionId: id } });
+          else if (target in contentIcons) go('content', target as ContentKind);
+          else go(target as Tab);
+        }} />
         <main className="min-w-0 p-3 sm:p-6 lg:p-8">
           <section aria-label="পাতার ব্যানার" className="mb-6 overflow-hidden rounded-lg border border-primary-raised bg-primary text-primary-foreground sm:mb-7">
             <div className={tab === 'admissions' ? "grid min-w-0 gap-3 border-b border-primary-raised px-4 py-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center sm:px-5" : "flex flex-wrap items-center justify-between gap-3 border-b border-primary-raised px-5 py-3 sm:px-7"}>
@@ -187,7 +187,7 @@ export function AdminWorkspace() {
               </div>
             </div>
           </section>
-          {tab === 'orders' && <label className="relative mb-4 block sm:hidden"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="নাম, ফোন বা নম্বর খুঁজুন" className="h-11 w-full rounded-xl border-2 border-border bg-background pl-9 pr-3 text-sm outline-none focus:border-primary" /></label>}
+          {tab === 'orders' && <label className="relative mb-4 block"><Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" /><input aria-label="অর্ডার তালিকায় খুঁজুন" value={q} onChange={(e) => setQ(e.target.value)} placeholder="নাম, ফোন বা নম্বর খুঁজুন" className="h-11 w-full rounded-xl border-2 border-border bg-background pl-9 pr-3 text-sm outline-none focus:border-primary" /></label>}
           {message && <p className="mb-4 rounded-lg bg-accent p-3 text-sm text-primary">{message}</p>}
           {error && <p role="alert" className="mb-4 rounded-lg bg-secondary p-3 text-sm text-destructive">{error}</p>}
           {loading && <p>তথ্য আসছে...</p>}
