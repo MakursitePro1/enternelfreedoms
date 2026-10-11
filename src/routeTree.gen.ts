@@ -19,6 +19,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ResidentialRouteImport } from './routes/residential'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as EternelfreeadmingoIndexRouteImport } from './routes/Eternelfreeadmingo.index'
 import { Route as EternelfreeadmingoPageRouteImport } from './routes/Eternelfreeadmingo.$page'
 import { Route as AcademicsIndexRouteImport } from './routes/academics.index'
@@ -81,6 +82,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const ResidentialRoute = ResidentialRouteImport.update({
   id: '/residential',
   path: '/residential',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EternelfreeadmingoIndexRoute = EternelfreeadmingoIndexRouteImport.update({
@@ -161,6 +167,7 @@ export interface FileRoutesByFullPath {
   '/gallery': typeof GalleryRoute
   '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/Eternelfreeadmingo/$page': typeof EternelfreeadmingoPageRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
@@ -185,6 +192,7 @@ export interface FileRoutesByTo {
   '/gallery': typeof GalleryRoute
   '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/Eternelfreeadmingo/$page': typeof EternelfreeadmingoPageRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
@@ -211,6 +219,7 @@ export interface FileRoutesById {
   '/gallery': typeof GalleryRoute
   '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/Eternelfreeadmingo/$page': typeof EternelfreeadmingoPageRoute
   '/academics/$slug': typeof AcademicsSlugRoute
   '/activities/$id': typeof ActivitiesIdRoute
@@ -238,6 +247,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/reset-password'
     | '/residential'
+    | '/sitemap.xml'
     | '/Eternelfreeadmingo/$page'
     | '/academics/$slug'
     | '/activities/$id'
@@ -262,6 +272,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/reset-password'
     | '/residential'
+    | '/sitemap.xml'
     | '/Eternelfreeadmingo/$page'
     | '/academics/$slug'
     | '/activities/$id'
@@ -287,6 +298,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/reset-password'
     | '/residential'
+    | '/sitemap.xml'
     | '/Eternelfreeadmingo/$page'
     | '/academics/$slug'
     | '/activities/$id'
@@ -313,6 +325,7 @@ export interface RootRouteChildren {
   GalleryRoute: typeof GalleryRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ResidentialRoute: typeof ResidentialRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   AcademicsSlugRoute: typeof AcademicsSlugRoute
   ActivitiesIdRoute: typeof ActivitiesIdRoute
   BooksIdRoute: typeof BooksIdRoute
@@ -395,6 +408,13 @@ declare module '@tanstack/react-router' {
       path: '/residential'
       fullPath: '/residential'
       preLoaderRoute: typeof ResidentialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/Eternelfreeadmingo/': {
@@ -518,6 +538,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryRoute: GalleryRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ResidentialRoute: ResidentialRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   AcademicsSlugRoute: AcademicsSlugRoute,
   ActivitiesIdRoute: ActivitiesIdRoute,
   BooksIdRoute: BooksIdRoute,
