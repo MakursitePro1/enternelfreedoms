@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowUpRight, Banknote, BookOpen, ChevronRight, ExternalLink, GraduationCap, LayoutDashboard, LogOut, Menu, MessageSquare, Search, Settings, ShoppingBag, Users, X, FileText } from 'lucide-react';
+import { ArrowUpRight, Banknote, BookOpen, ExternalLink, GraduationCap, LayoutDashboard, LogOut, Menu, MessageSquare, Search, Settings, ShoppingBag, Users, X, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { adminPages, type AdminPageKey } from '@/lib/admin-pages';
 import type { getAdminData } from '@/lib/platform.functions';
