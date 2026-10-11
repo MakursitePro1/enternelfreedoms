@@ -12,6 +12,7 @@
 - [x] Admin dashboard: summary, messages, settings, all content kinds, image upload
 - [x] Verify all pages at 390/768/1280 and real flows (admin signed-in view unverified: no admin account exists yet)
 - [ ] Enable live online payment after the institution supplies its merchant account credentials (blocked: credentials).
+- [ ] Add a private payment gateway menu, central checkout controls and verified automated payment callbacks; verify previews.
 - [x] Polish all existing pages with stronger premium surfaces and consistent small-screen spacing; verify phone, tablet and desktop previews without changing content or flows.
 - [x] Place home statistics within the hero background and fit the complete hero within a device screen where practical.
 - [x] Compact teacher cards and add a looping, edge-faded teacher carousel with more clearly marked sample profiles.
