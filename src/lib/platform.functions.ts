@@ -1,5 +1,22 @@
 import { createServerFn } from '@tanstack/react-start';
 import { z } from 'zod';
+import { createClient } from '@supabase/supabase-js';
+import type { Database } from '@/integrations/supabase/types';
+
+// Works on any host (Lovable, Vercel): only the public project address/key are needed; access is enforced by database rules.
+function dbClient(token?: string) {
+  const url = process.env['SUPABASE_URL'] || import.meta.env['VITE_SUPABASE_URL'];
+  const key = process.env['SUPABASE_PUBLISHABLE_KEY'] || import.meta.env['VITE_SUPABASE_PUBLISHABLE_KEY'];
+  if (!url || !key) throw new Error('সার্ভার সংযোগ পাওয়া যায়নি।');
+  return createClient<Database>(url, key, {
+    global: {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      fetch: (input, init) => { const h = new Headers(init?.headers); if (h.get('Authorization') === `Bearer ${key}`) h.delete('Authorization'); h.set('apikey', key); return fetch(input, { ...init, headers: h }); },
+    },
+    auth: { storage: undefined, persistSession: false, autoRefreshToken: false },
+  });
+}
+function newRef(prefix: string) { return prefix + crypto.randomUUID().replace(/-/g, '').slice(0, 10).toUpperCase(); }
 
 const fileSchema = z.object({ name: z.string().min(1).max(150), type: z.string().regex(/^(image\/(jpeg|png|webp)|application\/pdf)$/), data: z.string().min(10).max(4_500_000) });
 const admissionSchema = z.object({ student_name: z.string().trim().min(2).max(120), birth_date: z.string().optional(), program: z.string().min(2).max(100), guardian_name: z.string().trim().min(2).max(120), phone: z.string().regex(/^01[0-9]{9}$/), address: z.string().trim().min(5).max(500), previous_school: z.string().max(150).optional(), notes: z.string().max(1000).optional(), documents: z.array(fileSchema.extend({ label: z.string().max(80) })).max(4).optional() });
@@ -16,33 +33,29 @@ function safeName(name: string) {
 }
 
 export const submitAdmission = createServerFn({ method: 'POST' }).validator((data) => admissionSchema.parse(data)).handler(async ({ data }) => {
-  const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
+  const db = dbClient();
   const { documents, ...fields } = data;
-  const { data: row, error } = await supabaseAdmin.from('admissions').insert({ ...fields, birth_date: fields.birth_date || null, previous_school: fields.previous_school ?? null, notes: fields.notes ?? null }).select('id,reference').single();
-  if (error || !row) throw new Error('আবেদন জমা দেওয়া যায়নি। আবার চেষ্টা করুন।');
-  if (documents?.length) {
-    const saved: { label: string; name: string; path: string }[] = [];
-    for (const doc of documents) {
-      const bytes = decode(doc.data);
-      if (bytes.byteLength > 3 * 1024 * 1024) continue;
-      const path = `${row.reference}/${Date.now()}-${safeName(doc.name)}`;
-      const { error: upErr } = await supabaseAdmin.storage.from('admission-docs').upload(path, bytes, { contentType: doc.type, upsert: false });
-      if (!upErr) saved.push({ label: doc.label, name: doc.name, path });
-    }
-    if (saved.length) await supabaseAdmin.from('admissions').update({ documents: saved }).eq('id', row.id);
+  const reference = newRef('EF-');
+  const saved: { label: string; name: string; path: string }[] = [];
+  for (const doc of documents ?? []) {
+    const bytes = decode(doc.data);
+    if (bytes.byteLength > 3 * 1024 * 1024) continue;
+    const path = `${reference}/${Date.now()}-${safeName(doc.name)}`;
+    const { error: upErr } = await db.storage.from('admission-docs').upload(path, bytes, { contentType: doc.type, upsert: false });
+    if (!upErr) saved.push({ label: doc.label, name: doc.name, path });
   }
-  return { reference: row.reference };
+  const { error } = await db.from('admissions').insert({ ...fields, reference, documents: saved, birth_date: fields.birth_date || null, previous_school: fields.previous_school ?? null, notes: fields.notes ?? null });
+  if (error) throw new Error('আবেদন জমা দেওয়া যায়নি। আবার চেষ্টা করুন।');
+  return { reference };
 });
 
 export const trackAdmission = createServerFn({ method: 'POST' }).validator((data) => z.object({ reference: z.string().trim().max(30), phone: z.string().regex(/^01[0-9]{9}$/) }).parse(data)).handler(async ({ data }) => {
-  const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
-  const { data: row } = await supabaseAdmin.from('admissions').select('student_name,program,status,created_at').eq('reference', data.reference.toUpperCase()).eq('phone', data.phone).maybeSingle();
-  return row;
+  const { data: row } = await dbClient().rpc('public_track_admission', { _reference: data.reference, _phone: data.phone });
+  return (row ?? null) as { student_name: string; program: string; status: string; created_at: string } | null;
 });
 
 export const submitContact = createServerFn({ method: 'POST' }).validator((data) => z.object({ name: z.string().trim().min(2).max(120), phone: z.string().regex(/^01[0-9]{9}$/), email: z.string().email().max(150).optional().or(z.literal('')), subject: z.string().trim().min(2).max(120), message: z.string().trim().min(5).max(2000) }).parse(data)).handler(async ({ data }) => {
-  const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
-  const { error } = await supabaseAdmin.from('contact_messages').insert({ ...data, email: data.email || null });
+  const { error } = await dbClient().from('contact_messages').insert({ ...data, email: data.email || null });
   if (error) throw new Error('বার্তা পাঠানো যায়নি। আবার চেষ্টা করুন।');
   return { ok: true };
 });
@@ -50,34 +63,34 @@ export const submitContact = createServerFn({ method: 'POST' }).validator((data)
 export const DELIVERY_ZONES = { inside: { label: 'ঢাকা সিটির ভিতরে', charge: 70 }, outside: { label: 'ঢাকা সিটির বাইরে', charge: 130 } } as const;
 const orderSchema = z.object({ customer_name: z.string().trim().min(2).max(120), phone: z.string().regex(/^01[0-9]{9}$/), address: z.string().trim().min(8).max(500), payment_method: z.enum(['ক্যাশ অন ডেলিভারি', 'বিকাশ', 'নগদ']), payment_reference: z.string().trim().max(100).optional(), delivery_zone: z.enum(['inside', 'outside']).optional(), items: z.array(z.object({ id: z.string().uuid(), quantity: z.number().int().min(1).max(20) })).min(1).max(30) });
 export const submitOrder = createServerFn({ method: 'POST' }).validator((data) => orderSchema.parse(data)).handler(async ({ data }) => {
-  const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
+  const db = dbClient();
   if (data.payment_method !== 'ক্যাশ অন ডেলিভারি' && (!data.payment_reference || data.payment_reference.length < 5)) throw new Error('পেমেন্টের ট্রানজেকশন আইডি প্রয়োজন।');
   const ids = data.items.map((x) => x.id);
-  const { data: books, error: bookError } = await supabaseAdmin.from('books').select('id,title,price,active').in('id', ids);
+  const { data: books, error: bookError } = await db.from('books').select('id,title,price,active').in('id', ids);
   if (bookError || !books || data.items.some((item) => !books.some((book) => book.id === item.id && book.active))) throw new Error('বইয়ের তথ্য পাওয়া যায়নি।');
   const items = data.items.map((item) => { const book = books.find((b) => b.id === item.id); if (!book) throw new Error('বইয়ের তথ্য পাওয়া যায়নি।'); return { id: book.id, title: book.title, price: Number(book.price), quantity: item.quantity }; });
   const zone = data.delivery_zone ? DELIVERY_ZONES[data.delivery_zone] : null;
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0) + (zone?.charge ?? 0);
   const address = zone ? `[${zone.label} · ডেলিভারি ৳${zone.charge}] ${data.address}` : data.address;
-  const { data: row, error } = await supabaseAdmin.from('orders').insert({ customer_name: data.customer_name, phone: data.phone, address, items, total, payment_method: data.payment_method, payment_reference: data.payment_method === 'ক্যাশ অন ডেলিভারি' ? null : data.payment_reference ?? null }).select('reference').single();
+  const reference = newRef('BK-');
+  const { error } = await db.from('orders').insert({ reference, customer_name: data.customer_name, phone: data.phone, address, items, total, payment_method: data.payment_method, payment_reference: data.payment_method === 'ক্যাশ অন ডেলিভারি' ? null : data.payment_reference ?? null });
   if (error) throw new Error('অর্ডার জমা দেওয়া যায়নি।');
-  return row;
+  return { reference };
 });
 
 export const trackOrder = createServerFn({ method: 'POST' }).validator((data) => z.object({ reference: z.string().trim().max(30), phone: z.string().regex(/^01[0-9]{9}$/) }).parse(data)).handler(async ({ data }) => {
-  const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
-   const { data: row, error } = await supabaseAdmin.from('orders').select('reference,customer_name,phone,address,items,status,created_at,total,payment_method,payment_reference,payment_status,paid_amount,approved_at,courier_name,tracking_number,delivery_note,history,updated_at').eq('reference', data.reference.toUpperCase()).eq('phone', data.phone).maybeSingle();
-   if (error) throw new Error('অর্ডারের তথ্য পাওয়া যায়নি।');
-  return row;
+  const { data: row, error } = await dbClient().rpc('public_track_order', { _reference: data.reference, _phone: data.phone });
+  if (error) throw new Error('অর্ডারের তথ্য পাওয়া যায়নি।');
+  return (row ?? null) as unknown as Database['public']['Tables']['orders']['Row'] | null;
 });
 
 async function verifyAdmin(token: string) {
-  const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
-  const { data: { user }, error } = await supabaseAdmin.auth.getUser(token);
+  const db = dbClient(token);
+  const { data: { user }, error } = await db.auth.getUser(token);
   if (error || !user) throw new Error('লগইন প্রয়োজন।');
-  const { data: role } = await supabaseAdmin.from('user_roles').select('role').eq('user_id', user.id).eq('role', 'admin').maybeSingle();
+  const { data: role } = await db.from('user_roles').select('role').eq('user_id', user.id).eq('role', 'admin').maybeSingle();
   if (!role) throw new Error('অ্যাডমিন অনুমতি নেই।');
-  return supabaseAdmin;
+  return db;
 }
 
 export const getAdminData = createServerFn({ method: 'POST' }).validator((data) => z.object({ token: z.string().min(10) }).parse(data)).handler(async ({ data }) => {

@@ -64,6 +64,13 @@
       "when": 1791627510098,
       "tag": "0008_enable_institution_content_realtime",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1791687072809,
+      "tag": "0009_hosting_independent_access",
+      "breakpoints": true
     }
   ]
 }
