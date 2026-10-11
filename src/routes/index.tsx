@@ -135,7 +135,7 @@ function Home() {
           </div>
           <div className="relative min-w-0">
             <div className="relative grid grid-cols-2 gap-2.5 sm:gap-5">
-              <img src={photos[0]} alt="প্রতিষ্ঠানের শিক্ষার্থী ও শিক্ষক" className="h-28 w-full rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-24 sm:h-56 lg:h-[21rem]" />
+              <img src={photos[0]} alt="প্রতিষ্ঠানের শিক্ষার্থী ও শিক্ষক" loading="lazy" decoding="async" className="h-28 w-full rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-24 sm:h-56 lg:h-[21rem]" />
               <img src={facilityImages.library} alt="লাইব্রেরি ও পাঠকক্ষ" loading="lazy" className="mt-4 h-28 w-full rounded-xl object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:h-24 sm:mt-12 sm:h-56 lg:h-[21rem]" />
               <div className="pointer-events-none absolute inset-x-0 top-1/2 z-20 hidden -translate-y-1/2 justify-center sm:flex">
                 <div className="grid size-14 place-items-center rounded-full bg-gold text-primary shadow-elegant ring-4 ring-background"><BookOpen className="size-6" /></div>
@@ -171,7 +171,7 @@ function Home() {
           <div className="grid grid-cols-2 gap-2.5 max-[359px]:gap-2 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
             {programs.map((p) => (
               <Link to="/academics/$slug" params={{ slug: p.slug }} key={p.slug} className="group relative flex min-h-[210px] flex-col justify-end overflow-hidden rounded-xl shadow-elegant transition-transform duration-300 hover:-translate-y-1.5 max-[359px]:min-h-[185px] max-[359px]:rounded-lg sm:min-h-[340px] sm:rounded-2xl">
-                <img src={p.image} alt={p.name} className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                <img src={p.image} alt={p.name} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/75 to-primary/25 transition-colors duration-300 group-hover:via-primary/80" />
                 <div className="relative flex flex-1 flex-col p-3 max-[359px]:p-2.5 sm:p-6">
                   <div className="flex items-center justify-between gap-1"><span className="rounded-full bg-primary-foreground/15 px-2 py-1 text-[9.5px] font-semibold text-primary-foreground backdrop-blur-sm ring-1 ring-primary-foreground/20 max-[359px]:px-1.5 max-[359px]:text-[9px] sm:px-3 sm:text-[11px]">{p.group}</span><span className="shrink-0 font-display text-base text-gold drop-shadow sm:text-2xl">{p.number}</span></div>
@@ -189,7 +189,7 @@ function Home() {
       <section className="bg-secondary px-2.5 py-10 max-[359px]:px-2 max-[359px]:py-8 sm:px-5 sm:py-20 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto grid max-w-6xl gap-4 max-[359px]:gap-3 sm:gap-10 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:gap-14">
-            <img src={principal.image || undefined} alt={principal.name} className="h-60 w-full rounded-2xl object-cover object-top shadow-elegant max-[359px]:h-52 max-[359px]:rounded-xl sm:h-[420px] lg:h-[540px]" />
+            <img src={principal.image || undefined} alt={principal.name} loading="lazy" decoding="async" className="h-60 w-full rounded-2xl object-cover object-top shadow-elegant max-[359px]:h-52 max-[359px]:rounded-xl sm:h-[420px] lg:h-[540px]" />
             <div className="principal-card min-w-0 rounded-2xl border border-primary-foreground/15 bg-primary p-4 shadow-elegant max-[359px]:rounded-xl max-[359px]:p-3.5 sm:p-8 lg:p-10">
               <Heading light eyebrow="অধ্যক্ষের বাণী" title="আলোকিত মানুষ গড়ার প্রত্যয়ে" />
               <blockquote className="border-s-4 border-gold ps-4 font-display text-[15px] leading-8 text-primary-foreground sm:ps-6 sm:text-lg sm:leading-9">“আমরা বিশ্বাস করি, প্রকৃত শিক্ষা মানুষকে জ্ঞানী করার পাশাপাশি চরিত্রবান ও দায়িত্বশীল করে তোলে। কুরআনের আলোয় আলোকিত হৃদয় এবং আধুনিক জ্ঞানে সমৃদ্ধ মেধা—এই দুইয়ের সমন্বয়েই আমরা প্রতিটি শিক্ষার্থীকে গড়ে তুলতে চাই। অভিভাবকদের আমানত হিসেবে আমরা প্রতিটি শিশুকে নিজের সন্তানের মতো যত্ন করি।”</blockquote>
