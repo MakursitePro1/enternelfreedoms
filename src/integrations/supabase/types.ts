@@ -275,6 +275,80 @@ export type Database = {
         }
         Relationships: []
       }
+      payment_attempts: {
+        Row: {
+          amount: number
+          created_at: string
+          gateway: string
+          id: string
+          mode: string
+          order_reference: string
+          provider_reference: string | null
+          status: string
+          transaction_id: string
+          verified_at: string | null
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          gateway: string
+          id?: string
+          mode: string
+          order_reference: string
+          provider_reference?: string | null
+          status?: string
+          transaction_id: string
+          verified_at?: string | null
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          gateway?: string
+          id?: string
+          mode?: string
+          order_reference?: string
+          provider_reference?: string | null
+          status?: string
+          transaction_id?: string
+          verified_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_attempts_order_reference_fkey"
+            columns: ["order_reference"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["reference"]
+          },
+        ]
+      }
+      payment_gateways: {
+        Row: {
+          account_number: string
+          enabled: boolean
+          id: string
+          merchant_id: string
+          mode: string
+          updated_at: string
+        }
+        Insert: {
+          account_number?: string
+          enabled?: boolean
+          id: string
+          merchant_id?: string
+          mode?: string
+          updated_at?: string
+        }
+        Update: {
+          account_number?: string
+          enabled?: boolean
+          id?: string
+          merchant_id?: string
+          mode?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       site_settings: {
         Row: {
           key: string
@@ -316,6 +390,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      confirm_gateway_payment: {
+        Args: {
+          _amount: number
+          _provider_reference: string
+          _transaction_id: string
+        }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
