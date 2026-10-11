@@ -9,7 +9,6 @@ import { FeeTable } from '@/components/InstitutionSections';
 import { useInstitutionContent } from '@/lib/institution-content';
 import { useSiteSettings, telHref } from '@/lib/site-settings';
 import { programs, admissionSteps, requiredDocs, eligibility, photos, facilityImages } from '@/lib/content';
-import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 import { submitAdmission, trackAdmission } from '@/lib/platform.functions';
 

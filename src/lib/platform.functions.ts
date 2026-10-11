@@ -116,7 +116,7 @@ const editSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('notice'), id: z.string().uuid().optional(), title: z.string().min(3).max(200), body: z.string().max(5000), category: z.string().min(1).max(50), file_url: z.string().url().optional() }),
   z.object({ kind: z.literal('book'), id: z.string().uuid().optional(), title: z.string().min(2).max(200), description: z.string().max(3000), details: z.string().max(5000).optional(), author: z.string().max(150).optional(), pages: z.number().int().min(0).max(5000).optional(), price: z.number().nonnegative(), cover_url: z.string().url().optional(), active: z.boolean() }),
   z.object({ kind: z.literal('content'), id: z.string().uuid().optional(), content_kind: contentKindEnum, title: z.string().trim().min(2).max(200), body: z.string().max(5000), image_url: z.string().url().optional(), detail: z.string().max(500).optional(), category: z.string().max(100).optional(), published: z.boolean(), sort_order: z.number().int().min(0).max(10000) }),
-  z.object({ kind: z.literal('settings'), values: z.record(z.string().max(60), z.string().max(500)) }),
+  z.object({ kind: z.literal('settings'), values: z.record(z.string().max(60), z.string().max(1500)) }),
   z.object({ kind: z.literal('delete'), target: z.enum(['notice', 'book', 'content', 'message']), id: z.string().uuid() }),
 ]);
 

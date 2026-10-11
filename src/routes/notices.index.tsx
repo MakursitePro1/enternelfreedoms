@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { Search, CalendarDays, ArrowRight, ChevronLeft, ChevronRight, Sparkles, Phone, Megaphone, BellRing } from 'lucide-react';
 import { Site, Heading } from '@/components/Site';
 import { supabase } from '@/integrations/supabase/client';
-import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 import { photos, facilityImages } from '@/lib/content';
 

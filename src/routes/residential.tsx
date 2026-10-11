@@ -5,7 +5,6 @@ import { Site, DemoNote } from '@/components/Site';
 import { StatsBar, MealTable, SafetyGrid, itemImage } from '@/components/InstitutionSections';
 import { useInstitutionContent, type InstitutionItem } from '@/lib/institution-content';
 import { dayTimeline, parentQuestions, facilityImages, isDemo } from '@/lib/content';
-import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/residential')({

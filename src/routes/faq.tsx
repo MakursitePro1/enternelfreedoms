@@ -9,7 +9,7 @@ import { useInstitutionContent } from '@/lib/institution-content';
 import { useSiteSettings, telHref } from '@/lib/site-settings';
 import { useLang } from '@/lib/i18n';
 import { faq as staticFaq, parentRules, prepareList, requiredDocs, facilityImages, photos } from '@/lib/content';
-import { seo, jsonLd } from '@/lib/seo';
+import { jsonLd } from '@/lib/seo';
 
 export const Route = createFileRoute('/faq')({
   head: (ctx) => ({ ...pageSeo(ctx, '/faq'), scripts: [jsonLd({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: staticFaq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) })] }),

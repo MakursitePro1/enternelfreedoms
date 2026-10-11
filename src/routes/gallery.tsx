@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { useInstitutionContent } from '@/lib/institution-content';
 import { galleryCategories, galleryPhotos, facilityImages } from '@/lib/content';
 import { useSiteSettings, youtubeEmbed } from '@/lib/site-settings';
-import { seo } from '@/lib/seo';
 
 export const Route = createFileRoute('/gallery')({
   head: (ctx) => pageSeo(ctx, '/gallery'),

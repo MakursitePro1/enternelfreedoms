@@ -5,7 +5,6 @@ import { Sparkles, ArrowRight, Phone, GraduationCap, HeartHandshake, BookOpenChe
 import { Site, Heading } from '@/components/Site';
 import { StatsBar, TeachersGrid, TeachersCarousel } from '@/components/InstitutionSections';
 import { photos, programs, facilityImages } from '@/lib/content';
-import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/teachers/')({

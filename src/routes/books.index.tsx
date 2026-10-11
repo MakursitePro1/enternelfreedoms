@@ -15,7 +15,6 @@ import hifzArt from '@/assets/book-hifz-art.jpg';
 import duaArt from '@/assets/book-dua-art.jpg';
 import { useCart } from '@/lib/cart';
 import { useSiteSettings } from '@/lib/site-settings';
-import { seo } from '@/lib/seo';
 import { OrderDetails } from '@/components/orders/OrderDetails';
 
 function SeeMoreClamp({ as = 'h3', to, className, children }: { as?: 'h3' | 'p'; to: string; className: string; children: React.ReactNode }) {

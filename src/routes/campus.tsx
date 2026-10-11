@@ -5,7 +5,6 @@ import { Site, Heading } from '@/components/Site';
 import { SafetyGrid, itemImage } from '@/components/InstitutionSections';
 import { useInstitutionContent } from '@/lib/institution-content';
 import { facilityImages } from '@/lib/content';
-import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/campus')({

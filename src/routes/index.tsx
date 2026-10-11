@@ -13,7 +13,7 @@ import { photos, programs, dayTimeline, whyCards, parentQuestions, facilityImage
 import { useInstitutionContent } from '@/lib/institution-content';
 import { useSiteSettings, youtubeEmbed } from '@/lib/site-settings';
 import { useLang } from '@/lib/i18n';
-import { seo, jsonLd, SITE_URL, SITE_NAME } from '@/lib/seo';
+import { jsonLd, SITE_URL, SITE_NAME } from '@/lib/seo';
 import { supabase } from '@/integrations/supabase/client';
 
 export const Route = createFileRoute('/')({

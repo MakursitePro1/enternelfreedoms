@@ -219,7 +219,7 @@ export function AdminWorkspace() {
               </div>
             </div>}
 
-            {tab === 'seo' && <AdminSeo />}
+            {tab === 'seo' && <AdminSeo settings={settings} uploading={uploading} pickImage={pickImage} onSave={(values, ok) => run({ kind: 'settings', values }, ok)} />}
 
             {tab === 'settings' && <Card className="max-w-3xl"><form onSubmit={async (e) => { e.preventDefault(); await run({ kind: 'settings', values: settings }, 'সেটিংস সংরক্ষণ হয়েছে। ওয়েবসাইট রিফ্রেশ করলে দেখা যাবে।'); }} className="grid gap-4 sm:grid-cols-2">{settingFields.map(([k, l]) => <label key={k} className="text-sm font-semibold text-primary">{l}<input value={settings[k] ?? ''} onChange={(e) => setSettings({ ...settings, [k]: e.target.value })} className={`${field} mt-1.5 font-normal`} /></label>)}<div className="sm:col-span-2"><Button type="submit">সেটিংস সংরক্ষণ</Button></div></form></Card>}
           </> : null}><Outlet /></AdminPageContext.Provider>

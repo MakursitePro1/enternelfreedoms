@@ -5,7 +5,6 @@ import { Target, Eye, BookOpen, Sparkles, Rocket, ArrowRight, Phone, Quote } fro
 import { Site, Heading, TextLink } from '@/components/Site';
 import { StatsBar, AchievementsGrid, TeachersCarousel } from '@/components/InstitutionSections';
 import { photos, whyCards, programs } from '@/lib/content';
-import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/about')({

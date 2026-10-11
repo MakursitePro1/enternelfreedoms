@@ -4,7 +4,6 @@ import { ArrowRight, ArrowUpRight, Clock, Users, GraduationCap, BookOpen, Sparkl
 import { Site } from '@/components/Site';
 import { InstitutionSections, StatsBar } from '@/components/InstitutionSections';
 import { programs, facilityImages } from '@/lib/content';
-import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/academics/')({
