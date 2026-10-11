@@ -1,14 +1,14 @@
+import { pageSeo } from '@/lib/seo-pages';
 import { usePrincipal } from '@/lib/principal';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { Sparkles, ArrowRight, Phone, GraduationCap, HeartHandshake, BookOpenCheck, ShieldCheck, Quote, Award } from 'lucide-react';
 import { Site, Heading } from '@/components/Site';
 import { StatsBar, TeachersGrid, TeachersCarousel } from '@/components/InstitutionSections';
 import { photos, programs, facilityImages } from '@/lib/content';
-import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/teachers/')({
-  head: () => seo('শিক্ষকমণ্ডলী', 'Eternal Freedom Institute Al Islamia-এর অভিজ্ঞ শিক্ষক ও কর্মীদের পরিচিতি—নাম, পদবি, যোগ্যতা, অভিজ্ঞতা ও বিভাগ।', '/teachers', 'মাদ্রাসা শিক্ষক, অভিজ্ঞ উস্তায'),
+  head: (ctx) => pageSeo(ctx, '/teachers'),
   component: Teachers,
 });
 

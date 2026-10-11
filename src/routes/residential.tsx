@@ -1,14 +1,14 @@
+import { pageSeo } from '@/lib/seo-pages';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowRight, BookOpen, Check, ChefHat, Croissant, Home, Layers3, Phone, ShieldCheck, Sparkles, UtensilsCrossed } from 'lucide-react';
 import { Site, DemoNote } from '@/components/Site';
 import { StatsBar, MealTable, SafetyGrid, itemImage } from '@/components/InstitutionSections';
 import { useInstitutionContent, type InstitutionItem } from '@/lib/institution-content';
 import { dayTimeline, parentQuestions, facilityImages, isDemo } from '@/lib/content';
-import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/residential')({
-  head: () => seo('আবাসিক জীবন, খাবার ও নিরাপত্তা', 'আবাসিক কক্ষ, তিন স্তরের বিছানা, খাবারের সাপ্তাহিক মেনু, রান্নাঘর ও বেকারি, দৈনিক রুটিন এবং শিক্ষার্থীর নিরাপত্তা ব্যবস্থা।', '/residential', 'আবাসিক মাদ্রাসা, ছাত্রাবাস, খাবার মেনু'),
+  head: (ctx) => pageSeo(ctx, '/residential'),
   component: Residential,
 });
 

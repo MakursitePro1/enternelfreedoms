@@ -1,3 +1,4 @@
+import { pageSeo } from '@/lib/seo-pages';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, X, PlayCircle, Images, Sparkles, ArrowRight, Phone, ZoomIn, GraduationCap, ShieldCheck, Home as HomeIcon, Camera, Clapperboard } from 'lucide-react';
@@ -7,10 +8,9 @@ import { Button } from '@/components/ui/button';
 import { useInstitutionContent } from '@/lib/institution-content';
 import { galleryCategories, galleryPhotos, facilityImages } from '@/lib/content';
 import { useSiteSettings, youtubeEmbed } from '@/lib/site-settings';
-import { seo } from '@/lib/seo';
 
 export const Route = createFileRoute('/gallery')({
-  head: () => seo('ফটো ও ভিডিও গ্যালারি', 'ক্যাম্পাস, শ্রেণিকক্ষ, কুরআন শিক্ষা, হিফজ, নাজেরা, কিতাব, আবাসিক জীবন, খাবার, খেলাধুলা, অনুষ্ঠান ও শিক্ষার্থীদের কার্যক্রমের ছবি ও ক্যাম্পাস ভিডিও।', '/gallery', 'মাদ্রাসা ছবি, ক্যাম্পাস ভিডিও'),
+  head: (ctx) => pageSeo(ctx, '/gallery'),
   component: Gallery,
 });
 

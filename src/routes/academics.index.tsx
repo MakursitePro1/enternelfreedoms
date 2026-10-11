@@ -1,13 +1,13 @@
+import { pageSeo } from '@/lib/seo-pages';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowRight, ArrowUpRight, Clock, Users, GraduationCap, BookOpen, Sparkles, Phone, Check, Layers3 } from 'lucide-react';
 import { Site } from '@/components/Site';
 import { InstitutionSections, StatsBar } from '@/components/InstitutionSections';
 import { programs, facilityImages } from '@/lib/content';
-import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/academics/')({
-  head: () => seo('শিক্ষা কার্যক্রম', 'সাধারণ শিক্ষা (প্লে–দশম/দাখিল), নূরানী, নাজেরা, হিফজ, কিতাব, স্পোকেন ইংলিশ, আইসিটি ও জীবনদক্ষতা—প্রতিটি বিভাগের বিস্তারিত।', '/academics', 'হিফজ বিভাগ, নূরানী, নাজেরা, কিতাব, স্পোকেন ইংলিশ'),
+  head: (ctx) => pageSeo(ctx, '/academics'),
   component: Academics,
 });
 

@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LanguageProvider } from "../lib/i18n";
 import { organizationLd } from "../lib/seo";
+import { fetchSeoOverrides } from "../lib/seo-pages";
 
 function NotFoundComponent() {
   return (
@@ -76,6 +77,10 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+  // Admin-edited SEO for public pages; page heads read it from this root match.
+  loader: async ({ context }) => ({
+    seo: await context.queryClient.fetchQuery({ queryKey: ["seo-overrides"], queryFn: fetchSeoOverrides, staleTime: 15_000 }).catch(() => ({})),
+  }),
   head: () => ({
     meta: [
       { charSet: "utf-8" },

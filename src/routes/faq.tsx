@@ -1,3 +1,4 @@
+import { pageSeo } from '@/lib/seo-pages';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { ChevronDown, ChevronRight, ShieldAlert, Backpack, FileCheck2, Sparkles, ArrowRight, Phone, GraduationCap, Home as HomeIcon, ShieldCheck, MessageCircleQuestion } from 'lucide-react';
@@ -8,10 +9,10 @@ import { useInstitutionContent } from '@/lib/institution-content';
 import { useSiteSettings, telHref } from '@/lib/site-settings';
 import { useLang } from '@/lib/i18n';
 import { faq as staticFaq, parentRules, prepareList, requiredDocs, facilityImages, photos } from '@/lib/content';
-import { seo, jsonLd } from '@/lib/seo';
+import { jsonLd } from '@/lib/seo';
 
 export const Route = createFileRoute('/faq')({
-  head: () => ({ ...seo('অভিভাবক নির্দেশিকা ও প্রশ্নোত্তর', 'ভর্তি, আবাসিক জীবন, প্রয়োজনীয় কাগজপত্র, নিয়মকানুন ও শিক্ষার্থীর প্রস্তুতি নিয়ে অভিভাবকদের জন্য নির্দেশিকা ও সচরাচর জিজ্ঞাসা।', '/faq', 'ভর্তি নিয়ম, আবাসিক নিয়ম, অভিভাবক প্রশ্ন'), scripts: [jsonLd({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: staticFaq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) })] }),
+  head: (ctx) => ({ ...pageSeo(ctx, '/faq'), scripts: [jsonLd({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: staticFaq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) })] }),
   component: Faq,
 });
 

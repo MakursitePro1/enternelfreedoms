@@ -1,3 +1,4 @@
+import { pageSeo } from '@/lib/seo-pages';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useState } from 'react';
 import { ArrowRight, CalendarDays, Camera, ChevronRight, Images, Trophy } from 'lucide-react';
@@ -7,10 +8,9 @@ import { Button } from '@/components/ui/button';
 import { useInstitutionContent } from '@/lib/institution-content';
 import { photos } from '@/lib/content';
 import { youtubeEmbed } from '@/lib/site-settings';
-import { seo } from '@/lib/seo';
 
 export const Route = createFileRoute('/activities/')({
-  head: () => seo('খবর, অনুষ্ঠান ও অর্জন', 'Eternal Freedom Institute Al Islamia-এর খবর, অনুষ্ঠান, কার্যক্রম ও অর্জন—ছবি ও বিস্তারিতসহ।', '/activities', 'মাদ্রাসা অনুষ্ঠান, অর্জন'),
+  head: (ctx) => pageSeo(ctx, '/activities'),
   component: Activities,
 });
 
