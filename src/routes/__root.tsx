@@ -15,6 +15,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { LanguageProvider } from "../lib/i18n";
 import { organizationLd } from "../lib/seo";
 import { fetchSeoOverrides } from "../lib/seo-pages";
+import { fetchIntegrationSettings, gtmNoscriptUrl } from "../lib/integrations";
 
 function NotFoundComponent() {
   return (
