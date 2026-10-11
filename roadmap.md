@@ -40,3 +40,4 @@
 - [x] Upgrade teacher/staff management and synchronize every public teacher surface instantly; verify signed-in edits, uploads and open public pages.
 - [x] Refine admin book editor with solid green styling and clickable premium responsive catalogue cards; verify signed-in interactions.
 - [x] Refine private login with a solid black form surface and one-screen layouts across devices; preserve authentication behavior and verify previews.
+- [x] Refine teacher/staff management with premium solid styling and responsive cards, filters and editing; verify authenticated previews without changing publishing behavior.
