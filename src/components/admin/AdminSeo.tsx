@@ -6,7 +6,7 @@ import {
   X, ImageIcon, Eye, EyeOff, XCircle, Sparkles, Pencil, TrendingUp,
 } from 'lucide-react';
 import { SITE_URL, SITE_NAME } from '@/lib/seo';
-import { SEO_PAGES, seoKey, resolvePageSeo, absoluteUrl, type SeoOverrides } from '@/lib/seo-pages';
+import { SEO_PAGES, seoKey, resolvePageSeo, type SeoOverrides } from '@/lib/seo-pages';
 
 type Props = {
   settings: Record<string, string>;
@@ -160,7 +160,7 @@ export function AdminSeo({ settings, uploading, pickImage, onSave }: Props) {
               return (
                 <button key={p.path} type="button" onClick={() => setPath(p.path)} className={`flex min-w-0 items-center gap-3 rounded-xl border p-2 text-start transition ${active ? 'border-primary bg-accent' : 'border-border bg-background hover:border-primary/50 hover:bg-secondary'}`}>
                   <div className="relative shrink-0">
-                    <img src={p.custom && p.draft.image !== p.image ? p.draft.image : p.preview} alt="" loading="lazy" className="size-14 rounded-lg object-cover" />
+                    <img src={p.draft.image !== p.image ? p.draft.image : p.preview} alt="" loading="lazy" className="size-14 rounded-lg object-cover" />
                     <span className="absolute -bottom-1.5 -right-1.5 grid size-6 place-items-center rounded-md border-2 border-background bg-primary text-gold"><I className="size-3" /></span>
                   </div>
                   <div className="min-w-0 flex-1">
@@ -315,4 +315,3 @@ export function AdminSeo({ settings, uploading, pickImage, onSave }: Props) {
   );
 }
 
-export { absoluteUrl };
