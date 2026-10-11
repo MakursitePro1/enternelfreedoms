@@ -17,7 +17,7 @@ import { jsonLd, SITE_URL, SITE_NAME } from '@/lib/seo';
 import { supabase } from '@/integrations/supabase/client';
 
 export const Route = createFileRoute('/')({
-  head: (ctx) => { const base = pageSeo(ctx, '/'); return { ...base, links: [{ rel: 'preload', as: 'image', href: photos[2], fetchPriority: 'high' }, ...(base.links ?? [])], scripts: [...(base.scripts ?? []), jsonLd({ '@context': 'https://schema.org', '@type': 'WebSite', name: SITE_NAME, url: SITE_URL, inLanguage: 'bn' })] }; },
+  head: (ctx) => { const base = pageSeo(ctx, '/'); return { ...base, links: [{ rel: 'preload', as: 'image', href: photos[2], fetchPriority: 'high' }, { rel: 'canonical', href: `${SITE_URL}/` }], scripts: [...(base.scripts ?? []), jsonLd({ '@context': 'https://schema.org', '@type': 'WebSite', name: SITE_NAME, url: SITE_URL, inLanguage: 'bn' })] }; },
   component: Home,
 });
 
