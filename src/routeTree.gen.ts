@@ -33,6 +33,7 @@ import { Route as NoticesIdRouteImport } from './routes/notices.$id'
 import { Route as TeachersIndexRouteImport } from './routes/teachers.index'
 import { Route as TeachersIdRouteImport } from './routes/teachers.$id'
 import { Route as EternelfreeadmingoPageAdmissionIdRouteImport } from './routes/Eternelfreeadmingo.$page_.$admissionId'
+import { Route as ApiPublicPaymentsGatewayRouteImport } from './routes/api.public.payments.$gateway'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -155,6 +156,12 @@ const EternelfreeadmingoPageAdmissionIdRoute =
     path: '/$page/$admissionId',
     getParentRoute: () => EternelfreeadmingoRoute,
   } as any)
+const ApiPublicPaymentsGatewayRoute =
+  ApiPublicPaymentsGatewayRouteImport.update({
+    id: '/api/public/payments/$gateway',
+    path: '/api/public/payments/$gateway',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -181,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/notices/': typeof NoticesIndexRoute
   '/teachers/': typeof TeachersIndexRoute
   '/Eternelfreeadmingo/$page/$admissionId': typeof EternelfreeadmingoPageAdmissionIdRoute
+  '/api/public/payments/$gateway': typeof ApiPublicPaymentsGatewayRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -206,6 +214,7 @@ export interface FileRoutesByTo {
   '/notices': typeof NoticesIndexRoute
   '/teachers': typeof TeachersIndexRoute
   '/Eternelfreeadmingo/$page/$admissionId': typeof EternelfreeadmingoPageAdmissionIdRoute
+  '/api/public/payments/$gateway': typeof ApiPublicPaymentsGatewayRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -233,6 +242,7 @@ export interface FileRoutesById {
   '/notices/': typeof NoticesIndexRoute
   '/teachers/': typeof TeachersIndexRoute
   '/Eternelfreeadmingo/$page_/$admissionId': typeof EternelfreeadmingoPageAdmissionIdRoute
+  '/api/public/payments/$gateway': typeof ApiPublicPaymentsGatewayRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -261,6 +271,7 @@ export interface FileRouteTypes {
     | '/notices/'
     | '/teachers/'
     | '/Eternelfreeadmingo/$page/$admissionId'
+    | '/api/public/payments/$gateway'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/notices'
     | '/teachers'
     | '/Eternelfreeadmingo/$page/$admissionId'
+    | '/api/public/payments/$gateway'
   id:
     | '__root__'
     | '/'
@@ -312,6 +324,7 @@ export interface FileRouteTypes {
     | '/notices/'
     | '/teachers/'
     | '/Eternelfreeadmingo/$page_/$admissionId'
+    | '/api/public/payments/$gateway'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -336,6 +349,7 @@ export interface RootRouteChildren {
   BooksIndexRoute: typeof BooksIndexRoute
   NoticesIndexRoute: typeof NoticesIndexRoute
   TeachersIndexRoute: typeof TeachersIndexRoute
+  ApiPublicPaymentsGatewayRoute: typeof ApiPublicPaymentsGatewayRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -508,6 +522,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EternelfreeadmingoPageAdmissionIdRouteImport
       parentRoute: typeof EternelfreeadmingoRoute
     }
+    '/api/public/payments/$gateway': {
+      id: '/api/public/payments/$gateway'
+      path: '/api/public/payments/$gateway'
+      fullPath: '/api/public/payments/$gateway'
+      preLoaderRoute: typeof ApiPublicPaymentsGatewayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -549,6 +570,7 @@ const rootRouteChildren: RootRouteChildren = {
   BooksIndexRoute: BooksIndexRoute,
   NoticesIndexRoute: NoticesIndexRoute,
   TeachersIndexRoute: TeachersIndexRoute,
+  ApiPublicPaymentsGatewayRoute: ApiPublicPaymentsGatewayRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

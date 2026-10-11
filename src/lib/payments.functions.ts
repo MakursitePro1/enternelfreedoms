@@ -10,7 +10,7 @@ export const getPaymentGateways = createServerFn({ method: 'GET' }).handler(asyn
     sslcommerz: Boolean(process.env['SSLCOMMERZ_STORE_ID'] && process.env['SSLCOMMERZ_STORE_PASSWORD']),
     aamarpay: Boolean(process.env['AAMARPAY_STORE_ID'] && process.env['AAMARPAY_SIGNATURE_KEY']),
   };
-  return readGateways(credentials);
+  return readGateways(credentials, { url: process.env['SUPABASE_URL'] || import.meta.env['VITE_SUPABASE_URL'], key: process.env['SUPABASE_PUBLISHABLE_KEY'] || import.meta.env['VITE_SUPABASE_PUBLISHABLE_KEY'] });
 });
 
 export const savePaymentGateway = createServerFn({ method: 'POST' })
