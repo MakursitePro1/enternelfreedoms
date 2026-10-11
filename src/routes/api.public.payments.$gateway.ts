@@ -9,7 +9,9 @@ async function callback(request: Request, gateway: string) {
   const length = Number(request.headers.get('content-length') ?? '0');
   if (length > 16000) return new Response('Too large', { status: 413 });
   const query = new URL(request.url).searchParams;
-  const fields = request.method === 'POST' ? new URLSearchParams((await request.text()).slice(0,16001)) : query;
+  const body = request.method === 'POST' ? await request.text() : '';
+  if (body.length > 16000) return new Response('Too large', { status: 413 });
+  const fields = request.method === 'POST' ? new URLSearchParams(body) : query;
   const transaction = fields.get(gateway === 'sslcommerz' ? 'tran_id' : 'mer_txnid') ?? '';
   const validation = fields.get('val_id') ?? '';
   if (!/^PAY-[a-f0-9]{24}$/.test(transaction) || validation.length > 200) return new Response('Invalid payment reference', { status: 400 });

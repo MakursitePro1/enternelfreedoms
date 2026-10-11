@@ -128,6 +128,7 @@ function Books() {
   const [trackingError, setTrackingError] = useState('');
   useEffect(() => { supabase.from('books').select('id,title,description,price,cover_url,slug,author,pages,details').eq('active', true).order('created_at', { ascending: true }).then(({ data }) => { setBooks((data ?? []) as Book[]); setLoading(false); }); }, []);
   useEffect(() => { if (search.cart) setOpen(true); }, [search.cart]);
+  useEffect(() => { const saved = sessionStorage.getItem('payment-order-reference'); if (saved) setTracking((current) => ({ ...current, reference: saved })); }, []);
    async function checkOrder(e: FormEvent) { e.preventDefault(); setTracked(undefined); setTrackingError(''); try { const found = await lookup({ data: tracking }); setTracked(found); if (!found) setTrackingError('এই নম্বরের সঙ্গে অর্ডার নম্বর মেলেনি।'); } catch { setTrackingError('অর্ডারের তথ্য পাওয়া যায়নি।'); } }
   const magic = books.find((book) => book.slug === 'magic-english');
   const catalogue = [

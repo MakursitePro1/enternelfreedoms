@@ -4,19 +4,18 @@ import { PAYMENT_PROVIDERS, type GatewayConfig } from './payment-gateways';
 
 type Credentials = { id: string | undefined; secret: string | undefined };
 type Customer = { customer_name: string; phone: string; address: string };
-export async function readGateways(credentials: { sslcommerz: boolean; aamarpay: boolean }, connection?: { url: string; key: string }) {
+export async function readGateways(credentials: { sslcommerz: boolean; aamarpay: boolean }, connection: { url: string; key: string }) {
   // The caller supplies server configuration; this helper never reads secrets at module scope.
-  const url = connection?.url ?? import.meta.env['VITE_SUPABASE_URL'];
-  const key = connection?.key ?? import.meta.env['VITE_SUPABASE_PUBLISHABLE_KEY'];
+  const { url, key } = connection;
   const db = createClient<Database>(url, key, { auth: { persistSession: false, autoRefreshToken: false }, global: { fetch: (input, init) => { const headers = new Headers(init?.headers); if (headers.get('Authorization') === `Bearer ${key}`) headers.delete('Authorization'); headers.set('apikey',key); return fetch(input, { ...init, headers }); } } });
   const [{ data, error }, { data: settings }] = await Promise.all([db.from('payment_gateways').select('*'), db.from('site_settings').select('key,value').in('key',['bkash','nagad'])]);
   if (error) throw new Error('পেমেন্ট পদ্ধতি পাওয়া যায়নি।');
   return PAYMENT_PROVIDERS.map((p): GatewayConfig => {
     const stored = data?.find((row) => row.id === p.id);
     const legacy = settings?.find((row) => row.key === p.id)?.value ?? '';
-    const account = stored?.account_number ?? legacy;
+    const account = (stored?.account_number ?? legacy).replace(/[০-৯]/g, (digit) => String('০১২৩৪৫৬৭৮৯'.indexOf(digit))).replace(/[\s-]/g, '');
     const credentialsReady = p.id === 'sslcommerz' ? credentials.sslcommerz : p.id === 'aamarpay' ? credentials.aamarpay : false;
-    const ready = p.kind === 'cod' || (p.kind === 'wallet' && /^01\d{9,11}$/.test(account)) || (p.kind === 'automatic' && credentialsReady);
+    const ready = p.kind === 'cod' || (p.kind === 'wallet' && /^01\d{9,11}$/.test(account) && !/^0170+$/.test(account)) || (p.kind === 'automatic' && credentialsReady);
     return { id: p.id, enabled: stored?.enabled ?? (p.kind === 'cod' || (p.id === 'bkash' || p.id === 'nagad') && ready), mode: (stored?.mode as GatewayConfig['mode']) ?? (p.kind === 'automatic' ? 'sandbox' : 'manual'), account_number: account, merchant_id: stored?.merchant_id ?? '', credentialsReady, ready };
   });
 }
