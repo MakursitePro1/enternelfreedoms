@@ -1,5 +1,6 @@
 import { seo, SITE_URL } from '@/lib/seo';
 import { photos, facilityImages } from '@/lib/content';
+import { integrationHead, type IntegrationValues } from '@/lib/integrations';
 
 export type SeoPageDefault = { path: string; name: string; title: string; description: string; keywords: string; image: string; preview: string };
 
@@ -61,11 +62,12 @@ type HeadCtx = { matches: readonly { loaderData?: unknown }[] };
 
 /** Builds the full head for a main public page, applying admin overrides loaded by the root route. */
 export function pageSeo(ctx: HeadCtx, path: string) {
-  const root = ctx.matches[0]?.loaderData as { seo?: SeoOverrides } | undefined;
+  const root = ctx.matches[0]?.loaderData as { seo?: SeoOverrides; integ?: IntegrationValues } | undefined;
   const p = resolvePageSeo(path, root?.seo ?? {});
   const base = seo(p.title, p.description, path, p.keywords);
   const image = absoluteUrl(p.image);
   const meta = base.meta.map((m) => ('name' in m && m.name === 'robots' && p.noindex ? { name: 'robots', content: 'noindex, nofollow' } : m));
+  const integ = integrationHead(root?.integ ?? {});
   return {
     ...base,
     meta: [
@@ -73,6 +75,8 @@ export function pageSeo(ctx: HeadCtx, path: string) {
       { property: 'og:image', content: image },
       { property: 'og:image:alt', content: p.title },
       { name: 'twitter:image', content: image },
+      ...integ.meta,
     ],
+    scripts: [...(base.scripts ?? []), ...integ.scripts],
   };
 }
