@@ -159,10 +159,9 @@ export function AdminSeo({ settings, uploading, pickImage, onSave }: Props) {
               const I = icons[p.path] ?? Globe;
               const active = p.path === path;
               return (
-                <button key={p.path} type="button" onClick={() => { setPath(p.path); if (window.innerWidth < 1280) editorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }} className={`flex min-w-0 items-center gap-3 rounded-xl border p-2 text-start transition ${active ? 'border-primary bg-accent' : 'border-border bg-background hover:border-primary/50 hover:bg-secondary'}`}>
-                  <div className="relative shrink-0">
-                    <img src={p.draft.image !== p.image ? p.draft.image : p.preview} alt="" loading="lazy" className="size-14 rounded-lg object-cover" />
-                    <span className="absolute -bottom-1.5 -right-1.5 grid size-6 place-items-center rounded-md border-2 border-background bg-primary text-gold"><I className="size-3" /></span>
+                <button key={p.path} type="button" onClick={() => { setPath(p.path); if (window.innerWidth < 1280) editorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }} className={`flex min-w-0 items-center gap-3 rounded-xl border p-2.5 text-start transition ${active ? 'border-primary bg-accent' : 'border-border bg-background hover:border-primary/50 hover:bg-secondary'}`}>
+                  <div className={`grid size-14 shrink-0 place-items-center rounded-xl border sm:size-16 ${active ? 'border-primary bg-primary text-gold' : 'border-border bg-accent text-primary'}`}>
+                    <I className="size-7 sm:size-8" strokeWidth={1.75} />
                   </div>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-bold text-primary">{p.name}</p>
