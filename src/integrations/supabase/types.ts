@@ -323,6 +323,14 @@ export type Database = {
         }
         Returns: boolean
       }
+      public_track_admission: {
+        Args: { _phone: string; _reference: string }
+        Returns: Json
+      }
+      public_track_order: {
+        Args: { _phone: string; _reference: string }
+        Returns: Json
+      }
     }
     Enums: {
       app_role: "admin" | "user"
