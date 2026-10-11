@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import {
   CheckCircle2, Globe, Search, FileCode2, Link2, Type, AlignLeft, KeyRound, Share2, ListTree, ExternalLink, Home, Landmark, GraduationCap,
@@ -73,6 +73,7 @@ export function AdminSeo({ settings, uploading, pickImage, onSave }: Props) {
   const [draft, setDraft] = useState<Draft>(() => draftFor('/', settings));
   const [kwInput, setKwInput] = useState('');
   const [saving, setSaving] = useState(false);
+  const editorRef = useRef<HTMLElement>(null);
 
   useEffect(() => { setDraft(draftFor(path, settings)); setKwInput(''); }, [path, settings]);
 
@@ -158,7 +159,7 @@ export function AdminSeo({ settings, uploading, pickImage, onSave }: Props) {
               const I = icons[p.path] ?? Globe;
               const active = p.path === path;
               return (
-                <button key={p.path} type="button" onClick={() => setPath(p.path)} className={`flex min-w-0 items-center gap-3 rounded-xl border p-2 text-start transition ${active ? 'border-primary bg-accent' : 'border-border bg-background hover:border-primary/50 hover:bg-secondary'}`}>
+                <button key={p.path} type="button" onClick={() => { setPath(p.path); if (window.innerWidth < 1280) editorRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }} className={`flex min-w-0 items-center gap-3 rounded-xl border p-2 text-start transition ${active ? 'border-primary bg-accent' : 'border-border bg-background hover:border-primary/50 hover:bg-secondary'}`}>
                   <div className="relative shrink-0">
                     <img src={p.draft.image !== p.image ? p.draft.image : p.preview} alt="" loading="lazy" className="size-14 rounded-lg object-cover" />
                     <span className="absolute -bottom-1.5 -right-1.5 grid size-6 place-items-center rounded-md border-2 border-background bg-primary text-gold"><I className="size-3" /></span>
@@ -176,7 +177,7 @@ export function AdminSeo({ settings, uploading, pickImage, onSave }: Props) {
         </aside>
 
         {/* Editor */}
-        <section className="min-w-0 space-y-5">
+        <section ref={editorRef} className="min-w-0 scroll-mt-20 space-y-5">
           <div className="overflow-hidden rounded-2xl border border-panel-dark-border bg-panel-dark shadow-elegant">
             <div className="flex flex-col gap-4 border-b border-panel-dark-border p-4 sm:flex-row sm:items-center sm:p-5">
               <div className="grid size-12 shrink-0 place-items-center rounded-2xl bg-gold text-primary"><Icon className="size-6" /></div>
