@@ -163,7 +163,7 @@ export function AdminWorkspace() {
       </aside>
       <div className={`transition-[padding] duration-300 ${collapsed ? 'lg:pl-[76px]' : 'lg:pl-[272px]'}`}>
         <AdminHeader title={heroes[tab][0]} page={page} data={data} onMenu={() => setMenuOpen(true)} onLogout={logout} onNavigate={(target, id) => {
-          if (id) void navigate({ to: '/Eternelfreeadmingo/$page_/$admissionId', params: { page: 'admissions', admissionId: id } });
+          if (id) void navigate({ to: '/Eternelfreeadmingo/$page/$admissionId', params: { page: 'admissions', admissionId: id } });
           else if (target in contentIcons) go('content', target as ContentKind);
           else go(target as Tab);
         }} />
