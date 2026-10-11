@@ -81,6 +81,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   // Admin-edited SEO for public pages; page heads read it from this root match.
   loader: async ({ context }) => ({
     seo: await context.queryClient.fetchQuery({ queryKey: ["seo-overrides"], queryFn: fetchSeoOverrides, staleTime: 15_000 }).catch(() => ({})),
+    integ: await context.queryClient.fetchQuery({ queryKey: ["integrations"], queryFn: fetchIntegrationSettings, staleTime: 15_000 }).catch(() => ({})),
   }),
   head: () => ({
     meta: [
@@ -133,10 +134,17 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const loaderData = Route.useLoaderData();
+  const gtmUrl = gtmNoscriptUrl((loaderData as { integ?: Record<string, string> } | undefined)?.integ ?? {});
 
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
+        {gtmUrl && (
+          <noscript>
+            <iframe src={gtmUrl} height="0" width="0" style={{ display: "none", visibility: "hidden" }} title="Google Tag Manager" />
+          </noscript>
+        )}
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
       </LanguageProvider>

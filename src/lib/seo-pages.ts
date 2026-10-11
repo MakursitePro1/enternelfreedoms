@@ -77,6 +77,6 @@ export function pageSeo(ctx: HeadCtx, path: string) {
       { name: 'twitter:image', content: image },
       ...integ.meta,
     ],
-    scripts: [...(base.scripts ?? []), ...integ.scripts],
+    scripts: integ.scripts,
   };
 }
