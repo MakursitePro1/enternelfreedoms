@@ -1,3 +1,4 @@
+import { pageSeo } from '@/lib/seo-pages';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useMemo, useState } from 'react';
 import { Search, CalendarDays, ArrowRight, ChevronLeft, ChevronRight, Sparkles, Phone, Megaphone, BellRing } from 'lucide-react';
@@ -8,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { photos, facilityImages } from '@/lib/content';
 
 export const Route = createFileRoute('/notices/')({
-  head: () => seo('নোটিশ বোর্ড', 'ভর্তি, পরীক্ষা, ছুটি, অভিভাবক সভা ও গুরুত্বপূর্ণ ঘোষণা—Eternal Freedom Institute Al Islamia-এর সর্বশেষ নোটিশ।', '/notices', 'মাদ্রাসা নোটিশ, ভর্তি বিজ্ঞপ্তি'),
+  head: (ctx) => pageSeo(ctx, '/notices'),
   component: Notices,
 });
 

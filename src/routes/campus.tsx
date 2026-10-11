@@ -1,3 +1,4 @@
+import { pageSeo } from '@/lib/seo-pages';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowRight, CheckCircle2, Images, MapPin, ShieldCheck } from 'lucide-react';
 import { Site, Heading } from '@/components/Site';
@@ -8,7 +9,7 @@ import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/campus')({
-  head: () => seo('ক্যাম্পাস ও সুবিধা', 'একাডেমিক ভবন, শ্রেণিকক্ষ, আবাসন, খেলার মাঠ, লাইব্রেরি, আইসিটি, চিকিৎসা, রান্নাঘর, বেকারি, পানি, লন্ড্রি ও সিসিটিভি—সব সুবিধা ছবিসহ।', '/campus', 'মাদ্রাসা ক্যাম্পাস, আবাসিক সুবিধা'),
+  head: (ctx) => pageSeo(ctx, '/campus'),
   component: Campus,
 });
 

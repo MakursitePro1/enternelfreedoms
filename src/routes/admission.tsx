@@ -1,3 +1,4 @@
+import { pageSeo } from '@/lib/seo-pages';
 import { AdmissionInfoBanner } from '@/components/AdmissionInfoBanner';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useEffect, useState, type FormEvent } from 'react';
@@ -13,7 +14,7 @@ import { Button } from '@/components/ui/button';
 import { submitAdmission, trackAdmission } from '@/lib/platform.functions';
 
 export const Route = createFileRoute('/admission')({
-  head: () => seo('অনলাইন ভর্তি', 'ভর্তির তথ্য, বিভাগ, যোগ্যতা, প্রয়োজনীয় কাগজপত্র, ফি তালিকা, অনলাইন আবেদন (ছবি ও কাগজ আপলোডসহ) ও আবেদনের অবস্থা।', '/admission', 'মাদ্রাসা ভর্তি, অনলাইন ভর্তি আবেদন, আবাসিক ভর্তি'),
+  head: (ctx) => pageSeo(ctx, '/admission'),
   component: Admission,
 });
 

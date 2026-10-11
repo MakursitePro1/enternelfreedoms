@@ -1,3 +1,4 @@
+import { pageSeo } from '@/lib/seo-pages';
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { useCallback, useEffect, useState, createElement, type FormEvent } from 'react';
 import { ShoppingBag, Plus, Minus, CheckCircle2, Truck, Wallet, ShieldCheck, Search, X, ArrowRight, BookOpen, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
@@ -46,7 +47,7 @@ function SeeMoreClamp({ as = 'h3', to, className, children }: { as?: 'h3' | 'p';
 
 export const Route = createFileRoute('/books/')({
   validateSearch: (s: Record<string, unknown>): { cart?: number } => (s['cart'] ? { cart: 1 } : {}),
-  head: () => seo('অনলাইন বইয়ের দোকান', 'Eternal Freedom প্রকাশনার বই দেখুন, বিস্তারিত পড়ুন এবং ক্যাশ অন ডেলিভারি, বিকাশ বা নগদে অর্ডার করুন।', '/books', 'বই কিনুন, বিকাশ নগদ অর্ডার, ম্যাজিক ইংলিশ বই'),
+  head: (ctx) => pageSeo(ctx, '/books'),
   component: Books,
 });
 
