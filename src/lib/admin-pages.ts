@@ -10,7 +10,7 @@ export const adminPages = {
 } as const;
 
 export type AdminPageKey = keyof typeof adminPages;
-export type AdminTab = 'overview' | 'admissions' | 'orders' | 'messages' | 'notices' | 'books' | 'content' | 'settings';
+export type AdminTab = 'overview' | 'admissions' | 'orders' | 'messages' | 'notices' | 'books' | 'content' | 'seo' | 'settings';
 
 export function adminPageHead(key: AdminPageKey) {
   return { meta: [...seo(`${adminPages[key]} — প্রশাসনিক ব্যবস্থাপনা`, `Eternal Freedom Institute Al Islamia-এর ${adminPages[key]} পরিচালনার অনুমোদিত পাতা।`).meta, { name: 'robots', content: 'noindex, nofollow' }] };
