@@ -1,6 +1,8 @@
 import { createServerFn } from '@tanstack/react-start';
 import { z } from 'zod';
 import { createClient } from '@supabase/supabase-js';
+import { getRequest } from '@tanstack/react-start/server';
+import { availableGateways, methodFor, type PaymentGatewayId } from '@/lib/payment-gateways';
 import type { Database } from '@/integrations/supabase/types';
 
 // Works on any host (Lovable, Vercel): only the public project address/key are needed; access is enforced by database rules.
@@ -61,10 +63,18 @@ export const submitContact = createServerFn({ method: 'POST' }).validator((data)
 });
 
 export const DELIVERY_ZONES = { inside: { label: 'ঢাকা সিটির ভিতরে', charge: 70 }, outside: { label: 'ঢাকা সিটির বাইরে', charge: 130 } } as const;
-const orderSchema = z.object({ customer_name: z.string().trim().min(2).max(120), phone: z.string().regex(/^01[0-9]{9}$/), address: z.string().trim().min(8).max(500), payment_method: z.enum(['ক্যাশ অন ডেলিভারি', 'বিকাশ', 'নগদ']), payment_reference: z.string().trim().max(100).optional(), delivery_zone: z.enum(['inside', 'outside']).optional(), items: z.array(z.object({ id: z.string().uuid(), quantity: z.number().int().min(1).max(20) })).min(1).max(30) });
+const orderSchema = z.object({ customer_name: z.string().trim().min(2).max(120), phone: z.string().regex(/^01[0-9]{9}$/), address: z.string().trim().min(8).max(500), payment_method: z.string().max(60), gateway_id: z.enum(['cod','bkash','nagad','rocket','upay','sslcommerz','aamarpay']).optional(), payment_reference: z.string().trim().max(100).optional(), delivery_zone: z.enum(['inside', 'outside']).optional(), items: z.array(z.object({ id: z.string().uuid(), quantity: z.number().int().min(1).max(20) })).min(1).max(30) });
 export const submitOrder = createServerFn({ method: 'POST' }).validator((data) => orderSchema.parse(data)).handler(async ({ data }) => {
   const db = dbClient();
-  if (data.payment_method !== 'ক্যাশ অন ডেলিভারি' && (!data.payment_reference || data.payment_reference.length < 5)) throw new Error('পেমেন্টের ট্রানজেকশন আইডি প্রয়োজন।');
+  const { readGateways, initiatePayment } = await import('@/lib/payments.server');
+  const gateways = await readGateways({ sslcommerz: Boolean(process.env['SSLCOMMERZ_STORE_ID'] && process.env['SSLCOMMERZ_STORE_PASSWORD']), aamarpay: Boolean(process.env['AAMARPAY_STORE_ID'] && process.env['AAMARPAY_SIGNATURE_KEY']) }, { url: process.env['SUPABASE_URL'] || import.meta.env['VITE_SUPABASE_URL'], key: process.env['SUPABASE_PUBLISHABLE_KEY'] || import.meta.env['VITE_SUPABASE_PUBLISHABLE_KEY'] });
+  const legacyId = data.payment_method === 'ক্যাশ অন ডেলিভারি' ? 'cod' : data.payment_method === 'বিকাশ' ? 'bkash' : data.payment_method === 'নগদ' ? 'nagad' : '';
+  const gatewayId = data.gateway_id ?? legacyId;
+  const gateway = availableGateways(gateways).find((g) => g.id === gatewayId);
+  if (!gateway) throw new Error('এই পেমেন্ট পদ্ধতি এখন চালু নেই। অন্য পদ্ধতি নির্বাচন করুন।');
+  const automatic = gateway.id === 'sslcommerz' || gateway.id === 'aamarpay';
+  if (automatic && gateway.mode !== 'live') throw new Error('এই গেটওয়ে এখন টেস্ট অবস্থায়; প্রকৃত অর্ডারে ব্যবহার করা যাবে না।');
+  if (!automatic && gateway.id !== 'cod' && (!data.payment_reference || data.payment_reference.length < 5)) throw new Error('পেমেন্টের ট্রানজেকশন আইডি প্রয়োজন।');
   const ids = data.items.map((x) => x.id);
   const { data: books, error: bookError } = await db.from('books').select('id,title,price,active').in('id', ids);
   if (bookError || !books || data.items.some((item) => !books.some((book) => book.id === item.id && book.active))) throw new Error('বইয়ের তথ্য পাওয়া যায়নি।');
@@ -73,9 +83,21 @@ export const submitOrder = createServerFn({ method: 'POST' }).validator((data) =
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0) + (zone?.charge ?? 0);
   const address = zone ? `[${zone.label} · ডেলিভারি ৳${zone.charge}] ${data.address}` : data.address;
   const reference = newRef('BK-');
-  const { error } = await db.from('orders').insert({ reference, customer_name: data.customer_name, phone: data.phone, address, items, total, payment_method: data.payment_method, payment_reference: data.payment_method === 'ক্যাশ অন ডেলিভারি' ? null : data.payment_reference ?? null });
+  const transaction = `PAY-${crypto.randomUUID().replaceAll('-','').slice(0,24)}`;
+  let redirectUrl: string | null = null;
+  if (automatic) {
+    const credentials = gateway.id === 'sslcommerz' ? { id: process.env['SSLCOMMERZ_STORE_ID'], secret: process.env['SSLCOMMERZ_STORE_PASSWORD'] } : { id: process.env['AAMARPAY_STORE_ID'], secret: process.env['AAMARPAY_SIGNATURE_KEY'] };
+    redirectUrl = await initiatePayment(gateway.id as 'sslcommerz' | 'aamarpay', 'live', credentials, transaction, total, data, new URL(getRequest().url).origin);
+  }
+  // Price, active books and configured payment method have all been independently validated above.
+  const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
+  const { error } = await supabaseAdmin.from('orders').insert({ reference, customer_name: data.customer_name, phone: data.phone, address, items, total, payment_method: methodFor(gateway.id as PaymentGatewayId), payment_reference: gateway.id === 'cod' ? null : automatic ? transaction : data.payment_reference ?? null });
   if (error) throw new Error('অর্ডার জমা দেওয়া যায়নি।');
-  return { reference };
+  if (automatic) {
+    const { error: attemptError } = await supabaseAdmin.from('payment_attempts').insert({ order_reference: reference, gateway: gateway.id, transaction_id: transaction, mode: 'live', amount: total });
+    if (attemptError) { await supabaseAdmin.from('orders').update({ status: 'বাতিল' }).eq('reference',reference); throw new Error('পেমেন্ট শুরু করা যায়নি। আবার চেষ্টা করুন।'); }
+  }
+  return { reference, redirectUrl };
 });
 
 export const trackOrder = createServerFn({ method: 'POST' }).validator((data) => z.object({ reference: z.string().trim().max(30), phone: z.string().regex(/^01[0-9]{9}$/) }).parse(data)).handler(async ({ data }) => {

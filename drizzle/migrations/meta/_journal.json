@@ -71,6 +71,13 @@
       "when": 1791687072809,
       "tag": "0009_hosting_independent_access",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1791690892629,
+      "tag": "0010_central_payment_gateway_controls",
+      "breakpoints": true
     }
   ]
 }

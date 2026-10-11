@@ -14,7 +14,8 @@ import adabArt from '@/assets/book-adab-art.jpg';
 import hifzArt from '@/assets/book-hifz-art.jpg';
 import duaArt from '@/assets/book-dua-art.jpg';
 import { useCart } from '@/lib/cart';
-import { useSiteSettings } from '@/lib/site-settings';
+import { PaymentMethods, usePaymentMethods } from '@/components/payments/PaymentMethods';
+import { methodFor, providerFor } from '@/lib/payment-gateways';
 import { OrderDetails } from '@/components/orders/OrderDetails';
 
 function SeeMoreClamp({ as = 'h3', to, className, children }: { as?: 'h3' | 'p'; to: string; className: string; children: React.ReactNode }) {
@@ -51,7 +52,7 @@ export const Route = createFileRoute('/books/')({
 });
 
 export type Book = { id: string; title: string; description: string; price: number; cover_url: string | null; slug: string | null; author: string | null; pages: number | null; details: string | null };
-type Method = 'ক্যাশ অন ডেলিভারি' | 'বিকাশ' | 'নগদ';
+type Method = string;
 
 export function coverFor(b: Book, k: number) { return b.cover_url ?? pick(bookCovers, k); }
 
@@ -67,7 +68,9 @@ const PAGE_SIZE = 4;
 
 export function CartDrawer({ books, onClose }: { books: Book[]; onClose: () => void }) {
   const { cart, change, clear } = useCart();
-  const s = useSiteSettings();
+  const { methods } = usePaymentMethods();
+  const [gatewayId, setGatewayId] = useState('cod');
+  useEffect(() => { if (methods.length && !methods.some((g) => g.id === gatewayId)) setGatewayId(methods[0]?.id ?? ''); }, [methods, gatewayId]);
   const order = useServerFn(submitOrder);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -78,9 +81,9 @@ export function CartDrawer({ books, onClose }: { books: Book[]; onClose: () => v
   async function checkout(e: FormEvent) {
     e.preventDefault(); setError('');
     if (!/^01\d{9}$/.test(form.phone)) { setError('১১ সংখ্যার সঠিক মোবাইল নম্বর দিন।'); return; }
-    if (form.payment_method !== 'ক্যাশ অন ডেলিভারি' && form.payment_reference.trim().length < 5) { setError('পেমেন্টের ট্রানজেকশন আইডি দিন।'); return; }
+    if (providerFor(gatewayId)?.kind === 'wallet' && form.payment_reference.trim().length < 5) { setError('পেমেন্টের ট্রানজেকশন আইডি দিন।'); return; }
     setBusy(true);
-    try { const r = await order({ data: { ...form, payment_reference: form.payment_reference || undefined, items: selected.map((b) => ({ id: b.id, quantity: cart[b.id] ?? 0 })) } }); setReference(r.reference); clear(); }
+    try { const r = await order({ data: { ...form, gateway_id: gatewayId as 'cod' | 'bkash' | 'nagad' | 'rocket' | 'upay' | 'sslcommerz' | 'aamarpay', payment_method: methodFor(gatewayId), payment_reference: form.payment_reference || undefined, items: selected.map((b) => ({ id: b.id, quantity: cart[b.id] ?? 0 })) } }); setReference(r.reference); clear(); if (r.redirectUrl) { sessionStorage.setItem('payment-order-reference', r.reference); window.location.assign(r.redirectUrl); } }
     catch (err) { setError(err instanceof Error ? err.message : 'অর্ডার জমা দেওয়া যায়নি।'); }
     finally { setBusy(false); }
   }
@@ -100,21 +103,9 @@ export function CartDrawer({ books, onClose }: { books: Book[]; onClose: () => v
             <input required aria-label="মোবাইল নম্বর" type="tel" placeholder="মোবাইল নম্বর (01XXXXXXXXX)" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={input} />
             <textarea required aria-label="ঠিকানা" placeholder="সম্পূর্ণ ঠিকানা (গ্রাম, থানা, জেলা)" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} className={`${input} min-h-24`} />
             <h3 className="pt-2 font-semibold text-primary">পেমেন্ট পদ্ধতি</h3>
-            <div className="grid grid-cols-3 gap-2">{(['ক্যাশ অন ডেলিভারি', 'বিকাশ', 'নগদ'] as Method[]).map((m) => <button key={m} type="button" onClick={() => setForm({ ...form, payment_method: m })} className={`rounded-xl border-2 px-2 py-3 text-xs font-semibold ${form.payment_method === m ? 'border-primary bg-accent text-primary' : 'border-border text-muted-foreground'}`}>{m}</button>)}</div>
-            {form.payment_method !== 'ক্যাশ অন ডেলিভারি' && (
-              <div className="rounded-xl bg-accent p-4 text-sm leading-7 text-primary">
-                <p className="font-semibold">{form.payment_method} দিয়ে পেমেন্টের ধাপ:</p>
-                <ol className="mt-1 list-decimal ps-5">
-                  <li>{form.payment_method} অ্যাপ থেকে “Send Money” নির্বাচন করুন</li>
-                  <li>নম্বর: <strong className="select-all">{form.payment_method === 'বিকাশ' ? s.bkash : s.nagad}</strong></li>
-                  <li>পরিমাণ: <strong>৳ {total.toLocaleString('bn-BD')}</strong></li>
-                  <li>প্রাপ্ত ট্রানজেকশন আইডি নিচে লিখুন</li>
-                </ol>
-                <input required aria-label="ট্রানজেকশন আইডি" placeholder="ট্রানজেকশন আইডি (TrxID)" value={form.payment_reference} onChange={(e) => setForm({ ...form, payment_reference: e.target.value })} className="mt-3 w-full rounded-lg bg-background px-4 py-3 outline-none focus:ring-2 focus:ring-ring" />
-              </div>
-            )}
-            {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
-            <Button type="submit" size="lg" disabled={busy} className="w-full">{busy ? 'জমা হচ্ছে...' : 'অর্ডার নিশ্চিত করুন'}</Button>
+            <PaymentMethods selected={gatewayId} onSelect={(id) => { setGatewayId(id); setForm({ ...form, payment_reference: '' }); }} reference={form.payment_reference} onReference={(payment_reference) => setForm({ ...form, payment_reference })} total={total} />
+{error && <p role="alert" className="text-sm text-destructive">{error}</p>}
+            <Button type="submit" size="lg" disabled={busy || !methods.some((g) => g.id === gatewayId)} className="w-full">{busy ? 'জমা হচ্ছে...' : 'অর্ডার নিশ্চিত করুন'}</Button>
           </form>
         </>) : <div className="mt-16 text-center text-muted-foreground"><ShoppingBag className="mx-auto size-12 text-gold" /><p className="mt-4">কার্ট খালি। পছন্দের বই কার্টে রাখুন।</p></div>}
       </aside>
@@ -137,6 +128,7 @@ function Books() {
   const [trackingError, setTrackingError] = useState('');
   useEffect(() => { supabase.from('books').select('id,title,description,price,cover_url,slug,author,pages,details').eq('active', true).order('created_at', { ascending: true }).then(({ data }) => { setBooks((data ?? []) as Book[]); setLoading(false); }); }, []);
   useEffect(() => { if (search.cart) setOpen(true); }, [search.cart]);
+  useEffect(() => { const saved = sessionStorage.getItem('payment-order-reference'); if (saved) setTracking((current) => ({ ...current, reference: saved })); }, []);
    async function checkOrder(e: FormEvent) { e.preventDefault(); setTracked(undefined); setTrackingError(''); try { const found = await lookup({ data: tracking }); setTracked(found); if (!found) setTrackingError('এই নম্বরের সঙ্গে অর্ডার নম্বর মেলেনি।'); } catch { setTrackingError('অর্ডারের তথ্য পাওয়া যায়নি।'); } }
   const magic = books.find((book) => book.slug === 'magic-english');
   const catalogue = [

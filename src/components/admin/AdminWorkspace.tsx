@@ -21,10 +21,11 @@ import { AdminAuth, ALIVE_KEY, REMEMBER_KEY } from '@/components/admin/AdminAuth
 import { Menu, X, Search, ExternalLink, Users, Images, Video, Trophy, CalendarDays, MessageCircleHeart, Building2, Utensils, BarChart3, ShieldCheck, Banknote, HelpCircle, BookMarked, Newspaper, PanelLeftClose, PanelLeftOpen, Globe, Blocks } from 'lucide-react';
 import { AdminSeo } from './AdminSeo';
 import { AdminIntegrations } from './AdminIntegrations';
+import { AdminPayments } from './AdminPayments';
 
 type Data = Awaited<ReturnType<typeof getAdminData>>;
 type Tab = AdminTab;
-const tabs: [Tab, string, typeof LayoutDashboard][] = [['overview', 'সারসংক্ষেপ', LayoutDashboard], ['admissions', 'ভর্তি আবেদন', GraduationCap], ['orders', 'বইয়ের অর্ডার', ShoppingBag], ['messages', 'বার্তা', MessageSquare], ['notices', 'নোটিশ', Megaphone], ['books', 'বই', BookOpen], ['content', 'ওয়েবসাইটের তথ্য', Layers], ['seo', 'SEO', Globe], ['integrations', 'ইন্টিগ্রেশন', Blocks], ['settings', 'সেটিংস', Settings]];
+const tabs: [Tab, string, typeof LayoutDashboard][] = [['overview', 'সারসংক্ষেপ', LayoutDashboard], ['admissions', 'ভর্তি আবেদন', GraduationCap], ['orders', 'বইয়ের অর্ডার', ShoppingBag], ['messages', 'বার্তা', MessageSquare], ['notices', 'নোটিশ', Megaphone], ['books', 'বই', BookOpen], ['content', 'ওয়েবসাইটের তথ্য', Layers], ['seo', 'SEO', Globe], ['integrations', 'ইন্টিগ্রেশন', Blocks], ['payments', 'পেমেন্ট গেটওয়ে', Banknote], ['settings', 'সেটিংস', Settings]];
 const emptyContent = { id: '', title: '', body: '', image_url: '', detail: '', category: '', published: true, sort_order: 0 };
 const field = 'min-w-0 w-full bg-secondary px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-ring';
 
@@ -37,7 +38,7 @@ export function AdminWorkspace() {
   const page = segments[1] ?? 'overview';
   const admissionId = page === 'admissions' ? segments[2] : undefined;
   const contentPage = contentKinds.find((item) => item.key === page);
-  const tab: Tab = contentPage ? 'content' : (['overview', 'admissions', 'orders', 'messages', 'notices', 'books', 'seo', 'integrations', 'settings'].includes(page) ? page as Tab : 'overview');
+  const tab: Tab = contentPage ? 'content' : (['overview', 'admissions', 'orders', 'messages', 'notices', 'books', 'seo', 'integrations', 'payments', 'settings'].includes(page) ? page as Tab : 'overview');
   const kind: ContentKind = contentPage?.key ?? 'teacher';
   const [session, setSession] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -105,6 +106,7 @@ export function AdminWorkspace() {
     content: [kindInfo.label, `ওয়েবসাইটে দেখানো ${kindInfo.label} যোগ, সম্পাদনা ও লুকান।`],
     seo: ['সার্চ ইঞ্জিন অপটিমাইজেশন (SEO)', 'সব পাবলিক পেজের SEO অবস্থা, স্কোর ও সার্চ ইঞ্জিন সংযোগ।'],
     integrations: ['ইন্টিগ্রেশন', 'Google Analytics, Tag Manager, Meta Pixel, Pinterest, Search Console ও আরও প্লাটফর্ম সংযোগ।'],
+    payments: ['পেমেন্ট গেটওয়ে', 'বইয়ের পেমেন্ট পদ্ধতি, মার্চেন্ট সংযোগ ও পেমেন্ট যাচাই নিয়ন্ত্রণ।'],
     settings: ['ওয়েবসাইট সেটিংস', 'ফোন, ইমেইল, ঠিকানা, পেমেন্ট নম্বর ও সামাজিক লিংক।'],
   };
   const go = (t: Tab, k?: ContentKind) => {
@@ -149,6 +151,7 @@ export function AdminWorkspace() {
           <div>{!collapsed && <p className="px-3 pb-1.5 text-[10.5px] font-bold uppercase tracking-wider text-gold">সিস্টেম</p>}
             <button type="button" title="SEO" onClick={() => go('seo')} className={navBtn(tab === 'seo')}><Globe className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">SEO</span>}</button>
             <button type="button" title="ইন্টিগ্রেশন" onClick={() => go('integrations')} className={navBtn(tab === 'integrations')}><Blocks className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">ইন্টিগ্রেশন</span>}</button>
+            <Button type="button" variant="ghost" title="পেমেন্ট গেটওয়ে" onClick={() => go('payments')} className={navBtn(tab === 'payments')}><Banknote className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">পেমেন্ট গেটওয়ে</span>}</Button>
             <button type="button" title="সেটিংস" onClick={() => go('settings')} className={navBtn(tab === 'settings')}><Settings className="size-4 shrink-0" />{!collapsed && <span className="flex-1 text-start">সেটিংস</span>}</button>
           </div>
         </nav>
@@ -225,6 +228,7 @@ export function AdminWorkspace() {
             {tab === 'seo' && <AdminSeo settings={settings} uploading={uploading} pickImage={pickImage} onSave={(values, ok) => run({ kind: 'settings', values }, ok)} />}
 
             {tab === 'integrations' && <AdminIntegrations settings={settings} onSave={(values, ok) => run({ kind: 'settings', values }, ok)} />}
+            {tab === 'payments' && <AdminPayments />}
 
             {tab === 'settings' && <Card className="max-w-3xl"><form onSubmit={async (e) => { e.preventDefault(); await run({ kind: 'settings', values: settings }, 'সেটিংস সংরক্ষণ হয়েছে। ওয়েবসাইট রিফ্রেশ করলে দেখা যাবে।'); }} className="grid gap-4 sm:grid-cols-2">{settingFields.map(([k, l]) => <label key={k} className="text-sm font-semibold text-primary">{l}<input value={settings[k] ?? ''} onChange={(e) => setSettings({ ...settings, [k]: e.target.value })} className={`${field} mt-1.5 font-normal`} /></label>)}<div className="sm:col-span-2"><Button type="submit">সেটিংস সংরক্ষণ</Button></div></form></Card>}
           </> : null}><Outlet /></AdminPageContext.Provider>
