@@ -31,7 +31,43 @@
 
 /* Teacher workspace sizing follows its available width, including the sidebar. */
 .admin-teachers { container-type: inline-size; }
-.teacher-editor { container-type: inline-size; }
+.teacher-editor {
+  container-type: inline-size;
+  background: var(--panel-green);
+  color: var(--panel-green-foreground);
+  --border: var(--panel-green-border);
+}
+.teacher-editor > div:first-child { padding: 1rem; }
+.teacher-editor > div:first-child h2 { font-size: 1rem; line-height: 1.5; }
+.teacher-editor [role="tablist"] { background: var(--panel-green-soft); border-color: var(--panel-green-border); }
+.teacher-editor [role="tab"] { height: 3rem; color: var(--panel-green-muted); border-color: var(--panel-green-border); background: var(--panel-green-soft); }
+.teacher-editor [role="tab"][aria-selected="true"] { background: var(--panel-green); color: var(--gold-light); border-color: var(--gold); }
+.teacher-editor fieldset { padding: 1rem; }
+.teacher-editor [role="tabpanel"] > :not(:last-child) { margin-bottom: .75rem; }
+.teacher-editor [role="tabpanel"] > :last-child { margin-bottom: 0; }
+.teacher-editor [role="tabpanel"] > * { margin-top: 0; }
+.teacher-editor [role="tabpanel"] h3 { padding-top: .25rem; padding-bottom: .5rem; }
+.teacher-editor fieldset .text-primary { color: var(--gold-light); }
+.teacher-editor fieldset .text-muted-foreground { color: var(--panel-green-muted); }
+.teacher-editor fieldset input:not([type="checkbox"]),
+.teacher-editor fieldset textarea { background: var(--card); color: var(--card-foreground); border-color: var(--panel-green-border); padding: .5rem .75rem; margin-top: .375rem; font-size: .8125rem; line-height: 1.5rem; }
+.teacher-editor fieldset .bg-secondary { background: var(--panel-green-soft); border-color: var(--panel-green-border); }
+.teacher-editor fieldset [role="tabpanel"] .bg-secondary .text-primary { color: var(--gold-light); }
+.teacher-editor fieldset [role="tabpanel"] button { color: var(--primary); }
+.teacher-editor fieldset [role="tabpanel"] button[data-variant="ghost"] { color: var(--panel-green-foreground); }
+.teacher-editor > div:last-child { padding: .75rem 1rem; background: var(--panel-green-soft); border-color: var(--panel-green-border); }
+.teacher-editor > div:last-child button:first-child { color: var(--panel-green-foreground); }
+.teacher-editor > div:last-child button[type="submit"] { background: var(--gold); color: var(--primary); height: 2.5rem; }
+.teacher-editor > div:last-child button[type="submit"]:hover { background: var(--gold-light); }
+.teacher-card-grid article > div:first-child { background: var(--primary); border-color: var(--primary-raised); padding: .375rem .75rem; }
+.teacher-card-grid article > div:first-child .text-primary { color: var(--gold-light); }
+.teacher-card-grid article > div:first-child .text-muted-foreground { color: var(--panel-green-muted); }
+.teacher-card-grid article > div:nth-child(2) { padding: .75rem; gap: .625rem; }
+.teacher-card-grid article > div:nth-child(2) h3 { font-size: .8125rem; line-height: 1.375rem; }
+.teacher-card-grid article > div:nth-child(2) p { margin-top: .25rem; font-size: .6875rem; line-height: 1.125rem; }
+.teacher-card-grid article > div:nth-child(3):not(:last-child) { margin: 0 .75rem .625rem; padding-top: .5rem; font-size: .6875rem; line-height: 1.25rem; }
+.teacher-card-grid article > div:last-child { padding: .5rem .75rem; }
+.teacher-card-grid article > div:last-child button { height: 2rem; }
 @container (max-width: 400px) {
   .teacher-editor [role="tab"] { flex-direction: column; gap: .25rem; font-size: .6875rem; }
 }
