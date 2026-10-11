@@ -10,7 +10,7 @@ import { youtubeEmbed } from '@/lib/site-settings';
 import { seo } from '@/lib/seo';
 
 export const Route = createFileRoute('/activities/')({
-  head: () => seo('খবর, অনুষ্ঠান ও অর্জন', 'Eternal Freedom Institute Al Islamia-এর খবর, অনুষ্ঠান, কার্যক্রম ও অর্জন—ছবি ও বিস্তারিতসহ।'),
+  head: () => seo('খবর, অনুষ্ঠান ও অর্জন', 'Eternal Freedom Institute Al Islamia-এর খবর, অনুষ্ঠান, কার্যক্রম ও অর্জন—ছবি ও বিস্তারিতসহ।', '/activities', 'মাদ্রাসা অনুষ্ঠান, অর্জন'),
   component: Activities,
 });
 

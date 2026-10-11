@@ -8,7 +8,7 @@ import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/teachers/')({
-  head: () => seo('শিক্ষকমণ্ডলী', 'Eternal Freedom Institute Al Islamia-এর অভিজ্ঞ শিক্ষক ও কর্মীদের পরিচিতি—নাম, পদবি, যোগ্যতা, অভিজ্ঞতা ও বিভাগ।'),
+  head: () => seo('শিক্ষকমণ্ডলী', 'Eternal Freedom Institute Al Islamia-এর অভিজ্ঞ শিক্ষক ও কর্মীদের পরিচিতি—নাম, পদবি, যোগ্যতা, অভিজ্ঞতা ও বিভাগ।', '/teachers', 'মাদ্রাসা শিক্ষক, অভিজ্ঞ উস্তায'),
   component: Teachers,
 });
 

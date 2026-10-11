@@ -7,7 +7,7 @@ import { seo } from '@/lib/seo';
 import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/notices/$id')({
-  head: () => seo('নোটিশের বিস্তারিত', 'Eternal Freedom Institute Al Islamia-এর প্রকাশিত নোটিশের পূর্ণ বিবরণ।'),
+  head: () => seo('নোটিশের বিস্তারিত', 'Eternal Freedom Institute Al Islamia-এর প্রকাশিত নোটিশের পূর্ণ বিবরণ।', '/notices'),
   component: NoticeDetail,
 });
 
