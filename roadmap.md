@@ -12,6 +12,7 @@
 - [x] Admin dashboard: summary, messages, settings, all content kinds, image upload
 - [x] Verify all pages at 390/768/1280 and real flows (admin signed-in view unverified: no admin account exists yet)
 - [ ] Enable live online payment after the institution supplies its merchant account credentials (blocked: credentials).
+- [x] Make the English/Bengali switch translate public pages, forms, published content and admin interface; persist selection and verify public details, signed-in admin pages, four-step admissions and mobile preview. Private submitted names/addresses remain original; new published text falls back to the original when the free translation source is unavailable.
 - [x] Replace the admin header with premium icon navigation and instant authorized page/content search; verify signed-in results, navigation, empty/close states and 360–1280px screen sizes.
 - [x] Add a private payment gateway menu, central checkout controls and independently validated payment callbacks; verify signed-in controls, responsive previews and COD order tracking. Live provider payments remain blocked by merchant credentials above.
 - [x] Polish all existing pages with stronger premium surfaces and consistent small-screen spacing; verify phone, tablet and desktop previews without changing content or flows.

@@ -42,10 +42,10 @@ function LanguageSwitch({ compact = false }: { compact?: boolean }) {
     <div className={`flex items-center gap-1 ${compact ? '' : 'rounded-md bg-primary-foreground/10 p-0.5'}`} role="group" aria-label="ভাষা নির্বাচন">
       <Globe className="mx-1 size-3.5 opacity-70" aria-hidden />
       {languages.map((l) => (
-        <button key={l.key} type="button" onClick={() => setLang(l.key)} aria-pressed={lang === l.key}
-          className={`rounded px-2 py-0.5 text-xs transition-colors ${lang === l.key ? 'bg-gold text-primary font-semibold' : 'hover:bg-primary-foreground/15'}`}>
+        <Button key={l.key} type="button" variant="ghost" data-no-translate onClick={() => setLang(l.key)} aria-pressed={lang === l.key}
+          className={`h-auto rounded px-2 py-0.5 text-xs transition-colors ${lang === l.key ? 'bg-gold text-primary font-semibold' : 'hover:bg-primary-foreground/15'}`}>
           {l.label}
-        </button>
+        </Button>
       ))}
     </div>
   );

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import type { getAdminData } from '@/lib/platform.functions';
 import type { AdminTab } from '@/lib/admin-pages';
 import type { ContentKind } from '@/lib/institution-content';
+import { useLang } from '@/lib/i18n';
 
 type Data = Awaited<ReturnType<typeof getAdminData>>;
 const number = (n: number) => n.toLocaleString('bn-BD');
@@ -12,6 +13,9 @@ const money = (n: number) => `৳ ${number(n)}`;
 const date = (d: string) => new Date(d).toLocaleDateString('bn-BD', { day: 'numeric', month: 'short' });
 
 export function AdminOverview({ data, go, refresh }: { data: Data; go: (tab: AdminTab, kind?: ContentKind) => void; refresh: () => Promise<void> }) {
+  const { lang } = useLang();
+  const number = (n: number) => n.toLocaleString(lang === 'en' ? 'en-US' : 'bn-BD');
+  const money = (n: number) => `৳ ${number(n)}`;
   const [days, setDays] = useState('30');
   const [refreshing, setRefreshing] = useState(false);
   const summary = useMemo(() => {
@@ -27,10 +31,10 @@ export function AdminOverview({ data, go, refresh }: { data: Data; go: (tab: Adm
     const chart = Array.from({ length: 6 }, (_, i) => {
       const month = new Date(now.getFullYear(), now.getMonth() - 5 + i, 1);
       const inMonth = (s: string) => { const d = new Date(s); return d.getFullYear() === month.getFullYear() && d.getMonth() === month.getMonth(); };
-      return { month: month.toLocaleDateString('bn-BD', { month: 'short' }), admissions: data.admissions.filter((a) => inMonth(a.created_at)).length, orders: data.orders.filter((o) => inMonth(o.created_at)).length };
+      return { month: month.toLocaleDateString(lang === 'en' ? 'en-US' : 'bn-BD', { month: 'short' }), admissions: data.admissions.filter((a) => inMonth(a.created_at)).length, orders: data.orders.filter((o) => inMonth(o.created_at)).length };
     });
     return { admissions, orders, messages, completed, chart, completedTotal: completed.reduce((sum, o) => sum + Number(o.total), 0), periodTotal: orders.filter((o) => o.status === 'সম্পন্ন').reduce((sum, o) => sum + Number(o.total), 0) };
-  }, [data, days]);
+  }, [data, days, lang]);
   const pending = { admissions: data.admissions.filter((a) => a.status === 'নতুন').length, orders: data.orders.filter((o) => o.status === 'নতুন').length, messages: data.messages.filter((m) => m.status === 'নতুন').length };
   const metrics = [
     { label: 'মোট ভর্তি আবেদন', value: number(data.admissions.length), detail: `নির্বাচিত সময়ে ${number(summary.admissions.length)}টি আবেদন`, icon: GraduationCap, tab: 'admissions' as const },
