@@ -73,7 +73,7 @@ export function Site({ children }: { children: ReactNode }) {
           <div className="flex flex-wrap items-center gap-x-5 gap-y-1 opacity-90">
             <a href={telHref(s.phone)} className="flex items-center gap-1.5 hover:text-gold-light"><Phone className="size-3.5 text-gold-light" />{s.phone}</a>
             <a href={`mailto:${s.email}`} className="hidden items-center gap-1.5 hover:text-gold-light sm:flex"><Mail className="size-3.5 text-gold-light" />{s.email}</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=24.4569854,90.5514883" target="_blank" rel="noreferrer" aria-label="ম্যাপে প্রতিষ্ঠানের অবস্থান দেখুন" className="hidden items-center gap-1.5 hover:text-gold-light md:flex"><MapPin className="size-3.5 text-gold-light" />{s.address}</a>
+            <a href="https://maps.app.goo.gl/ajfkoA4g1ybDBJG8A" target="_blank" rel="noreferrer" aria-label="ম্যাপে প্রতিষ্ঠানের অবস্থান দেখুন" className="hidden items-center gap-1.5 hover:text-gold-light md:flex"><MapPin className="size-3.5 text-gold-light" />{s.address}</a>
           </div>
           <LanguageSwitch />
         </div>
@@ -171,7 +171,7 @@ export function Site({ children }: { children: ReactNode }) {
               <a href={telHref(s.phone)} className="flex gap-2 hover:text-gold-light"><Phone className="mt-0.5 size-4 shrink-0 text-gold-light" />{s.phone}{s.phone2 ? `, ${s.phone2}` : ''}</a>
               <a href={`mailto:${s.email}`} className="flex gap-2 break-all hover:text-gold-light"><Mail className="mt-0.5 size-4 shrink-0 text-gold-light" />{s.email}</a>
               <p className="flex gap-2"><Clock className="mt-0.5 size-4 shrink-0 text-gold-light" />{s.office_hours}</p>
-              <a href="https://www.google.com/maps/place/Eternal+Freedom+Institute+Al+Islamia/@24.4569854,90.5489134,880m/data=!3m2!1e3!4b1!4m6!3m5!1s0x3756619166939f13:0xf7a04cb7cd46f8de!8m2!3d24.4569854!4d90.5514883!16s%2Fg%2F11vdtqt29c" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 font-semibold text-gold-light">গুগল ম্যাপে দেখুন <ArrowUpRight className="size-3.5" /></a>
+              <a href="https://maps.app.goo.gl/ajfkoA4g1ybDBJG8A" target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 font-semibold text-gold-light">গুগল ম্যাপে দেখুন <ArrowUpRight className="size-3.5" /></a>
             </div>
           </div>
         </div>
