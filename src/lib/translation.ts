@@ -12,6 +12,6 @@ export function translateText(source: string, lang: Lang, extra: Record<string, 
   return source.split(/(\n)/).map((line) => {
     const text = line.trim();
     const candidate = extra[text] ?? englishCatalogue[text] ?? text.replace(phrasePattern, (phrase) => englishCatalogue[phrase] ?? phrase);
-    return line.replace(text, /[\u0980-\u09ef]/.test(candidate) ? text : candidate);
+    return line.replace(text, /[\u0980-\u09df]/.test(candidate) ? text : candidate);
   }).join('').replace(/[০-৯]/g, (digit) => String('০১২৩৪৫৬৭৮৯'.indexOf(digit))).replace(/।/g, '.');
 }
