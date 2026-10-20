@@ -10,6 +10,15 @@ import { languages, useLang } from '@/lib/i18n';
 import { FloatingActions } from '@/components/FloatingActions';
 import logoAsset from '@/assets/institute-logo.jpeg.asset.json';
 
+const socialAccounts = [
+  { label: 'Magic English Learning School', sub: 'ফেসবুক পেজ', href: 'https://www.facebook.com/share/19UP9qEPWG/', icon: Facebook },
+  { label: 'Md Ansarul Haque', sub: 'ফেসবুক প্রোফাইল', href: 'https://www.facebook.com/share/1DJApghnng/', icon: Facebook },
+  { label: 'Eternal Freedom', sub: 'ফেসবুক পেজ', href: 'https://www.facebook.com/share/19k1oqBehc/', icon: Facebook },
+  { label: 'Magic English Learning School', sub: 'ইউটিউব চ্যানেল', href: 'https://youtube.com/@magicenglishlearningschool?si=fTNdeZ4WfCSA8WM6', icon: Youtube },
+  { label: 'Md Ansarul Haque', sub: 'টিকটক', href: 'https://www.tiktok.com/@mdansarulhaque143?_r=1&_t=ZS-9AFNU0nSJda', icon: Music2 },
+  { label: 'গুগল ম্যাপ', sub: 'প্রতিষ্ঠানের অবস্থান', href: 'https://maps.app.goo.gl/LBjuWzrg68gaWxCT9', icon: MapPin },
+];
+
 function NoticeTicker() {
   const { t } = useLang();
   const [items, setItems] = useState<{ id: string; title: string; category: string }[]>([]);
@@ -54,12 +63,17 @@ function LanguageSwitch({ compact = false }: { compact?: boolean }) {
 export function Site({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [more, setMore] = useState(false);
+  const [socialOpen, setSocialOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
+  const socialRef = useRef<HTMLDivElement>(null);
   const path = useRouterState({ select: (s) => s.location.pathname });
   const s = useSiteSettings();
   const { t } = useLang();
   useEffect(() => {
-    const close = (e: MouseEvent) => { if (moreRef.current && !moreRef.current.contains(e.target as Node)) setMore(false); };
+    const close = (e: MouseEvent) => {
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) setMore(false);
+      if (socialRef.current && !socialRef.current.contains(e.target as Node)) setSocialOpen(false);
+    };
     document.addEventListener('mousedown', close);
     return () => document.removeEventListener('mousedown', close);
   }, []);
@@ -104,6 +118,22 @@ export function Site({ children }: { children: ReactNode }) {
                 </div>
               )}
             </div>
+            <div className="relative" ref={socialRef}>
+              <button type="button" onClick={() => setSocialOpen(!socialOpen)} aria-expanded={socialOpen} className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium hover:bg-secondary hover:text-primary text-foreground/75">
+                {t('সোশ্যাল মিডিয়া')}<ChevronDown className={`size-4 transition-transform ${socialOpen ? 'rotate-180' : ''}`} />
+              </button>
+              {socialOpen && (
+                <div className="absolute end-0 top-full mt-2 w-72 rounded-xl border border-border bg-background p-2 shadow-elegant">
+                  {socialAccounts.map((account, index) => (
+                    <a key={index} href={account.href} target="_blank" rel="noreferrer" onClick={() => setSocialOpen(false)} className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm hover:bg-secondary">
+                      <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-accent text-primary"><account.icon className="size-4" /></span>
+                      <span className="min-w-0"><span className="block truncate text-sm font-semibold text-primary">{account.label}</span><span className="mt-0.5 block truncate text-xs text-muted-foreground">{t(account.sub)}</span></span>
+                      <ArrowUpRight className="ms-auto size-4 shrink-0 text-muted-foreground" />
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
           </nav>
           <div className="flex shrink-0 items-center gap-2">
             <Button asChild className="hidden sm:inline-flex"><Link to="/admission">{t('ভর্তি আবেদন')} <ArrowUpRight className="size-4" /></Link></Button>
@@ -132,6 +162,17 @@ export function Site({ children }: { children: ReactNode }) {
                       </Link>
                     ))}
                   </nav>
+                  <div className="mt-2 border-t border-border/60 px-1.5 pt-3">
+                    <p className="px-2.5 pb-2 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">{t('সোশ্যাল মিডিয়া')}</p>
+                    <div className="grid gap-1.5">
+                      {socialAccounts.map((account, index) => (
+                        <a key={index} href={account.href} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-lg border border-border px-3 py-2.5 text-sm text-foreground/85 hover:bg-secondary hover:text-primary">
+                          <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-accent text-primary"><account.icon className="size-4" /></span>
+                          <span className="min-w-0"><span className="block truncate text-sm font-semibold text-primary">{account.label}</span><span className="mt-0.5 block truncate text-xs text-muted-foreground">{t(account.sub)}</span></span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
                   <div className="border-t border-border/60 p-4">
                     <Button asChild className="w-full"><Link to="/admission" onClick={() => setOpen(false)}>{t('ভর্তি আবেদন')} <ArrowUpRight className="size-4" /></Link></Button>
                   </div>
