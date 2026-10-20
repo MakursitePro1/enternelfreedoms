@@ -160,7 +160,6 @@ export function Site({ children }: { children: ReactNode }) {
                       </Link>
                     ))}
                   </nav>
-                  </nav>
                   <div className="border-t border-border/60 p-4">
                     <Button asChild className="w-full"><Link to="/admission" onClick={() => setOpen(false)}>{t('ভর্তি আবেদন')} <ArrowUpRight className="size-4" /></Link></Button>
                   </div>
