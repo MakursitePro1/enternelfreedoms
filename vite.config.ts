@@ -7,8 +7,8 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
-  react: { jsxImportSource: '@/lib/localized-jsx' },
-  vite: { optimizeDeps: { exclude: ['@/lib/localized-jsx/jsx-runtime', '@/lib/localized-jsx/jsx-dev-runtime'] } },
+  react: { jsxImportSource: '/src/lib/localized-jsx' },
+  vite: { optimizeDeps: { exclude: ['/src/lib/localized-jsx/jsx-runtime', '/src/lib/localized-jsx/jsx-dev-runtime'] } },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
