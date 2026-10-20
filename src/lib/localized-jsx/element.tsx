@@ -7,8 +7,8 @@ const attributes = ['placeholder', 'title', 'alt', 'aria-label', 'aria-descripti
 
 export const LocalizedElement = forwardRef<HTMLElement, Props>(function LocalizedElement({ tag, source, ...forwarded }, forwardedRef) {
   const { t } = useLang();
-  const original = { ...source, ...forwarded };
-  const props = { ...original };
+  const original: Record<string, unknown> = { ...source, ...forwarded };
+  const props: Record<string, unknown> = { ...original };
   if (forwardedRef) props['ref'] = forwardedRef;
   if (!props['data-no-translate'] && !['script', 'style', 'textarea'].includes(tag)) {
     const text = (child: unknown): unknown => typeof child === 'string' ? t(child) : Array.isArray(child) ? child.map(text) : child;
