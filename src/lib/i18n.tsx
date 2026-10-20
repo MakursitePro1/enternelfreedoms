@@ -1,67 +1,66 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
+/** @jsxImportSource react */
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useServerFn } from '@tanstack/react-start';
+import { englishCatalogue, translateText, type Lang } from './translation';
+import { translatePublishedText } from './translations.functions';
 
-export type Lang = 'bn' | 'en';
+export type { Lang } from './translation';
 export const languages: { key: Lang; label: string }[] = [
   { key: 'bn', label: 'বাংলা' },
   { key: 'en', label: 'English' },
 ];
-
-/** Translations keyed by the Bangla source text. Missing keys fall back to Bangla. */
-const dict: Record<string, { en: string }> = {
-  'হোম': { en: 'Home' },
-  'প্রতিষ্ঠান পরিচিতি': { en: 'About' },
-  'শিক্ষা কার্যক্রম': { en: 'Academics' },
-  'আবাসিক জীবন': { en: 'Residential Life' },
-  'ভর্তি': { en: 'Admission' },
-  'বইয়ের দোকান': { en: 'Book Store' },
-  'নোটিশ': { en: 'Notices' },
-  'আরও': { en: 'More' },
-  'শিক্ষকমণ্ডলী': { en: 'Teachers' },
-  'ক্যাম্পাস ও সুবিধা': { en: 'Campus & Facilities' },
-  'খবর ও অনুষ্ঠান': { en: 'News & Events' },
-  'গ্যালারি': { en: 'Gallery' },
-  'অভিভাবক নির্দেশিকা': { en: 'Parent Guide' },
-  'যোগাযোগ': { en: 'Contact' },
-  'ভর্তি আবেদন': { en: 'Apply Now' },
-  'অ্যাডমিন': { en: 'Admin' },
-  'সর্বশেষ নোটিশ': { en: 'Latest notice' },
-  'কুরআনের আলোয় জ্ঞান, চরিত্র ও দক্ষতার সমন্বিত শিক্ষা': { en: 'Integrated education of knowledge, character and skills in the light of the Qur\'an' },
-  'গফরগাঁও, ময়মনসিংহের সমন্বিত শিক্ষা প্রতিষ্ঠান': { en: 'An integrated institution in Gafargaon, Mymensingh' },
-  'ভর্তি সম্পর্কে জানুন': { en: 'Learn about admission' },
-  'ক্যাম্পাস ঘুরে দেখুন': { en: 'Explore the campus' },
-  'গুরুত্বপূর্ণ লিংক': { en: 'Quick links' },
-  'অফিস সময়': { en: 'Office hours' },
-  'সর্বস্বত্ব সংরক্ষিত।': { en: 'All rights reserved.' },
-  'কেন Eternal Freedom?': { en: 'Why Eternal Freedom?' },
-  'অধ্যক্ষের বাণী': { en: 'Principal\'s Message' },
-  'একটি দিন Eternal Freedom-এ': { en: 'A Day at Eternal Freedom' },
-  'খাবার ও পুষ্টি': { en: 'Food & Nutrition' },
-  'নিরাপত্তা ও যত্ন': { en: 'Safety & Care' },
-  'অর্জনসমূহ': { en: 'Achievements' },
-  'ভর্তি প্রক্রিয়া': { en: 'Admission Process' },
-  'নোটিশ বোর্ড': { en: 'Notice Board' },
-  'অভিভাবকদের মতামত': { en: 'Parent Testimonials' },
-  'ক্যাম্পাস ভিডিও': { en: 'Campus Video' },
-  'বার্তা পাঠান': { en: 'Send message' },
-  'সব দেখুন': { en: 'View all' },
-  'এখনই কিনুন': { en: 'Buy now' },
-};
 
 type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (bn: string) => string };
 const LangContext = createContext<Ctx>({ lang: 'bn', setLang: () => {}, t: (s) => s });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>('bn');
+  const [extra, setExtra] = useState<Record<string, string>>({});
+  const fetchTranslations = useServerFn(translatePublishedText);
+  const attempted = useRef(new Set<string>());
   useEffect(() => {
-    const saved = window.localStorage.getItem('ef-lang') as Lang | null;
-    if (saved === 'en') setLangState(saved);
+    try {
+      if (window.localStorage.getItem('ef-lang') === 'en') setLangState('en');
+    } catch { /* Language selection also works when storage is disabled. */ }
+    const sync = (event: StorageEvent) => { if (event.key === 'ef-lang') setLangState(event.newValue === 'en' ? 'en' : 'bn'); };
+    window.addEventListener('storage', sync);
+    return () => window.removeEventListener('storage', sync);
   }, []);
   useEffect(() => {
     document.documentElement.lang = lang;
     document.documentElement.dir = 'ltr';
   }, [lang]);
-  const setLang = (l: Lang) => { setLangState(l); window.localStorage.setItem('ef-lang', l); };
-  const t = (bn: string) => (lang === 'bn' ? bn : dict[bn]?.[lang] ?? bn);
+  const setLang = useCallback((l: Lang) => {
+    setLangState(l);
+    try { window.localStorage.setItem('ef-lang', l); } catch { /* Optional persistence. */ }
+  }, []);
+  const t = useCallback((source: string) => translateText(source, lang, extra), [lang, extra]);
+  useEffect(() => {
+    if (lang !== 'en') return;
+    let alive = true;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const collect = async () => {
+      const missing = new Set<string>();
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        if (node.parentElement?.closest('script,style,input,textarea,[data-no-translate]')) continue;
+        const text = node.textContent?.trim() ?? '';
+        if (/[\u0980-\u09ef]/.test(text) && text.length <= 6000 && !englishCatalogue[text] && !extra[text] && !attempted.current.has(text)) missing.add(text);
+      }
+      const texts = [...missing].slice(0, 20);
+      if (!texts.length) return;
+      texts.forEach((text) => attempted.current.add(text));
+      const translations = await fetchTranslations({ data: { texts } }).catch(() => ({}));
+      if (alive && Object.keys(translations).length) setExtra((previous) => ({ ...previous, ...translations }));
+      if (alive && missing.size > 20) timer = setTimeout(() => void collect(), 300);
+    };
+    const schedule = () => { if (timer) clearTimeout(timer); timer = setTimeout(() => void collect(), 250); };
+    const observer = new MutationObserver(schedule);
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+    schedule();
+    return () => { alive = false; observer.disconnect(); if (timer) clearTimeout(timer); };
+  }, [lang, extra, fetchTranslations]);
   return <LangContext.Provider value={{ lang, setLang, t }}>{children}</LangContext.Provider>;
 }
 
