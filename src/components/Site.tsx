@@ -1,6 +1,6 @@
 import { Link, useRouterState } from '@tanstack/react-router';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { ArrowUpRight, Menu, MapPin, ArrowRight, Phone, Mail, Clock, ChevronDown, ChevronRight, Megaphone, Globe, Facebook, Youtube, Music2, MessageCircle } from 'lucide-react';
+import { ArrowUpRight, Menu, MapPin, ArrowRight, Phone, Mail, Clock, ChevronDown, ChevronRight, Megaphone, Globe, Facebook, Youtube, Music2, MessageCircle, Share2 } from 'lucide-react';
 import { nav, moreNav, allNav } from '@/lib/content';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
@@ -118,12 +118,13 @@ export function Site({ children }: { children: ReactNode }) {
                 </div>
               )}
             </div>
-            <div className="relative" ref={socialRef}>
-              <button type="button" onClick={() => setSocialOpen(!socialOpen)} aria-expanded={socialOpen} className="flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium hover:bg-secondary hover:text-primary text-foreground/75">
-                {t('সোশ্যাল মিডিয়া')}<ChevronDown className={`size-4 transition-transform ${socialOpen ? 'rotate-180' : ''}`} />
-              </button>
+          </nav>
+          <div className="flex shrink-0 items-center gap-2">
+            <Button asChild className="hidden sm:inline-flex"><Link to="/admission">{t('ভর্তি আবেদন')} <ArrowUpRight className="size-4" /></Link></Button>
+            <div className="relative shrink-0" ref={socialRef}>
+              <Button type="button" size="icon" aria-label="সোশ্যাল মিডিয়া" aria-expanded={socialOpen} onClick={() => setSocialOpen(!socialOpen)} className="size-10 rounded-md bg-black text-white hover:bg-neutral-900"><Share2 className="size-4" /></Button>
               {socialOpen && (
-                <div className="absolute end-0 top-full mt-2 w-72 rounded-xl border border-border bg-background p-2 shadow-elegant">
+                <div className="absolute end-0 top-full mt-2 w-72 max-w-[calc(100vw-1.5rem)] rounded-xl border border-border bg-background p-2 shadow-elegant">
                   {socialAccounts.map((account, index) => (
                     <a key={index} href={account.href} target="_blank" rel="noreferrer" onClick={() => setSocialOpen(false)} className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm hover:bg-secondary">
                       <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-accent text-primary"><account.icon className="size-4" /></span>
@@ -134,9 +135,6 @@ export function Site({ children }: { children: ReactNode }) {
                 </div>
               )}
             </div>
-          </nav>
-          <div className="flex shrink-0 items-center gap-2">
-            <Button asChild className="hidden sm:inline-flex"><Link to="/admission">{t('ভর্তি আবেদন')} <ArrowUpRight className="size-4" /></Link></Button>
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="xl:hidden bg-primary text-primary-foreground hover:bg-primary hover:text-gold-light" aria-label="মেনু খুলুন" aria-expanded={open}><Menu /></Button>
@@ -162,17 +160,6 @@ export function Site({ children }: { children: ReactNode }) {
                       </Link>
                     ))}
                   </nav>
-                  <div className="mt-2 border-t border-border/60 px-1.5 pt-3">
-                    <p className="px-2.5 pb-2 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">{t('সোশ্যাল মিডিয়া')}</p>
-                    <div className="grid gap-1.5">
-                      {socialAccounts.map((account, index) => (
-                        <a key={index} href={account.href} target="_blank" rel="noreferrer" onClick={() => setOpen(false)} className="flex items-center gap-3 rounded-lg border border-border px-3 py-2.5 text-sm text-foreground/85 hover:bg-secondary hover:text-primary">
-                          <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-accent text-primary"><account.icon className="size-4" /></span>
-                          <span className="min-w-0"><span className="block truncate text-sm font-semibold text-primary">{account.label}</span><span className="mt-0.5 block truncate text-xs text-muted-foreground">{t(account.sub)}</span></span>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
                   <div className="border-t border-border/60 p-4">
                     <Button asChild className="w-full"><Link to="/admission" onClick={() => setOpen(false)}>{t('ভর্তি আবেদন')} <ArrowUpRight className="size-4" /></Link></Button>
                   </div>
