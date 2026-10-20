@@ -73,7 +73,7 @@ export function Site({ children }: { children: ReactNode }) {
           <div className="flex flex-wrap items-center gap-x-5 gap-y-1 opacity-90">
             <a href={telHref(s.phone)} className="flex items-center gap-1.5 hover:text-gold-light"><Phone className="size-3.5 text-gold-light" />{s.phone}</a>
             <a href={`mailto:${s.email}`} className="hidden items-center gap-1.5 hover:text-gold-light sm:flex"><Mail className="size-3.5 text-gold-light" />{s.email}</a>
-            <span className="hidden items-center gap-1.5 md:flex"><MapPin className="size-3.5 text-gold-light" />{s.address}</span>
+            <a href="https://www.google.com/maps/search/?api=1&query=24.4569854,90.5514883" target="_blank" rel="noreferrer" aria-label="ম্যাপে প্রতিষ্ঠানের অবস্থান দেখুন" className="hidden items-center gap-1.5 hover:text-gold-light md:flex"><MapPin className="size-3.5 text-gold-light" />{s.address}</a>
           </div>
           <LanguageSwitch />
         </div>
