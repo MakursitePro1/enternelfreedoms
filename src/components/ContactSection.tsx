@@ -3,7 +3,7 @@ import { ContactForm } from '@/components/ContactForm';
 import { Heading } from '@/components/Site';
 import { defaultSettings, telHref, useSiteSettings } from '@/lib/site-settings';
 
-export const CONTACT_MAP_URL = 'https://maps.app.goo.gl/npSrmEkrXeXM4Ac68';
+export const CONTACT_MAP_URL = 'https://maps.app.goo.gl/ajfkoA4g1ybDBJG8A';
 const CONTACT_MAP_EMBED = 'https://www.google.com/maps?q=24.4569854,90.5514883&z=14&hl=bn&output=embed';
 
 function InfoRow({ icon: Icon, label, children, href }: { icon: typeof MapPin; label: string; children: React.ReactNode; href?: string }) {
