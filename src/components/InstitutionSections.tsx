@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { useInstitutionContent, parseLabeled, type ContentKind, type InstitutionItem } from '@/lib/institution-content';
 import { facilityImage, facilityImageList, initials, isDemo, photos, pick } from '@/lib/content';
 import { youtubeEmbed } from '@/lib/site-settings';
+import mealMenuImage from '@/assets/meal-menu.png';
 import { teacherPath } from '@/lib/teacher-links';
 
 export function itemImage(item: InstitutionItem, index = 0) {
