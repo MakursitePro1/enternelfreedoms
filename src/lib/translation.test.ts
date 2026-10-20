@@ -13,7 +13,7 @@ test('English selection translates Bengali while Bengali selection preserves the
 test('Changing the displayed language never changes a submitted option value', () => {
   const markup = renderToStaticMarkup(createElement(LangContext.Provider, { value: { lang: 'en', setLang: () => {}, t: (source) => translateText(source, 'en') } }, createElement(LocalizedElement, { tag: 'option', source: { children: 'ভর্তি' } })));
   assert.match(markup, /value="ভর্তি"/);
-  assert.match(markup, />Admission<\/option>/);
+  assert.ok(markup.includes(`>${translateText('ভর্তি', 'en')}</option>`));
 });
 test('Customer-entered form values stay unchanged in English', () => {
   const markup = renderToStaticMarkup(createElement(LangContext.Provider, { value: { lang: 'en', setLang: () => {}, t: (source) => translateText(source, 'en') } }, createElement(LocalizedElement, { tag: 'input', source: { defaultValue: 'বাংলা ব্যক্তিগত নাম', placeholder: 'নাম' } })));

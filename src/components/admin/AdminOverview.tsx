@@ -13,7 +13,7 @@ const money = (n: number) => `৳ ${number(n)}`;
 const date = (d: string) => new Date(d).toLocaleDateString('bn-BD', { day: 'numeric', month: 'short' });
 
 export function AdminOverview({ data, go, refresh }: { data: Data; go: (tab: AdminTab, kind?: ContentKind) => void; refresh: () => Promise<void> }) {
-  const { lang, t } = useLang();
+  const { lang } = useLang();
   const number = (n: number) => n.toLocaleString(lang === 'en' ? 'en-US' : 'bn-BD');
   const money = (n: number) => `৳ ${number(n)}`;
   const [days, setDays] = useState('30');
