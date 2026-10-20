@@ -10,6 +10,15 @@ import { languages, useLang } from '@/lib/i18n';
 import { FloatingActions } from '@/components/FloatingActions';
 import logoAsset from '@/assets/institute-logo.jpeg.asset.json';
 
+const socialAccounts = [
+  { label: 'Magic English Learning School', sub: 'ফেসবুক পেজ', href: 'https://www.facebook.com/share/19UP9qEPWG/', icon: Facebook },
+  { label: 'Md Ansarul Haque', sub: 'ফেসবুক প্রোফাইল', href: 'https://www.facebook.com/share/1DJApghnng/', icon: Facebook },
+  { label: 'Eternal Freedom', sub: 'ফেসবুক পেজ', href: 'https://www.facebook.com/share/19k1oqBehc/', icon: Facebook },
+  { label: 'Magic English Learning School', sub: 'ইউটিউব চ্যানেল', href: 'https://youtube.com/@magicenglishlearningschool?si=fTNdeZ4WfCSA8WM6', icon: Youtube },
+  { label: 'Md Ansarul Haque', sub: 'টিকটক', href: 'https://www.tiktok.com/@mdansarulhaque143?_r=1&_t=ZS-9AFNU0nSJda', icon: Music2 },
+  { label: 'গুগল ম্যাপ', sub: 'প্রতিষ্ঠানের অবস্থান', href: 'https://maps.app.goo.gl/LBjuWzrg68gaWxCT9', icon: MapPin },
+];
+
 function NoticeTicker() {
   const { t } = useLang();
   const [items, setItems] = useState<{ id: string; title: string; category: string }[]>([]);
@@ -54,12 +63,17 @@ function LanguageSwitch({ compact = false }: { compact?: boolean }) {
 export function Site({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [more, setMore] = useState(false);
+  const [socialOpen, setSocialOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
+  const socialRef = useRef<HTMLDivElement>(null);
   const path = useRouterState({ select: (s) => s.location.pathname });
   const s = useSiteSettings();
   const { t } = useLang();
   useEffect(() => {
-    const close = (e: MouseEvent) => { if (moreRef.current && !moreRef.current.contains(e.target as Node)) setMore(false); };
+    const close = (e: MouseEvent) => {
+      if (moreRef.current && !moreRef.current.contains(e.target as Node)) setMore(false);
+      if (socialRef.current && !socialRef.current.contains(e.target as Node)) setSocialOpen(false);
+    };
     document.addEventListener('mousedown', close);
     return () => document.removeEventListener('mousedown', close);
   }, []);
