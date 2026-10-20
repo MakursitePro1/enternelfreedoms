@@ -2,7 +2,7 @@
 import { createElement, forwardRef, type ReactNode, type ElementType } from 'react';
 import { useLang } from '../language-context';
 
-type Props = { tag: string; source: Record<string, unknown>; [key: string]: unknown };
+type Props = { tag: string; source: Record<string, unknown> };
 const attributes = ['placeholder', 'title', 'alt', 'aria-label', 'aria-description', 'label'];
 
 export const LocalizedElement = forwardRef<HTMLElement, Props>(function LocalizedElement({ tag, source, ...forwarded }, forwardedRef) {
@@ -20,3 +20,12 @@ export const LocalizedElement = forwardRef<HTMLElement, Props>(function Localize
   if (tag === 'textarea' && typeof original['placeholder'] === 'string') props['placeholder'] = t(original['placeholder']);
   return createElement(tag as ElementType, props);
 });
+
+export function LocalizedText({ text }: { text: string }) {
+  const { t } = useLang();
+  return t(text);
+}
+
+export function localizeChildren(child: unknown): unknown {
+  return typeof child === 'string' ? createElement(LocalizedText, { text: child }) : Array.isArray(child) ? child.map((entry, index) => typeof entry === 'string' ? createElement(LocalizedText, { text: entry, key: index }) : localizeChildren(entry)) : child;
+}
