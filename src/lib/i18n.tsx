@@ -1,17 +1,16 @@
 /** @jsxImportSource react */
-import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useServerFn } from '@tanstack/react-start';
 import { englishCatalogue, translateText, type Lang } from './translation';
 import { translatePublishedText } from './translations.functions';
+import { LangContext } from './language-context';
+export { useLang } from './language-context';
 
 export type { Lang } from './translation';
 export const languages: { key: Lang; label: string }[] = [
   { key: 'bn', label: 'বাংলা' },
   { key: 'en', label: 'English' },
 ];
-
-type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (bn: string) => string };
-const LangContext = createContext<Ctx>({ lang: 'bn', setLang: () => {}, t: (s) => s });
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>('bn');
@@ -64,6 +63,3 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   return <LangContext.Provider value={{ lang, setLang, t }}>{children}</LangContext.Provider>;
 }
 
-export function useLang() {
-  return useContext(LangContext);
-}

@@ -1,6 +1,6 @@
 /** @jsxImportSource react */
 import { createElement, forwardRef, type ReactNode, type ElementType } from 'react';
-import { useLang } from '../i18n';
+import { useLang } from '../language-context';
 
 type Props = { tag: string; source: Record<string, unknown>; [key: string]: unknown };
 const attributes = ['placeholder', 'title', 'alt', 'aria-label', 'aria-description', 'label'];
