@@ -22,7 +22,7 @@ export const translatePublishedText = createServerFn({ method: 'POST' })
     });
     const [content, books, notices, settings] = await Promise.all([
       db.from('institution_content').select('title,body,detail,category').eq('published', true),
-      db.from('books').select('title,description,author').eq('active', true),
+      db.from('books').select('title,description,author,details').eq('active', true),
       db.from('notices').select('title,body,category'),
       db.from('site_settings').select('value').in('key', ['address', 'office_hours', 'admission_badge']),
     ]);
@@ -31,6 +31,7 @@ export const translatePublishedText = createServerFn({ method: 'POST' })
       for (const row of rows ?? []) for (const text of Object.values(row)) if (typeof text === 'string') {
         allowed.add(text);
         allowed.add(text.replace(/\s+/g, ' ').trim());
+        for (const part of text.split(',')) allowed.add(part.trim());
         for (const line of text.split('\n')) {
           allowed.add(line.trim());
           const labeled = line.match(/^\s*[^:：]{2,12}[:：]\s*(.+)$/);

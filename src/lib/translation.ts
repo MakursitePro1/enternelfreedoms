@@ -2,7 +2,7 @@ import catalogue from './translations/en.json';
 
 export type Lang = 'bn' | 'en';
 export const englishCatalogue: Record<string, string> = catalogue;
-const phrasePattern = new RegExp(Object.keys(englishCatalogue).filter((key) => /[\u0980-\u09ef]/.test(key) && key.length <= 100).sort((a, b) => b.length - a.length).map((key) => key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|'), 'g');
+const phrasePattern = new RegExp(`(?<![\\u0980-\\u09ff])(?:${Object.keys(englishCatalogue).filter((key) => /[\u0980-\u09ef]/.test(key) && key.length >= 2 && key.length <= 100).sort((a, b) => b.length - a.length).map((key) => key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})(?![\\u0980-\\u09ff])`, 'g');
 export function translateText(source: string, lang: Lang, extra: Record<string, string> = {}): string {
   if (lang === 'bn' || !source) return source;
   const normalized = source.replace(/\s+/g, ' ').trim();
