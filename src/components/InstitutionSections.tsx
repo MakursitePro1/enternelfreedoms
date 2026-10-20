@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { useInstitutionContent, parseLabeled, type ContentKind, type InstitutionItem } from '@/lib/institution-content';
 import { facilityImage, facilityImageList, initials, isDemo, photos, pick } from '@/lib/content';
 import { youtubeEmbed } from '@/lib/site-settings';
+import mealMenuImage from '@/assets/meal-menu.png';
 import { teacherPath } from '@/lib/teacher-links';
 
 export function itemImage(item: InstitutionItem, index = 0) {
@@ -231,35 +232,11 @@ export function SafetyGrid({ dark = false }: { dark?: boolean }) {
   );
 }
 
-export function MealTable({ limit }: { limit?: number }) {
-  const items = useInstitutionContent('meal');
-  if (!items.length) return null;
-  const rows = items.slice(0, limit ?? items.length).map((m) => ({ ...m, parsed: parseLabeled(m.body).fields }));
+export function MealTable({ limit: _limit }: { limit?: number }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-border/60 bg-background shadow-elegant">
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[560px] border-collapse text-[12.5px] sm:text-sm">
-          <thead>
-            <tr className="bg-primary text-primary-foreground">
-              {['দিন', 'সকালের নাশতা', 'দুপুরের খাবার', 'রাতের খাবার'].map((h) => (
-                <th key={h} className="border-b-2 border-gold p-3 text-start text-[13px] font-semibold tracking-wide max-[359px]:p-2.5 max-[359px]:text-[12px] sm:p-4 sm:text-sm">{h}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((r, i) => (
-              <tr key={r.id} className={`transition-colors duration-200 hover:bg-accent/70 ${i % 2 ? 'bg-secondary' : ''} ${i < rows.length - 1 ? 'border-b border-border/50' : ''}`}>
-                <td className="p-3 max-[359px]:p-2.5 sm:p-4"><span className="inline-block rounded-full bg-gold-soft px-2.5 py-1 font-display text-[12px] font-bold text-gold-deep max-[359px]:px-2 max-[359px]:text-[11px] sm:text-[13px]">{r.title}</span></td>
-                <td className="p-3 font-medium text-foreground/80 max-[359px]:p-2.5 sm:p-4">{r.parsed['সকাল'] ?? '—'}</td>
-                <td className="p-3 font-medium text-foreground/80 max-[359px]:p-2.5 sm:p-4">{r.parsed['দুপুর'] ?? '—'}</td>
-                <td className="p-3 font-medium text-foreground/80 max-[359px]:p-2.5 sm:p-4">{r.parsed['রাত'] ?? '—'}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      {rows.some((r) => isDemo(r.slug)) && <div className="border-t border-border/60 p-2.5 text-end max-[359px]:p-2 sm:p-3"><DemoNote /></div>}
-    </div>
+    <figure className="overflow-hidden rounded-xl shadow-elegant">
+      <img src={mealMenuImage} alt="সাপ্তাহিক খাবারের মেনু — সকালের নাশতা, দুপুরের খাবার ও রাতের খাবার" loading="lazy" className="w-full" />
+    </figure>
   );
 }
 
