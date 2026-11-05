@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 import { getRequest } from '@tanstack/react-start/server';
 import { availableGateways, methodFor, type PaymentGatewayId } from '@/lib/payment-gateways';
 import type { Database } from '@/integrations/supabase/types';
+import { mediaUrlSchema, requireAdminQuerySuccess } from './admin-validation';
 
 // Works on any host (Lovable, Vercel): only the public project address/key are needed; access is enforced by database rules.
 function dbClient(token?: string) {
@@ -126,6 +127,7 @@ export const getAdminData = createServerFn({ method: 'POST' }).validator((data) 
     db.from('contact_messages').select('*').order('created_at', { ascending: false }),
     db.from('site_settings').select('key,value'),
   ]);
+  requireAdminQuerySuccess([admissions, orders, books, notices, content, messages, settings]);
   return { admissions: admissions.data ?? [], orders: orders.data ?? [], books: books.data ?? [], notices: notices.data ?? [], content: content.data ?? [], messages: messages.data ?? [], settings: settings.data ?? [] };
 });
 
@@ -135,9 +137,9 @@ const editSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('admission_trash'), id: z.string().uuid(), trashed: z.boolean() }),
   z.object({ kind: z.literal('order'), id: z.string().uuid(), status: z.enum(['নতুন', 'যাচাই চলছে', 'অনুমোদিত', 'প্রক্রিয়াধীন', 'পাঠানো হয়েছে', 'সম্পন্ন', 'বাতিল']), payment_status: z.enum(['অপরিশোধিত', 'যাচাই অপেক্ষায়', 'পরিশোধিত', 'পেমেন্ট বাতিল', 'ফেরত দেওয়া হয়েছে']).optional(), paid_amount: z.number().nonnegative().optional(), courier_name: z.string().trim().max(100).optional(), tracking_number: z.string().trim().max(100).optional(), delivery_note: z.string().trim().max(1000).optional() }),
   z.object({ kind: z.literal('message'), id: z.string().uuid(), status: z.enum(['নতুন', 'উত্তর দেওয়া হয়েছে', 'সম্পন্ন']) }),
-  z.object({ kind: z.literal('notice'), id: z.string().uuid().optional(), title: z.string().min(3).max(200), body: z.string().max(5000), category: z.string().min(1).max(50), file_url: z.string().url().optional() }),
-  z.object({ kind: z.literal('book'), id: z.string().uuid().optional(), title: z.string().min(2).max(200), description: z.string().max(3000), details: z.string().max(5000).optional(), author: z.string().max(150).optional(), pages: z.number().int().min(0).max(5000).optional(), price: z.number().nonnegative(), cover_url: z.string().url().optional(), active: z.boolean() }),
-  z.object({ kind: z.literal('content'), id: z.string().uuid().optional(), content_kind: contentKindEnum, title: z.string().trim().min(2).max(200), body: z.string().max(5000), image_url: z.string().url().optional(), detail: z.string().max(500).optional(), category: z.string().max(100).optional(), published: z.boolean(), sort_order: z.number().int().min(0).max(10000) }),
+  z.object({ kind: z.literal('notice'), id: z.string().uuid().optional(), title: z.string().min(3).max(200), body: z.string().max(5000), category: z.string().min(1).max(50), file_url: mediaUrlSchema.optional() }),
+  z.object({ kind: z.literal('book'), id: z.string().uuid().optional(), title: z.string().min(2).max(200), description: z.string().max(3000), details: z.string().max(5000).optional(), author: z.string().max(150).optional(), pages: z.number().int().min(0).max(5000).optional(), price: z.number().nonnegative(), cover_url: mediaUrlSchema.optional(), active: z.boolean() }),
+  z.object({ kind: z.literal('content'), id: z.string().uuid().optional(), content_kind: contentKindEnum, title: z.string().trim().min(2).max(200), body: z.string().max(5000), image_url: mediaUrlSchema.optional(), detail: z.string().max(500).optional(), category: z.string().max(100).optional(), published: z.boolean(), sort_order: z.number().int().min(0).max(10000) }),
   z.object({ kind: z.literal('settings'), values: z.record(z.string().max(60), z.string().max(1500)) }),
   z.object({ kind: z.literal('delete'), target: z.enum(['notice', 'book', 'content', 'message']), id: z.string().uuid() }),
 ]);
@@ -146,18 +148,20 @@ export type AdminChange = z.infer<typeof editSchema>;
 export const adminSave = createServerFn({ method: 'POST' }).validator((data) => z.object({ token: z.string().min(10), change: editSchema }).parse(data)).handler(async ({ data }) => {
   const db = await verifyAdmin(data.token);
   const change = data.change;
-  let result: { error: unknown };
+  let result: { error: unknown; data?: unknown };
+  let targeted = false;
   if (change.kind === 'delete') {
     const table = change.target === 'notice' ? 'notices' : change.target === 'book' ? 'books' : change.target === 'message' ? 'contact_messages' : 'institution_content';
-    result = await db.from(table).delete().eq('id', change.id);
-  } else if (change.kind === 'admission') result = await db.from('admissions').update({ status: change.status }).eq('id', change.id);
-  else if (change.kind === 'admission_trash') result = await db.from('admissions').update({ deleted_at: change.trashed ? new Date().toISOString() : null }).eq('id', change.id);
-   else if (change.kind === 'order') { const fields = { status: change.status, ...(change.payment_status !== undefined ? { payment_status: change.payment_status } : {}), ...(change.paid_amount !== undefined ? { paid_amount: change.paid_amount } : {}), ...(change.courier_name !== undefined ? { courier_name: change.courier_name } : {}), ...(change.tracking_number !== undefined ? { tracking_number: change.tracking_number } : {}), ...(change.delivery_note !== undefined ? { delivery_note: change.delivery_note } : {}) }; result = await db.from('orders').update(fields).eq('id', change.id); }
-  else if (change.kind === 'message') result = await db.from('contact_messages').update({ status: change.status }).eq('id', change.id);
-  else if (change.kind === 'notice') { const payload = { title: change.title, body: change.body, category: change.category, file_url: change.file_url || null }; result = change.id ? await db.from('notices').update(payload).eq('id', change.id) : await db.from('notices').insert(payload); }
+    targeted = true;
+    result = await db.from(table).delete().eq('id', change.id).select('id');
+  } else if (change.kind === 'admission') result = await db.from('admissions').update({ status: change.status }).eq('id', change.id).select('id');
+  else if (change.kind === 'admission_trash') result = await db.from('admissions').update({ deleted_at: change.trashed ? new Date().toISOString() : null }).eq('id', change.id).select('id');
+   else if (change.kind === 'order') { const fields = { status: change.status, ...(change.payment_status !== undefined ? { payment_status: change.payment_status } : {}), ...(change.paid_amount !== undefined ? { paid_amount: change.paid_amount } : {}), ...(change.courier_name !== undefined ? { courier_name: change.courier_name } : {}), ...(change.tracking_number !== undefined ? { tracking_number: change.tracking_number } : {}), ...(change.delivery_note !== undefined ? { delivery_note: change.delivery_note } : {}) }; result = await db.from('orders').update(fields).eq('id', change.id).select('id'); }
+  else if (change.kind === 'message') result = await db.from('contact_messages').update({ status: change.status }).eq('id', change.id).select('id');
+  else if (change.kind === 'notice') { const payload = { title: change.title, body: change.body, category: change.category, file_url: change.file_url || null }; result = change.id ? await db.from('notices').update(payload).eq('id', change.id).select('id') : await db.from('notices').insert(payload); }
   else if (change.kind === 'book') {
     const payload = { title: change.title, description: change.description, details: change.details || null, author: change.author || null, pages: change.pages ?? null, price: change.price, cover_url: change.cover_url || null, active: change.active };
-    if (change.id) { await db.from('books').update({ slug: null }).eq('id', change.id).like('slug', 'demo-%'); result = await db.from('books').update(payload).eq('id', change.id); }
+    if (change.id) { const current = await db.from('books').select('slug').eq('id', change.id).single(); if (current.error) throw new Error('বইয়ের তথ্য পাওয়া যায়নি।'); result = await db.from('books').update({ ...payload, ...(current.data.slug?.startsWith('demo-') ? { slug: null } : {}) }).eq('id', change.id).select('id'); }
     else result = await db.from('books').insert(payload);
   } else if (change.kind === 'settings') {
     const rows = Object.entries(change.values).map(([key, value]) => ({ key, value, updated_at: new Date().toISOString() }));
@@ -165,8 +169,10 @@ export const adminSave = createServerFn({ method: 'POST' }).validator((data) => 
   } else {
     const payload = { kind: change.content_kind, title: change.title, body: change.body, image_url: change.image_url || null, detail: change.detail || null, category: change.category || null, published: change.published, sort_order: change.sort_order };
     // Keep teacher identity markers stable when names and profile fields change.
-    result = change.id ? await db.from('institution_content').update(change.content_kind === 'teacher' ? payload : { ...payload, slug: null }).eq('id', change.id) : await db.from('institution_content').insert(payload);
+    result = change.id ? await db.from('institution_content').update(change.content_kind === 'teacher' ? payload : { ...payload, slug: null }).eq('id', change.id).select('id') : await db.from('institution_content').insert(payload);
   }
+  targeted = targeted || ('id' in change && Boolean(change.id));
+  if (targeted && Array.isArray(result.data) && result.data.length === 0) throw new Error('তথ্যটি আর পাওয়া যাচ্ছে না। তালিকা হালনাগাদ করুন।');
   if (result.error) throw new Error('পরিবর্তন সংরক্ষণ করা যায়নি।');
   return { ok: true };
 });

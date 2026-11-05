@@ -1,4 +1,4 @@
-import { Outlet, useNavigate, useRouterState } from '@tanstack/react-router';
+import { Outlet, useNavigate, useRouter, useRouterState } from '@tanstack/react-router';
 import { AdminPageContext } from './AdminPage';
 import { AdminOverview } from './AdminOverview';
 import { AdminAdmissions } from './AdminAdmissions';
@@ -14,7 +14,8 @@ import { LayoutDashboard, GraduationCap, ShoppingBag, MessageSquare, Megaphone, 
 import { supabase } from '@/integrations/supabase/client';
 import { adminSave, adminUpload, adminDocumentLink, getAdminData, type AdminChange } from '@/lib/platform.functions';
 import { contentKinds, notifyInstitutionContentChanged, type ContentKind, type InstitutionItem } from '@/lib/institution-content';
-import { settingFields } from '@/lib/site-settings';
+import { settingFields, notifySiteSettingsChanged } from '@/lib/site-settings';
+import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import logoAsset from '@/assets/institute-logo.jpeg.asset.json';
 import { AdminAuth, ALIVE_KEY, REMEMBER_KEY } from '@/components/admin/AdminAuth';
@@ -34,6 +35,8 @@ function Card({ children, className = '' }: { children: ReactNode; className?: s
 
 export function AdminWorkspace() {
   const navigate = useNavigate();
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const segments = pathname.split('/').filter(Boolean);
   const page = segments[1] ?? 'overview';
@@ -60,7 +63,7 @@ export function AdminWorkspace() {
   async function token() { const { data } = await supabase.auth.getSession(); if (!data.session) throw new Error('লগইন প্রয়োজন।'); return data.session.access_token; }
   async function refresh() {
     try { const d = await fetchAdmin({ data: { token: await token() } }); setTrashed(d.admissions.filter((a) => a.deleted_at)); setData({ ...d, admissions: d.admissions.filter((a) => !a.deleted_at) }); setSettings(Object.fromEntries(d.settings.map((s) => [s.key, s.value]))); setError(''); }
-    catch { setData(null); setError('এই অ্যাকাউন্টে অ্যাডমিন অনুমতি নেই। অনুমোদিত অ্যাকাউন্ট দিয়ে প্রবেশ করুন।'); }
+    catch { setError('তথ্য আনা যায়নি। সংযোগ ও অ্যাকাউন্টের অনুমতি যাচাই করে আবার চেষ্টা করুন।'); }
     finally { setLoading(false); }
   }
   useEffect(() => {
@@ -70,7 +73,7 @@ export function AdminWorkspace() {
   }, []);
   function flash(m: string) { setMessage(m); setError(''); window.setTimeout(() => setMessage(''), 3000); }
   async function run(change: AdminChange, ok: string) {
-    try { await save({ data: { token: await token(), change } }); if (change.kind === 'content' || (change.kind === 'delete' && change.target === 'content')) notifyInstitutionContentChanged(); flash(ok); await refresh(); return true; }
+    try { await save({ data: { token: await token(), change } }); if (change.kind === 'content' || (change.kind === 'delete' && change.target === 'content')) notifyInstitutionContentChanged(); if (change.kind === 'settings') notifySiteSettingsChanged(); await queryClient.invalidateQueries(); await router.invalidate(); await refresh(); flash(ok); return true; }
     catch { setError('সংরক্ষণ করা যায়নি। তথ্য যাচাই করুন।'); return false; }
   }
   async function pickImage(file: File | undefined, set: (url: string) => void) {
@@ -183,7 +186,7 @@ export function AdminWorkspace() {
               </div>
               <div className="grid min-w-0 grid-cols-2 gap-2 justify-self-end lg:shrink-0">
                 <Button type="button" variant="secondary" disabled={!data} onClick={focusPageContent} className="h-10 gap-1.5 bg-gold px-3 text-xs text-primary hover:bg-gold-light sm:px-4 sm:text-sm"><ArrowRight className="size-4" />{bannerAction}</Button>
-                <Button type="button" variant="outline" disabled={loading || !data} onClick={async () => { setLoading(true); await refresh(); }} className="h-10 gap-1.5 border-primary-foreground bg-primary px-3 text-xs text-primary-foreground hover:bg-primary-raised hover:text-primary-foreground sm:px-4 sm:text-sm"><RefreshCw className="size-4" />তথ্য হালনাগাদ</Button>
+                <Button type="button" variant="outline" disabled={loading} onClick={async () => { setLoading(true); await refresh(); }} className="h-10 gap-1.5 border-primary-foreground bg-primary px-3 text-xs text-primary-foreground hover:bg-primary-raised hover:text-primary-foreground sm:px-4 sm:text-sm"><RefreshCw className="size-4" />তথ্য হালনাগাদ</Button>
               </div>
             </div>
           </section>
@@ -199,7 +202,7 @@ export function AdminWorkspace() {
 
              {tab === 'orders' && <AdminOrders orders={data.orders} books={data.books} query={q} onSave={(change) => run(change, 'অর্ডারের তথ্য সংরক্ষিত হয়েছে।')} />}
 
-            {tab === 'messages' && <AdminMessages messages={data.messages} onStatus={(id, status) => run({ kind: 'message', id, status: status as 'নতুন' }, 'হালনাগাদ হয়েছে।')} onDelete={(id) => run({ kind: 'delete', target: 'message', id }, 'মুছে ফেলা হয়েছে।')} />}
+            {tab === 'messages' && <AdminMessages messages={data.messages} onStatus={(id, status) => run({ kind: 'message', id, status }, 'হালনাগাদ হয়েছে।')} onDelete={(id) => run({ kind: 'delete', target: 'message', id }, 'মুছে ফেলা হয়েছে।')} />}
 
             {tab === 'notices' && <AdminNotices notices={data.notices} onSave={(n) => run({ kind: 'notice', id: n.id, title: n.title, body: n.body, category: n.category, file_url: n.file_url }, 'নোটিশ সংরক্ষণ হয়েছে।')} onDelete={(id) => run({ kind: 'delete', target: 'notice', id }, 'মুছে ফেলা হয়েছে।')} />}
 

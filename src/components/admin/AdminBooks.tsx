@@ -5,13 +5,14 @@ import { BookOpen, BookMarked, Eye, EyeOff, ImagePlus, Upload, Check, Plus, Penc
 import { Button } from '@/components/ui/button';
 import type { Database } from '@/integrations/supabase/types';
 import type { AdminChange } from '@/lib/platform.functions';
+import { mediaUrlSchema } from '@/lib/admin-validation';
 
 type Book = Database['public']['Tables']['books']['Row'];
 export const emptyBook = { id: '', title: '', description: '', details: '', author: '', pages: '', price: '', cover_url: '', active: true };
 export type BookDraft = typeof emptyBook;
 type Props = { books: Book[]; draft: BookDraft; setDraft: (value: BookDraft) => void; onSave: (change: AdminChange) => Promise<boolean>; onUpload: (file: File) => Promise<string> };
 const input = 'w-full min-w-0 rounded-md border border-field-border bg-background px-2.5 py-1.5 text-xs outline-none focus:ring-2 focus:ring-ring';
-const bookSchema = z.object({ title: z.string().trim().min(2, 'বইয়ের নাম অন্তত ২ অক্ষরের হতে হবে।').max(200), author: z.string().trim().max(150), price: z.number().finite().nonnegative('মূল্য শূন্যের কম হতে পারবে না।'), pages: z.number().int().min(0).max(5000).optional(), description: z.string().max(3000), details: z.string().max(5000), cover_url: z.string().url('সঠিক ছবির লিংক দিন।').optional() });
+const bookSchema = z.object({ title: z.string().trim().min(2, 'বইয়ের নাম অন্তত ২ অক্ষরের হতে হবে।').max(200), author: z.string().trim().max(150), price: z.number().finite().nonnegative('মূল্য শূন্যের কম হতে পারবে না।'), pages: z.number().int().min(0).max(5000).optional(), description: z.string().max(3000), details: z.string().max(5000), cover_url: mediaUrlSchema.optional() });
 const money = (n: number) => `৳${n.toLocaleString('bn-BD')}`;
 const num = (n: number) => n.toLocaleString('bn-BD');
 
@@ -108,7 +109,7 @@ export function AdminBooks({ books, draft, setDraft, onSave, onUpload }: Props) 
             </div>
             <input ref={fileInput} type="file" aria-label="প্রচ্ছদ নির্বাচন" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(e) => { chooseFile(e.target.files?.[0]); e.target.value = ''; }} />
             {file && <div className="flex min-w-0 items-center gap-2 rounded-md border border-field-border p-3"><ImagePlus className="size-4 shrink-0 text-primary" /><div className="min-w-0 flex-1"><p className="truncate text-xs">{file.name}</p><p className="text-[10px] text-muted-foreground">{(file.size / 1024 / 1024).toFixed(2)} MB · নির্বাচিত</p></div><Button type="button" size="sm" onClick={async () => { setBusy('upload'); setError(''); try { await uploadCover(); setSuccess('প্রচ্ছদ আপলোড হয়েছে।'); } catch { setError('প্রচ্ছদ আপলোড করা যায়নি। আবার চেষ্টা করুন।'); } finally { setBusy(null); } }}><Upload />আপলোড</Button></div>}
-            <label className="block text-xs font-semibold">প্রচ্ছদের লিংক<input type="url" aria-label="প্রচ্ছদের লিংক" maxLength={4000} value={draft.cover_url} onChange={(e) => { setFile(null); set('cover_url', e.target.value); }} placeholder="https://" className={`${input} mt-1.5`} /></label>
+            <label className="block text-xs font-semibold">প্রচ্ছদের লিংক<input type="text" aria-label="প্রচ্ছদের লিংক" maxLength={4000} value={draft.cover_url} onChange={(e) => { setFile(null); set('cover_url', e.target.value); }} placeholder="https://" className={`${input} mt-1.5`} /></label>
           </div>}
 {tab === 'review' && <div className="space-y-3">
             <section aria-label="বইয়ের পরিচিতি" className="overflow-hidden rounded-lg border border-panel-green-border bg-panel-green-soft">

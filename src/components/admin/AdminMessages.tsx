@@ -27,7 +27,7 @@ const tone: Record<string, string> = {
 const when = (d: string) => new Date(d).toLocaleString('bn-BD', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' });
 const initials = (n: string) => n.replace(/^(মোঃ|মাওলানা|হাফেজা)\s*/, '').trim().charAt(0);
 
-export function AdminMessages({ messages, onStatus, onDelete }: { messages: MessageRow[]; onStatus: (id: string, status: string) => void; onDelete: (id: string) => void }) {
+export function AdminMessages({ messages, onStatus, onDelete }: { messages: MessageRow[]; onStatus: (id: string, status: typeof STATUSES[number]) => void; onDelete: (id: string) => void }) {
   const [layouts, setLayouts] = useState<MessageRow[]>(fictionalMessages);
   const [filter, setFilter] = useState('');
   const [q, setQ] = useState('');
@@ -38,7 +38,7 @@ export function AdminMessages({ messages, onStatus, onDelete }: { messages: Mess
   const chosen = touched ? (rows.find((m) => m.id === chosenId) ?? shown[0] ?? null) : (shown[0] ?? null);
   const activeId = chosen?.id ?? null;
   const isLocal = (id: string) => layouts.some((m) => m.id === id);
-  const setStatus = (id: string, status: string) => isLocal(id) ? setLayouts((l) => l.map((m) => m.id === id ? { ...m, status } : m)) : onStatus(id, status);
+  const setStatus = (id: string, status: typeof STATUSES[number]) => isLocal(id) ? setLayouts((l) => l.map((m) => m.id === id ? { ...m, status } : m)) : onStatus(id, status);
   const remove = (id: string) => { if (!window.confirm('বার্তাটি মুছে ফেলবেন?')) return; if (isLocal(id)) setLayouts((l) => l.filter((m) => m.id !== id)); else onDelete(id); setChosenId(null); setTouched(false); };
   const count = (s: string) => rows.filter((m) => m.status === s).length;
   const stats = [
@@ -67,7 +67,7 @@ export function AdminMessages({ messages, onStatus, onDelete }: { messages: Mess
     </div>
 
     <div className="grid gap-4 lg:grid-cols-[minmax(0,380px)_minmax(0,1fr)]">
-      <div className={`space-y-2.5 ${chosen ? 'hidden lg:block' : ''}`}>
+      <div className={`space-y-2.5 ${chosen && touched ? 'hidden lg:block' : ''}`}>
         {shown.map((m) => <button key={m.id} type="button" onClick={() => { setChosenId(m.id); setTouched(true); }} className={`w-full rounded-2xl border p-3.5 text-start transition-colors ${activeId === m.id ? 'border-primary bg-accent' : 'border-border bg-card hover:border-primary'}`}>
           <div className="flex items-start gap-3">
             <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-primary text-sm font-bold text-primary-foreground">{initials(m.name)}</span>
@@ -82,7 +82,7 @@ export function AdminMessages({ messages, onStatus, onDelete }: { messages: Mess
         {!shown.length && <div className="rounded-2xl border border-dashed border-border bg-card p-8 text-center text-sm text-muted-foreground">কোনো বার্তা পাওয়া যায়নি।</div>}
       </div>
 
-      <div className={`${chosen ? '' : 'hidden lg:block'}`}>
+      <div className={`${chosen && touched ? '' : 'hidden lg:block'}`}>
         {chosen ? <article className="overflow-hidden rounded-2xl border border-border bg-card lg:sticky lg:top-24">
           <header className="bg-primary p-4 text-primary-foreground sm:p-5">
             <button type="button" onClick={() => setTouched(false)} className="mb-3 inline-flex items-center gap-1.5 rounded-lg bg-background px-2.5 py-1 text-xs font-semibold text-primary lg:hidden"><ArrowLeft className="size-3.5" />তালিকা</button>

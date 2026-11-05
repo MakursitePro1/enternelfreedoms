@@ -44,7 +44,6 @@ export function usePublishedContent(kind?: ContentKind) {
       }
     };
     void refresh();
-    if (kind && kind !== 'teacher') return () => { alive = false; };
     const visibleRefresh = () => { if (document.visibilityState === 'visible') void refresh(); };
     const storageRefresh = (event: StorageEvent) => { if (event.key === CONTENT_CHANGED) void refresh(); };
     const channel = supabase.channel(`published-content-${kind ?? 'all'}-${Math.random()}`)

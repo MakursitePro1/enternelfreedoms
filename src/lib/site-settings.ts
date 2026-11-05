@@ -29,19 +29,36 @@ export const settingFields: [string, string][] = [
 let cache: SiteSettings | null = null;
 const listeners = new Set<(s: SiteSettings) => void>();
 
+const SETTINGS_CHANGED = 'ef-site-settings-changed';
+export function notifySiteSettingsChanged() {
+  cache = null;
+  window.dispatchEvent(new Event(SETTINGS_CHANGED));
+  localStorage.setItem(SETTINGS_CHANGED, `${Date.now()}-${Math.random()}`);
+}
+
 export function useSiteSettings() {
   const [settings, setSettings] = useState<SiteSettings>(cache ?? defaultSettings);
   useEffect(() => {
     listeners.add(setSettings);
-    if (!cache) {
-      supabase.from('site_settings').select('key,value').then(({ data }) => {
-        const next: SiteSettings = { ...defaultSettings };
-        for (const row of data ?? []) if (row.key in next) next[row.key as keyof SiteSettings] = row.value;
-        cache = next;
-        listeners.forEach((l) => l(next));
-      });
-    }
-    return () => { listeners.delete(setSettings); };
+    const refresh = async () => {
+      const { data, error } = await supabase.from('site_settings').select('key,value');
+      if (error) return;
+      const next: SiteSettings = { ...defaultSettings };
+      for (const row of data ?? []) if (row.key in next) next[row.key as keyof SiteSettings] = row.value;
+      cache = next;
+      listeners.forEach((listener) => listener(next));
+    };
+    const storageRefresh = (event: StorageEvent) => { if (event.key === SETTINGS_CHANGED) void refresh(); };
+    if (!cache) void refresh();
+    window.addEventListener(SETTINGS_CHANGED, refresh);
+    window.addEventListener('storage', storageRefresh);
+    window.addEventListener('focus', refresh);
+    return () => {
+      listeners.delete(setSettings);
+      window.removeEventListener(SETTINGS_CHANGED, refresh);
+      window.removeEventListener('storage', storageRefresh);
+      window.removeEventListener('focus', refresh);
+    };
   }, []);
   return settings;
 }
