@@ -38,3 +38,4 @@
 - Share media URL validation between admin editors and server mutations, accepting bundled root-relative paths and HTTP(S) only; reject failed management reads and missing mutation targets instead of reporting empty data or success.
 - Invalidate public content, settings and route data after authorized admin saves, so mounted public views do not retain stale records.
 - Validate the notice-agreement admission form through a shared schema; retain father contact in existing guardian fields and mother contact plus consent in private notes, so existing admin records and permissions remain compatible.
+- Keep admission selection and form state in one mounted component and render the notice verbatim; use tab-scoped language storage so choices never synchronize to other visitors or tabs.

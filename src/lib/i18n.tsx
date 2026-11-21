@@ -4,6 +4,7 @@ import { useServerFn } from '@tanstack/react-start';
 import { englishCatalogue, translateText, type Lang } from './translation';
 import { translatePublishedText } from './translations.functions';
 import { LangContext } from './language-context';
+import { readLanguagePreference, saveLanguagePreference } from './language-preference';
 export { useLang } from './language-context';
 
 export type { Lang } from './translation';
@@ -19,11 +20,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const attempted = useRef(new Set<string>());
   useEffect(() => {
     try {
-      if (window.localStorage.getItem('ef-lang') === 'en') setLangState('en');
+      setLangState(readLanguagePreference(window.sessionStorage));
     } catch { /* Language selection also works when storage is disabled. */ }
-    const sync = (event: StorageEvent) => { if (event.key === 'ef-lang') setLangState(event.newValue === 'en' ? 'en' : 'bn'); };
-    window.addEventListener('storage', sync);
-    return () => window.removeEventListener('storage', sync);
   }, []);
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -31,7 +29,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }, [lang]);
   const setLang = useCallback((l: Lang) => {
     setLangState(l);
-    try { window.localStorage.setItem('ef-lang', l); } catch { /* Optional persistence. */ }
+    try { saveLanguagePreference(window.sessionStorage, l); } catch { /* Optional persistence. */ }
   }, []);
   const t = useCallback((source: string) => translateText(source, lang, extra), [lang, extra]);
   useEffect(() => {

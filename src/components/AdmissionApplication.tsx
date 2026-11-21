@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useServerFn } from '@tanstack/react-start';
-import { ArrowLeft, ArrowRight, Check, CheckCircle2, Copy, FileText, Upload, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, CheckCircle2, Copy, FileText, GraduationCap, Upload, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { admissionNoticeBn } from '@/lib/admission-notice';
@@ -9,7 +9,6 @@ import { admissionSchema, admissionDocumentSchema, type AdmissionDocument } from
 import { submitAdmission } from '@/lib/platform.functions';
 import { useLang } from '@/lib/i18n';
 import { programs } from '@/lib/content';
-import { AdmissionNotice } from '@/components/AdmissionNotice';
 
 const initial = { student_name: '', birth_date: '', guardian_name: '', phone: '', mother_name: '', mother_phone: '', program: '' };
 const labels = {
@@ -24,7 +23,7 @@ const inputClass = 'mt-2 w-full min-w-0 rounded-xl border border-border bg-backg
 
 export function AdmissionApplication() {
   const { lang, t } = useLang();
-  const [step, setStep] = useState(0);
+  const [view, setView] = useState<'notice' | 'form' | null>(null);
   const [agreed, setAgreed] = useState(false);
   const [form, setForm] = useState(initial);
   const [documents, setDocuments] = useState<AdmissionDocument[]>([]);
@@ -80,11 +79,25 @@ export function AdmissionApplication() {
               {doc && <div className="mt-3 flex min-w-0 items-center justify-between gap-2"><span data-no-translate className="truncate text-xs text-muted-foreground">{doc.name}</span><Button type="button" size="icon" variant="ghost" aria-label={copy('ফাইল সরান', 'Remove File')} onClick={() => setDocuments((previous) => previous.filter((item) => item.label !== label))}><X className="size-4" /></Button></div>}
             </div>;
   }
-  return <section id="apply" className="scroll-mt-28 px-2.5 py-6 sm:px-5 sm:py-10">
-    <div className="w-full rounded-[1.5rem] border border-border bg-secondary p-3 font-teacher shadow-sm sm:rounded-[2rem] sm:p-6 lg:p-8">
-      {!reference && <ol className="mb-5 grid grid-cols-2 gap-3 sm:mb-6" aria-label={copy('ভর্তির ধাপ', 'Application steps')}>
-        {[copy('নোটিশ ও সম্মতি', 'Notice & Agreement'), copy('শিক্ষার্থীর তথ্য', 'Student Details')].map((label, index) => <li key={index} className={`flex items-center gap-3 rounded-[1.1rem] border px-4 py-4 text-sm font-semibold sm:text-base ${step === index ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-secondary text-muted-foreground'}`}><span className="grid size-7 shrink-0 place-items-center rounded-full bg-gold text-primary">{index + 1}</span><span>{label}</span></li>)}
-      </ol>}
+  function openView(next: 'notice' | 'form' | null) {
+    setView(next);
+    setError('');
+    document.getElementById('apply')?.scrollIntoView({ behavior: 'instant', block: 'start' });
+  }
+  return <section id="apply" aria-label={copy('অনলাইন ভর্তি', 'Online Admission')} className="scroll-mt-28 px-3 py-6 font-teacher sm:px-5 sm:py-8">
+    <h1 className="sr-only">{copy('অনলাইন ভর্তি', 'Online Admission')}</h1>
+    <div className="mx-auto w-full max-w-7xl">
+      {view === null && !reference && <div className="mx-auto grid w-full max-w-5xl gap-4 sm:grid-cols-2 sm:gap-6">
+        <Button type="button" onClick={() => openView('notice')} className="h-auto min-h-36 w-full flex-col gap-5 whitespace-normal rounded-lg border border-primary bg-primary px-5 py-7 text-center text-primary-foreground shadow-sm hover:bg-primary-raised sm:min-h-56 sm:py-10">
+          <FileText className="size-10 shrink-0 text-gold-light sm:size-12" strokeWidth={1.5} />
+          <span className="font-display text-xl font-bold leading-relaxed sm:text-2xl">{copy('ভর্তি ও প্রতিষ্ঠান সম্পর্কে', 'Admission & Institution')}</span>
+        </Button>
+        <Button type="button" onClick={() => openView('form')} className="h-auto min-h-36 w-full flex-col gap-5 whitespace-normal rounded-lg border border-gold bg-gold px-5 py-7 text-center text-primary shadow-sm hover:bg-gold-light sm:min-h-56 sm:py-10">
+          <GraduationCap className="size-10 shrink-0 sm:size-12" strokeWidth={1.5} />
+          <span className="font-display text-xl font-bold leading-relaxed sm:text-2xl">{copy('এপ্লাই এডমিশন', 'Apply Admission')}</span>
+        </Button>
+      </div>}
+      {(view !== null || reference) && <div className="mb-4"><Button type="button" variant="outline" disabled={busy} onClick={() => { setReference(''); openView(null); }}><ArrowLeft className="size-4" />{copy('পেছনে', 'Back')}</Button></div>}
       {reference ? <div role="status" className="rounded-[1.25rem] border border-border bg-card px-5 py-12 text-center shadow-sm">
         <CheckCircle2 className="mx-auto size-14 text-primary" />
         <h2 className="mt-5 font-display text-2xl font-bold text-primary">{copy('আবেদন সফলভাবে জমা হয়েছে!', 'Application Submitted Successfully!')}</h2>
@@ -94,24 +107,7 @@ export function AdmissionApplication() {
           <Button type="button" onClick={() => void copyReference()} className="shrink-0">{copied ? <Check className="size-4" /> : <Copy className="size-4" />}{copied ? copy('কপি হয়েছে', 'Copied') : copy('কপি করুন', 'Copy')}</Button>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">{copy('ভবিষ্যতে যোগাযোগের জন্য আবেদন নম্বরটি সংরক্ষণ করুন।', 'Please keep your application ID for future reference.')}</p>
-      </div> : step === 0 ? <>
-        <div className="relative overflow-hidden rounded-[1.25rem] bg-primary px-5 py-8 text-primary-foreground shadow-elegant sm:px-10 sm:py-12">
-          <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-20" />
-          <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
-            <div className="min-w-0">
-              <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-primary"><FileText className="size-3.5" />{copy('ভর্তি চলছে — সীমিত আসন', 'Admissions open — limited seats')}</span>
-              <h2 className="mt-4 font-display text-3xl font-bold leading-tight sm:text-5xl">{copy('ভর্তি ও প্রতিষ্ঠান সম্পর্কিত', 'Admission & Institution')}<br /><span className="text-gold-light">{copy('বিস্তারিত তথ্য', 'Complete Information')}</span></h2>
-            </div>
-            <p className="max-w-md text-sm leading-7 text-primary-foreground/85 sm:text-base">{copy('আবেদন করার আগে নিচের সম্পূর্ণ নোটিশ মনোযোগ দিয়ে পড়ুন, তারপর সম্মতি দিয়ে পরবর্তী ধাপে যান।', 'Please read the complete notice below carefully, then agree and continue to the next step.')}</p>
-          </div>
-        </div>
-        <div className="mt-5 sm:mt-6"><AdmissionNotice text={lang === 'en' ? admissionNoticeEn : admissionNoticeBn} lang={lang} /></div>
-        <div className="mt-6 flex items-start gap-4 rounded-[1.25rem] border-2 border-gold bg-card p-5 shadow-sm sm:p-7">
-          <Checkbox id="admission-agreement" checked={agreed} onCheckedChange={(value) => setAgreed(value === true)} className="mt-1 shrink-0" />
-          <label htmlFor="admission-agreement" className="cursor-pointer text-sm font-semibold leading-6 text-foreground">{copy('আমি সম্পূর্ণ নোটিশটি পড়েছি এবং ভর্তি ও প্রতিষ্ঠানের সকল শর্তাবলিতে সম্মত আছি।', 'I have read the complete notice and agree to all admission and institution terms and conditions.')}</label>
-        </div>
-        <div className="mt-5 flex justify-end"><Button size="lg" className="h-12 w-full px-8 text-base sm:w-auto" disabled={!agreed} onClick={() => { setStep(1); setError(''); document.getElementById('apply')?.scrollIntoView({ behavior: 'instant' }); }}>{copy('সম্মত — পরবর্তী ধাপ', 'Agree — Next Step')}<ArrowRight className="size-4" /></Button></div>
-      </> : <form onSubmit={submit} className="rounded-[1.25rem] border border-border bg-card p-5 shadow-sm sm:p-10">
+      </div> : view === 'notice' ? <div data-no-translate className="whitespace-pre-wrap rounded-lg border border-border bg-secondary p-5 text-base leading-9 text-foreground [overflow-wrap:anywhere] sm:p-10 sm:text-lg sm:leading-10">{lang === 'en' ? admissionNoticeEn : admissionNoticeBn}</div> : view === 'form' ? <form onSubmit={submit} className="rounded-lg border border-border bg-card p-5 shadow-sm sm:p-8">
         <h2 className="mb-6 font-display text-2xl font-bold text-primary">{copy('শিক্ষার্থীর তথ্য', 'Student Details')}</h2>
         <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {field('student_name')}
@@ -125,9 +121,12 @@ export function AdmissionApplication() {
           {docField('জন্মনিবন্ধন')}
         </div>
         {error && <p role="alert" className="mt-5 text-sm text-destructive">{error}</p>}
-        <div className="mt-7 flex flex-wrap justify-between gap-3"><Button type="button" variant="outline" disabled={busy} onClick={() => setStep(0)}><ArrowLeft className="size-4" />{copy('পেছনে', 'Back')}</Button><Button type="submit" disabled={busy || uploading}>{busy ? copy('জমা হচ্ছে...', 'Submitting...') : copy('আবেদন জমা দিন', 'Submit Application')}<ArrowRight className="size-4" /></Button></div>
-      </form>}
-      {step === 0 && error && <p role="alert" className="mt-4 text-sm text-destructive">{error}</p>}
+        <div className="mt-6 flex items-start gap-3 rounded-lg border border-border bg-secondary p-4">
+          <Checkbox id="admission-agreement" checked={agreed} onCheckedChange={(value) => setAgreed(value === true)} className="mt-1 shrink-0" />
+          <label htmlFor="admission-agreement" className="min-w-0 cursor-pointer text-sm leading-7 text-foreground">{copy('আমি সম্পূর্ণ নোটিশটি পড়েছি এবং ভর্তি ও প্রতিষ্ঠানের সকল শর্তাবলিতে সম্মত আছি।', 'I have read the complete notice and agree to all admission and institution terms and conditions.')}</label>
+        </div>
+        <div className="mt-6 flex justify-end"><Button type="submit" disabled={busy || uploading || !agreed} className="w-full sm:w-auto">{busy ? copy('জমা হচ্ছে...', 'Submitting...') : copy('আবেদন জমা দিন', 'Submit Application')}<ArrowRight className="size-4" /></Button></div>
+      </form> : null}
     </div>
   </section>;
 }
