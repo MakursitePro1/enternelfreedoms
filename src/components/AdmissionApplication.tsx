@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useServerFn } from '@tanstack/react-start';
-import { ArrowLeft, ArrowRight, Check, CheckCircle2, Copy, FileText, GraduationCap, Upload, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, CheckCircle2, Copy, FileText, GraduationCap, MousePointerClick, Upload, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { admissionNoticeBn } from '@/lib/admission-notice';
@@ -88,15 +88,17 @@ export function AdmissionApplication() {
     <h1 className="sr-only">{copy('অনলাইন ভর্তি', 'Online Admission')}</h1>
     <div className="mx-auto w-full max-w-7xl">
       {view === null && !reference && <div className="mx-auto grid w-full gap-4 sm:grid-cols-2 sm:gap-6">
-        <Button type="button" onClick={() => openView('notice')} className="group relative h-[clamp(150px,calc((100svh-220px)/2),260px)] w-full min-w-0 cursor-pointer flex-col gap-5 whitespace-normal rounded-lg border border-primary border-b-4 border-b-gold bg-primary px-5 py-5 text-center text-primary-foreground shadow-sm transition-transform hover:bg-primary-raised active:translate-y-1 motion-reduce:transition-none sm:h-[clamp(180px,calc(100svh-240px),420px)] sm:gap-7 sm:px-8 [&_svg]:size-8 sm:[&_svg]:size-10">
-          <span className="grid size-16 shrink-0 place-items-center rounded-full border border-gold bg-primary-raised sm:size-20"><FileText className="shrink-0 text-gold-light" strokeWidth={1.5} /></span>
+        <Button type="button" onClick={() => openView('notice')} className="group relative h-[clamp(170px,calc((100svh-220px)/2),280px)] w-full min-w-0 cursor-pointer flex-col gap-4 whitespace-normal rounded-2xl border-2 border-gold border-b-8 bg-primary px-5 py-5 text-center text-primary-foreground shadow-lg transition-all hover:-translate-y-1 hover:bg-primary-raised hover:shadow-xl active:translate-y-1 active:border-b-2 active:shadow-sm motion-reduce:transition-none sm:h-[clamp(200px,calc(100svh-240px),440px)] sm:gap-5 sm:px-8 [&_svg]:size-8 sm:[&_svg]:size-10">
+          <span className="grid size-16 shrink-0 place-items-center rounded-full border-2 border-gold bg-primary-raised shadow-md transition-transform group-hover:scale-110 motion-reduce:transition-none sm:size-20"><FileText className="shrink-0 text-gold-light" strokeWidth={1.5} /></span>
           <span className="min-w-0 font-display text-2xl font-bold leading-relaxed sm:text-3xl">{copy('ভর্তি ও প্রতিষ্ঠান সম্পর্কে', 'Admission & Institution')}</span>
-          <span aria-hidden="true" className="absolute bottom-4 right-4 grid size-9 place-items-center rounded-full bg-gold text-primary sm:bottom-6 sm:right-6 sm:size-11 [&_svg]:size-5 sm:[&_svg]:size-6"><ArrowRight /></span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-gold bg-primary-raised px-4 py-1.5 text-xs font-bold text-gold-light sm:text-sm">{copy('এখানে ক্লিক করুন', 'Click here')}<MousePointerClick className="size-4 shrink-0" /></span>
+          <span aria-hidden="true" className="absolute bottom-4 right-4 grid size-9 place-items-center rounded-full bg-gold text-primary shadow-md transition-transform group-hover:translate-x-1 motion-reduce:transition-none sm:bottom-6 sm:right-6 sm:size-11 [&_svg]:size-5 sm:[&_svg]:size-6"><ArrowRight /></span>
         </Button>
-        <Button type="button" onClick={() => openView('form')} className="group relative h-[clamp(150px,calc((100svh-220px)/2),260px)] w-full min-w-0 cursor-pointer flex-col gap-5 whitespace-normal rounded-lg border border-gold border-b-4 border-b-primary bg-gold px-5 py-5 text-center text-primary shadow-sm transition-transform hover:bg-gold-light active:translate-y-1 motion-reduce:transition-none sm:h-[clamp(180px,calc(100svh-240px),420px)] sm:gap-7 sm:px-8 [&_svg]:size-8 sm:[&_svg]:size-10">
-          <span className="grid size-16 shrink-0 place-items-center rounded-full border border-primary bg-gold-light sm:size-20"><GraduationCap className="shrink-0" strokeWidth={1.5} /></span>
+        <Button type="button" onClick={() => openView('form')} className="group relative h-[clamp(170px,calc((100svh-220px)/2),280px)] w-full min-w-0 cursor-pointer flex-col gap-4 whitespace-normal rounded-2xl border-2 border-primary border-b-8 bg-gold px-5 py-5 text-center text-primary shadow-lg transition-all hover:-translate-y-1 hover:bg-gold-light hover:shadow-xl active:translate-y-1 active:border-b-2 active:shadow-sm motion-reduce:transition-none sm:h-[clamp(200px,calc(100svh-240px),440px)] sm:gap-5 sm:px-8 [&_svg]:size-8 sm:[&_svg]:size-10">
+          <span className="grid size-16 shrink-0 place-items-center rounded-full border-2 border-primary bg-gold-light shadow-md transition-transform group-hover:scale-110 motion-reduce:transition-none sm:size-20"><GraduationCap className="shrink-0" strokeWidth={1.5} /></span>
           <span className="min-w-0 font-display text-2xl font-bold leading-relaxed sm:text-3xl">{copy('এপ্লাই এডমিশন', 'Apply Admission')}</span>
-          <span aria-hidden="true" className="absolute bottom-4 right-4 grid size-9 place-items-center rounded-full bg-primary text-primary-foreground sm:bottom-6 sm:right-6 sm:size-11 [&_svg]:size-5 sm:[&_svg]:size-6"><ArrowRight /></span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-primary bg-gold-light px-4 py-1.5 text-xs font-bold text-primary sm:text-sm">{copy('এখানে ক্লিক করুন', 'Click here')}<MousePointerClick className="size-4 shrink-0" /></span>
+          <span aria-hidden="true" className="absolute bottom-4 right-4 grid size-9 place-items-center rounded-full bg-primary text-primary-foreground shadow-md transition-transform group-hover:translate-x-1 motion-reduce:transition-none sm:bottom-6 sm:right-6 sm:size-11 [&_svg]:size-5 sm:[&_svg]:size-6"><ArrowRight /></span>
         </Button>
       </div>}
       {(view !== null || reference) && <div className="mb-4"><Button type="button" variant="outline" disabled={busy} onClick={() => { setReference(''); openView(null); }}><ArrowLeft className="size-4" />{copy('পেছনে', 'Back')}</Button></div>}
