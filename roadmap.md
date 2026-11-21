@@ -12,7 +12,7 @@
 - [x] Admin dashboard: summary, messages, settings, all content kinds, image upload
 - [x] Verify all pages at 390/768/1280 and real flows (admin signed-in view unverified: no admin account exists yet)
 - [ ] Enable live online payment after the institution supplies its merchant account credentials (blocked: credentials).
-- [ ] Simplify admissions to the supplied complete notice, mandatory agreement and nine requested student fields; verify private saving and responsive preview.
+- [x] Simplify admissions to the supplied complete notice, mandatory agreement and nine requested student fields; verify actual submission and private row/document storage, English/Bengali and 390/834/1111px previews. Email is not enabled; authenticated admin readback was not exercised.
 - [x] Audit all 23 admin pages without redesign; fix local-media editing, failed reads/missing mutation targets, stale public data and mobile message navigation. Verify authenticated existing-record saves/readback, SEO/integration/gateway saves, temporary hidden-content create/delete, upload rendering, logout and 390/834/1280px previews. Real customer dispatch/cancellation, reset-email delivery, timed trash deletion and external provider transactions are not exercised.
 - [ ] Verify live provider payment transactions after merchant credentials are supplied (blocked: merchant credentials).
 - [x] Make the English/Bengali switch translate public pages, forms, published content and admin interface; persist selection and verify public details, signed-in admin pages, four-step admissions and mobile preview. Private submitted names/addresses remain original; new published text falls back to the original when the free translation source is unavailable.
