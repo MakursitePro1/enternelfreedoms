@@ -20,7 +20,7 @@ const labels = {
   mother_name: ['মায়ের পূর্ণ নাম', "Mother’s Full Name"],
   mother_phone: ['মায়ের মোবাইল নম্বর', "Mother’s Mobile Number"],
 } as const;
-const inputClass = 'mt-2 w-full min-w-0 rounded-lg border border-border bg-background px-3 py-3 text-sm text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary';
+const inputClass = 'mt-2 w-full min-w-0 rounded-xl border border-border bg-background px-4 py-3.5 text-base text-sm text-foreground outline-none focus:border-primary focus:ring-1 focus:ring-primary';
 
 export function AdmissionApplication() {
   const { lang, t } = useLang();
@@ -69,10 +69,10 @@ export function AdmissionApplication() {
       <input aria-label={copy(label[0], label[1])} required type={type} maxLength={type === 'tel' ? 11 : 120} pattern={type === 'tel' ? '01[0-9]{9}' : undefined} value={form[name]} onChange={(event) => setForm((previous) => ({ ...previous, [name]: event.target.value }))} className={inputClass} />
     </label>;
   }
-  return <section id="apply" className="scroll-mt-28 px-4 py-8 sm:px-6 sm:py-12">
-    <div className="mx-auto max-w-6xl">
-      {!reference && <ol className="mb-6 grid grid-cols-2 gap-3" aria-label={copy('ভর্তির ধাপ', 'Application steps')}>
-        {[copy('নোটিশ ও সম্মতি', 'Notice & Agreement'), copy('শিক্ষার্থীর তথ্য', 'Student Details')].map((label, index) => <li key={index} className={`flex items-center gap-3 rounded-lg border px-4 py-3 text-sm font-semibold ${step === index ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-secondary text-muted-foreground'}`}><span className="grid size-7 shrink-0 place-items-center rounded-full bg-gold text-primary">{index + 1}</span><span>{label}</span></li>)}
+  return <section id="apply" className="scroll-mt-28 px-2.5 py-6 sm:px-5 sm:py-10">
+    <div className="w-full font-teacher">
+      {!reference && <ol className="mb-5 grid grid-cols-2 gap-3 sm:mb-6" aria-label={copy('ভর্তির ধাপ', 'Application steps')}>
+        {[copy('নোটিশ ও সম্মতি', 'Notice & Agreement'), copy('শিক্ষার্থীর তথ্য', 'Student Details')].map((label, index) => <li key={index} className={`flex items-center gap-3 rounded-[1.1rem] border px-4 py-4 text-sm font-semibold sm:text-base ${step === index ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-secondary text-muted-foreground'}`}><span className="grid size-7 shrink-0 place-items-center rounded-full bg-gold text-primary">{index + 1}</span><span>{label}</span></li>)}
       </ol>}
       {reference ? <div role="status" className="rounded-lg border border-border px-5 py-12 text-center">
         <CheckCircle2 className="mx-auto size-14 text-primary" />
@@ -81,28 +81,32 @@ export function AdmissionApplication() {
         <p data-no-translate className="mt-6 select-all break-all text-3xl font-bold text-primary">{reference}</p>
         <p className="mt-4 text-sm text-muted-foreground">{copy('ভবিষ্যতে যোগাযোগের জন্য আবেদন নম্বরটি সংরক্ষণ করুন।', 'Please keep your application ID for future reference.')}</p>
       </div> : step === 0 ? <>
-        <div className="rounded-t-2xl bg-primary px-5 py-6 text-primary-foreground sm:px-8 sm:py-8">
-          <div className="flex items-center gap-4"><span className="grid size-12 shrink-0 place-items-center rounded-xl bg-gold text-primary"><FileText className="size-6" /></span>
-          <div><p className="text-xs font-semibold uppercase tracking-widest text-gold">{copy('ভর্তি নোটিশ', 'Admission Notice')}</p><h2 className="font-display text-xl font-bold sm:text-3xl">{copy('ভর্তি ও প্রতিষ্ঠান সম্পর্কিত বিস্তারিত তথ্য', 'Admission & Institution Information')}</h2></div></div>
+        <div className="relative overflow-hidden rounded-[1.25rem] bg-primary px-5 py-8 text-primary-foreground shadow-elegant sm:px-10 sm:py-12">
+          <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-20" />
+          <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+            <div className="min-w-0">
+              <span className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-1.5 text-xs font-bold text-primary"><FileText className="size-3.5" />{copy('ভর্তি চলছে — সীমিত আসন', 'Admissions open — limited seats')}</span>
+              <h2 className="mt-4 font-display text-3xl font-bold leading-tight sm:text-5xl">{copy('ভর্তি ও প্রতিষ্ঠান সম্পর্কিত', 'Admission & Institution')}<br /><span className="text-gold-light">{copy('বিস্তারিত তথ্য', 'Complete Information')}</span></h2>
+            </div>
+            <p className="max-w-md text-sm leading-7 text-primary-foreground/85 sm:text-base">{copy('আবেদন করার আগে নিচের সম্পূর্ণ নোটিশ মনোযোগ দিয়ে পড়ুন, তারপর সম্মতি দিয়ে পরবর্তী ধাপে যান।', 'Please read the complete notice below carefully, then agree and continue to the next step.')}</p>
+          </div>
         </div>
-        <div className="rounded-b-2xl border-x border-b border-border bg-background p-3 sm:p-6">
-          <AdmissionNotice text={lang === 'en' ? admissionNoticeEn : admissionNoticeBn} />
-        </div>
-        <div className="mt-5 flex items-start gap-3 rounded-2xl border-2 border-gold bg-secondary p-4 sm:p-5">
+        <div className="mt-5 sm:mt-6"><AdmissionNotice text={lang === 'en' ? admissionNoticeEn : admissionNoticeBn} lang={lang} /></div>
+        <div className="mt-6 flex items-start gap-4 rounded-[1.25rem] border-2 border-gold bg-card p-5 shadow-sm sm:p-7">
           <Checkbox id="admission-agreement" checked={agreed} onCheckedChange={(value) => setAgreed(value === true)} className="mt-1 shrink-0" />
           <label htmlFor="admission-agreement" className="cursor-pointer text-sm font-semibold leading-6 text-foreground">{copy('আমি সম্পূর্ণ নোটিশটি পড়েছি এবং ভর্তি ও প্রতিষ্ঠানের সকল শর্তাবলিতে সম্মত আছি।', 'I have read the complete notice and agree to all admission and institution terms and conditions.')}</label>
         </div>
-        <div className="mt-5 flex justify-end"><Button disabled={!agreed} onClick={() => { setStep(1); setError(''); document.getElementById('apply')?.scrollIntoView({ behavior: 'instant' }); }}>{copy('সম্মত — পরবর্তী ধাপ', 'Agree — Next Step')}<ArrowRight className="size-4" /></Button></div>
-      </> : <form onSubmit={submit} className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-8">
+        <div className="mt-5 flex justify-end"><Button size="lg" className="h-12 w-full px-8 text-base sm:w-auto" disabled={!agreed} onClick={() => { setStep(1); setError(''); document.getElementById('apply')?.scrollIntoView({ behavior: 'instant' }); }}>{copy('সম্মত — পরবর্তী ধাপ', 'Agree — Next Step')}<ArrowRight className="size-4" /></Button></div>
+      </> : <form onSubmit={submit} className="rounded-[1.25rem] border border-border bg-card p-5 shadow-sm sm:p-10">
         <h2 className="mb-6 font-display text-2xl font-bold text-primary">{copy('শিক্ষার্থীর তথ্য', 'Student Details')}</h2>
-        <div className="grid gap-5 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {field('student_name')}
           {field('birth_date')}
           {field('guardian_name')}
           {field('phone')}
           {field('mother_name')}
           {field('mother_phone')}
-          <label className="block text-sm font-semibold text-foreground sm:col-span-2">{copy('শ্রেণি / বিভাগ', 'Applying for Class / Department')} *<select required aria-label={copy('শ্রেণি / বিভাগ', 'Applying for Class / Department')} value={form.program} onChange={(event) => setForm({ ...form, program: event.target.value })} className={inputClass}><option value="">{copy('নির্বাচন করুন', 'Select')}</option>{programs.map((program) => <option key={program.slug} value={program.name}>{t(program.name)}</option>)}</select></label>
+          <label className="block text-sm font-semibold text-foreground sm:col-span-2 xl:col-span-3">{copy('শ্রেণি / বিভাগ', 'Applying for Class / Department')} *<select required aria-label={copy('শ্রেণি / বিভাগ', 'Applying for Class / Department')} value={form.program} onChange={(event) => setForm({ ...form, program: event.target.value })} className={inputClass}><option value="">{copy('নির্বাচন করুন', 'Select')}</option>{programs.map((program) => <option key={program.slug} value={program.name}>{t(program.name)}</option>)}</select></label>
           {(['শিক্ষার্থীর ছবি', 'জন্মনিবন্ধন'] as const).map((label) => {
             const doc = documents.find((item) => item.label === label);
             const name = label === 'শিক্ষার্থীর ছবি' ? copy('শিক্ষার্থীর ছবি', 'Student’s Photograph') : copy('জন্ম নিবন্ধনের কপি (ঐচ্ছিক)', 'Birth Registration Certificate (Optional)');
