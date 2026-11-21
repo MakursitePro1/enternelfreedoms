@@ -87,14 +87,16 @@ export function AdmissionApplication() {
   return <section id="apply" aria-label={copy('অনলাইন ভর্তি', 'Online Admission')} className="scroll-mt-28 px-3 py-6 font-teacher sm:px-5 sm:py-8">
     <h1 className="sr-only">{copy('অনলাইন ভর্তি', 'Online Admission')}</h1>
     <div className="mx-auto w-full max-w-7xl">
-      {view === null && !reference && <div className="mx-auto grid w-full max-w-5xl gap-4 sm:grid-cols-2 sm:gap-6">
-        <Button type="button" onClick={() => openView('notice')} className="h-auto min-h-36 w-full flex-col gap-5 whitespace-normal rounded-lg border border-primary bg-primary px-5 py-7 text-center text-primary-foreground shadow-sm hover:bg-primary-raised sm:min-h-56 sm:py-10">
-          <FileText className="size-10 shrink-0 text-gold-light sm:size-12" strokeWidth={1.5} />
-          <span className="font-display text-xl font-bold leading-relaxed sm:text-2xl">{copy('ভর্তি ও প্রতিষ্ঠান সম্পর্কে', 'Admission & Institution')}</span>
+      {view === null && !reference && <div className="mx-auto grid w-full gap-4 sm:grid-cols-2 sm:gap-6">
+        <Button type="button" onClick={() => openView('notice')} className="group relative h-[clamp(150px,calc((100svh-220px)/2),260px)] w-full min-w-0 cursor-pointer flex-col gap-5 whitespace-normal rounded-lg border border-primary border-b-4 border-b-gold bg-primary px-5 py-5 text-center text-primary-foreground shadow-sm transition-transform hover:bg-primary-raised active:translate-y-1 motion-reduce:transition-none sm:h-[clamp(180px,calc(100svh-240px),420px)] sm:gap-7 sm:px-8 [&_svg]:size-8 sm:[&_svg]:size-10">
+          <span className="grid size-16 shrink-0 place-items-center rounded-full border border-gold bg-primary-raised sm:size-20"><FileText className="shrink-0 text-gold-light" strokeWidth={1.5} /></span>
+          <span className="min-w-0 font-display text-2xl font-bold leading-relaxed sm:text-3xl">{copy('ভর্তি ও প্রতিষ্ঠান সম্পর্কে', 'Admission & Institution')}</span>
+          <span aria-hidden="true" className="absolute bottom-4 right-4 grid size-9 place-items-center rounded-full bg-gold text-primary sm:bottom-6 sm:right-6 sm:size-11 [&_svg]:size-5 sm:[&_svg]:size-6"><ArrowRight /></span>
         </Button>
-        <Button type="button" onClick={() => openView('form')} className="h-auto min-h-36 w-full flex-col gap-5 whitespace-normal rounded-lg border border-gold bg-gold px-5 py-7 text-center text-primary shadow-sm hover:bg-gold-light sm:min-h-56 sm:py-10">
-          <GraduationCap className="size-10 shrink-0 sm:size-12" strokeWidth={1.5} />
-          <span className="font-display text-xl font-bold leading-relaxed sm:text-2xl">{copy('এপ্লাই এডমিশন', 'Apply Admission')}</span>
+        <Button type="button" onClick={() => openView('form')} className="group relative h-[clamp(150px,calc((100svh-220px)/2),260px)] w-full min-w-0 cursor-pointer flex-col gap-5 whitespace-normal rounded-lg border border-gold border-b-4 border-b-primary bg-gold px-5 py-5 text-center text-primary shadow-sm transition-transform hover:bg-gold-light active:translate-y-1 motion-reduce:transition-none sm:h-[clamp(180px,calc(100svh-240px),420px)] sm:gap-7 sm:px-8 [&_svg]:size-8 sm:[&_svg]:size-10">
+          <span className="grid size-16 shrink-0 place-items-center rounded-full border border-primary bg-gold-light sm:size-20"><GraduationCap className="shrink-0" strokeWidth={1.5} /></span>
+          <span className="min-w-0 font-display text-2xl font-bold leading-relaxed sm:text-3xl">{copy('এপ্লাই এডমিশন', 'Apply Admission')}</span>
+          <span aria-hidden="true" className="absolute bottom-4 right-4 grid size-9 place-items-center rounded-full bg-primary text-primary-foreground sm:bottom-6 sm:right-6 sm:size-11 [&_svg]:size-5 sm:[&_svg]:size-6"><ArrowRight /></span>
         </Button>
       </div>}
       {(view !== null || reference) && <div className="mb-4"><Button type="button" variant="outline" disabled={busy} onClick={() => { setReference(''); openView(null); }}><ArrowLeft className="size-4" />{copy('পেছনে', 'Back')}</Button></div>}
@@ -107,7 +109,10 @@ export function AdmissionApplication() {
           <Button type="button" onClick={() => void copyReference()} className="shrink-0">{copied ? <Check className="size-4" /> : <Copy className="size-4" />}{copied ? copy('কপি হয়েছে', 'Copied') : copy('কপি করুন', 'Copy')}</Button>
         </div>
         <p className="mt-4 text-sm text-muted-foreground">{copy('ভবিষ্যতে যোগাযোগের জন্য আবেদন নম্বরটি সংরক্ষণ করুন।', 'Please keep your application ID for future reference.')}</p>
-      </div> : view === 'notice' ? <div data-no-translate className="whitespace-pre-wrap rounded-lg border border-border bg-secondary p-5 text-base leading-9 text-foreground [overflow-wrap:anywhere] sm:p-10 sm:text-lg sm:leading-10">{lang === 'en' ? admissionNoticeEn : admissionNoticeBn}</div> : view === 'form' ? <form onSubmit={submit} className="rounded-lg border border-border bg-card p-5 shadow-sm sm:p-8">
+      </div> : view === 'notice' ? <>
+        <div data-no-translate className="whitespace-pre-wrap rounded-lg border border-border bg-secondary p-5 text-base leading-9 text-foreground [overflow-wrap:anywhere] sm:p-10 sm:text-lg sm:leading-10">{lang === 'en' ? admissionNoticeEn : admissionNoticeBn}</div>
+        <div className="mt-5 flex justify-end"><Button type="button" size="lg" onClick={() => openView('form')} className="h-14 w-full gap-3 bg-gold px-7 text-base font-bold text-primary hover:bg-gold-light sm:w-auto">{copy('এপ্লাই এডমিশন', 'Apply Admission')}<ArrowRight className="size-5 shrink-0" /></Button></div>
+      </> : view === 'form' ? <form onSubmit={submit} className="rounded-lg border border-border bg-card p-5 shadow-sm sm:p-8">
         <h2 className="mb-6 font-display text-2xl font-bold text-primary">{copy('শিক্ষার্থীর তথ্য', 'Student Details')}</h2>
         <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {field('student_name')}
