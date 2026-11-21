@@ -51,12 +51,12 @@ function Text({ t }: { t: string }) {
 function LinkButton({ href, label }: { href: string; label: string }) {
   return <a href={href} target="_blank" rel="noopener noreferrer" className="group inline-flex min-w-0 max-w-full items-center gap-3 rounded-xl border border-border bg-background px-4 py-3 text-sm font-semibold text-primary transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground">
     <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground group-hover:bg-gold group-hover:text-primary"><ExternalLink className="size-4" /></span>
-    <span className="min-w-0 truncate">{label}</span>
+    <span className="min-w-0 break-all text-left leading-5">{label}</span>
   </a>;
 }
 function Card({ icon: Icon, title, children, className = '', tone = 'light' }: { icon: typeof Check; title: string; children: ReactNode; className?: string; tone?: 'light' | 'dark' }) {
   const dark = tone === 'dark';
-  return <article className={`min-w-0 rounded-[1.25rem] border p-5 shadow-sm sm:p-7 ${dark ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-card text-foreground'} ${className}`}>
+  return <article className={`min-w-0 rounded-[1.25rem] border p-4 shadow-sm sm:p-7 ${dark ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-card text-foreground'} ${className}`}>
     <header className="mb-5 flex min-w-0 items-center gap-3.5">
       <span className={`grid size-12 shrink-0 place-items-center rounded-2xl ${dark ? 'bg-gold text-primary' : 'bg-primary text-gold'}`}><Icon className="size-6" strokeWidth={1.8} /></span>
       <h3 className={`min-w-0 font-display text-xl font-bold leading-snug sm:text-2xl ${dark ? 'text-primary-foreground' : 'text-primary'}`}>{title}</h3>
@@ -164,10 +164,10 @@ function render(s: Section, i: number, lang: string) {
     case 'facilities': return <Facilities key={i} s={{ ...s, title: lang === 'en' ? 'Residential facilities' : 'আবাসিক সুবিধাসমূহ' }} />;
     case 'fees': return <Fees key={i} s={s} />;
     case 'monthly': return <Monthly key={i} s={s} />;
-    case 'slogan': return <article key={i} className="relative min-w-0 overflow-hidden rounded-[1.25rem] bg-primary p-6 text-center text-primary-foreground sm:p-10 lg:col-span-12">
+    case 'slogan': return <article key={i} className="relative min-w-0 overflow-hidden rounded-[1.25rem] bg-primary p-5 text-center text-primary-foreground sm:p-10">
       <div className="islamic-pattern pointer-events-none absolute inset-0 opacity-20" />
       <div className="relative"><p className="text-sm font-bold text-gold">{s.title}</p>
-        <p className="mt-3 font-display text-4xl font-bold text-gold-light sm:text-6xl">{clean(s.lines[0] ?? '')}</p>
+        <p className="mt-3 font-display text-3xl font-bold text-gold-light sm:text-6xl">{clean(s.lines[0] ?? '')}</p>
         {s.lines.slice(1).map((l, j) => <p key={j} className="mx-auto mt-4 max-w-3xl text-base leading-8 text-primary-foreground/85">{clean(l)}</p>)}</div>
     </article>;
     case 'dua': return <article key={i} className="flex min-w-0 flex-col items-center gap-3 rounded-[1.25rem] border-2 border-gold bg-secondary p-6 text-center sm:p-8 lg:col-span-12">
@@ -210,6 +210,14 @@ export function AdmissionNotice({ text, lang }: { text: string; lang: string }) 
       </div>
     </div>}
 
-    <div className="grid gap-5 sm:gap-6 lg:grid-cols-12">{sections.map((s, i) => render(s, i, lang))}</div>
+    <ol className="relative">{sections.map((s, i) => {
+      const n = en ? String(i + 1) : String(i + 1).replace(/\d/g, (d) => '০১২৩৪৫৬৭৮৯'[Number(d)] ?? d);
+      const last = i === sections.length - 1;
+      return <li key={i} className="relative min-w-0 pb-5 pl-11 sm:pb-6 sm:pl-16 lg:pl-20">
+        {!last && <span aria-hidden className="absolute bottom-0 left-[1.0625rem] top-10 w-0.5 bg-gold sm:left-[1.4375rem] sm:top-14 lg:left-[1.6875rem]" />}
+        <span className="absolute left-0 top-3 grid size-9 place-items-center rounded-full border-2 border-gold bg-primary font-display text-sm font-bold text-gold-light shadow-sm sm:size-12 sm:text-lg lg:size-14 lg:text-xl">{n}</span>
+        {render(s, i, lang)}
+      </li>;
+    })}</ol>
   </div>;
 }
