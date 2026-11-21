@@ -5,6 +5,7 @@ import { getRequest } from '@tanstack/react-start/server';
 import { availableGateways, methodFor, type PaymentGatewayId } from '@/lib/payment-gateways';
 import type { Database } from '@/integrations/supabase/types';
 import { mediaUrlSchema, requireAdminQuerySuccess } from './admin-validation';
+import { admissionSchema } from './admission-schema';
 
 // Works on any host (Lovable, Vercel): only the public project address/key are needed; access is enforced by database rules.
 function dbClient(token?: string) {
@@ -22,7 +23,6 @@ function dbClient(token?: string) {
 function newRef(prefix: string) { return prefix + crypto.randomUUID().replace(/-/g, '').slice(0, 10).toUpperCase(); }
 
 const fileSchema = z.object({ name: z.string().min(1).max(150), type: z.string().regex(/^(image\/(jpeg|png|webp)|application\/pdf)$/), data: z.string().min(10).max(4_500_000) });
-const admissionSchema = z.object({ student_name: z.string().trim().min(2).max(120), birth_date: z.string().optional(), program: z.string().min(2).max(100), guardian_name: z.string().trim().min(2).max(120), phone: z.string().regex(/^01[0-9]{9}$/), address: z.string().trim().min(5).max(500), previous_school: z.string().max(150).optional(), notes: z.string().max(1000).optional(), documents: z.array(fileSchema.extend({ label: z.string().max(80) })).max(4).optional() });
 
 function decode(data: string) {
   const base64 = data.includes(',') ? data.split(',')[1] : data;
@@ -37,19 +37,31 @@ function safeName(name: string) {
 
 export const submitAdmission = createServerFn({ method: 'POST' }).validator((data) => admissionSchema.parse(data)).handler(async ({ data }) => {
   const db = dbClient();
-  const { documents, ...fields } = data;
+  const { documents, mother_name, mother_phone, agreed, ...fields } = data;
   const reference = newRef('EF-');
   const saved: { label: string; name: string; path: string }[] = [];
-  for (const doc of documents ?? []) {
+  try {
+  for (const doc of documents) {
     const bytes = decode(doc.data);
-    if (bytes.byteLength > 3 * 1024 * 1024) continue;
+    if (bytes.byteLength > 3 * 1024 * 1024) throw new Error('প্রতিটি ফাইল ৩ MB-এর মধ্যে হতে হবে।');
+    const valid = doc.type === 'image/jpeg' ? bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255
+      : doc.type === 'image/png' ? bytes.slice(0, 8).join(',') === '137,80,78,71,13,10,26,10'
+      : doc.type === 'image/webp' ? new TextDecoder().decode(bytes.slice(0, 4)) === 'RIFF' && new TextDecoder().decode(bytes.slice(8, 12)) === 'WEBP'
+      : new TextDecoder().decode(bytes.slice(0, 5)) === '%PDF-';
+    if (!valid) throw new Error('ফাইলের ধরন সঠিক নয়।');
     const path = `${reference}/${Date.now()}-${safeName(doc.name)}`;
     const { error: upErr } = await db.storage.from('admission-docs').upload(path, bytes, { contentType: doc.type, upsert: false });
-    if (!upErr) saved.push({ label: doc.label, name: doc.name, path });
+    if (upErr) throw new Error('কাগজপত্র আপলোড হয়নি। আবার চেষ্টা করুন।');
+    saved.push({ label: doc.label, name: doc.name, path });
   }
-  const { error } = await db.from('admissions').insert({ ...fields, reference, documents: saved, birth_date: fields.birth_date || null, previous_school: fields.previous_school ?? null, notes: fields.notes ?? null });
+  const notes = `মায়ের পূর্ণ নাম: ${mother_name}\nমায়ের মোবাইল নম্বর: ${mother_phone}\nভর্তির নোটিশ ও সকল শর্তাবলিতে সম্মতি: ${agreed ? 'হ্যাঁ' : 'না'}`;
+  const { error } = await db.from('admissions').insert({ ...fields, reference, documents: saved, address: '', previous_school: null, notes });
   if (error) throw new Error('আবেদন জমা দেওয়া যায়নি। আবার চেষ্টা করুন।');
   return { reference };
+  } catch (error) {
+    if (saved.length) await db.storage.from('admission-docs').remove(saved.map((doc) => doc.path));
+    throw error;
+  }
 });
 
 export const trackAdmission = createServerFn({ method: 'POST' }).validator((data) => z.object({ reference: z.string().trim().max(30), phone: z.string().regex(/^01[0-9]{9}$/) }).parse(data)).handler(async ({ data }) => {

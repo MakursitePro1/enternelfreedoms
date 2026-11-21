@@ -37,3 +37,4 @@
 - Localize JSX text via the shared runtime and separate stable language context; preserve form values and private records. Local catalogues switch instantly; external fallback accepts only verified published content. Third-party charts use the selected locale directly.
 - Share media URL validation between admin editors and server mutations, accepting bundled root-relative paths and HTTP(S) only; reject failed management reads and missing mutation targets instead of reporting empty data or success.
 - Invalidate public content, settings and route data after authorized admin saves, so mounted public views do not retain stale records.
+- Validate the notice-agreement admission form through a shared schema; retain father contact in existing guardian fields and mother contact plus consent in private notes, so existing admin records and permissions remain compatible.
