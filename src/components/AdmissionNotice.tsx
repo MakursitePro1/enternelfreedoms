@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import {
   BadgeCheck, Banknote, BookOpen, Building2, CalendarDays, Camera, Check, CheckCircle2, ClipboardList, Copy, ExternalLink,
   GraduationCap, HandHeart, Heart, Landmark, MapPin, MessageCircle, MonitorPlay, Navigation, Phone, Quote, ShieldCheck,
@@ -196,6 +196,15 @@ export function AdmissionNotice({ text, lang }: { text: string; lang: string }) 
     { icon: CalendarDays, label: en ? 'Classes begin' : 'ক্লাস শুরু', value: en ? '1 January' : 'পহেলা জানুয়ারি' },
   ];
   const [title, ...introRest] = intro;
+  const listRef = useRef<HTMLOListElement>(null);
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    let frame = 0;
+    const update = () => { frame = 0; const el = listRef.current; if (!el) return; const r = el.getBoundingClientRect(); const mid = window.innerHeight * 0.6; setProgress(Math.min(1, Math.max(0, (mid - r.top) / Math.max(1, r.height)))); };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    update(); window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll);
+    return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); if (frame) cancelAnimationFrame(frame); };
+  }, []);
   return <div className="space-y-5 sm:space-y-6">
     <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-4">{facts.map((f) => <div key={f.label} className="flex min-w-0 items-center gap-3 rounded-[1.1rem] border border-border bg-card p-4 shadow-sm sm:gap-4 sm:p-5">
       <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-gold text-primary sm:size-14"><f.icon className="size-5 sm:size-7" strokeWidth={1.8} /></span>
@@ -210,11 +219,14 @@ export function AdmissionNotice({ text, lang }: { text: string; lang: string }) 
       </div>
     </div>}
 
-    <ol className="relative">{sections.map((s, i) => {
+    <ol ref={listRef} className="relative">
+      <span aria-hidden className="absolute bottom-6 left-[1.0625rem] top-6 w-0.5 rounded-full bg-border sm:left-[1.4375rem] lg:left-[1.6875rem]" />
+      <span aria-hidden style={{ height: `calc((100% - 3rem) * ${progress})` }} className="absolute left-[1.0625rem] top-6 w-0.5 rounded-full bg-gold transition-[height] duration-150 ease-out sm:left-[1.4375rem] lg:left-[1.6875rem]">
+        <span className="absolute -bottom-1.5 left-1/2 size-3 -translate-x-1/2 rounded-full border-2 border-card bg-gold" />
+      </span>
+      {sections.map((s, i) => {
       const n = en ? String(i + 1) : String(i + 1).replace(/\d/g, (d) => '০১২৩৪৫৬৭৮৯'[Number(d)] ?? d);
-      const last = i === sections.length - 1;
       return <li key={i} className="relative min-w-0 pb-5 pl-11 sm:pb-6 sm:pl-16 lg:pl-20">
-        {!last && <span aria-hidden className="absolute bottom-0 left-[1.0625rem] top-10 w-0.5 bg-gold sm:left-[1.4375rem] sm:top-14 lg:left-[1.6875rem]" />}
         <span className="absolute left-0 top-3 grid size-9 place-items-center rounded-full border-2 border-gold bg-primary font-display text-sm font-bold text-gold-light shadow-sm sm:size-12 sm:text-lg lg:size-14 lg:text-xl">{n}</span>
         {render(s, i, lang)}
       </li>;
