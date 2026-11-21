@@ -9,6 +9,7 @@ import { admissionSchema, admissionDocumentSchema, type AdmissionDocument } from
 import { submitAdmission } from '@/lib/platform.functions';
 import { useLang } from '@/lib/i18n';
 import { programs } from '@/lib/content';
+import { AdmissionNotice } from '@/components/AdmissionNotice';
 
 const initial = { student_name: '', birth_date: '', guardian_name: '', phone: '', mother_name: '', mother_phone: '', program: '' };
 const labels = {
@@ -69,7 +70,7 @@ export function AdmissionApplication() {
     </label>;
   }
   return <section id="apply" className="scroll-mt-28 px-4 py-8 sm:px-6 sm:py-12">
-    <div className="mx-auto max-w-4xl">
+    <div className="mx-auto max-w-6xl">
       {!reference && <ol className="mb-6 grid grid-cols-2 gap-3" aria-label={copy('ভর্তির ধাপ', 'Application steps')}>
         {[copy('নোটিশ ও সম্মতি', 'Notice & Agreement'), copy('শিক্ষার্থীর তথ্য', 'Student Details')].map((label, index) => <li key={index} className={`flex items-center gap-3 rounded-lg border px-4 py-3 text-sm font-semibold ${step === index ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-secondary text-muted-foreground'}`}><span className="grid size-7 shrink-0 place-items-center rounded-full bg-gold text-primary">{index + 1}</span><span>{label}</span></li>)}
       </ol>}
@@ -80,21 +81,19 @@ export function AdmissionApplication() {
         <p data-no-translate className="mt-6 select-all break-all text-3xl font-bold text-primary">{reference}</p>
         <p className="mt-4 text-sm text-muted-foreground">{copy('ভবিষ্যতে যোগাযোগের জন্য আবেদন নম্বরটি সংরক্ষণ করুন।', 'Please keep your application ID for future reference.')}</p>
       </div> : step === 0 ? <>
-        <div className="rounded-t-lg bg-primary px-5 py-5 text-primary-foreground sm:px-7">
-          <FileText className="mb-3 size-7 text-gold" />
-          <h2 className="font-display text-xl font-bold sm:text-2xl">{copy('ভর্তি ও প্রতিষ্ঠান সম্পর্কিত বিস্তারিত তথ্য', 'Admission & Institution Information')}</h2>
+        <div className="rounded-t-2xl bg-primary px-5 py-6 text-primary-foreground sm:px-8 sm:py-8">
+          <div className="flex items-center gap-4"><span className="grid size-12 shrink-0 place-items-center rounded-xl bg-gold text-primary"><FileText className="size-6" /></span>
+          <div><p className="text-xs font-semibold uppercase tracking-widest text-gold">{copy('ভর্তি নোটিশ', 'Admission Notice')}</p><h2 className="font-display text-xl font-bold sm:text-3xl">{copy('ভর্তি ও প্রতিষ্ঠান সম্পর্কিত বিস্তারিত তথ্য', 'Admission & Institution Information')}</h2></div></div>
         </div>
-        <div className="border-x border-b border-border px-5 py-6 sm:px-7">
-          <div className="space-y-5 text-sm leading-7 text-foreground">
-            {(lang === 'en' ? admissionNoticeEn : admissionNoticeBn).split(/\n\s*\n/).map((paragraph, index) => <p key={index} className="whitespace-pre-line break-words">{paragraph.split(/(https:\/\/[^\s]+)/g).map((part, partIndex) => part.startsWith('https://') ? <a key={partIndex} href={part} target="_blank" rel="noopener noreferrer" className="break-all font-semibold text-primary underline underline-offset-4">{part}</a> : <span key={partIndex}>{part}</span>)}</p>)}
-          </div>
+        <div className="rounded-b-2xl border-x border-b border-border bg-background p-3 sm:p-6">
+          <AdmissionNotice text={lang === 'en' ? admissionNoticeEn : admissionNoticeBn} />
         </div>
-        <div className="mt-5 flex items-start gap-3 rounded-lg border border-border p-4">
+        <div className="mt-5 flex items-start gap-3 rounded-2xl border-2 border-gold bg-secondary p-4 sm:p-5">
           <Checkbox id="admission-agreement" checked={agreed} onCheckedChange={(value) => setAgreed(value === true)} className="mt-1 shrink-0" />
           <label htmlFor="admission-agreement" className="cursor-pointer text-sm font-semibold leading-6 text-foreground">{copy('আমি সম্পূর্ণ নোটিশটি পড়েছি এবং ভর্তি ও প্রতিষ্ঠানের সকল শর্তাবলিতে সম্মত আছি।', 'I have read the complete notice and agree to all admission and institution terms and conditions.')}</label>
         </div>
         <div className="mt-5 flex justify-end"><Button disabled={!agreed} onClick={() => { setStep(1); setError(''); document.getElementById('apply')?.scrollIntoView({ behavior: 'instant' }); }}>{copy('সম্মত — পরবর্তী ধাপ', 'Agree — Next Step')}<ArrowRight className="size-4" /></Button></div>
-      </> : <form onSubmit={submit} className="rounded-lg border border-border p-5 sm:p-7">
+      </> : <form onSubmit={submit} className="rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-8">
         <h2 className="mb-6 font-display text-2xl font-bold text-primary">{copy('শিক্ষার্থীর তথ্য', 'Student Details')}</h2>
         <div className="grid gap-5 sm:grid-cols-2">
           {field('student_name')}
