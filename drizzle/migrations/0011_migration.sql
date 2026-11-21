@@ -1,0 +1,2 @@
+DROP POLICY IF EXISTS "Public safe gateway configuration" ON public.payment_gateways;
+CREATE POLICY "Public read enabled gateways" ON public.payment_gateways FOR SELECT TO anon, authenticated USING (enabled OR public.has_role(auth.uid(), 'admin'::app_role));

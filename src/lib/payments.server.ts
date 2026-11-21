@@ -16,7 +16,7 @@ export async function readGateways(credentials: { sslcommerz: boolean; aamarpay:
     const account = (stored?.account_number ?? legacy).replace(/[০-৯]/g, (digit) => String('০১২৩৪৫৬৭৮৯'.indexOf(digit))).replace(/[\s-]/g, '');
     const credentialsReady = p.id === 'sslcommerz' ? credentials.sslcommerz : p.id === 'aamarpay' ? credentials.aamarpay : false;
     const ready = p.kind === 'cod' || (p.kind === 'wallet' && /^01\d{9,11}$/.test(account) && !/^0170+$/.test(account)) || (p.kind === 'automatic' && credentialsReady);
-    return { id: p.id, enabled: stored?.enabled ?? (p.kind === 'cod' || (p.id === 'bkash' || p.id === 'nagad') && ready), mode: (stored?.mode as GatewayConfig['mode']) ?? (p.kind === 'automatic' ? 'sandbox' : 'manual'), account_number: account, merchant_id: stored?.merchant_id ?? '', credentialsReady, ready };
+    return { id: p.id, enabled: stored?.enabled ?? p.kind === 'cod', mode: (stored?.mode as GatewayConfig['mode']) ?? (p.kind === 'automatic' ? 'sandbox' : 'manual'), account_number: account, merchant_id: stored?.merchant_id ?? '', credentialsReady, ready };
   });
 }
 

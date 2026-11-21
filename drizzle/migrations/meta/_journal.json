@@ -78,6 +78,13 @@
       "when": 1791690892629,
       "tag": "0010_central_payment_gateway_controls",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1795256168070,
+      "tag": "0011_migration",
+      "breakpoints": true
     }
   ]
 }
