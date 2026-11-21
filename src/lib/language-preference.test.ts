@@ -19,3 +19,22 @@ test('Changing language affects only the selecting tab and persists there', () =
   saveLanguagePreference(selectedTab, 'bn');
   assert.equal(readLanguagePreference(selectedTab), 'bn');
 });
+test('Independent visitors keep their own language even when another visitor changes it', () => {
+  const firstVisitor = tabStorage();
+  const secondVisitor = tabStorage();
+  saveLanguagePreference(firstVisitor, 'en');
+  assert.equal(readLanguagePreference(secondVisitor), 'bn');
+  saveLanguagePreference(secondVisitor, 'en');
+  saveLanguagePreference(firstVisitor, 'bn');
+  assert.equal(readLanguagePreference(firstVisitor), 'bn');
+  assert.equal(readLanguagePreference(secondVisitor), 'en');
+});
+test('An unsupported saved language defaults to Bengali', () => {
+  const storage = tabStorage();
+  storage.setItem('ef-lang', 'fr');
+  assert.equal(readLanguagePreference(storage), 'bn');
+});
+test('Unavailable language storage defaults to Bengali', () => {
+  const storage = { getItem: () => { throw new Error('Storage disabled'); }, setItem: () => {} };
+  assert.equal(readLanguagePreference(storage), 'bn');
+});
