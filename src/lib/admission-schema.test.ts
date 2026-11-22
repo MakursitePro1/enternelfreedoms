@@ -27,4 +27,8 @@ test('Birth registration is optional and no address or registration number is re
 test('Invalid calendar dates and invalid parent phones are rejected', () => {
   assert.equal(admissionSchema.safeParse({ ...application, birth_date: '2015-02-31' }).success, false);
   assert.equal(admissionSchema.safeParse({ ...application, mother_phone: '123' }).success, false);
+});test('Guardian note is optional and limited to 1000 characters', () => {
+  assert.equal(admissionSchema.safeParse(application).success, true);
+  assert.equal(admissionSchema.safeParse({ ...application, guardian_note: 'বিশেষ নোট' }).success, true);
+  assert.equal(admissionSchema.safeParse({ ...application, guardian_note: 'ক'.repeat(1001) }).success, false);
 });
