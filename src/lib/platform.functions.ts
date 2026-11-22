@@ -37,7 +37,7 @@ function safeName(name: string) {
 
 export const submitAdmission = createServerFn({ method: 'POST' }).validator((data) => admissionSchema.parse(data)).handler(async ({ data }) => {
   const db = dbClient();
-  const { documents, mother_name, mother_phone, agreed, ...fields } = data;
+  const { documents, mother_name, mother_phone, agreed, guardian_note, ...fields } = data;
   const reference = newRef('EF-');
   const saved: { label: string; name: string; path: string }[] = [];
   try {
@@ -54,7 +54,7 @@ export const submitAdmission = createServerFn({ method: 'POST' }).validator((dat
     if (upErr) throw new Error('কাগজপত্র আপলোড হয়নি। আবার চেষ্টা করুন।');
     saved.push({ label: doc.label, name: doc.name, path });
   }
-  const notes = `মায়ের পূর্ণ নাম: ${mother_name}\nমায়ের মোবাইল নম্বর: ${mother_phone}\nভর্তির নোটিশ ও সকল শর্তাবলিতে সম্মতি: ${agreed ? 'হ্যাঁ' : 'না'}`;
+  const notes = `মায়ের পূর্ণ নাম: ${mother_name}\nমায়ের মোবাইল নম্বর: ${mother_phone}\nভর্তির নোটিশ ও সকল শর্তাবলিতে সম্মতি: ${agreed ? 'হ্যাঁ' : 'না'}${guardian_note ? `\nঅভিভাবকের মন্তব্য / নোট: ${guardian_note}` : ''}`;
   const { error } = await db.from('admissions').insert({ ...fields, reference, documents: saved, address: '', previous_school: null, notes });
   if (error) throw new Error('আবেদন জমা দেওয়া যায়নি। আবার চেষ্টা করুন।');
   return { reference };

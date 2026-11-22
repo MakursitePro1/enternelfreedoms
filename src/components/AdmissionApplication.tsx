@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useServerFn } from '@tanstack/react-start';
-import { ArrowLeft, ArrowRight, Check, ChevronRight, FilePenLine, FolderSearch, CheckCircle2, Copy, Upload, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, CheckCircle2, Copy, Upload, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { admissionNoticeBn } from '@/lib/admission-notice';
@@ -9,8 +9,9 @@ import { admissionSchema, admissionDocumentSchema, type AdmissionDocument } from
 import { submitAdmission } from '@/lib/platform.functions';
 import { useLang } from '@/lib/i18n';
 import { programs } from '@/lib/content';
+import { AdmissionChoice } from '@/components/AdmissionChoice';
 
-const initial = { student_name: '', birth_date: '', guardian_name: '', phone: '', mother_name: '', mother_phone: '', program: '' };
+const initial = { student_name: '', birth_date: '', guardian_name: '', phone: '', mother_name: '', mother_phone: '', program: '', guardian_note: '' };
 const labels = {
   student_name: ['শিক্ষার্থীর পূর্ণ নাম', "Student’s Full Name"],
   birth_date: ['জন্ম তারিখ', 'Date of Birth'],
@@ -87,27 +88,7 @@ export function AdmissionApplication() {
   return <section id="apply" aria-label={copy('অনলাইন ভর্তি', 'Online Admission')} className="scroll-mt-28 px-3 py-6 font-teacher sm:px-5 sm:py-8">
     <h1 className="sr-only">{copy('অনলাইন ভর্তি', 'Online Admission')}</h1>
     <div className="mx-auto w-full max-w-7xl">
-      {view === null && !reference && <div className="mx-auto w-full max-w-5xl">
-        <div className="mb-5 text-center sm:mb-7">
-          <span className="inline-block rounded-full bg-secondary px-5 py-1.5 text-base font-bold text-primary sm:px-7 sm:text-xl">{copy('প্রিয় অভিভাবক,', 'Dear Guardian,')}</span>
-          <p className="mt-2 font-display text-3xl font-extrabold leading-snug text-primary sm:text-5xl">{copy('ভর্তি সংক্রান্ত সেবা', 'Admission Services')}</p>
-          <p className="mt-1 text-sm font-medium text-foreground sm:text-lg">{copy('আপনার প্রয়োজন অনুযায়ী নিচের অপশনটি নির্বাচন করুন', 'Choose the option below according to your need')}</p>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-7">
-        <Button type="button" onClick={() => openView('form')} className="group h-auto w-full min-w-0 cursor-pointer flex-col gap-3 whitespace-normal rounded-3xl border-4 border-gold bg-primary px-5 py-6 text-center text-primary-foreground shadow-lg transition-all hover:-translate-y-1 hover:bg-primary hover:shadow-xl active:translate-y-0.5 motion-reduce:transition-none sm:gap-4 sm:px-8 sm:py-8">
-          <span className="grid size-20 shrink-0 place-items-center rounded-full bg-primary-raised sm:size-24"><FilePenLine className="size-10! text-gold-light sm:size-12!" strokeWidth={1.6} /></span>
-          <span className="font-display text-2xl font-extrabold leading-snug sm:text-[2rem]">{copy('নতুন ভর্তির আবেদন', 'New Admission Application')}</span>
-          <span className="text-sm font-medium sm:text-base">{copy('প্রথমবার আবেদন করতে এখানে ক্লিক করুন', 'Click here to apply for the first time')}</span>
-          <span className="mt-1 inline-flex h-12 w-full max-w-sm items-center justify-center gap-3 rounded-full bg-gold text-base font-bold text-primary shadow-md transition-colors group-hover:bg-gold-light sm:h-14 sm:text-lg">{copy('ভর্তি আবেদন করুন', 'Apply for Admission')}<ChevronRight className="size-5! shrink-0" strokeWidth={2.5} /></span>
-        </Button>
-        <Button type="button" onClick={() => openView('notice')} className="group h-auto w-full min-w-0 cursor-pointer flex-col gap-3 whitespace-normal rounded-3xl border-2 border-primary bg-card px-5 py-6 text-center text-primary shadow-lg transition-all hover:-translate-y-1 hover:bg-card hover:shadow-xl active:translate-y-0.5 motion-reduce:transition-none sm:gap-4 sm:px-8 sm:py-8">
-          <span className="grid size-20 shrink-0 place-items-center rounded-full bg-secondary sm:size-24"><FolderSearch className="size-10! text-gold sm:size-12!" strokeWidth={1.6} /></span>
-          <span className="font-display text-2xl font-extrabold leading-snug sm:text-[2rem]">{copy('ভর্তির সম্পর্কে বিস্তারিত জানতে', 'Learn More About Admission')}</span>
-          <span className="text-sm font-medium text-foreground sm:text-base">{copy('এখানে ক্লিক করুন', 'Click here')}</span>
-          <span className="mt-1 inline-flex h-12 w-full max-w-sm items-center justify-center gap-3 rounded-full border-2 border-primary bg-card text-base font-bold text-primary transition-colors group-hover:bg-secondary sm:h-14 sm:text-lg">{copy('বিস্তারিত জানুন', 'Learn Details')}<ChevronRight className="size-5! shrink-0" strokeWidth={2.5} /></span>
-        </Button>
-        </div>
-      </div>}
+      {view === null && !reference && <AdmissionChoice copy={copy} onOpen={openView} />}
       {(view !== null || reference) && <div className="mb-4"><Button type="button" variant="outline" disabled={busy} onClick={() => { setReference(''); openView(null); }}><ArrowLeft className="size-4" />{copy('পেছনে', 'Back')}</Button></div>}
       {reference ? <div role="status" className="rounded-[1.25rem] border border-border bg-card px-5 py-12 text-center shadow-sm">
         <CheckCircle2 className="mx-auto size-14 text-primary" />
@@ -133,6 +114,9 @@ export function AdmissionApplication() {
           {field('mother_phone')}
           <label className="block text-sm font-semibold text-foreground ">{copy('শ্রেণি / বিভাগ', 'Applying for Class / Department')} *<select required aria-label={copy('শ্রেণি / বিভাগ', 'Applying for Class / Department')} value={form.program} onChange={(event) => setForm({ ...form, program: event.target.value })} className={inputClass}><option value="">{copy('নির্বাচন করুন', 'Select')}</option>{programs.map((program) => <option key={program.slug} value={program.name}>{t(program.name)}</option>)}</select></label>
           {docField('জন্মনিবন্ধন')}
+          <label className="block min-w-0 text-sm font-semibold text-foreground sm:col-span-2 xl:col-span-3">{copy('অভিভাবকের মন্তব্য / নোট (ঐচ্ছিক)', 'Guardian’s Comments / Notes (Optional)')}
+            <textarea aria-label={copy('অভিভাবকের মন্তব্য / নোট (ঐচ্ছিক)', 'Guardian’s Comments / Notes (Optional)')} rows={4} maxLength={1000} value={form.guardian_note} onChange={(event) => setForm((previous) => ({ ...previous, guardian_note: event.target.value }))} placeholder={copy('কোনো মন্তব্য বা বিশেষ তথ্য থাকলে এখানে লিখুন', 'Write any comments or special information here')} className={`${inputClass} resize-y`} />
+          </label>
         </div>
         {error && <p role="alert" className="mt-5 text-sm text-destructive">{error}</p>}
         <div className="mt-6 flex items-start gap-3 rounded-lg border border-border bg-secondary p-4">
