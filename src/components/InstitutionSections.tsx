@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { useInstitutionContent, parseLabeled, type ContentKind, type InstitutionItem } from '@/lib/institution-content';
 import { facilityImage, facilityImageList, initials, isDemo, photos, pick } from '@/lib/content';
 import { youtubeEmbed } from '@/lib/site-settings';
-import mealMenuImage from '@/assets/meal-menu.png';
+import mealMenuImage from '@/assets/meal-menu.jpg';
 import { teacherPath } from '@/lib/teacher-links';
 
 export function itemImage(item: InstitutionItem, index = 0) {
@@ -235,7 +235,7 @@ export function SafetyGrid({ dark = false }: { dark?: boolean }) {
 export function MealTable({ limit: _limit }: { limit?: number }) {
   return (
     <figure className="overflow-hidden rounded-xl shadow-elegant">
-      <img src={mealMenuImage} alt="সাপ্তাহিক খাবারের মেনু — সকালের নাশতা, দুপুরের খাবার ও রাতের খাবার" loading="lazy" className="w-full" />
+      <img src={mealMenuImage} alt="দৈনিক ৩ বেলা খাবার এবং ৩ বেলা নাস্তার সাপ্তাহিক মেনু" loading="lazy" className="w-full" />
     </figure>
   );
 }
