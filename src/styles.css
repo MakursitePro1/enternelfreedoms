@@ -331,7 +331,9 @@ html[dir="rtl"] .ticker-track { animation-direction: reverse; }
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
 }
-@keyframes admission-shine { 0%, 55% { transform: translateX(-160%) skewX(-20deg); } 100% { transform: translateX(260%) skewX(-20deg); } }
 .admission-shine { position: relative; overflow: hidden; isolation: isolate; }
-.admission-shine::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 45%; pointer-events: none; z-index: 2; background: linear-gradient(90deg, transparent, color-mix(in oklab, white 55%, transparent), transparent); animation: admission-shine 3.6s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) { .admission-shine::after { animation: none; display: none; } }
+.admission-shine > * { position: relative; z-index: 1; }
+.admission-shine::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(115deg, transparent 0 28%, color-mix(in oklab, white 16%, transparent) 34%, color-mix(in oklab, white 4%, transparent) 46%, transparent 52% 100%); }
+.admission-shine::after { content: ""; position: absolute; inset: 7px; z-index: 0; pointer-events: none; border-radius: inherit; border: 1px solid color-mix(in oklab, var(--gold) 45%, transparent); }
+.admission-gloss { position: relative; overflow: hidden; box-shadow: inset 0 2px 0 color-mix(in oklab, white 55%, transparent), inset 0 -3px 0 color-mix(in oklab, black 14%, transparent), 0 10px 22px -10px color-mix(in oklab, var(--primary) 70%, transparent); }
+.admission-gloss::before { content: ""; position: absolute; inset: 0 0 50% 0; pointer-events: none; background: linear-gradient(to bottom, color-mix(in oklab, white 38%, transparent), transparent); }

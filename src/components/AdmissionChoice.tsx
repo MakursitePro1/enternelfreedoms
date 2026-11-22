@@ -1,6 +1,4 @@
 import { ChevronRight } from 'lucide-react';
-import campusLeft from '@/assets/admission-campus-left.jpg.asset.json';
-import campusRight from '@/assets/admission-campus-right.jpg.asset.json';
 
 type Copy = (bn: string, en: string) => string;
 
@@ -39,15 +37,13 @@ function DetailsIcon() {
 }
 
 export function AdmissionChoice({ copy, onOpen }: { copy: Copy; onOpen: (view: 'notice' | 'form') => void }) {
-  const card = 'admission-shine group flex min-h-0 cursor-pointer flex-col items-center justify-center gap-[clamp(2px,1svh,14px)] rounded-[clamp(18px,2.4vw,30px)] px-4 py-[clamp(6px,2svh,32px)] text-center shadow-xl transition-transform hover:-translate-y-1 active:translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 motion-reduce:transition-none sm:px-8';
+  const card = 'admission-shine group flex min-h-0 cursor-pointer flex-col items-center justify-center gap-[clamp(2px,1svh,14px)] rounded-[clamp(18px,2.4vw,30px)] px-4 py-[clamp(6px,2svh,32px)] text-center shadow-[0_24px_50px_-20px_color-mix(in_oklab,var(--primary)_55%,transparent)] transition-transform hover:-translate-y-1 active:translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 motion-reduce:transition-none sm:px-8';
   const title = 'font-display font-black leading-tight text-[clamp(1rem,min(3svh,5.5vw),2.3rem)] sm:text-[clamp(1.3rem,min(4.2svh,3.4vw),2.4rem)]';
   const sub = '[@media(max-height:680px)]:text-[0.68rem] [@media(max-height:680px)]:leading-tight font-medium text-[clamp(0.7rem,min(1.9svh,3.6vw),1.15rem)] sm:text-[clamp(0.85rem,min(2.2svh,2vw),1.15rem)]';
   const btn = '[@media(max-height:680px)]:h-[28px] mt-[clamp(0px,0.8svh,12px)] inline-flex h-[clamp(30px,5.6svh,60px)] w-full max-w-md shrink-0 items-center justify-center gap-3 rounded-full text-[clamp(0.9rem,min(2.3svh,4vw),1.25rem)] font-extrabold';
   const icon = 'relative size-[clamp(28px,min(calc(12svh-46px),16vw),120px)] shrink-0 sm:size-[clamp(56px,min(14svh,11vw),128px)]';
   return <div className="mx-auto flex h-[calc(100svh-var(--admission-offset,196px))] min-h-[420px] max-h-[860px] w-full max-w-6xl flex-col gap-[clamp(8px,2svh,24px)]">
-    <div className="relative shrink-0 overflow-hidden rounded-[clamp(18px,2.4vw,30px)] border border-border bg-card px-4 py-[clamp(6px,2svh,28px)] text-center shadow-lg">
-      <img src={campusLeft.url} alt="" aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 h-full w-[34%] object-cover object-left [mask-image:linear-gradient(to_right,black_40%,transparent)] sm:w-[30%]" />
-      <img src={campusRight.url} alt="" aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 h-full w-[34%] object-cover object-right [mask-image:linear-gradient(to_left,black_40%,transparent)] sm:w-[30%]" />
+    <div className="relative shrink-0 overflow-hidden rounded-[clamp(18px,2.4vw,30px)] border border-border bg-card/75 px-4 py-[clamp(6px,2svh,28px)] text-center shadow-lg">
       <div className="relative">
         <span className="inline-block rounded-full bg-secondary px-5 py-1 text-[clamp(0.85rem,min(2.2svh,4vw),1.4rem)] font-bold text-primary shadow-sm sm:px-8">{copy('প্রিয় অভিভাবক,', 'Dear Guardian,')}</span>
         <p className="relative mx-auto mt-1 w-fit font-display font-black leading-tight text-primary text-[clamp(1.3rem,min(5svh,8vw),3.6rem)]">
@@ -62,13 +58,13 @@ export function AdmissionChoice({ copy, onOpen }: { copy: Copy; onOpen: (view: '
         <span className={icon}><ApplicationIcon /><Sparks className="absolute -right-[45%] -top-[5%] size-[40%] text-gold-light" /></span>
         <span className={title}>{copy('নতুন ভর্তির আবেদন', 'New Admission Application')}</span>
         <span className={sub}>{copy('প্রথমবার আবেদন করতে এখানে ক্লিক করুন', 'Click here to apply for the first time')}</span>
-        <span className={`${btn} bg-gold text-primary shadow-lg transition-colors group-hover:bg-gold-light`}>{copy('ভর্তি আবেদন করুন', 'Apply for Admission')}<ChevronRight className="size-5 shrink-0" strokeWidth={3} /></span>
+        <span className={`${btn} admission-gloss border border-gold-light bg-gold text-primary transition-colors group-hover:bg-gold-light`}>{copy('ভর্তি আবেদন করুন', 'Apply for Admission')}<span className="grid size-[1.6em] shrink-0 place-items-center rounded-full bg-primary text-gold-light"><ChevronRight className="size-[0.95em]" strokeWidth={3} /></span></span>
       </button>
       <button type="button" onClick={() => onOpen('notice')} className={`${card} border-[3px] border-primary bg-card text-primary focus-visible:ring-primary`}>
         <span className={icon}><DetailsIcon /></span>
         <span className={title}>{copy('ভর্তির সম্পর্কে বিস্তারিত জানতে', 'Learn More About Admission')}</span>
         <span className={`${sub} text-foreground`}>{copy('এখানে ক্লিক করুন', 'Click here')}</span>
-        <span className={`${btn} border-[3px] border-primary bg-card text-primary transition-colors group-hover:bg-secondary`}>{copy('বিস্তারিত জানুন', 'Learn Details')}<ChevronRight className="size-5 shrink-0" strokeWidth={3} /></span>
+        <span className={`${btn} admission-gloss bg-primary text-primary-foreground transition-colors group-hover:bg-primary-raised`}>{copy('বিস্তারিত জানুন', 'Learn Details')}<span className="grid size-[1.6em] shrink-0 place-items-center rounded-full bg-gold text-primary"><ChevronRight className="size-[0.95em]" strokeWidth={3} /></span></span>
       </button>
     </div>
   </div>;
