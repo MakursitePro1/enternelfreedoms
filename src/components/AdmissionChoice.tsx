@@ -63,7 +63,7 @@ export function AdmissionChoice({ copy, onOpen }: { copy: Copy; onOpen: (view: '
       </button>
       <button type="button" onClick={() => onOpen('notice')} className={`${card} border-[3px] border-primary bg-card text-primary focus-visible:ring-primary`}>
         <span className={icon}><DetailsIcon /></span>
-        <span className={title}>{copy('ভর্তির সম্পর্কে বিস্তারিত জানতে', 'Learn More About Admission')}</span>
+        <span className={title}>{copy('ভর্তি সম্পর্কে বিস্তারিত জানতে', 'Learn More About Admission')}</span>
         <span className={`${sub} text-foreground`}>{copy('এখানে ক্লিক করুন', 'Click here')}</span>
         <span className={`${btn} admission-gloss admission-btn border border-primary-raised bg-primary text-primary-foreground transition-colors group-hover:bg-primary-raised`}>{copy('বিস্তারিত জানুন', 'Learn Details')}<span className="admission-arrow grid size-[1.6em] shrink-0 place-items-center rounded-full bg-gold text-primary"><ChevronRight className="size-[0.95em]" strokeWidth={3} /></span></span>
       </button>
