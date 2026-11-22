@@ -134,6 +134,7 @@
   --font-teacher: "Noto Sans Bengali", sans-serif;
   --font-book-title: "Sora", "Noto Serif Bengali", serif;
   --color-gold: var(--gold);
+  --color-admission-selected: var(--admission-selected);
   --color-gold-light: var(--gold-light);
   --color-gold-soft: var(--gold-soft);
   --color-gold-deep: var(--gold-deep);
@@ -185,6 +186,7 @@
 }
 
 :root {
+  --admission-selected: oklch(0.92 0.055 135);
    --radius: 0.625rem;
   --background: #FBFBFA;
   --foreground: #173c32;

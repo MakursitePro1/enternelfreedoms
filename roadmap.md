@@ -1,3 +1,4 @@
+- [ ] Match admission class selection to the supplied image, add a calendar birthdate picker, and align authorized admin filters/details; verify submission and admin readback.
 - [x] Build Bengali public pages for institution, study, residential life, admissions, books, notices, gallery and FAQ.
 - [x] Connect admissions, tracking, orders, notices, books and secure admin management to Cloud.
 - [x] Check mobile and desktop previews, then apply routine package update.

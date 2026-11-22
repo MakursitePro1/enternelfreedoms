@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { AdminAdmissionDetail } from './AdminAdmissionDetail';
 import { GraduationCap, Clock3, CheckCircle2, XCircle, Search, MapPin, Users, Phone, ArrowUpRight, CalendarDays, Trash2, RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { programs } from '@/lib/content';
+import { admissionPrograms } from '@/lib/admission-programs';
 import type { Database } from '@/integrations/supabase/types';
 
 type Admission = Database['public']['Tables']['admissions']['Row'];
@@ -22,8 +22,9 @@ export function AdminAdmissions({ admissions, trashed, query, setQuery, onStatus
   const [page, setPage] = useState(1);
   const [saving, setSaving] = useState<string | null>(null);
   const rows = view === 'trash' ? trashed : admissions;
+  const programFilters = [...new Set([...admissionPrograms.map(([name]) => name), ...admissions.map((row) => row.program), ...trashed.map((row) => row.program)])];
   const q = query.trim().toLowerCase();
-  const filtered = rows.filter((row) => (status === 'সব' || row.status === status) && (program === 'সব' || row.program === program) && [row.student_name, row.guardian_name, row.reference, row.phone, row.address].some((v) => v.toLowerCase().includes(q)));
+  const filtered = rows.filter((row) => (status === 'সব' || row.status === status) && (program === 'সব' || row.program === program) && [row.student_name, row.guardian_name, row.reference, row.phone, row.address, row.program, row.notes ?? ''].some((v) => v.toLowerCase().includes(q)));
   const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const current = Math.min(page, pages);
   const visible = filtered.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
@@ -42,7 +43,7 @@ export function AdminAdmissions({ admissions, trashed, query, setQuery, onStatus
     <div className="grid grid-cols-2 gap-2 md:grid-cols-4">{metrics.map(({ label, count, Icon }, index) => <div key={label} className={`min-w-0 rounded-lg border p-3 ${index === 0 ? 'border-primary bg-primary text-primary-foreground' : 'border-input bg-background text-primary'}`}><div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2"><p className="text-xs font-semibold">{label}</p><Icon className={`size-4 shrink-0 ${index === 0 ? 'text-gold' : 'text-gold-deep'}`} /></div><p className="mt-2 font-brand text-2xl font-bold">{bn(count)}</p></div>)}</div>
     <div className="grid min-w-0 gap-2 border-y border-input py-3 md:grid-cols-[minmax(0,1fr)_auto]">
       <label className="relative min-w-0 w-full"><Search className="absolute left-3 top-3 size-4 text-muted-foreground" /><input aria-label="আবেদন খুঁজুন" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="নাম, ফোন বা আবেদন নম্বর" className={`${inputStyle} w-full pl-9`} /></label>
-      <div className="grid min-w-0 w-full grid-cols-2 gap-2 md:w-auto"><select aria-label="অবস্থা ফিল্টার" value={status} onChange={(e) => setStatus(e.target.value)} className={inputStyle}><option value="সব">সব অবস্থা</option>{statuses.map((s) => <option key={s}>{s}</option>)}</select><select aria-label="বিভাগ ফিল্টার" value={program} onChange={(e) => setProgram(e.target.value)} className={inputStyle}><option value="সব">সব বিভাগ</option>{programs.map((p) => <option key={p.slug}>{p.name}</option>)}</select></div>
+      <div className="grid min-w-0 w-full grid-cols-2 gap-2 md:w-auto"><select aria-label="অবস্থা ফিল্টার" value={status} onChange={(e) => setStatus(e.target.value)} className={inputStyle}><option value="সব">সব অবস্থা</option>{statuses.map((s) => <option key={s}>{s}</option>)}</select><select aria-label="বিভাগ ফিল্টার" value={program} onChange={(e) => setProgram(e.target.value)} className={`${inputStyle} max-w-64`}><option value="সব">সব শ্রেণি / বিভাগ</option>{programFilters.map((name) => <option key={name}>{name}</option>)}</select></div>
     </div>
     <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2"><div className="min-w-0"><h3 className="font-semibold text-primary">{view === 'trash' ? 'ডিলিট ফাইল' : 'সকল ভর্তি আবেদন'}</h3>{view === 'trash' && <p className="mt-0.5 text-[11px] text-muted-foreground">ডিলিট করা আবেদন ৩ মাস পর্যন্ত এখানে থাকে, এরপর স্থায়ীভাবে মুছে যায়।</p>}</div><span className="text-xs text-muted-foreground">{bn(filtered.length)}টি আবেদন</span></div>
     <div className="grid min-w-0 items-start gap-3 md:grid-cols-2 2xl:grid-cols-3">{visible.map((row) => <article key={row.id} aria-label={`${row.student_name} এর আবেদন`} className="group min-w-0 overflow-hidden rounded-xl border border-input bg-background transition-colors hover:border-primary">
@@ -53,7 +54,7 @@ export function AdminAdmissions({ admissions, trashed, query, setQuery, onStatus
       <div className="mx-3 grid min-w-0 grid-cols-2 gap-2 rounded-lg bg-secondary p-2.5 text-[11px]">
         <p className="flex min-w-0 items-center gap-1.5"><Users className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate font-medium text-foreground">{row.guardian_name}</span></p>
         <p className="flex min-w-0 items-center gap-1.5"><Phone className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate font-brand text-foreground">{row.phone}</span></p>
-        <p className="col-span-2 flex min-w-0 items-center gap-1.5"><MapPin className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate font-medium text-foreground">{row.address}</span></p>
+        {row.address && <p className="col-span-2 flex min-w-0 items-center gap-1.5"><MapPin className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate font-medium text-foreground">{row.address}</span></p>}
       </div>
       <div className="flex min-w-0 items-center gap-2 p-3">
         <p className="mr-auto flex min-w-0 items-center gap-1 text-[11px] text-muted-foreground"><CalendarDays className="size-3.5 shrink-0" />{view === 'trash' && row.deleted_at ? `${bn(daysLeft(row.deleted_at))} দিন বাকি` : new Date(row.created_at).toLocaleDateString('bn-BD')}</p>

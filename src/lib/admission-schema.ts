@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { isAdmissionProgram } from './admission-programs';
 
 export const admissionDocumentSchema = z.object({
   label: z.enum(['শিক্ষার্থীর ছবি', 'জন্মনিবন্ধন']),
@@ -19,7 +20,7 @@ export const admissionSchema = z.object({
   mother_name: person,
   mother_phone: phone,
   guardian_note: z.string().trim().max(1000, 'মন্তব্য ১০০০ অক্ষরের মধ্যে লিখুন।').optional().default(''),
-  program: z.string().trim().min(2, 'শ্রেণি / বিভাগ নির্বাচন করুন।').max(100),
+  program: z.string().trim().refine(isAdmissionProgram, 'শ্রেণি / বিভাগ নির্বাচন করুন।'),
   agreed: z.literal(true, { errorMap: () => ({ message: 'ভর্তির শর্তাবলিতে সম্মতি দিন।' }) }),
   documents: z.array(admissionDocumentSchema).min(1).max(2).superRefine((docs, ctx) => {
     const photo = docs.find((doc) => doc.label === 'শিক্ষার্থীর ছবি');

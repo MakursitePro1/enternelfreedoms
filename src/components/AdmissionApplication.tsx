@@ -8,7 +8,8 @@ import { admissionNoticeEn } from '@/lib/admission-notice-en';
 import { admissionSchema, admissionDocumentSchema, type AdmissionDocument } from '@/lib/admission-schema';
 import { submitAdmission } from '@/lib/platform.functions';
 import { useLang } from '@/lib/i18n';
-import { programs } from '@/lib/content';
+import { AdmissionProgramPicker } from '@/components/AdmissionProgramPicker';
+import { AdmissionBirthDate } from '@/components/AdmissionBirthDate';
 import { AdmissionChoice } from '@/components/AdmissionChoice';
 import campusLeft from '@/assets/campus-left.jpg';
 import campusRight from '@/assets/campus-right.jpg';
@@ -110,13 +111,13 @@ export function AdmissionApplication() {
         <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {field('student_name')}
           {docField('শিক্ষার্থীর ছবি')}
-          {field('birth_date')}
+          <AdmissionBirthDate value={form.birth_date} lang={lang} onChange={(birth_date) => setForm((previous) => ({ ...previous, birth_date }))} />
           {field('guardian_name')}
           {field('phone')}
           {field('mother_name')}
           {field('mother_phone')}
-          <label className="block text-sm font-semibold text-foreground ">{copy('শ্রেণি / বিভাগ', 'Applying for Class / Department')} *<select required aria-label={copy('শ্রেণি / বিভাগ', 'Applying for Class / Department')} value={form.program} onChange={(event) => setForm({ ...form, program: event.target.value })} className={inputClass}><option value="">{copy('নির্বাচন করুন', 'Select')}</option>{programs.map((program) => <option key={program.slug} value={program.name}>{t(program.name)}</option>)}</select></label>
           {docField('জন্মনিবন্ধন')}
+          <AdmissionProgramPicker value={form.program} copy={copy} onChange={(program) => setForm((previous) => ({ ...previous, program }))} />
           <label className="block min-w-0 text-sm font-semibold text-foreground sm:col-span-2 xl:col-span-3">{copy('অভিভাবকের মন্তব্য / নোট (ঐচ্ছিক)', 'Guardian’s Comments / Notes (Optional)')}
             <textarea aria-label={copy('অভিভাবকের মন্তব্য / নোট (ঐচ্ছিক)', 'Guardian’s Comments / Notes (Optional)')} rows={4} maxLength={1000} value={form.guardian_note} onChange={(event) => setForm((previous) => ({ ...previous, guardian_note: event.target.value }))} placeholder={copy('কোনো মন্তব্য বা বিশেষ তথ্য থাকলে এখানে লিখুন', 'Write any comments or special information here')} className={`${inputClass} resize-y`} />
           </label>

@@ -3,6 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { ArrowLeft, FileText, GraduationCap, Users, ClipboardList, ShieldCheck, CheckCircle2, XCircle, Clock3, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import type { Database } from '@/integrations/supabase/types';
+import { admissionParentDetails } from '@/lib/admission-details';
 
 type Admission = Database['public']['Tables']['admissions']['Row'];
 const statuses = ['নতুন', 'যাচাই চলছে', 'অনুমোদিত', 'বাতিল'] as const;
@@ -23,10 +24,11 @@ export function AdminAdmissionDetail({ row, openDoc, onStatusChange }: { row: Ad
     </div>
   </section>;
   const docs = Array.isArray(row.documents) ? row.documents.filter((doc): doc is { label: string; name: string; path: string } => typeof doc === 'object' && doc !== null && !Array.isArray(doc) && typeof doc['label'] === 'string' && typeof doc['name'] === 'string' && typeof doc['path'] === 'string') : [];
+  const parent = admissionParentDetails(row.notes);
   const groups = [
-    { title: 'শিক্ষার্থীর তথ্য', Icon: GraduationCap, fields: [['শিক্ষার্থীর নাম', row.student_name], ['জন্মতারিখ', row.birth_date ? new Date(`${row.birth_date}T00:00:00`).toLocaleDateString('bn-BD') : null], ['বিভাগ', row.program], ['পূর্ববর্তী শিক্ষাপ্রতিষ্ঠান', row.previous_school]] },
-    { title: 'অভিভাবক ও যোগাযোগ', Icon: Users, fields: [['অভিভাবকের নাম', row.guardian_name], ['ফোন নম্বর', row.phone], ['ঠিকানা', row.address]] },
-    { title: 'আবেদনের বিবরণ', Icon: ClipboardList, fields: [['আবেদন নম্বর', row.reference], ['বর্তমান অবস্থা', row.status], ['জমা দেওয়ার সময়', new Date(row.created_at).toLocaleString('bn-BD')], ['অতিরিক্ত তথ্য / মন্তব্য', row.notes]] },
+    { title: 'শিক্ষার্থীর তথ্য', Icon: GraduationCap, fields: [['শিক্ষার্থীর নাম', row.student_name], ['জন্মতারিখ', row.birth_date ? new Date(`${row.birth_date}T00:00:00`).toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' }) : null], ['শ্রেণি / বিভাগ', row.program], ...(row.previous_school ? [['পূর্ববর্তী শিক্ষাপ্রতিষ্ঠান', row.previous_school]] : [])] },
+    { title: 'অভিভাবক ও যোগাযোগ', Icon: Users, fields: [[parent.structured ? 'বাবার পূর্ণ নাম' : 'অভিভাবকের নাম', row.guardian_name], [parent.structured ? 'বাবার মোবাইল নম্বর' : 'ফোন নম্বর', row.phone], ['মায়ের পূর্ণ নাম', parent.motherName], ['মায়ের মোবাইল নম্বর', parent.motherPhone], ...(row.address ? [['ঠিকানা', row.address]] : [])] },
+    { title: 'আবেদনের বিবরণ', Icon: ClipboardList, fields: [['আবেদন নম্বর', row.reference], ['বর্তমান অবস্থা', row.status], ['জমা দেওয়ার সময়', new Date(row.created_at).toLocaleString('bn-BD')], ['ভর্তির শর্তাবলিতে সম্মতি', parent.consent], ['অভিভাবকের মন্তব্য / নোট', parent.guardianNote]] },
   ];
   return <section aria-label="আবেদনের সম্পূর্ণ বিস্তারিত">
     <div className="premium-panel min-w-0 rounded-2xl border border-panel-dark-border bg-panel-dark p-4 sm:p-6">
