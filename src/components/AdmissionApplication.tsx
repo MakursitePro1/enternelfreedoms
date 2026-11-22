@@ -10,8 +10,8 @@ import { submitAdmission } from '@/lib/platform.functions';
 import { useLang } from '@/lib/i18n';
 import { programs } from '@/lib/content';
 import { AdmissionChoice } from '@/components/AdmissionChoice';
-import campusLeft from '@/assets/admission-campus-left.jpg.asset.json';
-import campusRight from '@/assets/admission-campus-right.jpg.asset.json';
+import campusLeft from '@/assets/campus-left.jpg';
+import campusRight from '@/assets/campus-right.jpg';
 
 const initial = { student_name: '', birth_date: '', guardian_name: '', phone: '', mother_name: '', mother_phone: '', program: '', guardian_note: '' };
 const labels = {
@@ -88,7 +88,7 @@ export function AdmissionApplication() {
     document.getElementById('apply')?.scrollIntoView({ behavior: 'instant', block: 'start' });
   }
   return <section id="apply" aria-label={copy('অনলাইন ভর্তি', 'Online Admission')} className="relative isolate scroll-mt-28 overflow-hidden px-3 py-6 font-teacher sm:px-5 sm:py-8">
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10"><img src={campusLeft.url} alt="" className="absolute inset-y-0 left-0 h-full w-1/2 object-cover object-left" /><img src={campusRight.url} alt="" className="absolute inset-y-0 right-0 h-full w-1/2 object-cover object-right" /><div className="absolute inset-0 bg-background/40" /></div>
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10"><img src={campusLeft} alt="" className="absolute inset-y-0 left-0 h-full w-1/2 object-cover object-left" /><img src={campusRight} alt="" className="absolute inset-y-0 right-0 h-full w-1/2 object-cover object-right" /><div className="absolute inset-0 bg-background/40" /></div>
     <h1 className="sr-only">{copy('অনলাইন ভর্তি', 'Online Admission')}</h1>
     <div className="mx-auto w-full max-w-7xl">
       {view === null && !reference && <AdmissionChoice copy={copy} onOpen={openView} />}
