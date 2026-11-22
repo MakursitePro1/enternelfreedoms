@@ -335,3 +335,11 @@ html[dir="rtl"] .ticker-track { animation-direction: reverse; }
 .admission-shine > * { position: relative; z-index: 1; }
 .admission-shine::after { content: ""; position: absolute; inset: 7px; z-index: 0; pointer-events: none; border-radius: inherit; border: 1px solid color-mix(in oklab, var(--gold) 45%, transparent); }
 .admission-gloss { position: relative; box-shadow: inset 0 -4px 0 color-mix(in oklab, black 18%, transparent), 0 10px 22px -10px color-mix(in oklab, var(--primary) 70%, transparent); }
+
+.admission-btn { transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease; }
+.group:hover .admission-btn { transform: translateY(-2px); box-shadow: inset 0 -4px 0 color-mix(in oklab, black 18%, transparent), 0 16px 26px -12px color-mix(in oklab, var(--primary) 75%, transparent); }
+.group:active .admission-btn { transform: translateY(1px); }
+@keyframes admission-nudge { 0%,100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+.admission-arrow { animation: admission-nudge 1.8s ease-in-out infinite; }
+.group:hover .admission-arrow { animation-duration: .8s; }
+@media (prefers-reduced-motion: reduce) { .admission-arrow { animation: none; } .admission-btn { transition: none; } }

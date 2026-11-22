@@ -40,7 +40,7 @@ export function AdmissionChoice({ copy, onOpen }: { copy: Copy; onOpen: (view: '
   const card = 'admission-shine group flex min-h-0 cursor-pointer flex-col items-center justify-center gap-[clamp(2px,1svh,14px)] rounded-[clamp(18px,2.4vw,30px)] px-4 py-[clamp(6px,2svh,32px)] text-center shadow-[0_24px_50px_-20px_color-mix(in_oklab,var(--primary)_55%,transparent)] transition-transform hover:-translate-y-1 active:translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 motion-reduce:transition-none sm:px-8';
   const title = 'font-display font-black leading-tight text-[clamp(1rem,min(3svh,5.5vw),2.3rem)] sm:text-[clamp(1.3rem,min(4.2svh,3.4vw),2.4rem)]';
   const sub = '[@media(max-height:680px)]:text-[0.68rem] [@media(max-height:680px)]:leading-tight font-medium text-[clamp(0.7rem,min(1.9svh,3.6vw),1.15rem)] sm:text-[clamp(0.85rem,min(2.2svh,2vw),1.15rem)]';
-  const btn = '[@media(max-height:680px)]:h-[28px] mt-[clamp(0px,0.8svh,12px)] inline-flex h-[clamp(30px,5.6svh,60px)] w-full max-w-md shrink-0 items-center justify-center gap-3 rounded-full text-[clamp(0.9rem,min(2.3svh,4vw),1.25rem)] font-extrabold';
+  const btn = '[@media(max-height:680px)]:h-[28px] mt-[clamp(0px,0.8svh,12px)] inline-flex h-[clamp(30px,5.6svh,60px)] w-full max-w-md shrink-0 items-center justify-center gap-[clamp(6px,1.2vw,14px)] rounded-full px-[clamp(10px,2vw,24px)] tracking-wide text-[clamp(0.9rem,min(2.3svh,4vw),1.25rem)] font-extrabold';
   const icon = 'relative size-[clamp(28px,min(calc(12svh-46px),16vw),120px)] shrink-0 sm:size-[clamp(56px,min(14svh,11vw),128px)]';
   return <div className="mx-auto flex h-[calc(100svh-var(--admission-offset,196px))] min-h-[420px] max-h-[860px] w-full max-w-6xl flex-col gap-[clamp(8px,2svh,24px)]">
     <div className="relative shrink-0 px-4 py-[clamp(2px,1svh,14px)] text-center">
@@ -59,13 +59,13 @@ export function AdmissionChoice({ copy, onOpen }: { copy: Copy; onOpen: (view: '
         <span className={icon}><ApplicationIcon /><Sparks className="absolute -right-[45%] -top-[5%] size-[40%] text-gold-light" /></span>
         <span className={title}>{copy('নতুন ভর্তির আবেদন', 'New Admission Application')}</span>
         <span className={sub}>{copy('প্রথমবার আবেদন করতে এখানে ক্লিক করুন', 'Click here to apply for the first time')}</span>
-        <span className={`${btn} admission-gloss border border-gold-light bg-gold text-primary transition-colors group-hover:bg-gold-light`}>{copy('ভর্তি আবেদন করুন', 'Apply for Admission')}<span className="grid size-[1.6em] shrink-0 place-items-center rounded-full bg-primary text-gold-light"><ChevronRight className="size-[0.95em]" strokeWidth={3} /></span></span>
+        <span className={`${btn} admission-gloss admission-btn border border-gold-light bg-gold text-primary transition-colors group-hover:bg-gold-light`}>{copy('ভর্তি আবেদন করুন', 'Apply for Admission')}<span className="admission-arrow grid size-[1.6em] shrink-0 place-items-center rounded-full bg-primary text-gold-light"><ChevronRight className="size-[0.95em]" strokeWidth={3} /></span></span>
       </button>
       <button type="button" onClick={() => onOpen('notice')} className={`${card} border-[3px] border-primary bg-card text-primary focus-visible:ring-primary`}>
         <span className={icon}><DetailsIcon /></span>
         <span className={title}>{copy('ভর্তির সম্পর্কে বিস্তারিত জানতে', 'Learn More About Admission')}</span>
         <span className={`${sub} text-foreground`}>{copy('এখানে ক্লিক করুন', 'Click here')}</span>
-        <span className={`${btn} admission-gloss bg-primary text-primary-foreground transition-colors group-hover:bg-primary-raised`}>{copy('বিস্তারিত জানুন', 'Learn Details')}<span className="grid size-[1.6em] shrink-0 place-items-center rounded-full bg-gold text-primary"><ChevronRight className="size-[0.95em]" strokeWidth={3} /></span></span>
+        <span className={`${btn} admission-gloss admission-btn border border-primary-raised bg-primary text-primary-foreground transition-colors group-hover:bg-primary-raised`}>{copy('বিস্তারিত জানুন', 'Learn Details')}<span className="admission-arrow grid size-[1.6em] shrink-0 place-items-center rounded-full bg-gold text-primary"><ChevronRight className="size-[0.95em]" strokeWidth={3} /></span></span>
       </button>
     </div>
   </div>;
