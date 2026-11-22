@@ -40,17 +40,17 @@ function DetailsIcon() {
 
 export function AdmissionChoice({ copy, onOpen }: { copy: Copy; onOpen: (view: 'notice' | 'form') => void }) {
   const card = 'admission-shine group flex min-h-0 cursor-pointer flex-col items-center justify-center gap-[clamp(2px,1svh,14px)] rounded-[clamp(18px,2.4vw,30px)] px-4 py-[clamp(6px,2svh,32px)] text-center shadow-xl transition-transform hover:-translate-y-1 active:translate-y-0.5 focus-visible:outline-none focus-visible:ring-4 motion-reduce:transition-none sm:px-8';
-  const title = 'font-display font-black leading-tight text-[clamp(1rem,min(3svh,5.5vw),2.3rem)] sm:text-[clamp(1.3rem,min(4.2svh,2.6vw),2.4rem)]';
-  const sub = 'font-medium text-[clamp(0.7rem,min(1.9svh,3.6vw),1.15rem)] sm:text-[clamp(0.85rem,min(2.2svh,1.5vw),1.15rem)]';
-  const btn = 'mt-[clamp(0px,0.8svh,12px)] inline-flex h-[clamp(30px,5.6svh,60px)] w-full max-w-md shrink-0 items-center justify-center gap-3 rounded-full text-[clamp(0.9rem,min(2.3svh,4vw),1.25rem)] font-extrabold';
-  const icon = 'relative size-[clamp(34px,min(8svh,16vw),120px)] shrink-0 sm:size-[clamp(56px,min(14svh,11vw),128px)]';
-  return <div className="mx-auto flex h-[calc(100svh-var(--admission-offset,196px))] min-h-[420px] w-full max-w-6xl flex-col gap-[clamp(10px,2svh,24px)]">
-    <div className="relative shrink-0 overflow-hidden rounded-[clamp(18px,2.4vw,30px)] border border-border bg-card px-4 py-[clamp(10px,2.2svh,28px)] text-center shadow-lg">
+  const title = 'font-display font-black leading-tight text-[clamp(1rem,min(3svh,5.5vw),2.3rem)] sm:text-[clamp(1.3rem,min(4.2svh,3.4vw),2.4rem)]';
+  const sub = '[@media(max-height:680px)]:text-[0.68rem] [@media(max-height:680px)]:leading-tight font-medium text-[clamp(0.7rem,min(1.9svh,3.6vw),1.15rem)] sm:text-[clamp(0.85rem,min(2.2svh,2vw),1.15rem)]';
+  const btn = '[@media(max-height:680px)]:h-[28px] mt-[clamp(0px,0.8svh,12px)] inline-flex h-[clamp(30px,5.6svh,60px)] w-full max-w-md shrink-0 items-center justify-center gap-3 rounded-full text-[clamp(0.9rem,min(2.3svh,4vw),1.25rem)] font-extrabold';
+  const icon = 'relative size-[clamp(28px,min(calc(12svh-46px),16vw),120px)] shrink-0 sm:size-[clamp(56px,min(14svh,11vw),128px)]';
+  return <div className="mx-auto flex h-[calc(100svh-var(--admission-offset,196px))] min-h-[420px] max-h-[860px] w-full max-w-6xl flex-col gap-[clamp(8px,2svh,24px)]">
+    <div className="relative shrink-0 overflow-hidden rounded-[clamp(18px,2.4vw,30px)] border border-border bg-card px-4 py-[clamp(6px,2svh,28px)] text-center shadow-lg">
       <img src={campusLeft.url} alt="" aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 h-full w-[34%] object-cover object-left [mask-image:linear-gradient(to_right,black_40%,transparent)] sm:w-[30%]" />
       <img src={campusRight.url} alt="" aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 h-full w-[34%] object-cover object-right [mask-image:linear-gradient(to_left,black_40%,transparent)] sm:w-[30%]" />
       <div className="relative">
         <span className="inline-block rounded-full bg-secondary px-5 py-1 text-[clamp(0.85rem,min(2.2svh,4vw),1.4rem)] font-bold text-primary shadow-sm sm:px-8">{copy('প্রিয় অভিভাবক,', 'Dear Guardian,')}</span>
-        <p className="relative mx-auto mt-1 w-fit font-display font-black leading-tight text-primary text-[clamp(1.5rem,min(5svh,8vw),3.6rem)]">
+        <p className="relative mx-auto mt-1 w-fit font-display font-black leading-tight text-primary text-[clamp(1.3rem,min(5svh,8vw),3.6rem)]">
           {copy('ভর্তি সংক্রান্ত সেবা', 'Admission Services')}
           <Sparks className="absolute -right-6 -top-4 size-6 text-gold sm:-right-10 sm:-top-6 sm:size-10" />
         </p>
