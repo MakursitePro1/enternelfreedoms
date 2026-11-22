@@ -1,5 +1,9 @@
 export const admissionNoticeEn = `Admission and institution information: 👇
-🌸 A limited number of students are being admitted, subject to conditions, for the 2027 academic year. Classes begin on 1 January. Only a few seats remain; places are available on a first-come, first-served basis. Interested families should contact us promptly.
+🌸 A limited number of students are being admitted, subject to conditions, for the 2027 academic year. Classes begin on 1 January. Only a few seats are available, on a first-come, first-served basis. Interested families should open the link below and apply 👇
+
+https://www.eternalfreedombd.com/admission
+
+If you are not already familiar with the costs and other services, please read the complete information below carefully before applying for admission. Once your application is submitted, founding principal Muhammad Ansarul Haque Sir will contact you.
 
 Childhood and adolescence come only once. May every day of your child's life be filled with learning, joy, sports and beautiful memories. Insha Allah, our institution offers regular sports on its own spacious playground and the opportunity to grow in a pleasant residential environment. Join us in building a beautiful childhood for your child and free them from a confined residential life.
 
