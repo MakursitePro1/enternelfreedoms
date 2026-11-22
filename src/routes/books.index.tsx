@@ -8,7 +8,7 @@ import { submitOrder, trackOrder } from '@/lib/platform.functions';
 import { Site, Heading } from '@/components/Site';
 import { Button } from '@/components/ui/button';
 import { bookCovers, pick, facilityImages } from '@/lib/content';
-import magicCover from '@/assets/magic-english.jpg.asset.json';
+import magicCover from '@/assets/magic-english-reader.jpg.asset.json';
 import nuraniArt from '@/assets/book-nurani-art.jpg';
 import adabArt from '@/assets/book-adab-art.jpg';
 import hifzArt from '@/assets/book-hifz-art.jpg';

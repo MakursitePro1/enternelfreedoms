@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { OrderDetails } from '@/components/orders/OrderDetails';
 import { fictionalOrders, money, nextStages, orderItems, orderStages, paymentStatuses, type OrderRecord, type OrderStatus, type PaymentStatus } from '@/lib/order-workflow';
 import type { AdminChange } from '@/lib/platform.functions';
-import magicEnglish from '@/assets/magic-english.jpg.asset.json';
+import magicEnglish from '@/assets/magic-english-reader.jpg.asset.json';
 const PAGE_SIZE = 12;
 type Change = Extract<AdminChange, { kind: 'order' }>;
 export function AdminOrders({ orders, query, books, onSave }: { orders: OrderRecord[]; query: string; books: { id: string; cover_url: string | null }[]; onSave: (change: Change) => Promise<boolean> }) {

@@ -103,12 +103,13 @@ export const submitOrder = createServerFn({ method: 'POST' }).validator((data) =
     redirectUrl = await initiatePayment(gateway.id as 'sslcommerz' | 'aamarpay', 'live', credentials, transaction, total, data, new URL(getRequest().url).origin);
   }
   // Price, active books and configured payment method have all been independently validated above.
-  const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
-  const { error } = await supabaseAdmin.from('orders').insert({ reference, customer_name: data.customer_name, phone: data.phone, address, items, total, payment_method: methodFor(gateway.id as PaymentGatewayId), payment_reference: gateway.id === 'cod' ? null : automatic ? transaction : data.payment_reference ?? null });
+  // Manual orders (COD / wallet transaction ID) use only the public connection, so they work on any host (Vercel too); database rules keep them as new, unpaid, admin-reviewed orders.
+  const orderDb = automatic ? (await import('@/integrations/supabase/client.server')).supabaseAdmin : db;
+  const { error } = await orderDb.from('orders').insert({ reference, customer_name: data.customer_name, phone: data.phone, address, items, total, payment_method: methodFor(gateway.id as PaymentGatewayId), payment_reference: gateway.id === 'cod' ? null : automatic ? transaction : data.payment_reference ?? null });
   if (error) throw new Error('অর্ডার জমা দেওয়া যায়নি।');
   if (automatic) {
-    const { error: attemptError } = await supabaseAdmin.from('payment_attempts').insert({ order_reference: reference, gateway: gateway.id, transaction_id: transaction, mode: 'live', amount: total });
-    if (attemptError) { await supabaseAdmin.from('orders').update({ status: 'বাতিল' }).eq('reference',reference); throw new Error('পেমেন্ট শুরু করা যায়নি। আবার চেষ্টা করুন।'); }
+    const { error: attemptError } = await orderDb.from('payment_attempts').insert({ order_reference: reference, gateway: gateway.id, transaction_id: transaction, mode: 'live', amount: total });
+    if (attemptError) { await orderDb.from('orders').update({ status: 'বাতিল' }).eq('reference',reference); throw new Error('পেমেন্ট শুরু করা যায়নি। আবার চেষ্টা করুন।'); }
   }
   return { reference, redirectUrl };
 });
