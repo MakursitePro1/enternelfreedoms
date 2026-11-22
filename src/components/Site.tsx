@@ -68,7 +68,7 @@ export function Site({ children }: { children: ReactNode }) {
   const socialRef = useRef<HTMLDivElement>(null);
   const path = useRouterState({ select: (s) => s.location.pathname });
   const s = useSiteSettings();
-  const { t } = useLang();
+  const { t, lang } = useLang();
   useEffect(() => {
     const close = (e: MouseEvent) => {
       if (moreRef.current && !moreRef.current.contains(e.target as Node)) setMore(false);
@@ -203,8 +203,12 @@ export function Site({ children }: { children: ReactNode }) {
             </div>
           </div>
         </div>
-        <div className="relative border-t border-primary-foreground/15 px-5 py-5 text-center text-xs opacity-70">
-          © {new Date().getFullYear()} Eternal Freedom Institute Al Islamia. {t('সর্বস্বত্ব সংরক্ষিত।')}
+        <div className="relative border-t border-primary-raised px-5 py-5 text-center text-xs">
+          <p>© {new Date().getFullYear()} Eternal Freedom Institute Al Islamia. {t('সর্বস্বত্ব সংরক্ষিত।')}</p>
+          <p className="mt-3 flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 leading-6">
+            <span>{lang === 'en' ? 'Website created by' : 'ওয়েবসাইট তৈরি করেছে'}</span>
+            <a data-no-translate href="https://makursite.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-brand font-bold text-gold-light underline decoration-gold underline-offset-4 transition-colors hover:text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold">Makursite.com<ArrowUpRight aria-hidden="true" className="size-3.5" /></a>
+          </p>
         </div>
       </footer>
     </div>
