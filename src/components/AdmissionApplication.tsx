@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react';
 import { useServerFn } from '@tanstack/react-start';
-import { ArrowLeft, ArrowRight, Check, CheckCircle2, Copy, FileText, GraduationCap, MousePointerClick, Upload, X } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Check, ChevronRight, FilePenLine, FolderSearch, CheckCircle2, Copy, Upload, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { admissionNoticeBn } from '@/lib/admission-notice';
@@ -87,19 +87,26 @@ export function AdmissionApplication() {
   return <section id="apply" aria-label={copy('অনলাইন ভর্তি', 'Online Admission')} className="scroll-mt-28 px-3 py-6 font-teacher sm:px-5 sm:py-8">
     <h1 className="sr-only">{copy('অনলাইন ভর্তি', 'Online Admission')}</h1>
     <div className="mx-auto w-full max-w-7xl">
-      {view === null && !reference && <div className="mx-auto grid w-full gap-4 sm:grid-cols-2 sm:gap-6">
-        <Button type="button" onClick={() => openView('notice')} className="group relative h-[clamp(170px,calc((100svh-220px)/2),280px)] w-full min-w-0 cursor-pointer flex-col gap-4 whitespace-normal rounded-2xl border-2 border-gold border-b-8 bg-primary px-5 py-5 text-center text-primary-foreground shadow-lg transition-all hover:-translate-y-1 hover:bg-primary-raised hover:shadow-xl active:translate-y-1 active:border-b-2 active:shadow-sm motion-reduce:transition-none sm:h-[clamp(200px,calc(100svh-240px),440px)] sm:gap-5 sm:px-8 [&_svg]:size-8 sm:[&_svg]:size-10">
-          <span className="grid size-16 shrink-0 place-items-center rounded-full border-2 border-gold bg-primary-raised shadow-md transition-transform group-hover:scale-110 motion-reduce:transition-none sm:size-20"><FileText className="shrink-0 text-gold-light" strokeWidth={1.5} /></span>
-          <span className="min-w-0 font-display text-2xl font-bold leading-relaxed sm:text-3xl">{copy('ভর্তি ও প্রতিষ্ঠান সম্পর্কে', 'Admission & Institution')}</span>
-          <span className="inline-flex h-11 shrink-0 items-center overflow-hidden rounded-lg border-2 border-b-4 border-gold bg-gold-light text-sm font-bold text-primary transition-transform group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transition-none sm:h-12 sm:text-base"><span className="px-4 sm:px-5">{copy('এখানে ক্লিক করুন', 'Click here')}</span><span aria-hidden="true" className="grid h-full w-10 shrink-0 place-items-center border-l-2 border-gold bg-primary-raised text-gold-light sm:w-12"><MousePointerClick className="size-5! shrink-0" strokeWidth={1.8} /></span></span>
-          <span aria-hidden="true" className="absolute bottom-4 right-4 grid size-9 place-items-center rounded-full bg-gold text-primary shadow-md transition-transform group-hover:translate-x-1 motion-reduce:transition-none sm:bottom-6 sm:right-6 sm:size-11 [&_svg]:size-5 sm:[&_svg]:size-6"><ArrowRight /></span>
+      {view === null && !reference && <div className="mx-auto w-full max-w-5xl">
+        <div className="mb-5 text-center sm:mb-7">
+          <span className="inline-block rounded-full bg-secondary px-5 py-1.5 text-base font-bold text-primary sm:px-7 sm:text-xl">{copy('প্রিয় অভিভাবক,', 'Dear Guardian,')}</span>
+          <p className="mt-2 font-display text-3xl font-extrabold leading-snug text-primary sm:text-5xl">{copy('ভর্তি সংক্রান্ত সেবা', 'Admission Services')}</p>
+          <p className="mt-1 text-sm font-medium text-foreground sm:text-lg">{copy('আপনার প্রয়োজন অনুযায়ী নিচের অপশনটি নির্বাচন করুন', 'Choose the option below according to your need')}</p>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 sm:gap-7">
+        <Button type="button" onClick={() => openView('form')} className="group h-auto w-full min-w-0 cursor-pointer flex-col gap-3 whitespace-normal rounded-3xl border-4 border-gold bg-primary px-5 py-6 text-center text-primary-foreground shadow-lg transition-all hover:-translate-y-1 hover:bg-primary hover:shadow-xl active:translate-y-0.5 motion-reduce:transition-none sm:gap-4 sm:px-8 sm:py-8">
+          <span className="grid size-20 shrink-0 place-items-center rounded-full bg-primary-raised sm:size-24"><FilePenLine className="size-10! text-gold-light sm:size-12!" strokeWidth={1.6} /></span>
+          <span className="font-display text-2xl font-extrabold leading-snug sm:text-[2rem]">{copy('নতুন ভর্তির আবেদন', 'New Admission Application')}</span>
+          <span className="text-sm font-medium sm:text-base">{copy('প্রথমবার আবেদন করতে এখানে ক্লিক করুন', 'Click here to apply for the first time')}</span>
+          <span className="mt-1 inline-flex h-12 w-full max-w-sm items-center justify-center gap-3 rounded-full bg-gold text-base font-bold text-primary shadow-md transition-colors group-hover:bg-gold-light sm:h-14 sm:text-lg">{copy('ভর্তি আবেদন করুন', 'Apply for Admission')}<ChevronRight className="size-5! shrink-0" strokeWidth={2.5} /></span>
         </Button>
-        <Button type="button" onClick={() => openView('form')} className="group relative h-[clamp(170px,calc((100svh-220px)/2),280px)] w-full min-w-0 cursor-pointer flex-col gap-4 whitespace-normal rounded-2xl border-2 border-primary border-b-8 bg-gold px-5 py-5 text-center text-primary shadow-lg transition-all hover:-translate-y-1 hover:bg-gold-light hover:shadow-xl active:translate-y-1 active:border-b-2 active:shadow-sm motion-reduce:transition-none sm:h-[clamp(200px,calc(100svh-240px),440px)] sm:gap-5 sm:px-8 [&_svg]:size-8 sm:[&_svg]:size-10">
-          <span className="grid size-16 shrink-0 place-items-center rounded-full border-2 border-primary bg-gold-light shadow-md transition-transform group-hover:scale-110 motion-reduce:transition-none sm:size-20"><GraduationCap className="shrink-0" strokeWidth={1.5} /></span>
-          <span className="min-w-0 font-display text-2xl font-bold leading-relaxed sm:text-3xl">{copy('এপ্লাই এডমিশন', 'Apply Admission')}</span>
-          <span className="inline-flex h-11 shrink-0 items-center overflow-hidden rounded-lg border-2 border-b-4 border-primary-raised bg-primary text-sm font-bold text-gold-light transition-transform group-hover:translate-x-1 group-focus-visible:translate-x-1 motion-reduce:transition-none sm:h-12 sm:text-base"><span className="px-4 sm:px-5">{copy('এখানে ক্লিক করুন', 'Click here')}</span><span aria-hidden="true" className="grid h-full w-10 shrink-0 place-items-center border-l-2 border-primary-raised bg-gold-light text-primary sm:w-12"><MousePointerClick className="size-5! shrink-0" strokeWidth={1.8} /></span></span>
-          <span aria-hidden="true" className="absolute bottom-4 right-4 grid size-9 place-items-center rounded-full bg-primary text-primary-foreground shadow-md transition-transform group-hover:translate-x-1 motion-reduce:transition-none sm:bottom-6 sm:right-6 sm:size-11 [&_svg]:size-5 sm:[&_svg]:size-6"><ArrowRight /></span>
+        <Button type="button" onClick={() => openView('notice')} className="group h-auto w-full min-w-0 cursor-pointer flex-col gap-3 whitespace-normal rounded-3xl border-2 border-primary bg-card px-5 py-6 text-center text-primary shadow-lg transition-all hover:-translate-y-1 hover:bg-card hover:shadow-xl active:translate-y-0.5 motion-reduce:transition-none sm:gap-4 sm:px-8 sm:py-8">
+          <span className="grid size-20 shrink-0 place-items-center rounded-full bg-secondary sm:size-24"><FolderSearch className="size-10! text-gold sm:size-12!" strokeWidth={1.6} /></span>
+          <span className="font-display text-2xl font-extrabold leading-snug sm:text-[2rem]">{copy('ভর্তির সম্পর্কে বিস্তারিত জানতে', 'Learn More About Admission')}</span>
+          <span className="text-sm font-medium text-foreground sm:text-base">{copy('এখানে ক্লিক করুন', 'Click here')}</span>
+          <span className="mt-1 inline-flex h-12 w-full max-w-sm items-center justify-center gap-3 rounded-full border-2 border-primary bg-card text-base font-bold text-primary transition-colors group-hover:bg-secondary sm:h-14 sm:text-lg">{copy('বিস্তারিত জানুন', 'Learn Details')}<ChevronRight className="size-5! shrink-0" strokeWidth={2.5} /></span>
         </Button>
+        </div>
       </div>}
       {(view !== null || reference) && <div className="mb-4"><Button type="button" variant="outline" disabled={busy} onClick={() => { setReference(''); openView(null); }}><ArrowLeft className="size-4" />{copy('পেছনে', 'Back')}</Button></div>}
       {reference ? <div role="status" className="rounded-[1.25rem] border border-border bg-card px-5 py-12 text-center shadow-sm">
