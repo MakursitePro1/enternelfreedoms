@@ -43,13 +43,14 @@ export function AdmissionChoice({ copy, onOpen }: { copy: Copy; onOpen: (view: '
   const btn = '[@media(max-height:680px)]:h-[28px] mt-[clamp(0px,0.8svh,12px)] inline-flex h-[clamp(30px,5.6svh,60px)] w-full max-w-md shrink-0 items-center justify-center gap-3 rounded-full text-[clamp(0.9rem,min(2.3svh,4vw),1.25rem)] font-extrabold';
   const icon = 'relative size-[clamp(28px,min(calc(12svh-46px),16vw),120px)] shrink-0 sm:size-[clamp(56px,min(14svh,11vw),128px)]';
   return <div className="mx-auto flex h-[calc(100svh-var(--admission-offset,196px))] min-h-[420px] max-h-[860px] w-full max-w-6xl flex-col gap-[clamp(8px,2svh,24px)]">
-    <div className="relative shrink-0 overflow-hidden rounded-[clamp(18px,2.4vw,30px)] border border-border bg-card/75 px-4 py-[clamp(6px,2svh,28px)] text-center shadow-lg">
+    <div className="relative shrink-0 px-4 py-[clamp(2px,1svh,14px)] text-center">
       <div className="relative">
-        <span className="inline-block rounded-full bg-secondary px-5 py-1 text-[clamp(0.85rem,min(2.2svh,4vw),1.4rem)] font-bold text-primary shadow-sm sm:px-8">{copy('প্রিয় অভিভাবক,', 'Dear Guardian,')}</span>
-        <p className="relative mx-auto mt-1 w-fit font-display font-black leading-tight text-primary text-[clamp(1.3rem,min(5svh,8vw),3.6rem)]">
+        <span className="inline-flex items-center gap-2 rounded-full border border-gold bg-primary px-5 py-1 text-primary-foreground text-[clamp(0.85rem,min(2.2svh,4vw),1.4rem)] font-bold shadow-md sm:px-8">{copy('প্রিয় অভিভাবক,', 'Dear Guardian,')}</span>
+        <p className="relative mx-auto mt-1 w-fit font-display font-black leading-tight text-primary text-[clamp(1.3rem,min(5svh,8vw),3.6rem)] [text-shadow:0_2px_0_var(--card),0_4px_10px_color-mix(in_oklab,var(--primary)_25%,transparent)]">
           {copy('ভর্তি সংক্রান্ত সেবা', 'Admission Services')}
           <Sparks className="absolute -right-6 -top-4 size-6 text-gold sm:-right-10 sm:-top-6 sm:size-10" />
         </p>
+        <span aria-hidden="true" className="mx-auto mt-1 flex w-fit items-center gap-2"><span className="h-[3px] w-[clamp(28px,8vw,80px)] rounded-full bg-gold" /><span className="size-2 rotate-45 bg-gold" /><span className="h-[3px] w-[clamp(28px,8vw,80px)] rounded-full bg-gold" /></span>
         <p className="mt-1 font-semibold text-foreground text-[clamp(0.75rem,min(1.9svh,3.4vw),1.2rem)]">{copy('আপনার প্রয়োজন অনুযায়ী নিচের অপশনটি নির্বাচন করুন', 'Choose the option below according to your need')}</p>
       </div>
     </div>
