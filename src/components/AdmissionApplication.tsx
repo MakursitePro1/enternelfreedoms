@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { admissionNoticeBn } from '@/lib/admission-notice';
 import { admissionNoticeEn } from '@/lib/admission-notice-en';
+import { AdmissionBoxTitle, AdmissionCostBox } from '@/components/AdmissionCostBox';
+import { FileText } from 'lucide-react';
 import { admissionSchema, admissionDocumentSchema, type AdmissionDocument } from '@/lib/admission-schema';
 import { submitAdmission } from '@/lib/platform.functions';
 import { useLang } from '@/lib/i18n';
@@ -104,7 +106,8 @@ export function AdmissionApplication() {
         </div>
         <p className="mt-4 text-sm text-muted-foreground">{copy('ভবিষ্যতে যোগাযোগের জন্য আবেদন নম্বরটি সংরক্ষণ করুন।', 'Please keep your application ID for future reference.')}</p>
       </div> : view === 'notice' ? <>
-        <div data-no-translate className="whitespace-pre-wrap rounded-lg border border-border bg-secondary p-5 text-base leading-9 text-foreground [overflow-wrap:anywhere] sm:p-10 sm:text-lg sm:leading-10">{(lang === 'en' ? admissionNoticeEn : admissionNoticeBn).split(/(https?:\/\/[^\s]+)/g).map((part, i) => /^https?:\/\//.test(part) ? <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="break-all font-semibold text-primary underline decoration-gold decoration-2 underline-offset-4 hover:text-gold">{part}</a> : part)}</div>
+        <div className="overflow-hidden rounded-lg border border-border bg-secondary"><AdmissionBoxTitle icon={<FileText className="size-6" />} title={copy('ভর্তি ও প্রতিষ্ঠান সম্পর্কিত বিস্তারিত তথ্য', 'Admission and Institution Details')} subtitle="Eternal Freedom Institute Al Islamia" /><div data-no-translate className="whitespace-pre-wrap p-5 text-base leading-9 text-foreground [overflow-wrap:anywhere] sm:p-10 sm:text-lg sm:leading-10">{(lang === 'en' ? admissionNoticeEn : admissionNoticeBn).split(/(https?:\/\/[^\s]+)/g).map((part, i) => /^https?:\/\//.test(part) ? <a key={i} href={part} target="_blank" rel="noopener noreferrer" className="break-all font-semibold text-primary underline decoration-gold decoration-2 underline-offset-4 hover:text-gold">{part}</a> : part)}</div></div>
+        <AdmissionCostBox lang={lang} />
         <div className="mt-5 flex justify-end"><Button type="button" size="lg" onClick={() => openView('form')} className="h-14 w-full gap-3 bg-gold px-7 text-base font-bold text-primary hover:bg-gold-light sm:w-auto">{copy('এপ্লাই এডমিশন', 'Apply Admission')}<ArrowRight className="size-5 shrink-0" /></Button></div>
       </> : view === 'form' ? <form onSubmit={submit} className="rounded-lg border border-border bg-card p-5 shadow-sm sm:p-8">
         <h2 className="mb-6 font-display text-2xl font-bold text-primary">{copy('শিক্ষার্থীর তথ্য', 'Student Details')}</h2>
