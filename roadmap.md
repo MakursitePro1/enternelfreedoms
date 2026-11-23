@@ -1,3 +1,4 @@
+- [x] Redesign the food page with a premium photo hero, daily six-slot schedule and two framed routine cards; verified 390/834/1280px, enlarge dialog and English.
 - [x] Replace the home dining image with the supplied snack routine and add a dedicated food page with both charts; verify home-to-page navigation, image enlargement, English switching, sitemap and 390/768/1111px previews without runtime errors.
 - [x] Match admission class selection to the supplied image, add a calendar birthdate picker, and align authorized admin filters/details; seven tests and 360/390/834/1280px public checks passed; real test submission and authorized admin readback passed; test record/upload/role removed. Admin mobile sizing after viewport transition remains unverified.
 - [x] Build Bengali public pages for institution, study, residential life, admissions, books, notices, gallery and FAQ.
