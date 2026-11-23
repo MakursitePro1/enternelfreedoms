@@ -235,7 +235,7 @@ export function SafetyGrid({ dark = false }: { dark?: boolean }) {
 export function MealTable({ limit: _limit }: { limit?: number }) {
   return (
     <figure className="overflow-hidden rounded-xl shadow-elegant">
-      <img src={mealMenuImage} alt="দৈনিক ৩ বেলা খাবার এবং ৩ বেলা নাস্তার সাপ্তাহিক মেনু" loading="lazy" className="w-full" />
+      <img src={mealMenuImage} alt="ইটার্নাল ফ্রিডম ইনস্টিটিউট আল ইসলামিয়ার দৈনিক তিন বেলা খাবারের সাপ্তাহিক রুটিন" loading="lazy" className="w-full" />
     </figure>
   );
 }
