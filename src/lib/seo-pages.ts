@@ -1,6 +1,7 @@
 import { seo, SITE_URL } from '@/lib/seo';
 import { photos, facilityImages } from '@/lib/content';
 import { integrationHead, type IntegrationValues } from '@/lib/integrations';
+import { snackRoutineUrl } from '@/lib/food-routines';
 
 export type SeoPageDefault = { path: string; name: string; title: string; description: string; keywords: string; image: string; preview: string };
 
@@ -19,6 +20,7 @@ export const SEO_PAGES: SeoPageDefault[] = [
   { path: '/gallery', name: 'গ্যালারি', title: 'ফটো ও ভিডিও গ্যালারি', description: 'ক্যাম্পাস, শ্রেণিকক্ষ, কুরআন শিক্ষা, হিফজ, নাজেরা, কিতাব, আবাসিক জীবন, খাবার, খেলাধুলা, অনুষ্ঠান ও শিক্ষার্থীদের কার্যক্রমের ছবি ও ক্যাম্পাস ভিডিও।', keywords: 'মাদ্রাসা ছবি, ক্যাম্পাস ভিডিও', image: photos[0], preview: photos[0] },
   { path: '/faq', name: 'প্রশ্নোত্তর', title: 'অভিভাবক নির্দেশিকা ও প্রশ্নোত্তর', description: 'ভর্তি, আবাসিক জীবন, প্রয়োজনীয় কাগজপত্র, নিয়মকানুন ও শিক্ষার্থীর প্রস্তুতি নিয়ে অভিভাবকদের জন্য নির্দেশিকা ও সচরাচর জিজ্ঞাসা।', keywords: 'ভর্তি নিয়ম, আবাসিক নিয়ম, অভিভাবক প্রশ্ন', image: photos[2], preview: facilityImages.quran },
   { path: '/contact', name: 'যোগাযোগ', title: 'যোগাযোগ', description: 'Eternal Freedom Institute Al Islamia, গফরগাঁও, ময়মনসিংহ—ফোন, ইমেইল, ঠিকানা, ম্যাপ ও বার্তা পাঠানোর ফর্ম।', keywords: 'মাদ্রাসা ঠিকানা, ফোন নম্বর, গফরগাঁও', image: photos[2], preview: photos[2] },
+  { path: '/food', name: 'খাবার ও পুষ্টি', title: 'সাপ্তাহিক খাবার ও নাস্তার রুটিন', description: 'Eternal Freedom Institute Al Islamia-এর শনিবার থেকে শুক্রবার তিন বেলা খাবার ও তিন বেলা নাস্তার সম্পূর্ণ সাপ্তাহিক রুটিন।', keywords: 'সাপ্তাহিক খাবার রুটিন, নাস্তার তালিকা, ইটার্নাল ফ্রিডম', image: snackRoutineUrl, preview: snackRoutineUrl },
 ];
 
 export const SEO_FIELDS = ['title', 'desc', 'kw', 'img', 'noindex'] as const;

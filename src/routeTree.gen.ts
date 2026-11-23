@@ -16,6 +16,7 @@ import { Route as AdmissionRouteImport } from './routes/admission'
 import { Route as CampusRouteImport } from './routes/campus'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
+import { Route as FoodRouteImport } from './routes/food'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ResidentialRouteImport } from './routes/residential'
@@ -68,6 +69,11 @@ const ContactRoute = ContactRouteImport.update({
 const FaqRoute = FaqRouteImport.update({
   id: '/faq',
   path: '/faq',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FoodRoute = FoodRouteImport.update({
+  id: '/food',
+  path: '/food',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryRoute = GalleryRouteImport.update({
@@ -171,6 +177,7 @@ export interface FileRoutesByFullPath {
   '/campus': typeof CampusRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/food': typeof FoodRoute
   '/gallery': typeof GalleryRoute
   '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
@@ -197,6 +204,7 @@ export interface FileRoutesByTo {
   '/campus': typeof CampusRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/food': typeof FoodRoute
   '/gallery': typeof GalleryRoute
   '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
@@ -225,6 +233,7 @@ export interface FileRoutesById {
   '/campus': typeof CampusRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
+  '/food': typeof FoodRoute
   '/gallery': typeof GalleryRoute
   '/reset-password': typeof ResetPasswordRoute
   '/residential': typeof ResidentialRoute
@@ -254,6 +263,7 @@ export interface FileRouteTypes {
     | '/campus'
     | '/contact'
     | '/faq'
+    | '/food'
     | '/gallery'
     | '/reset-password'
     | '/residential'
@@ -280,6 +290,7 @@ export interface FileRouteTypes {
     | '/campus'
     | '/contact'
     | '/faq'
+    | '/food'
     | '/gallery'
     | '/reset-password'
     | '/residential'
@@ -307,6 +318,7 @@ export interface FileRouteTypes {
     | '/campus'
     | '/contact'
     | '/faq'
+    | '/food'
     | '/gallery'
     | '/reset-password'
     | '/residential'
@@ -335,6 +347,7 @@ export interface RootRouteChildren {
   CampusRoute: typeof CampusRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
+  FoodRoute: typeof FoodRoute
   GalleryRoute: typeof GalleryRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ResidentialRoute: typeof ResidentialRoute
@@ -401,6 +414,13 @@ declare module '@tanstack/react-router' {
       path: '/faq'
       fullPath: '/faq'
       preLoaderRoute: typeof FaqRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/food': {
+      id: '/food'
+      path: '/food'
+      fullPath: '/food'
+      preLoaderRoute: typeof FoodRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery': {
@@ -556,6 +576,7 @@ const rootRouteChildren: RootRouteChildren = {
   CampusRoute: CampusRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
+  FoodRoute: FoodRoute,
   GalleryRoute: GalleryRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ResidentialRoute: ResidentialRoute,

@@ -7,6 +7,7 @@ const pages: [string, string, number][] = [
   ['/academics', 'weekly', 0.9],
   ['/admission', 'weekly', 0.9],
   ['/residential', 'monthly', 0.8],
+  ['/food', 'monthly', 0.8],
   ['/campus', 'monthly', 0.8],
   ['/teachers', 'weekly', 0.8],
   ['/books', 'weekly', 0.9],

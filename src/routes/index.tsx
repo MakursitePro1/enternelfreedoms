@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/compone
 import { Site, Heading, TextLink, DemoNote } from '@/components/Site';
 import { StatsBar, TeachersCarousel, TestimonialSlider, ActivitiesTeaser, AchievementsGrid, SafetyGrid, MealTable, itemImage } from '@/components/InstitutionSections';
 import { ContactSection } from '@/components/ContactSection';
+import { FoodRoutineImage } from '@/components/FoodRoutineImages';
 import { photos, programs, dayTimeline, whyCards, parentQuestions, facilityImages, admissionSteps, galleryPhotos, bookCovers, isDemo, pick } from '@/lib/content';
 import { useInstitutionContent } from '@/lib/institution-content';
 import { useSiteSettings, youtubeEmbed } from '@/lib/site-settings';
@@ -231,11 +232,11 @@ function Home() {
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 max-[359px]:gap-8 lg:grid-cols-[.9fr_1.1fr] lg:items-center lg:gap-12 [&>*]:min-w-0">
           <div className="min-w-0">
             <Heading compact eyebrow="খাবার ও পুষ্টি" title="নিজস্ব রান্নাঘরে যত্নে তৈরি খাবার" description="নিজস্ব কিচেন, বেকারি ও পরিচ্ছন্ন ডাইনিংয়ে স্বাস্থ্যসম্মতভাবে তৈরি তিনবেলা পুষ্টিকর খাবার ও নাশতা।" />
-            <img src={facilityImages.dining} alt="ডাইনিংয়ে খাবার পরিবেশন" loading="lazy" className="mt-5 aspect-[4/3] w-full rounded-lg object-cover shadow-elegant transition-transform duration-500 hover:scale-[1.02] max-[359px]:mt-4 max-[359px]:aspect-[3/2] max-[359px]:rounded-md sm:mt-7 sm:aspect-[16/10] sm:rounded-xl lg:aspect-[4/3]" />
+            <div className="mt-5 sm:mt-7"><FoodRoutineImage kind="snack" /></div>
           </div>
           <div className="min-w-0">
             <MealTable limit={4} />
-            <div className="mt-5 max-[359px]:mt-4 sm:mt-6"><TextLink to="/residential">পূর্ণ সাপ্তাহিক মেনু দেখুন</TextLink></div>
+            <div className="mt-5 max-[359px]:mt-4 sm:mt-6"><TextLink to="/food">পূর্ণ সাপ্তাহিক মেনু দেখুন</TextLink></div>
           </div>
         </div>
       </section>
