@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
-import { ArrowDown, ChevronRight, Clock3, Coffee, Croissant, Moon, Sun, Sunrise, UtensilsCrossed, CalendarDays, Soup } from 'lucide-react';
+import { ArrowDown, ChevronRight, Coffee, UtensilsCrossed, CalendarDays } from 'lucide-react';
 import { Site } from '@/components/Site';
 import { FoodRoutineSection } from '@/components/FoodRoutineImages';
 import { Button } from '@/components/ui/button';
@@ -52,51 +52,13 @@ function FoodHero() {
   );
 }
 
-function DailyTimeline() {
-  const { lang } = useLang();
-  const en = lang === 'en';
-  const slots = [
-    { Icon: Sunrise, kind: 'snack', time: en ? 'After Fajr' : 'ফজরের পর', title: en ? '1st snack' : '১ম বেলা নাস্তা' },
-    { Icon: Sun, kind: 'meal', time: en ? '8:00 am' : 'সকাল ৮:০০', title: en ? 'Breakfast meal' : 'সকালের খাবার' },
-    { Icon: Croissant, kind: 'snack', time: en ? '11:00 am' : 'সকাল ১১:০০', title: en ? '2nd snack' : '২য় বেলা নাস্তা' },
-    { Icon: Soup, kind: 'meal', time: en ? '1:50 pm' : 'দুপুর ১:৫০', title: en ? 'Lunch' : 'দুপুরের খাবার' },
-    { Icon: Coffee, kind: 'snack', time: en ? 'Afternoon' : 'বিকেল', title: en ? 'Afternoon snack' : 'বিকেলের নাস্তা' },
-    { Icon: Moon, kind: 'meal', time: en ? '9:15 pm' : 'রাত ৯:১৫', title: en ? 'Dinner' : 'রাতের খাবার' },
-  ] as const;
-  return (
-    <section aria-labelledby="daily-timeline-title" className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-      <div className="mx-auto max-w-2xl text-center">
-        <p className="inline-flex items-center gap-2 text-sm font-semibold text-gold-deep"><Clock3 className="size-4" />{en ? 'A day at a glance' : 'এক নজরে সারাদিন'}</p>
-        <h2 id="daily-timeline-title" className="mt-2 font-display text-2xl font-bold leading-snug text-primary sm:text-4xl">{en ? 'Daily food schedule' : 'দৈনিক খাবারের সময়সূচি'}</h2>
-        <div className="mx-auto mt-4 flex items-center justify-center gap-2"><span className="h-px w-10 bg-gold" /><span className="size-2 rotate-45 bg-gold" /><span className="h-px w-10 bg-gold" /></div>
-      </div>
-      <ol className="relative mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-6">
-        <span aria-hidden className="absolute left-[8%] right-[8%] top-7 hidden h-0.5 bg-gold lg:block" />
-        {slots.map((s, i) => {
-          const meal = s.kind === 'meal';
-          return (
-            <li key={s.title} className="relative flex min-w-0 flex-col items-center rounded-2xl border border-border bg-card px-3 pb-4 pt-0 text-center shadow-sm transition-transform duration-300 hover:-translate-y-1 hover:shadow-elegant lg:border-0 lg:bg-transparent lg:shadow-none lg:hover:shadow-none">
-              <span className={`relative -mt-px grid size-14 place-items-center rounded-full border-4 border-background ${meal ? 'bg-primary text-gold' : 'bg-gold text-primary'} shadow-elegant max-lg:mt-4`}><s.Icon className="size-6" /></span>
-              <span className="mt-3 font-display text-xs font-bold text-gold-deep">{en ? `Step ${i + 1}` : `ধাপ ${'১২৩৪৫৬'.charAt(i)}`}</span>
-              <span className="mt-1 font-display text-base font-bold leading-snug text-primary sm:text-lg">{s.time}</span>
-              <span className="mt-1 text-xs font-medium text-muted-foreground sm:text-sm">{s.title}</span>
-              <span className={`mt-3 rounded-full px-2.5 py-0.5 text-[11px] font-bold ${meal ? 'bg-primary text-primary-foreground' : 'bg-gold-soft text-gold-deep'}`}>{meal ? (en ? 'Meal' : 'খাবার') : (en ? 'Snack' : 'নাস্তা')}</span>
-            </li>
-          );
-        })}
-      </ol>
-    </section>
-  );
-}
-
 function Food() {
   const { lang } = useLang();
   const en = lang === 'en';
   return (
     <Site>
       <div className="px-2.5 pb-2 pt-2.5 sm:px-5 sm:pt-5"><FoodHero /></div>
-      <DailyTimeline />
-      <div className="pb-14 sm:pb-20">
+      <div className="pb-14 pt-8 sm:pb-20 sm:pt-12">
         <div className="mx-auto max-w-7xl px-3 sm:px-6 lg:px-8">
           <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-10">
             <p className="inline-flex items-center gap-2 text-sm font-semibold text-gold-deep"><CalendarDays className="size-4" />{en ? 'Saturday to Friday' : 'শনিবার থেকে শুক্রবার'}</p>

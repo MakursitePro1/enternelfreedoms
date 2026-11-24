@@ -82,7 +82,7 @@ export function FoodRoutineSection({ kind, reverse = false }: { kind: 'meal' | '
           <h2 id={`${kind}-routine-title`} className="mt-2 font-display text-2xl font-bold leading-snug text-primary sm:text-3xl lg:text-[2.1rem]">{heading}</h2>
           <div className="mt-4 h-1 w-16 rounded-full bg-gold" />
           <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">{intro}</p>
-          <ul className="mt-6 grid gap-2.5">
+          <ul className="mt-6 hidden gap-2.5 md:grid">
             {routineSlots[kind].map((s, i) => (
               <li key={s.label.bn} className="flex items-center gap-3 rounded-xl border border-border bg-card px-3.5 py-3 transition-colors hover:border-gold">
                 <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-gold font-display text-sm font-bold text-primary">{en ? i + 1 : '১২৩'.charAt(i)}</span>
