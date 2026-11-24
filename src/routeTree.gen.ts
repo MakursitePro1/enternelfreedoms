@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as EternelfreeadmingoRouteImport } from './routes/Eternelfreeadmingo'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdmissionRouteImport } from './routes/admission'
+import { Route as AdmissionStatusRouteImport } from './routes/admission-status'
 import { Route as CampusRouteImport } from './routes/campus'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -54,6 +55,11 @@ const AboutRoute = AboutRouteImport.update({
 const AdmissionRoute = AdmissionRouteImport.update({
   id: '/admission',
   path: '/admission',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdmissionStatusRoute = AdmissionStatusRouteImport.update({
+  id: '/admission-status',
+  path: '/admission-status',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CampusRoute = CampusRouteImport.update({
@@ -174,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/Eternelfreeadmingo': typeof EternelfreeadmingoRouteWithChildren
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
+  '/admission-status': typeof AdmissionStatusRoute
   '/campus': typeof CampusRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -201,6 +208,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
+  '/admission-status': typeof AdmissionStatusRoute
   '/campus': typeof CampusRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -230,6 +238,7 @@ export interface FileRoutesById {
   '/Eternelfreeadmingo': typeof EternelfreeadmingoRouteWithChildren
   '/about': typeof AboutRoute
   '/admission': typeof AdmissionRoute
+  '/admission-status': typeof AdmissionStatusRoute
   '/campus': typeof CampusRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
@@ -260,6 +269,7 @@ export interface FileRouteTypes {
     | '/Eternelfreeadmingo'
     | '/about'
     | '/admission'
+    | '/admission-status'
     | '/campus'
     | '/contact'
     | '/faq'
@@ -287,6 +297,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admission'
+    | '/admission-status'
     | '/campus'
     | '/contact'
     | '/faq'
@@ -315,6 +326,7 @@ export interface FileRouteTypes {
     | '/Eternelfreeadmingo'
     | '/about'
     | '/admission'
+    | '/admission-status'
     | '/campus'
     | '/contact'
     | '/faq'
@@ -344,6 +356,7 @@ export interface RootRouteChildren {
   EternelfreeadmingoRoute: typeof EternelfreeadmingoRouteWithChildren
   AboutRoute: typeof AboutRoute
   AdmissionRoute: typeof AdmissionRoute
+  AdmissionStatusRoute: typeof AdmissionStatusRoute
   CampusRoute: typeof CampusRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
@@ -393,6 +406,13 @@ declare module '@tanstack/react-router' {
       path: '/admission'
       fullPath: '/admission'
       preLoaderRoute: typeof AdmissionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admission-status': {
+      id: '/admission-status'
+      path: '/admission-status'
+      fullPath: '/admission-status'
+      preLoaderRoute: typeof AdmissionStatusRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/campus': {
@@ -573,6 +593,7 @@ const rootRouteChildren: RootRouteChildren = {
   EternelfreeadmingoRoute: EternelfreeadmingoRouteWithChildren,
   AboutRoute: AboutRoute,
   AdmissionRoute: AdmissionRoute,
+  AdmissionStatusRoute: AdmissionStatusRoute,
   CampusRoute: CampusRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
