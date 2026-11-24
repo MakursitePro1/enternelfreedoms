@@ -39,6 +39,7 @@ export const nav = [
 /** Secondary navigation grouped under "আরও". */
 export const moreNav = [
   ['/food', 'খাবার ও পুষ্টি'],
+  ['/admission-status', 'ভর্তি আবেদনের অবস্থা'],
   ['/teachers', 'শিক্ষকমণ্ডলী'],
   ['/campus', 'ক্যাম্পাস ও সুবিধা'],
   ['/activities', 'খবর ও অনুষ্ঠান'],

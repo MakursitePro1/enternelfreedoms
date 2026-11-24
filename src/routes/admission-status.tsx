@@ -7,7 +7,9 @@ import { Input } from '@/components/ui/input';
 import { useLang } from '@/lib/i18n';
 import { pageSeo } from '@/lib/seo-pages';
 import { trackAdmission } from '@/lib/platform.functions';
-import { programLabel } from '@/lib/admission-status-labels';
+import { admissionPrograms } from '@/lib/admission-programs';
+
+const programLabel = (p: string, lang: string) => (lang === 'en' ? admissionPrograms.find(([b]) => b === p)?.[1] ?? p : p);
 
 export const Route = createFileRoute('/admission-status')({
   head: (ctx) => pageSeo(ctx, '/admission-status'),
@@ -47,7 +49,7 @@ function AdmissionStatus() {
 
   return (
     <Site>
-      <section className="container-page py-8 sm:py-14">
+      <section className="mx-auto max-w-7xl px-3 py-8 sm:px-6 sm:py-14 lg:px-8">
         <div className="mx-auto max-w-2xl">
           <div className="text-center">
             <span className="inline-flex items-center gap-2 rounded-full border border-gold bg-secondary px-4 py-1.5 text-sm font-semibold text-primary"><ShieldCheck className="size-4" />{c('নিরাপদ অনুসন্ধান', 'Secure lookup')}</span>

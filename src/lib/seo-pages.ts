@@ -21,6 +21,7 @@ export const SEO_PAGES: SeoPageDefault[] = [
   { path: '/faq', name: 'প্রশ্নোত্তর', title: 'অভিভাবক নির্দেশিকা ও প্রশ্নোত্তর', description: 'ভর্তি, আবাসিক জীবন, প্রয়োজনীয় কাগজপত্র, নিয়মকানুন ও শিক্ষার্থীর প্রস্তুতি নিয়ে অভিভাবকদের জন্য নির্দেশিকা ও সচরাচর জিজ্ঞাসা।', keywords: 'ভর্তি নিয়ম, আবাসিক নিয়ম, অভিভাবক প্রশ্ন', image: photos[2], preview: facilityImages.quran },
   { path: '/contact', name: 'যোগাযোগ', title: 'যোগাযোগ', description: 'Eternal Freedom Institute Al Islamia, গফরগাঁও, ময়মনসিংহ—ফোন, ইমেইল, ঠিকানা, ম্যাপ ও বার্তা পাঠানোর ফর্ম।', keywords: 'মাদ্রাসা ঠিকানা, ফোন নম্বর, গফরগাঁও', image: photos[2], preview: photos[2] },
   { path: '/food', name: 'খাবার ও পুষ্টি', title: 'সাপ্তাহিক খাবার ও নাস্তার রুটিন', description: 'Eternal Freedom Institute Al Islamia-এর শনিবার থেকে শুক্রবার তিন বেলা খাবার ও তিন বেলা নাস্তার সম্পূর্ণ সাপ্তাহিক রুটিন।', keywords: 'সাপ্তাহিক খাবার রুটিন, নাস্তার তালিকা, ইটার্নাল ফ্রিডম', image: snackRoutineUrl, preview: snackRoutineUrl },
+  { path: '/admission-status', name: 'ভর্তি আবেদনের অবস্থা', title: 'ভর্তি আবেদনের অবস্থা', description: 'আবেদন নম্বর ও মোবাইল নম্বর দিয়ে Eternal Freedom Institute Al Islamia-তে সন্তানের ভর্তি আবেদনের বর্তমান অবস্থা নিরাপদে দেখুন।', keywords: 'ভর্তি আবেদনের অবস্থা, আবেদন ট্র্যাক', image: photos[4], preview: photos[4] },
 ];
 
 export const SEO_FIELDS = ['title', 'desc', 'kw', 'img', 'noindex'] as const;
