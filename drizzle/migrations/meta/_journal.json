@@ -92,6 +92,13 @@
       "when": 1795341169620,
       "tag": "0012_public_wallet_orders_and_magic_cover",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1795489260353,
+      "tag": "0013_admission_english_name_residential",
+      "breakpoints": true
     }
   ]
 }

@@ -1,0 +1,1 @@
+ALTER TABLE public.admissions ADD COLUMN IF NOT EXISTS student_name_en text, ADD COLUMN IF NOT EXISTS residential_experience boolean;

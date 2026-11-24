@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { AdminAdmissionDetail } from './AdminAdmissionDetail';
-import { GraduationCap, Clock3, CheckCircle2, XCircle, Search, MapPin, Users, Phone, ArrowUpRight, CalendarDays, Trash2, RotateCcw, ChevronLeft, ChevronRight } from 'lucide-react';
+import { GraduationCap, Clock3, CheckCircle2, XCircle, Search, MapPin, Users, Phone, ArrowUpRight, CalendarDays, Trash2, RotateCcw, ChevronLeft, ChevronRight, Home, School } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { admissionPrograms } from '@/lib/admission-programs';
 import type { Database } from '@/integrations/supabase/types';
@@ -19,16 +19,17 @@ export function AdminAdmissions({ admissions, trashed, query, setQuery, onStatus
   const [view, setView] = useState<'list' | 'trash'>('list');
   const [status, setStatus] = useState('সব');
   const [program, setProgram] = useState('সব');
+  const [residential, setResidential] = useState('সব');
   const [page, setPage] = useState(1);
   const [saving, setSaving] = useState<string | null>(null);
   const rows = view === 'trash' ? trashed : admissions;
   const programFilters = [...new Set([...admissionPrograms.map(([name]) => name), ...admissions.map((row) => row.program), ...trashed.map((row) => row.program)])];
   const q = query.trim().toLowerCase();
-  const filtered = rows.filter((row) => (status === 'সব' || row.status === status) && (program === 'সব' || row.program === program) && [row.student_name, row.guardian_name, row.reference, row.phone, row.address, row.program, row.notes ?? ''].some((v) => v.toLowerCase().includes(q)));
+  const filtered = rows.filter((row) => (status === 'সব' || row.status === status) && (program === 'সব' || row.program === program) && (residential === 'সব' || (residential === 'হ্যাঁ' ? row.residential_experience === true : row.residential_experience === false)) && [row.student_name, row.student_name_en ?? '', row.previous_school ?? '', row.guardian_name, row.reference, row.phone, row.address, row.program, row.notes ?? ''].some((v) => v.toLowerCase().includes(q)));
   const pages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const current = Math.min(page, pages);
   const visible = filtered.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
-  useEffect(() => setPage(1), [view, status, program, query]);
+  useEffect(() => setPage(1), [view, status, program, residential, query]);
   const metrics = [{ label: 'মোট আবেদন', count: admissions.length, Icon: GraduationCap }, { label: 'যাচাই বাকি', count: admissions.filter((r) => ['নতুন', 'যাচাই চলছে'].includes(r.status)).length, Icon: Clock3 }, { label: 'অনুমোদিত', count: admissions.filter((r) => r.status === 'অনুমোদিত').length, Icon: CheckCircle2 }, { label: 'বাতিল', count: admissions.filter((r) => r.status === 'বাতিল').length, Icon: XCircle }];
   async function act(id: string, fn: () => Promise<boolean>) { setSaving(id); try { await fn(); } finally { setSaving(null); } }
   if (admissionId) return <AdminAdmissionDetail row={[...admissions, ...trashed].find((row) => row.id === admissionId)} openDoc={openDoc} onStatusChange={onStatusChange} />;
@@ -43,17 +44,19 @@ export function AdminAdmissions({ admissions, trashed, query, setQuery, onStatus
     <div className="grid grid-cols-2 gap-2 md:grid-cols-4">{metrics.map(({ label, count, Icon }, index) => <div key={label} className={`min-w-0 rounded-lg border p-3 ${index === 0 ? 'border-primary bg-primary text-primary-foreground' : 'border-input bg-background text-primary'}`}><div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2"><p className="text-xs font-semibold">{label}</p><Icon className={`size-4 shrink-0 ${index === 0 ? 'text-gold' : 'text-gold-deep'}`} /></div><p className="mt-2 font-brand text-2xl font-bold">{bn(count)}</p></div>)}</div>
     <div className="grid min-w-0 gap-2 border-y border-input py-3 md:grid-cols-[minmax(0,1fr)_auto]">
       <label className="relative min-w-0 w-full"><Search className="absolute left-3 top-3 size-4 text-muted-foreground" /><input aria-label="আবেদন খুঁজুন" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="নাম, ফোন বা আবেদন নম্বর" className={`${inputStyle} w-full pl-9`} /></label>
-      <div className="grid min-w-0 w-full grid-cols-2 gap-2 md:w-auto"><select aria-label="অবস্থা ফিল্টার" value={status} onChange={(e) => setStatus(e.target.value)} className={inputStyle}><option value="সব">সব অবস্থা</option>{statuses.map((s) => <option key={s}>{s}</option>)}</select><select aria-label="বিভাগ ফিল্টার" value={program} onChange={(e) => setProgram(e.target.value)} className={`${inputStyle} max-w-64`}><option value="সব">সব শ্রেণি / বিভাগ</option>{programFilters.map((name) => <option key={name}>{name}</option>)}</select></div>
+      <div className="grid min-w-0 w-full grid-cols-2 gap-2 sm:grid-cols-3 md:w-auto"><select aria-label="অবস্থা ফিল্টার" value={status} onChange={(e) => setStatus(e.target.value)} className={inputStyle}><option value="সব">সব অবস্থা</option>{statuses.map((s) => <option key={s}>{s}</option>)}</select><select aria-label="বিভাগ ফিল্টার" value={program} onChange={(e) => setProgram(e.target.value)} className={`${inputStyle} max-w-64`}><option value="সব">সব শ্রেণি / বিভাগ</option>{programFilters.map((name) => <option key={name}>{name}</option>)}</select><select aria-label="আবাসিক অভ্যাস ফিল্টার" value={residential} onChange={(e) => setResidential(e.target.value)} className={`${inputStyle} col-span-2 sm:col-span-1`}><option value="সব">আবাসিক অভ্যাস: সব</option><option value="হ্যাঁ">আবাসিক অভ্যাস: হ্যাঁ</option><option value="না">আবাসিক অভ্যাস: না</option></select></div>
     </div>
     <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2"><div className="min-w-0"><h3 className="font-semibold text-primary">{view === 'trash' ? 'ডিলিট ফাইল' : 'সকল ভর্তি আবেদন'}</h3>{view === 'trash' && <p className="mt-0.5 text-[11px] text-muted-foreground">ডিলিট করা আবেদন ৩ মাস পর্যন্ত এখানে থাকে, এরপর স্থায়ীভাবে মুছে যায়।</p>}</div><span className="text-xs text-muted-foreground">{bn(filtered.length)}টি আবেদন</span></div>
     <div className="grid min-w-0 items-start gap-3 md:grid-cols-2 2xl:grid-cols-3">{visible.map((row) => <article key={row.id} aria-label={`${row.student_name} এর আবেদন`} className="group min-w-0 overflow-hidden rounded-xl border border-input bg-background transition-colors hover:border-primary">
       <div className="flex min-w-0 items-start gap-3 p-3">
         <div className="grid size-10 shrink-0 place-items-center rounded-lg bg-primary text-gold"><GraduationCap className="size-5" /></div>
-        <div className="min-w-0 flex-1"><div className="flex min-w-0 items-center justify-between gap-2"><h4 className="truncate font-teacher text-sm font-bold text-primary">{row.student_name}</h4><span className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold ${statusStyle[row.status] ?? 'bg-secondary text-primary'}`}>{row.status}</span></div><div className="mt-1 flex min-w-0 flex-wrap items-center gap-1.5"><span className="font-brand text-[11px] font-semibold text-gold-deep">{row.reference}</span><span className="inline-flex max-w-full items-center rounded-md bg-primary px-2 py-0.5 text-[10px] font-semibold text-gold"><span className="truncate">{row.program}</span></span></div></div>
+        <div className="min-w-0 flex-1"><div className="flex min-w-0 items-center justify-between gap-2"><div className="min-w-0"><h4 className="truncate font-teacher text-sm font-bold text-primary">{row.student_name}</h4>{row.student_name_en && <p data-no-translate className="truncate text-[11px] text-muted-foreground">{row.student_name_en}</p>}</div><span className={`shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold ${statusStyle[row.status] ?? 'bg-secondary text-primary'}`}>{row.status}</span></div><div className="mt-1 flex min-w-0 flex-wrap items-center gap-1.5"><span className="font-brand text-[11px] font-semibold text-gold-deep">{row.reference}</span><span className="inline-flex max-w-full items-center rounded-md bg-primary px-2 py-0.5 text-[10px] font-semibold text-gold"><span className="truncate">{row.program}</span></span></div></div>
       </div>
       <div className="mx-3 grid min-w-0 grid-cols-2 gap-2 rounded-lg bg-secondary p-2.5 text-[11px]">
         <p className="flex min-w-0 items-center gap-1.5"><Users className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate font-medium text-foreground">{row.guardian_name}</span></p>
         <p className="flex min-w-0 items-center gap-1.5"><Phone className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate font-brand text-foreground">{row.phone}</span></p>
+        {row.residential_experience !== null && <p className="col-span-2 flex min-w-0 items-center gap-1.5"><Home className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate font-medium text-foreground">আবাসিক অভ্যাস: {row.residential_experience ? 'হ্যাঁ' : 'না'}</span></p>}
+        {row.previous_school && <p className="col-span-2 flex min-w-0 items-center gap-1.5"><School className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate font-medium text-foreground">{row.previous_school}</span></p>}
         {row.address && <p className="col-span-2 flex min-w-0 items-center gap-1.5"><MapPin className="size-3.5 shrink-0 text-gold-deep" /><span className="truncate font-medium text-foreground">{row.address}</span></p>}
       </div>
       <div className="flex min-w-0 items-center gap-2 p-3">

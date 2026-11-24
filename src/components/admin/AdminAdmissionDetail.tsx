@@ -26,7 +26,7 @@ export function AdminAdmissionDetail({ row, openDoc, onStatusChange }: { row: Ad
   const docs = Array.isArray(row.documents) ? row.documents.filter((doc): doc is { label: string; name: string; path: string } => typeof doc === 'object' && doc !== null && !Array.isArray(doc) && typeof doc['label'] === 'string' && typeof doc['name'] === 'string' && typeof doc['path'] === 'string') : [];
   const parent = admissionParentDetails(row.notes);
   const groups = [
-    { title: 'শিক্ষার্থীর তথ্য', Icon: GraduationCap, fields: [['শিক্ষার্থীর নাম', row.student_name], ['জন্মতারিখ', row.birth_date ? new Date(`${row.birth_date}T00:00:00`).toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' }) : null], ['শ্রেণি / বিভাগ', row.program], ...(row.previous_school ? [['পূর্ববর্তী শিক্ষাপ্রতিষ্ঠান', row.previous_school]] : [])] },
+    { title: 'শিক্ষার্থীর তথ্য', Icon: GraduationCap, fields: [['শিক্ষার্থীর নাম (বাংলায়)', row.student_name], ['শিক্ষার্থীর নাম (ইংরেজিতে)', row.student_name_en], ['জন্মতারিখ', row.birth_date ? new Date(`${row.birth_date}T00:00:00`).toLocaleDateString('bn-BD', { day: 'numeric', month: 'long', year: 'numeric' }) : null], ['শ্রেণি / বিভাগ', row.program], ['পূর্ববর্তী প্রতিষ্ঠানের নাম', row.previous_school], ['আবাসিকে পড়াশোনা করার অভ্যাস', row.residential_experience === null ? null : row.residential_experience ? 'হ্যাঁ' : 'না']] },
     { title: 'অভিভাবক ও যোগাযোগ', Icon: Users, fields: [[parent.structured ? 'বাবার পূর্ণ নাম' : 'অভিভাবকের নাম', row.guardian_name], [parent.structured ? 'বাবার মোবাইল নম্বর' : 'ফোন নম্বর', row.phone], ['মায়ের পূর্ণ নাম', parent.motherName], ['মায়ের মোবাইল নম্বর', parent.motherPhone], ...(row.address ? [['ঠিকানা', row.address]] : [])] },
     { title: 'আবেদনের বিবরণ', Icon: ClipboardList, fields: [['আবেদন নম্বর', row.reference], ['বর্তমান অবস্থা', row.status], ['জমা দেওয়ার সময়', new Date(row.created_at).toLocaleString('bn-BD')], ['ভর্তির শর্তাবলিতে সম্মতি', parent.consent], ['অভিভাবকের মন্তব্য / নোট', parent.guardianNote]] },
   ];
@@ -38,7 +38,7 @@ export function AdminAdmissionDetail({ row, openDoc, onStatusChange }: { row: Ad
       </div>
       <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-b border-panel-dark-border pb-4">
         <div className="grid size-12 shrink-0 place-items-center rounded-lg border border-panel-dark-border bg-panel-dark-soft text-gold"><GraduationCap className="size-6" /></div>
-        <div className="min-w-0"><h3 className="break-words font-teacher text-xl font-bold text-panel-dark-foreground">{row.student_name}</h3><p className="mt-1 text-xs text-panel-dark-muted">{row.program} · {row.reference}</p></div>
+        <div className="min-w-0"><h3 className="break-words font-teacher text-xl font-bold text-panel-dark-foreground">{row.student_name}</h3>{row.student_name_en && <p data-no-translate className="break-words text-sm font-semibold text-panel-dark-muted">{row.student_name_en}</p>}<p className="mt-1 text-xs text-panel-dark-muted">{row.program} · {row.reference}</p></div>
       </div>
       {onStatusChange && <section aria-label="আবেদনের সিদ্ধান্ত" className="mt-5 rounded-xl border border-panel-dark-border bg-panel-dark-soft p-4">
         <h3 className="flex items-center gap-2 text-sm font-bold text-gold"><ShieldCheck className="size-4" />আবেদনের সিদ্ধান্ত</h3>

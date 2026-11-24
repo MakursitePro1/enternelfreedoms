@@ -28,8 +28,10 @@ export type Database = {
           previous_school: string | null
           program: string
           reference: string
+          residential_experience: boolean | null
           status: string
           student_name: string
+          student_name_en: string | null
         }
         Insert: {
           address: string
@@ -44,8 +46,10 @@ export type Database = {
           previous_school?: string | null
           program: string
           reference?: string
+          residential_experience?: boolean | null
           status?: string
           student_name: string
+          student_name_en?: string | null
         }
         Update: {
           address?: string
@@ -60,8 +64,10 @@ export type Database = {
           previous_school?: string | null
           program?: string
           reference?: string
+          residential_experience?: boolean | null
           status?: string
           student_name?: string
+          student_name_en?: string | null
         }
         Relationships: []
       }

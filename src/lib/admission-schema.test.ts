@@ -5,7 +5,7 @@ import { admissionPrograms } from './admission-programs';
 import { admissionParentDetails } from './admission-details';
 
 const application = {
-  student_name: 'Test Student', birth_date: '2015-01-01', guardian_name: 'Test Father',
+  student_name: 'পরীক্ষা ছাত্র', student_name_en: 'Test Student', residential_experience: 'yes', birth_date: '2015-01-01', guardian_name: 'Test Father',
   phone: '01700000001', mother_name: 'Test Mother', mother_phone: '01800000001',
   program: 'হিফজ বিভাগ', agreed: true,
   documents: [{ label: 'শিক্ষার্থীর ছবি', name: 'photo.png', type: 'image/png', data: 'data:image/png;base64,iVBORw0KGgo=' }],
@@ -47,4 +47,16 @@ test('Admin parent details retain the submitted mother contact, consent and mult
   assert.equal(details.consent, 'হ্যাঁ');
   assert.equal(details.guardianNote, 'প্রথম লাইন\nদ্বিতীয় লাইন');
   assert.equal(admissionParentDetails('পুরোনো মন্তব্য').guardianNote, 'পুরোনো মন্তব্য');
+});
+
+test('Bengali and English student names are both required in the right script', () => {
+  assert.equal(admissionSchema.safeParse({ ...application, student_name_en: '' }).success, false);
+  assert.equal(admissionSchema.safeParse({ ...application, student_name: 'Test Student' }).success, false);
+  assert.equal(admissionSchema.safeParse({ ...application, student_name_en: 'পরীক্ষা' }).success, false);
+});
+test('Previous institution is optional and residential experience must be yes or no', () => {
+  assert.equal(admissionSchema.parse(application).previous_school, '');
+  assert.equal(admissionSchema.safeParse({ ...application, previous_school: 'গফরগাঁও মাদরাসা' }).success, true);
+  assert.equal(admissionSchema.safeParse({ ...application, residential_experience: '' }).success, false);
+  assert.equal(admissionSchema.safeParse({ ...application, residential_experience: 'no' }).success, true);
 });

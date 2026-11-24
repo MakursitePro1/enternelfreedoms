@@ -10,7 +10,10 @@ export const admissionDocumentSchema = z.object({
 const person = z.string().trim().min(2, 'পূর্ণ নাম লিখুন।').max(120);
 const phone = z.string().trim().regex(/^01[0-9]{9}$/, '১১ সংখ্যার সঠিক মোবাইল নম্বর দিন।');
 export const admissionSchema = z.object({
-  student_name: person,
+  student_name: z.string().trim().min(2, 'শিক্ষার্থীর পূর্ণ নাম বাংলায় লিখুন।').max(120).regex(/^[\u0980-\u09FF\s.()\-]+$/, 'শিক্ষার্থীর পূর্ণ নাম বাংলা অক্ষরে লিখুন।'),
+  student_name_en: z.string().trim().min(2, 'শিক্ষার্থীর পূর্ণ নাম ইংরেজিতে লিখুন।').max(120).regex(/^[A-Za-z\s.'()\-]+$/, 'শিক্ষার্থীর পূর্ণ নাম ইংরেজি অক্ষরে লিখুন।'),
+  previous_school: z.string().trim().max(200, 'প্রতিষ্ঠানের নাম ২০০ অক্ষরের মধ্যে লিখুন।').optional().default(''),
+  residential_experience: z.enum(['yes', 'no'], { errorMap: () => ({ message: 'আবাসিকে পড়াশোনা করার অভ্যাস আছে কিনা নির্বাচন করুন।' }) }),
   birth_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'জন্ম তারিখ দিন।').refine((value) => {
     const date = new Date(`${value}T00:00:00Z`);
     return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value && date <= new Date();

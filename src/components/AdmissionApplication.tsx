@@ -16,9 +16,10 @@ import { AdmissionChoice } from '@/components/AdmissionChoice';
 import campusLeft from '@/assets/campus-left.jpg';
 import campusRight from '@/assets/campus-right.jpg';
 
-const initial = { student_name: '', birth_date: '', guardian_name: '', phone: '', mother_name: '', mother_phone: '', program: '', guardian_note: '' };
+const initial = { student_name: '', student_name_en: '', previous_school: '', residential_experience: '', birth_date: '', guardian_name: '', phone: '', mother_name: '', mother_phone: '', program: '', guardian_note: '' };
 const labels = {
-  student_name: ['শিক্ষার্থীর পূর্ণ নাম', "Student’s Full Name"],
+  student_name: ['শিক্ষার্থীর পূর্ণ নাম (বাংলায়)', "Student’s Full Name (in Bengali)"],
+  student_name_en: ['শিক্ষার্থীর পূর্ণ নাম (ইংরেজিতে)', "Student’s Full Name (in English)"],
   birth_date: ['জন্ম তারিখ', 'Date of Birth'],
   guardian_name: ['বাবার পূর্ণ নাম', "Father’s Full Name"],
   phone: ['বাবার মোবাইল নম্বর', "Father’s Mobile Number"],
@@ -113,6 +114,7 @@ export function AdmissionApplication() {
         <h2 className="mb-6 font-display text-2xl font-bold text-primary">{copy('শিক্ষার্থীর তথ্য', 'Student Details')}</h2>
         <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {field('student_name')}
+          {field('student_name_en')}
           {docField('শিক্ষার্থীর ছবি')}
           <AdmissionBirthDate value={form.birth_date} lang={lang} onChange={(birth_date) => setForm((previous) => ({ ...previous, birth_date }))} />
           {field('guardian_name')}
@@ -120,6 +122,13 @@ export function AdmissionApplication() {
           {field('mother_name')}
           {field('mother_phone')}
           {docField('জন্মনিবন্ধন')}
+          <label className="block min-w-0 text-sm font-semibold text-foreground">{copy('পূর্ববর্তী প্রতিষ্ঠানের নাম (ঐচ্ছিক)', 'Previous Institution Name (Optional)')}
+            <input aria-label={copy('পূর্ববর্তী প্রতিষ্ঠানের নাম (ঐচ্ছিক)', 'Previous Institution Name (Optional)')} type="text" maxLength={200} value={form.previous_school} onChange={(event) => setForm((previous) => ({ ...previous, previous_school: event.target.value }))} placeholder={copy('আগে কোথাও পড়ালেখা করলে প্রতিষ্ঠানের নাম লিখুন', 'If previously studied, write the institution name')} className={inputClass} />
+          </label>
+          <fieldset className="min-w-0 sm:col-span-2 xl:col-span-1">
+            <legend className="text-sm font-semibold text-foreground">{copy('আবাসিকে পড়াশোনা করার অভ্যাস আছে?', 'Has experience studying in a residential setting?')} *</legend>
+            <div role="radiogroup" aria-label={copy('আবাসিকে পড়াশোনা করার অভ্যাস আছে?', 'Has experience studying in a residential setting?')} className="mt-2 grid grid-cols-2 gap-3">{(['yes', 'no'] as const).map((value) => { const active = form.residential_experience === value; const text = value === 'yes' ? copy('হ্যাঁ', 'Yes') : copy('না', 'No'); return <button key={value} type="button" role="radio" aria-checked={active} onClick={() => setForm((previous) => ({ ...previous, residential_experience: value }))} className={`flex min-h-[3.25rem] items-center justify-center gap-2 rounded-xl border-2 px-4 text-base font-bold transition-colors ${active ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-background text-foreground hover:border-primary'}`}><span className={`grid size-5 shrink-0 place-items-center rounded-full border-2 ${active ? 'border-gold bg-gold text-primary' : 'border-border'}`}>{active && <Check className="size-3" />}</span>{text}</button>; })}</div>
+          </fieldset>
           <AdmissionProgramPicker value={form.program} copy={copy} onChange={(program) => setForm((previous) => ({ ...previous, program }))} />
           <label className="block min-w-0 text-sm font-semibold text-foreground sm:col-span-2 xl:col-span-3">{copy('অভিভাবকের মন্তব্য / নোট (ঐচ্ছিক)', 'Guardian’s Comments / Notes (Optional)')}
             <textarea aria-label={copy('অভিভাবকের মন্তব্য / নোট (ঐচ্ছিক)', 'Guardian’s Comments / Notes (Optional)')} rows={4} maxLength={1000} value={form.guardian_note} onChange={(event) => setForm((previous) => ({ ...previous, guardian_note: event.target.value }))} placeholder={copy('কোনো মন্তব্য বা বিশেষ তথ্য থাকলে এখানে লিখুন', 'Write any comments or special information here')} className={`${inputClass} resize-y`} />

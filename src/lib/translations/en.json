@@ -3413,5 +3413,19 @@
   "100টি — অন্তত ২টি দিন": "100 — add at least 2",
   "উপলব্ধি": "Achievements",
   "ইনটিগ্রেশন": "Integrations",
-  "পেশাগত যোগাযোগ": "Professional Contact"
+  "পেশাগত যোগাযোগ": "Professional Contact",
+  "শিক্ষার্থীর পূর্ণ নাম বাংলায় লিখুন।": "Enter the student's full name in Bengali.",
+  "শিক্ষার্থীর পূর্ণ নাম বাংলা অক্ষরে লিখুন।": "Write the student's full name using Bengali letters.",
+  "শিক্ষার্থীর পূর্ণ নাম ইংরেজিতে লিখুন।": "Enter the student's full name in English.",
+  "শিক্ষার্থীর পূর্ণ নাম ইংরেজি অক্ষরে লিখুন।": "Write the student's full name using English letters.",
+  "প্রতিষ্ঠানের নাম ২০০ অক্ষরের মধ্যে লিখুন।": "Keep the institution name within 200 characters.",
+  "আবাসিকে পড়াশোনা করার অভ্যাস আছে কিনা নির্বাচন করুন।": "Select whether the student has experience studying in a residential setting.",
+  "শিক্ষার্থীর নাম (বাংলায়)": "Student's name (Bengali)",
+  "শিক্ষার্থীর নাম (ইংরেজিতে)": "Student's name (English)",
+  "পূর্ববর্তী প্রতিষ্ঠানের নাম": "Previous institution name",
+  "আবাসিকে পড়াশোনা করার অভ্যাস": "Residential study experience",
+  "আবাসিক অভ্যাস: সব": "Residential experience: All",
+  "আবাসিক অভ্যাস: হ্যাঁ": "Residential experience: Yes",
+  "আবাসিক অভ্যাস: না": "Residential experience: No",
+  "আবাসিক অভ্যাস:": "Residential experience:"
 }
