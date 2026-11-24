@@ -4,6 +4,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Clear Bengali digit ১ (Noto Sans Bengali, OFL) — only U+09E7 uses it. */
+@font-face { font-family: "Bangla One"; font-style: normal; font-weight: 400; font-display: swap; src: url("/fonts/bangla-one-400.woff2") format("woff2"); unicode-range: U+09E7; }
+@font-face { font-family: "Bangla One"; font-style: normal; font-weight: 500; font-display: swap; src: url("/fonts/bangla-one-500.woff2") format("woff2"); unicode-range: U+09E7; }
+@font-face { font-family: "Bangla One"; font-style: normal; font-weight: 600; font-display: swap; src: url("/fonts/bangla-one-600.woff2") format("woff2"); unicode-range: U+09E7; }
+@font-face { font-family: "Bangla One"; font-style: normal; font-weight: 700; font-display: swap; src: url("/fonts/bangla-one-700.woff2") format("woff2"); unicode-range: U+09E7; }
+@font-face { font-family: "Bangla One"; font-style: normal; font-weight: 800; font-display: swap; src: url("/fonts/bangla-one-800.woff2") format("woff2"); unicode-range: U+09E7; }
+
 .admin-book-editor {
   --background: var(--card);
   --foreground: var(--panel-green-foreground);
@@ -128,11 +135,12 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  --font-display: "Noto Serif Bengali", serif;
-  --font-hero: "DM Sans", Arial, sans-serif;
-  --font-brand: "DM Sans", Arial, sans-serif;
-  --font-teacher: "Noto Sans Bengali", sans-serif;
-  --font-book-title: "Sora", "Noto Serif Bengali", serif;
+  --font-display: "Bangla One", "Noto Serif Bengali", serif;
+  --font-hero: "Bangla One", "DM Sans", Arial, sans-serif;
+  --font-brand: "Bangla One", "DM Sans", Arial, sans-serif;
+  --font-teacher: "Bangla One", "Noto Sans Bengali", sans-serif;
+  --font-mono: "Bangla One", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --font-book-title: "Bangla One", "Sora", "Noto Serif Bengali", serif;
   --color-gold: var(--gold);
   --color-admission-selected: var(--admission-selected);
   --color-gold-light: var(--gold-light);
@@ -243,7 +251,7 @@
   }
 
   body {
-    font-family: "Hind Siliguri", sans-serif;
+    font-family: "Bangla One", "Hind Siliguri", sans-serif;
     background-color: var(--color-background);
     color: var(--color-foreground);
     line-height: 1.65;
@@ -284,7 +292,7 @@
    --shadow-elegant: 0 26px 58px -34px color-mix(in oklab, var(--primary) 42%, transparent), 0 3px 16px -10px color-mix(in oklab, var(--primary) 18%, transparent);
 }
 
-html[dir="rtl"] body { font-family: "Noto Naskh Arabic", "Hind Siliguri", sans-serif; }
+html[dir="rtl"] body { font-family: "Bangla One", "Noto Naskh Arabic", "Hind Siliguri", sans-serif; }
 
 @utility bg-hero-overlay { background-image: var(--gradient-hero); }
 @utility bg-gold-gradient { background-image: var(--gradient-gold); }
