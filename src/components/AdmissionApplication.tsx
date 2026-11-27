@@ -11,7 +11,6 @@ import { admissionSchema, admissionDocumentSchema, type AdmissionDocument } from
 import { submitAdmission } from '@/lib/platform.functions';
 import { useLang } from '@/lib/i18n';
 import { AdmissionProgramPicker } from '@/components/AdmissionProgramPicker';
-import { AdmissionBirthDate } from '@/components/AdmissionBirthDate';
 import { AdmissionChoice } from '@/components/AdmissionChoice';
 import campusLeft from '@/assets/campus-left.jpg';
 import campusRight from '@/assets/campus-right.jpg';
@@ -72,9 +71,10 @@ export function AdmissionApplication() {
   }
   function field(name: keyof typeof labels) {
     const label = labels[name];
-    const type = name === 'birth_date' ? 'date' : name.endsWith('phone') || name === 'phone' ? 'tel' : 'text';
+    const type = name.endsWith('phone') || name === 'phone' ? 'tel' : 'text';
+    const isBirth = name === 'birth_date';
     return <label key={name} className="block min-w-0 text-sm font-semibold text-foreground">{copy(label[0], label[1])} *
-      <input aria-label={copy(label[0], label[1])} required type={type} maxLength={type === 'tel' ? 11 : 120} pattern={type === 'tel' ? '01[0-9]{9}' : undefined} value={form[name]} onChange={(event) => setForm((previous) => ({ ...previous, [name]: event.target.value }))} className={inputClass} />
+      <input aria-label={copy(label[0], label[1])} required type={type} inputMode={isBirth ? 'numeric' : undefined} placeholder={isBirth ? '2015-01-01' : undefined} maxLength={type === 'tel' ? 11 : isBirth ? 10 : 120} pattern={type === 'tel' ? '01[0-9]{9}' : isBirth ? '\\d{4}-\\d{2}-\\d{2}' : undefined} value={form[name]} onChange={(event) => setForm((previous) => ({ ...previous, [name]: event.target.value }))} className={inputClass} />
     </label>;
   }
   function docField(label: AdmissionDocument['label']) {
@@ -116,7 +116,7 @@ export function AdmissionApplication() {
           {field('student_name')}
           {field('student_name_en')}
           {docField('শিক্ষার্থীর ছবি')}
-          <AdmissionBirthDate value={form.birth_date} lang={lang} onChange={(birth_date) => setForm((previous) => ({ ...previous, birth_date }))} />
+          {field('birth_date')}
           {field('guardian_name')}
           {field('phone')}
           {field('mother_name')}
