@@ -55,7 +55,7 @@ export const submitAdmission = createServerFn({ method: 'POST' }).validator((dat
     saved.push({ label: doc.label, name: doc.name, path });
   }
   const notes = `মায়ের পূর্ণ নাম: ${mother_name}\nমায়ের মোবাইল নম্বর: ${mother_phone}\nভর্তির নোটিশ ও সকল শর্তাবলিতে সম্মতি: ${agreed ? 'হ্যাঁ' : 'না'}${guardian_note ? `\nঅভিভাবকের মন্তব্য / নোট: ${guardian_note}` : ''}`;
-  const { error } = await db.from('admissions').insert({ ...fields, reference, documents: saved, address: '', previous_school: previous_school || null, residential_experience: residential_experience === 'yes', notes });
+  const { error } = await db.from('admissions').insert({ ...fields, birth_date: fields.birth_date || null, reference, documents: saved, address: '', previous_school: previous_school || null, residential_experience: residential_experience === 'yes', notes });
   if (error) throw new Error('আবেদন জমা দেওয়া যায়নি। আবার চেষ্টা করুন।');
   return { reference };
   } catch (error) {

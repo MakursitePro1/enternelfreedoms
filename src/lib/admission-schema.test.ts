@@ -15,7 +15,7 @@ test('Agreement is mandatory before submitting an admission application', () => 
   assert.equal(admissionSchema.safeParse({ ...application, agreed: false }).success, false);
 });
 test('The eight required student fields cannot be omitted', () => {
-  for (const key of ['student_name', 'birth_date', 'guardian_name', 'phone', 'mother_name', 'mother_phone', 'program']) {
+  for (const key of ['student_name', 'guardian_name', 'phone', 'mother_name', 'mother_phone', 'program']) {
     assert.equal(admissionSchema.safeParse({ ...application, [key]: '' }).success, false, key);
   }
   assert.equal(admissionSchema.safeParse({ ...application, documents: [] }).success, false);

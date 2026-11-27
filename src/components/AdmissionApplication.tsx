@@ -116,7 +116,6 @@ export function AdmissionApplication() {
           {field('student_name')}
           {field('student_name_en')}
           {docField('শিক্ষার্থীর ছবি')}
-          {field('birth_date')}
           {field('guardian_name')}
           {field('phone')}
           {field('mother_name')}
