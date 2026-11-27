@@ -15,4 +15,4 @@ Allow: /
 Disallow: /Eternelfreeadmingo
 Disallow: /reset-password
 
-Sitemap: https://enternelfreedoms.lovable.app/sitemap.xml
+Sitemap: https://www.eternalfreedombd.com/sitemap.xml

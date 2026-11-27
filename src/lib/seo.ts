@@ -1,6 +1,9 @@
-export const SITE_URL = 'https://enternelfreedoms.lovable.app';
-export const SITE_NAME = 'Eternal Freedom Institute Al Islamia';
-const DEFAULT_KEYWORDS = 'Eternal Freedom Institute Al Islamia, গফরগাঁও মাদ্রাসা, ময়মনসিংহ আবাসিক প্রতিষ্ঠান, ইসলামী শিক্ষা, হিফজ, নূরানী, কিতাব বিভাগ, ম্যাজিক ইংলিশ';
+export const SITE_URL = 'https://www.eternalfreedombd.com';
+/** Site/brand name shown in search results, browser tabs and social previews. */
+export const SITE_NAME = 'Eternal Freedom BD';
+/** Full institutional name, kept in structured data and page descriptions. */
+export const SITE_LEGAL_NAME = 'Eternal Freedom Institute Al Islamia';
+const DEFAULT_KEYWORDS = 'Eternal Freedom BD, Eternal Freedom Institute Al Islamia, গফরগাঁও মাদ্রাসা, ময়মনসিংহ আবাসিক প্রতিষ্ঠান, ইসলামী শিক্ষা, হিফজ, নূরানী, কিতাব বিভাগ, ম্যাজিক ইংলিশ';
 
 export function seo(title: string, description: string, path = '/', keywords = '') {
   const fullTitle = `${title} | ${SITE_NAME}`;
@@ -33,6 +36,7 @@ export const organizationLd = {
   '@context': 'https://schema.org',
   '@type': 'EducationalOrganization',
   name: SITE_NAME,
+  legalName: SITE_LEGAL_NAME,
   alternateName: 'ইটারনাল ফ্রিডম ইনস্টিটিউট আল ইসলামিয়া',
   url: SITE_URL,
   logo: `${SITE_URL}/favicon.png`,
